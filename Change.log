@@ -1,0 +1,11 @@
+mdncomp
+=======
+
+0.2.0-alpha
+ADD: List option using . for path will list top levels (i.e. `mdncomp -l .`)
+
+0.1.1-alpha
+NEW: Experimental version release
+
+
+(c) Epistemex 2018
