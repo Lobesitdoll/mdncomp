@@ -1,6 +1,6 @@
 {
   "name": "mdncomp",
-  "version": "0.1.1-alpha",
+  "version": "0.2.0-alpha",
   "description": "Get MDN Browser Compatibility data.",
   "main": "index.js",
   "author": {
@@ -29,7 +29,8 @@
     "bin/",
     "package.json",
     "package-lock.json",
-    "README.md"
+    "README.md",
+    "Change.log"
   ],
   "dependencies": {
     "commander": "^2.14.1",

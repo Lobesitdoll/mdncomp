@@ -122,7 +122,13 @@ function getInfo(path) {
     if (o && !isPattern) o = o[part];
   });
 
-  if (!o) log("Unknown path.", path);
+  if (!o) {
+    if (path === "." && options.list) {
+      log(Object.keys(bcd).join("\n"))
+    }
+    else
+      log("Unknown path.", path);
+  }
   else {
 
     // List properties to output
