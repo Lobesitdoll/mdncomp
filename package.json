@@ -1,0 +1,38 @@
+{
+  "name": "mdncomp",
+  "version": "0.1.1-alpha",
+  "description": "Get MDN Browser Compatibility data.",
+  "main": "index.js",
+  "author": {
+    "name": "K3N",
+    "email": "epistemex@users.noreply.github.com"
+  },
+  "keywords": [
+    "mdn",
+    "docs",
+    "documentation",
+    "browser",
+    "compatibility",
+    "shell",
+    "console",
+    "terminal"
+  ],
+  "license": "MIT",
+  "bin": {
+    "mdncomp": "./bin/mdncomp.js"
+  },
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/epistemex/mdncomp.git"
+  },
+  "files": [
+    "bin/",
+    "package.json",
+    "package-lock.json",
+    "README.md"
+  ],
+  "dependencies": {
+    "commander": "^2.14.1",
+    "mdn-browser-compat-data": ">=0.0.24"
+  }
+}
