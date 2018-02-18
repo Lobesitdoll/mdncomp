@@ -1,6 +1,6 @@
 {
   "name": "mdncomp",
-  "version": "1.0.0-alpha",
+  "version": "1.0.1-alpha",
   "description": "Get MDN Browser Compatibility data.",
   "main": "index.js",
   "author": {
