@@ -33,7 +33,7 @@ It comes in colors, too!
 
 Or export as a SVG file:
 
-![SVG example](https://i.imgur.com/oRJisgO.jpg)
+![SVG example](https://i.imgur.com/OoM5p3H.jpg)
 
 See all options:
 

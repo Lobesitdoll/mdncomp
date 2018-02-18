@@ -6,7 +6,8 @@ function compatToSVG(mdnComp) {
   let
     out = new Output(),
     desktopList = ["chrome", "firefox", "edge", "ie", "opera", "safari"],
-    mobileList = ["android", "chrome,android", "firefox,android", "edge", "opera,android", "safari"],
+    mobileListIcons = ["android", "chrome,android", "firefox,android", "edge", "opera,android", "safari"],
+    mobileList = ["android", "chrome_android", "firefox_android", "edge_mobile", "opera_android", "safari_ios"],
     notes = [],
     ref = 0,
     opts = {
@@ -112,10 +113,10 @@ function compatToSVG(mdnComp) {
 
   if (isMob) {
     use("mobile", ((isDesk ? col2w / 2 : col2w) - iconSize) / 2 + colM, (col1h - iconSize) / 2, iconSize, iconSize);
-    for(i = 0, x = colM; i < desktopList.length; i++) {
-      let lst = mobileList[i].split(",");
+    for(i = 0, x = colM; i < mobileListIcons.length; i++) {
+      let lst = mobileListIcons[i].split(",");
       lst.forEach((icon, t) => {
-        use(icon, x + t * iconSize + step * i + (step - iconSize * lst.length) / 2, col1h + (col2h - iconSize) / 2, iconSize, iconSize, colIcon);
+        use(icon, (lst.length === 2 ? (t ? 1 : -1) : 0) + x + t * iconSize + step * i + (step - iconSize * lst.length) / 2, col1h + (col2h - iconSize) / 2, iconSize, iconSize, colIcon);
       })
     }
   }
