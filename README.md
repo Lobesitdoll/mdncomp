@@ -33,12 +33,22 @@ It comes in colors, too!
 
 Or export as a SVG file:
 
-![SVG example](https://i.imgur.com/OoM5p3H.jpg)
+![SVG example](https://i.imgur.com/8BMH5HD.jpg)
+
+Or as a shorthand format:
+
+```text
+$ mdncomp *html*toblob* -s
+->
+HTMLCanvasElement.toBlob:  DT: C:50 F:19 E:? IE:10 O:Y S:Y*   MOB: A:- CA:? FA:4 EM:? OA:? SI:?
+```
 
 See all options:
 
     $ mdncomp -h
 
+Install
+-------
 Install globally using NPM:
 
     $ npm i -g mdncomp
@@ -48,17 +58,14 @@ Install globally using NPM:
 
 Usage Examples
 --------------
-
 List top level objects using "." as path:
 
 Find an object to check compatibility for:
 ```text
 $ mdncomp *toblob*
 ->
-Searching: "toblob":
-  api.HTMLCanvasElement.toBlob
-  api.OffscreenCanvas.toBlob
-Results: 2
+api.HTMLCanvasElement.toBlob
+api.OffscreenCanvas.toBlob
 ```
 
 List information for all results:
@@ -112,6 +119,7 @@ Output to a file with no color information:
 
 Other options:
 - Search case-sensitive
+- Shorthand text output
 - Format link as markdown
 - Show just desktop or mobile
 - Ignore notes
@@ -122,7 +130,6 @@ Other options:
 
 License
 -------
-
 Released under [MIT license](http://choosealicense.com/licenses/mit/). You may use this class in both commercial and non-commercial projects provided that full header (minified and developer versions) is included.
 
 *&copy; Epistemex 2018*

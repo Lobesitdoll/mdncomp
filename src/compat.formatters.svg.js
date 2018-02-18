@@ -132,6 +132,7 @@ function compatToSVG(mdnComp) {
   }
 
   // insert notes
+  //todo text formatter - we don't have access to box sizes nor canvas so we are left with guessing text width from a monospace font (or import overheadly (!) code) - not optimal but works..
   if (options.notes && notes.length) {
     //h += 10;
     notes.forEach((note) => {
@@ -140,7 +141,7 @@ function compatToSVG(mdnComp) {
     });
   }
 
-  h += 30;
+  h += 40;
   text("Data from MDN - \"npm i -g mdncomp\" - version " + version + " by epistemex © 2018.", 10, h, 14, true);
 
   h += 10;
@@ -178,7 +179,11 @@ function compatToSVG(mdnComp) {
         nx = tx + w + 4;
 
       rect(x, y, step, col2h, status.indexOf("-") >= 0 ? colNo : (status === "?" ? "transparent" : colYes));
-      text(status, tx, y + 28);
+      if (status === "-") {
+        text(no16, tx, y + 28, 0, 0, "#c55")
+      }
+      else
+        text(status, tx, y + 28);
       if (refMark) text(refMark, nx, y + 19, 10);
     });
   }
@@ -206,8 +211,8 @@ function compatToSVG(mdnComp) {
     out.add("<rect x=\"%0\" y=\"%1\" width=\"%2\" height=\"%3\" fill=\"%4\" />", x, y, w, h, bgCol)
   }
 
-  function text(txt, x, y, size, sans) {
-    out.add("<text x=\"%1\" y=\"%2\" fill=\"#000\" font-family=\"%4\" font-size=\"%3\">%0</text>", txt, x, y, size||16, sans ? "sans-serif" : "monospace")
+  function text(txt, x, y, size, sans, color) {
+    out.add("<text x=\"%1\" y=\"%2\" fill=\"%5\" font-family=\"%4\" font-size=\"%3\">%0</text>", txt, x, y, size||16, sans ? "sans-serif" : "monospace", color ? color : "#000")
   }
 
   function textFmt(txt, max) {

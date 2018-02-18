@@ -1,6 +1,12 @@
 mdncomp
 =======
 
+1.1.2-alpha
+FIX: SVG formatting (no symbol and color)
+
+1.1.1-alpha
+FIX: SVG formatting
+
 1.1.0-alpha
 ADD: Can export to SVG file (-t svg) - autodetect from -o file extension is coming.
 
