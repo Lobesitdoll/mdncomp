@@ -1,6 +1,6 @@
 {
   "name": "mdncomp",
-  "version": "0.2.0-alpha",
+  "version": "1.0.0-alpha",
   "description": "Get MDN Browser Compatibility data.",
   "main": "index.js",
   "author": {
@@ -21,12 +21,14 @@
   "bin": {
     "mdncomp": "./bin/mdncomp.js"
   },
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/epistemex/mdncomp.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/epistemex/mdncomp.git"
   },
   "files": [
     "bin/",
+    "build/",
+    "src/",
     "package.json",
     "package-lock.json",
     "README.md",
@@ -34,6 +36,6 @@
   ],
   "dependencies": {
     "commander": "^2.14.1",
-    "mdn-browser-compat-data": ">=0.0.24"
+    "mdn-browser-compat-data": "0.0.24"
   }
 }

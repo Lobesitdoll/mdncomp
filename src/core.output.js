@@ -1,0 +1,44 @@
+/**
+ * Output object collecting strings and
+ * produces a final string.
+ * @constructor
+ */
+function Output(indent) {
+  this.string = "";
+  this.indent = "    ".substr(0, indent|0);
+}
+
+Output.prototype = {
+  /**
+   * Add text. Can contain formatting using %n where n is a number.
+   * The arguments are appended to the call.
+   * @example
+   *     o.add("Some %0 text", "cool");
+   *
+   * @param txt
+   */
+  add: function(txt) {
+    txt = txt ? txt : "";
+    if (arguments.length > 1) {
+      let format = txt.indexOf("%0") >= 0;
+      for(let i = 1; i < arguments.length; i++) {
+        let regEx = new RegExp("%" + (i - 1), "g");
+        txt = format ? txt.replace(regEx, arguments[i]) : txt + arguments[i];
+      }
+    }
+    this.string += this.indent + (txt || "");
+  },
+
+  addLine: function(txt) {
+    this.add.apply(this, arguments);
+    this.string += "\n"
+  },
+
+  trimEnd: function(n) {
+    this.string = this.string.substr(0, Math.max(0, this.string.length - n))
+  },
+
+  toString: function() {
+    return this.string
+  }
+};

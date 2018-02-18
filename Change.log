@@ -1,6 +1,9 @@
 mdncomp
 =======
 
+0.3.0-alpha
+
+
 0.2.0-alpha
 ADD: List option using . for path will list top levels (i.e. `mdncomp -l .`)
 

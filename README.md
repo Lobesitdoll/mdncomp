@@ -9,19 +9,19 @@ Experimental ALPHA release!
 $ mdncomp api.HTMLCanvasElement.toBlob
 
 "toBlob" (on standard track)
-See: https://developer.mozilla.org/docs/Web/API/HTMLCanvasElement/toBlob
+https://developer.mozilla.org/docs/Web/API/HTMLCanvasElement/toBlob
 
-DESKTOP:
-Chrome  | Firefox | Edge    | IE      | Opera   | Safari
---------+---------+---------+---------+---------+----------
-   50   |    19   |     -   |    10   |   Yes   |true(¹)
+  DESKTOP:
+  Chrome  | Firefox | Edge    | IE      | Opera   | Safari
+  --------+---------+---------+---------+---------+----------
+     50   |    19   |     -   |    10   |   Yes   |true(¹)
 
 ¹) See WebKit bug 71270.
 
-MOBILE:
-Android | Chrome  | Edge    | Firefox | Opera   | Safari
---------+---------+---------+---------+---------+----------
-    -   |     -   |     -   |     4   |     -   |     -
+  MOBILE:
+  Android | Chrome  | Edge    | Firefox | Opera   | Safari
+  --------+---------+---------+---------+---------+----------
+      -   |     -   |     -   |     4   |     -   |     -
 
 Data from MDN - 'npm i -g mdncomp' by K3N / epistemex.com (c) 2018.
 ```
