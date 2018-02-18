@@ -27,7 +27,15 @@ $ mdncomp *html*toblob*
 Data from MDN - `npm i -g mdncomp` ver. 1.0.1-alpha by epistemex
 ```
 
-See options:
+It comes in colors, too!
+
+![colors](https://i.imgur.com/2h3BlX5.jpg)
+
+Or export as a SVG file:
+
+![SVG example](https://i.imgur.com/oRJisgO.jpg)
+
+See all options:
 
     $ mdncomp -h
 
@@ -109,6 +117,7 @@ Other options:
 - Ignore notes
 - Collect notes in one section
 - Format max line width
+- Export to SVG file
 
 
 License

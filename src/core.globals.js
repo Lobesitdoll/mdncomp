@@ -28,7 +28,7 @@ const ANSI = {
   bgWhite: "\x1b[47m"
 };
 
-const lf = "\n", yes = "Y", no = "-", yes16 = "✔", no16 = "✘";
+const lf = "\r\n", yes = "Y", no = "-", yes16 = "✔", no16 = "✘";
 
 String.prototype.center = function(length) {
   let

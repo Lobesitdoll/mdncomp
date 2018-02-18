@@ -1,6 +1,9 @@
 mdncomp
 =======
 
+1.1.0-alpha
+ADD: Can export to SVG file (-t svg) - autodetect from -o file extension is coming.
+
 1.0.0-alpha
 IMP: Complete refactoring. No longer experimental.
 

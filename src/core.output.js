@@ -6,6 +6,7 @@
 function Output(indent) {
   this.string = "";
   this.indent = "    ".substr(0, indent|0);
+  this.linefeed = lf;
 }
 
 Output.prototype = {
@@ -14,8 +15,9 @@ Output.prototype = {
    * The arguments are appended to the call.
    * @example
    *     o.add("Some %0 text", "cool");
+   *     o.add("this ", "will ", "be ", "joined");
    *
-   * @param txt
+   * @param txt - text, format string
    */
   add: function(txt) {
     txt = txt ? txt : "";
@@ -29,11 +31,19 @@ Output.prototype = {
     this.string += this.indent + (txt || "");
   },
 
+  /**
+   * Same as add() but with an additional linefeed at the end.
+   * @param txt
+   */
   addLine: function(txt) {
     this.add.apply(this, arguments);
-    this.string += "\n"
+    this.string += this.linefeed;
   },
 
+  /**
+   * Trim n chars off the end
+   * @param n
+   */
   trimEnd: function(n) {
     this.string = this.string.substr(0, Math.max(0, this.string.length - n))
   },

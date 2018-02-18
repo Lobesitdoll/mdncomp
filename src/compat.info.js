@@ -6,7 +6,7 @@
  */
 function Info(obj) {
   this.prefix = obj.prefix || "";
-  this.added = obj.version_added ? this.toStatus(obj.version_added) : no;
+  this.added = obj.version_added ? this.toStatus(obj.version_added) : "?";
   this.removed = this.added && obj.version_removed ? this.toStatus(obj.version_removed) : null;
   this.notes = obj.notes ? (Array.isArray(obj.notes) ? obj.notes : [obj.notes]) : [];
   this.partial = !!obj.partial_implementation;
