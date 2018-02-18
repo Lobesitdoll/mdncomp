@@ -10,8 +10,8 @@ function compatToLong(mdnComp) {
     out = new Output(0),
     desktopList = ["chrome", "firefox", "edge", "ie", "opera", "safari"],
     mobileList = ["android", "chrome_android", "firefox_android", "edge_mobile", "opera_android", "safari_ios"],
-    //refs = ["➊", "➋", "➌", "➍", "➎", "➏", "➐", "➑", "➒", "➓"],
-    refs = ["¹", "²", "³", "ª", "º", "*", "1", "2", "3", "4", "5"],
+    //refs = ["➊", "➋", "➌", "➍", "➎", "➏", "➐", "➑", "➒", "➓"], // 0xxxxx
+    refs = ["¹", "²", "³", "ª", "º", "*", "^", "`", "1", "2", "3", "4", "5"],
     ref = 0,
     notes = [],
     opts = {
@@ -23,8 +23,13 @@ function compatToLong(mdnComp) {
     };
 
   out.addLine(ANSI.reset);
-  out.addLine("  %0%1%2%3%4 %5", ANSI.fgYellow, prePath, ANSI.fgCyan, mdnComp.name, ANSI.reset, mdnComp.getStatus());
-  out.addLine("  ", mdnComp.url, lf);
+  if (options.markdown && mdnComp.url.length) {
+    out.addLine("  [`%0%1`](%2) %3\n", prePath, mdnComp.name, mdnComp.url, mdnComp.getStatus());
+  }
+  else {
+    out.addLine("  %0%1%2%3%4 %5", ANSI.fgYellow, prePath, ANSI.fgCyan, mdnComp.name, ANSI.reset, mdnComp.getStatus());
+    out.addLine("  ", mdnComp.url ? mdnComp.url : "-", lf);
+  }
 
   if (opts.showDesktop) {
     out.addLine("  %0DESKTOP:", ANSI.fgYellow);
@@ -36,7 +41,7 @@ function compatToLong(mdnComp) {
     out.addLine(lf);
 
     // insert notes
-    if (!options.noteend && options.notes) out.addLine(notes.join(""));
+    if (!options.noteend && options.notes && notes.length) out.addLine(notes.join(""));
 
     // reset for next section
     if (!options.noteend) {
@@ -55,7 +60,7 @@ function compatToLong(mdnComp) {
     versions(mobileList);
     out.addLine(lf);
 
-    if (options.notes) out.addLine(notes.join(""));
+    if (options.notes && notes.length) out.addLine(notes.join(""));
   }
 
   function versions(list) {
@@ -64,7 +69,7 @@ function compatToLong(mdnComp) {
       if (browser) {
         status = browser.info[0].getVersion();
         if (browser.hasNotes()) {
-          status += ANSI.fgWhite + refs[++ref] + ANSI.reset;
+          status += ANSI.fgWhite + (options.notes ? refs[++ref] : "*") + ANSI.reset;
           notes.push(browser.getNotes(refs[ref]));
         }
       }
@@ -77,21 +82,8 @@ function compatToLong(mdnComp) {
     out.trimEnd(1);
   }
 
+  // remove last LF
+  out.trimEnd(1);
+
   return out.toString()
 }
-
-
-/**
- * Key formatter for ASCII output short-hand format (one line)
- * @param {MDNComp} mdnComp
- * @param {*} [options]
- * @returns {string}
- */
-function compatToShort(mdnComp, options) {
-  let out = "";
-
-  options = Object.assign({}, options);
-
-  return out
-}
-

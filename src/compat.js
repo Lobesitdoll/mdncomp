@@ -10,6 +10,5 @@
  */
 function convertCompat(path) {
   return new MDNComp(path);
-  //return JSON.stringify(new MDNComp(obj));
 }
 

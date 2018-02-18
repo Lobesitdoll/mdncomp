@@ -14,7 +14,7 @@ function MDNComp(path) {
 
   this.path = path;
   this.name = nameFromPath(path);
-  this.url = obj.mdn_url || "-";
+  this.url = obj.mdn_url || "";
   this.experimental = !!status.experimental;
   this.standard = !!status.standard_track;
   this.deprecated = !!status.deprecated;

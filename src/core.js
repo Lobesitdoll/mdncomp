@@ -10,6 +10,7 @@ module.exports = init;
 
 const
   mdn = require("mdn-browser-compat-data"),
+  saves = [],
   options = require("commander"),
   fs = require("fs"),
   version = require('../package.json').version,
@@ -21,9 +22,9 @@ function init() {
   options
     .version(version, "-v, --version")
     .usage('[options] <apipath>')
-    .description("Get MDN Browser Compatibility data.\n  (c) 2018 K3N / epistemex.com")
+    .description("Get MDN Browser Compatibility data.\n  Version: " + version + "\n  (c) 2018 K3N / epistemex.com")
     .option("-l, --list", "List paths starting with the given value or . for top-level")
-    .option("-o, --out <path>", "Save information to file")
+    .option("-o, --out <path>", "Save information to file. Use option b to remove ANSI sequences.")
     .option("-d, --desktop", "Show desktop only")
     .option("-m, --mobile", "Show mobile devices only")
     .option("-c, --case-sensitive", "Search in case-sensitive mode")
@@ -33,7 +34,7 @@ function init() {
     .option("--max-chars <width>", "Max number of chars per line before wrap (min. 62)", 72)
     .option("-N, --no-notes", "Don't show notes")
     .option("-e, --noteend", "Show notes (-n) at end instead of in sections")
-    .option("-f, --markdown [type]", "Format output as markdown (0=none, 1=GitHub, 2=Stackoverflow", 0)
+    .option("-f, --markdown", "Format link as markdown and turns off colors.")
     //.option("-t, --type <type>", "Used with -o, file type [txt, md, png, jpeg, svg, pdf]", "txt")
     //.option("-w, --width <width>", "Used with -o, Set width of image", 640)
     .action(go)
@@ -42,14 +43,16 @@ function init() {
       log("  Default output is a formatted code block.");
       log();
       log("  Examples:");
-      log("    $ mdncomp api.Blob");
-      log("    $ mdncomp --notes api.Blob");
-      log("    $ mdncomp css.properties.background-color");
-      log("    $ mdncomp --list api.HTML*");
-      //log("    $ mdncomp -i CanvasPattern.png api.CanvasPattern");
+      log("    $ mdncomp arcTo         : show information for arcTo");
+      log("    $ mdncomp arc -a        : show information for all containing \"arc\"");
+      log("    $ mdncomp arc           : list all objects containing \"arc\"");
+      log("    $ mdncomp *html*toblob* : information for HTMLCanvasElement.toBlob");
+      log("    $ mdncomp --list .      : list all top-levels");
       log()
     })
     .parse(args);
+
+  if (!options.args.length) options.help();
 }
 
 function outInfo(txt) {
@@ -61,7 +64,7 @@ function outStore(txt, noFile) {
   if (Array.isArray(txt)) txt = txt.join("\n");
   if (noFile || !options.out) log(txt);
   else {
-    // file
+    saves.push(txt);
   }
 }
 
@@ -71,7 +74,7 @@ function outStore(txt, noFile) {
 function go(path) {
 
   // invoke boring mode
-  if (!options.colors) {
+  if (!options.colors || options.markdown) {
     Object.keys(ANSI).forEach(color => {ANSI[color] = ""});
   }
 
@@ -83,7 +86,7 @@ function go(path) {
     else {
       let result = list(path, options.caseSensitive);
       outInfo(result);
-      outInfo("Found " + result.length + " items.")
+      //outInfo("Found " + result.length + " items.")
     }
   }
 
@@ -96,22 +99,32 @@ function go(path) {
     if (!result.length) outInfo("Not found.");
     else {
       if (result.length === 1 || options.showAll) {
-        result.forEach(function(entry) {
-          resultOut(entry);
-        });
-        outStore(ANSI.fgMagenta + ANSI.dim + "Data from MDN - `npm i -g mdncomp` ver. " + version + ANSI.reset + lf);
+        result.forEach(function(entry) {outResult(entry)});
+        outStore(ANSI.fgMagenta + ANSI.dim + "Data from MDN - `npm i -g mdncomp` ver. " + version + " by epistemex" + ANSI.reset + lf);
+
+        commitSave();
       }
       else {
-        outStore(result);
-        outInfo("Found " + result.length + " items.")
+        outInfo(result);
+        //outInfo("Found " + result.length + " items.")
       }
     }
 
   }
 
-  function resultOut(entry) {
+  function outResult(entry) {
     outStore(options.shorthand
       ? compatToShort(convertCompat(entry))
       : compatToLong(convertCompat(entry)));
+  }
+
+  function commitSave() {
+    if (options.out && saves.length) {
+      // file
+      fs.writeFile(options.out, saves.join("\n"), function(err) {
+        if(err) return log("An error occurred:\n" + err);
+        log("Saved output to file \"" + options.out + "\"!");
+      })
+    }
   }
 }
