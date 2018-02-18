@@ -1,5 +1,5 @@
 /*!
-	Core file ver 0.3.0-alpha
+	Core file (version: see package.json)
 	Copyright (c) 2018 Epistemex
 	www.epistemex.com
 */
@@ -43,11 +43,12 @@ function init() {
       log("  Default output is a formatted code block.");
       log();
       log("  Examples:");
-      log("    $ mdncomp arcTo         : show information for arcTo");
-      log("    $ mdncomp arc -a        : show information for all containing \"arc\"");
-      log("    $ mdncomp arc           : list all objects containing \"arc\"");
-      log("    $ mdncomp *html*toblob* : information for HTMLCanvasElement.toBlob");
-      log("    $ mdncomp --list .      : list all top-levels");
+      log("   mdncomp arcTo                              show information for arcTo");
+      log("   mdncomp arc -a                             show information for all containing \"arc\"");
+      log("   mdncomp arc                                list all objects containing \"arc\"");
+      log("   mdncomp *html*toblob*                      information for HTMLCanvasElement.toBlob");
+      log("   mdncomp --list .                           list all top-levels");
+      log("   mdncomp *sharedar* -o info.svg -t \"svg\"  export as svg");
       log()
     })
     .parse(args);
@@ -100,7 +101,7 @@ function go(path) {
     else {
       if (result.length === 1 || (options.showAll && options.type === "txt")) {
         result.forEach(function(entry) {outResult(entry)});
-        if (options.type === "txt") outStore(ANSI.fgMagenta + ANSI.dim + "Data from MDN - `npm i -g mdncomp` ver. " + version + " by epistemex" + ANSI.reset + lf);
+        if (options.type === "txt") outStore(ANSI.fgMagenta + "Data from MDN - `npm i -g mdncomp` ver. " + version + " by epistemex" + ANSI.reset + lf);
         commit();
       }
       else {
@@ -133,4 +134,5 @@ function go(path) {
       })
     }
   }
+
 }

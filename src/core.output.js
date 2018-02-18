@@ -48,6 +48,11 @@ Output.prototype = {
     this.string = this.string.substr(0, Math.max(0, this.string.length - n))
   },
 
+  replace: function(keyword, newText) {
+    let regEx = new RegExp(keyword, "g");
+    this.string = this.string.replace(regEx, newText);
+  },
+
   toString: function() {
     return this.string
   }

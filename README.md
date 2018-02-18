@@ -24,7 +24,7 @@ $ mdncomp *html*toblob*
   --------+---------+---------+---------+---------+----------
      -    |    -    |    4    |    -    |    -    |    -
 
-Data from MDN - `npm i -g mdncomp` ver. 1.0.1-alpha by epistemex
+Data from MDN - `npm i -g mdncomp` ver. 1.1.3-alpha by epistemex
 ```
 
 It comes in colors, too!
@@ -58,8 +58,6 @@ Install globally using NPM:
 
 Usage Examples
 --------------
-List top level objects using "." as path:
-
 Find an object to check compatibility for:
 ```text
 $ mdncomp *toblob*
@@ -117,7 +115,7 @@ Output to a file with no color information:
 
     $ mdncomp *html*toblob* -o toBlob.txt -b
 
-Other options:
+Main options:
 - Search case-sensitive
 - Shorthand text output
 - Format link as markdown

@@ -3,6 +3,7 @@
  * @param mdnComp
  */
 function compatToSVG(mdnComp) {
+  // todo refactoring...
   let
     out = new Output(),
     desktopList = ["chrome", "firefox", "edge", "ie", "opera", "safari"],
@@ -13,8 +14,7 @@ function compatToSVG(mdnComp) {
     opts = {
       showDesktop: !options.mobile,
       showMobile: !options.desktop,
-      showNotes: !options.noNotes,
-      notesEnd: !!options.noteend
+      showNotes: !options.noNotes
     },
     i, x,
     col1 = 200,
@@ -27,7 +27,7 @@ function compatToSVG(mdnComp) {
     step = col2w / cols,
     iconSize = 24,
     statusY = 10, statusDlt = 24,
-    colIcon = "#777",
+    colIcon = "#676769",
     colYes = "#E4F7E1",
     colNo = "#FBE3E3",
     col1h = 50, col2h = 45,
@@ -57,6 +57,7 @@ function compatToSVG(mdnComp) {
     addSymbol("android", "M28 12c-1.1 0-2 0.9-2 2v8c0 1.1 0.9 2 2 2s2-0.9 2-2v-8c0-1.1-0.9-2-2-2zM4 12c-1.1 0-2 0.9-2 2v8c0 1.1 0.9 2 2 2s2-0.9 2-2v-8c0-1.1-0.9-2-2-2zM7 23c0 1.657 1.343 3 3 3v0 4c0 1.1 0.9 2 2 2s2-0.9 2-2v-4h4v4c0 1.1 0.9 2 2 2s2-0.9 2-2v-4c1.657 0 3-1.343 3-3v-11h-18v11z", "M24.944 10c-0.304-2.746-1.844-5.119-4.051-6.551l1.001-2.001c0.247-0.494 0.047-1.095-0.447-1.342s-1.095-0.047-1.342 0.447l-1.004 2.009-0.261-0.104c-0.893-0.297-1.848-0.458-2.84-0.458s-1.947 0.161-2.84 0.458l-0.261 0.104-1.004-2.009c-0.247-0.494-0.848-0.694-1.342-0.447s-0.694 0.848-0.447 1.342l1.001 2.001c-2.207 1.433-3.747 3.805-4.051 6.551v1h17.944v-1h-0.056zM13 8c-0.552 0-1-0.448-1-1s0.447-0.999 0.998-1c0.001 0 0.002 0 0.003 0s0.001-0 0.002-0c0.551 0.001 0.998 0.448 0.998 1s-0.448 1-1 1zM19 8c-0.552 0-1-0.448-1-1s0.446-0.999 0.998-1c0 0 0.001 0 0.002 0s0.002-0 0.003-0c0.551 0.001 0.998 0.448 0.998 1s-0.448 1-1 1z");
   }
 
+  // todo
   addSymbol("flag", "M0 0h4v32h-4v-32z", "M26 20.094c2.582 0 4.83-0.625 6-1.547v-16c-1.17 0.922-3.418 1.547-6 1.547s-4.83-0.625-6-1.547v16c1.17 0.922 3.418 1.547 6 1.547z", "M19 1.016c-1.466-0.623-3.61-1.016-6-1.016-3.012 0-5.635 0.625-7 1.547v16c1.365-0.922 3.988-1.547 7-1.547 2.39 0 4.534 0.393 6 1.016v-16z");
 
   if (mdnComp.deprecated)
@@ -101,22 +102,31 @@ function compatToSVG(mdnComp) {
   // status
   if (mdnComp.deprecated) status("thumb", "Deprecated", 24);
   if (mdnComp.experimental) status("lab", "Experimental");
-  if (mdnComp.standard)  status(null, yes16 + " On standard track");
+  if (mdnComp.standard)  status(null, yes16 + " On standard track");  // todo need a better icon, this can be confused as legend for the status...
 
   // Fill in icons
   if (isDesk) {
-    use("desktop", ((isMob ? col2w / 2 : col2w) - iconSize) / 2 + col1, ((col1h - iconSize) / 2), iconSize, iconSize);
+    use("desktop", ((isMob ? col2w / 2 : col2w) - iconSize) / 2 + col1,
+                   ((col1h - iconSize) / 2),
+                   iconSize, iconSize);
     for(i = 0, x = col1; i < desktopList.length; i++) {
-      use(desktopList[i], x + step * i + (step- iconSize) / 2, col1h + (col2h - iconSize) / 2, iconSize, iconSize, colIcon);
+      use(desktopList[i],
+          x + step * i + (step- iconSize) / 2,
+          col1h + (col2h - iconSize) / 2, iconSize, iconSize, colIcon);
     }
   }
 
   if (isMob) {
-    use("mobile", ((isDesk ? col2w / 2 : col2w) - iconSize) / 2 + colM, (col1h - iconSize) / 2, iconSize, iconSize);
+    use("mobile", ((isDesk ? col2w / 2 : col2w) - iconSize) / 2 + colM,
+                  (col1h - iconSize) / 2,
+                  iconSize, iconSize);
+
     for(i = 0, x = colM; i < mobileListIcons.length; i++) {
       let lst = mobileListIcons[i].split(",");
       lst.forEach((icon, t) => {
-        use(icon, (lst.length === 2 ? (t ? 1 : -1) : 0) + x + t * iconSize + step * i + (step - iconSize * lst.length) / 2, col1h + (col2h - iconSize) / 2, iconSize, iconSize, colIcon);
+        use(icon, (lst.length === 2 ? (t ? 1 : -1) : 0) + x + t * iconSize + step * i + (step - iconSize * lst.length) / 2,
+                   col1h + (col2h - iconSize) / 2,
+                   iconSize, iconSize, colIcon);
       })
     }
   }
@@ -145,9 +155,9 @@ function compatToSVG(mdnComp) {
   text("Data from MDN - \"npm i -g mdncomp\" - version " + version + " by epistemex © 2018.", 10, h, 14, true);
 
   h += 10;
-  out.string = out.string.replace(/##TMP##/g, h);
+  out.replace("##TMP##", h);
 
-  line(0, h, w, h, 2);
+  line(0, h - 1, w, h - 1, 1);
 
   // close
   out.add("</g></svg>");
@@ -183,8 +193,8 @@ function compatToSVG(mdnComp) {
         text(no16, tx, y + 28, 0, 0, "#c55")
       }
       else
-        text(status, tx, y + 28);
-      if (refMark) text(refMark, nx, y + 19, 10);
+        text(status, tx, y + 28, 0, 0, status.indexOf("-") < 0 && status.indexOf("?") < 0 ? "#070" : "#000");
+      if (refMark) text(refMark, nx, y + 19, 10, "#000");
     });
   }
 
@@ -212,7 +222,7 @@ function compatToSVG(mdnComp) {
   }
 
   function text(txt, x, y, size, sans, color) {
-    out.add("<text x=\"%1\" y=\"%2\" fill=\"%5\" font-family=\"%4\" font-size=\"%3\">%0</text>", txt, x, y, size||16, sans ? "sans-serif" : "monospace", color ? color : "#000")
+    out.add("<text x=\"%1\" y=\"%2\" fill=\"%5\" font-family=\"%4\" font-size=\"%3\">%0</text>", txt, x, y, size||16, sans ? "sans-serif" : "Consolas, monospace", color ? color : "#000")
   }
 
   function textFmt(txt, max) {

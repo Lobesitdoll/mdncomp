@@ -12,6 +12,12 @@ function MDNComp(path) {
     status = obj.status,
     keys = Object.keys(obj.support);
 
+  if (!status) {
+    // todo check why status is missing
+    log(ANSI.fgRed, "TMP DEBUG:", path, "missing status object -> force exp.", ANSI.reset);
+    status = {experimental: true};
+  }
+
   this.path = path;
   this.name = nameFromPath(path);
   this.url = obj.mdn_url || "";
