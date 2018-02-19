@@ -14,28 +14,28 @@ $ mdncomp *html*toblob*
   DESKTOP:
   Chrome  | Firefox | Edge    | IE      | Opera   | Safari
   --------+---------+---------+---------+---------+----------
-     50   |    19   |    -    |    10   |    Y    |    Y²
+     50   |    19   |    ?    |    10   |    Y    |    Y¹
 
-²)
+¹)
 - See WebKit bug 71270.
 
   MOBILE:
   Android | Chrome  | Edge    | Firefox | Opera   | Safari
   --------+---------+---------+---------+---------+----------
-     -    |    -    |    4    |    -    |    -    |    -
+     -    |    ?    |    4    |    ?    |    ?    |    ?
 
-Data from MDN - `npm i -g mdncomp` ver. 1.1.3-alpha by epistemex
+Data from MDN - `npm i -g mdncomp` ver. 1.1.4-alpha by epistemex
 ```
 
 It comes in colors, too!
 
-![colors](https://i.imgur.com/2h3BlX5.jpg)
+![color output](https://i.imgur.com/hjOuDQH.jpg)
 
-Or export as a SVG file:
+Export as a SVG file:
 
-![SVG example](https://i.imgur.com/8BMH5HD.jpg)
+![SVG example](https://i.imgur.com/HjK0eil.jpg)
 
-Or as a shorthand format:
+In shorthand format in the terminal:
 
 ```text
 $ mdncomp *html*toblob* -s
@@ -43,9 +43,22 @@ $ mdncomp *html*toblob* -s
 HTMLCanvasElement.toBlob:  DT: C:50 F:19 E:? IE:10 O:Y S:Y*   MOB: A:- CA:? FA:4 EM:? OA:? SI:?
 ```
 
-See all options:
+Combined with the `-a` option to list all results with shorthand information:
+```text
+$ mdncomp *blob* -sa
+->
+Blob:  DT: C:5 F:4 E:Y IE:10 O:11 S:5.1   MOB: A:- CA:? FA:14 EM:Y OA:? SI:?
+Blob.Blob:  DT: C:20 F:13* E:? IE:10 O:12 S:8   MOB: A:- CA:? FA:14* EM:? OA:? SI:?
+Blob.size:  DT: C:5 F:4 E:Y IE:10 O:11 S:5.1   MOB: A:- CA:? FA:? EM:Y OA:? SI:?
+Blob.slice:  DT: C:21 F:13* E:Y IE:10 O:12 S:5.1   MOB: A:- CA:? FA:14 EM:Y OA:? SI:?
+...
+```
 
+To see all options:
+
+    $ mdncomp
     $ mdncomp -h
+    $ mdncomp --help
 
 Install
 -------
@@ -53,7 +66,7 @@ Install globally using NPM:
 
     $ npm i -g mdncomp
 
-(add `--save` if MDN data wasn't included).
+(add `--save` if the MDN compatibility data for some reason wasn't included).
 
 
 Usage Examples

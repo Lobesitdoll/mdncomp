@@ -1,9 +1,14 @@
 mdncomp
 =======
 
+1.1.4-alpha
+FIX: status object is optional -> now normalized to an empty object
+FIX: footnote counter
+IMP: SVG formatting (header, status, link, table)
+
 1.1.3-alpha
 TMP: Temp. workaround for missing status object in __compat.
-IMP: SVG formatting (the checkmark, colors)
+IMP: SVG formatting (the check-mark, colors)
 
 1.1.2-alpha
 IMP: SVG formatting (the "no" symbol and color)

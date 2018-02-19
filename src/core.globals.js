@@ -103,6 +103,15 @@ function nameFromPath(path) {
   let i = path.lastIndexOf(".");
   return i > 0 ? path.substr(i + 1) : path
 }
+
+function prePathFromPath(path) {
+  let
+    i = path.lastIndexOf(".") + 1,
+    prefix = path.substr(0, i ? i - 1 : 0),
+      part = prefix.length ? prefix.substr(prefix.lastIndexOf(".") + 1) : prefix;
+  return part + "."
+}
+
 /**
  * Check if path points to an object with compatibility
  * information or not.

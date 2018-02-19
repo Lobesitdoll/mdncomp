@@ -36,7 +36,7 @@ function init() {
     .option("-e, --noteend", "Show notes (-n) at end instead of in sections")
     .option("-f, --markdown", "Format link as markdown and turns off colors.")
     .option("-t, --type <type>", "Used with -o, file type [txt, svg]", "txt")
-    .option("-w, --width <width>", "Used with -o, Set width of image", 1040)
+    .option("-w, --width <width>", "Used with -o, Set width of image", 800)
     .action(go)
     .on("--help", function() {
       log();
@@ -48,7 +48,7 @@ function init() {
       log("   mdncomp arc                                list all objects containing \"arc\"");
       log("   mdncomp *html*toblob*                      information for HTMLCanvasElement.toBlob");
       log("   mdncomp --list .                           list all top-levels");
-      log("   mdncomp *sharedar* -o info.svg -t \"svg\"  export as svg");
+      log("   mdncomp *sharedar* -o info.svg -t svg      export as svg");
       log()
     })
     .parse(args);

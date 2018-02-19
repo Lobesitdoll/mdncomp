@@ -17,7 +17,7 @@ function compatToSVG(mdnComp) {
       showNotes: !options.noNotes
     },
     i, x,
-    col1 = 200,
+    col1 = 0, //200,
     w = options.width,
     isMob = opts.showMobile,
     isDesk = opts.showDesktop,
@@ -25,15 +25,15 @@ function compatToSVG(mdnComp) {
     colM = isMob && isDesk ? col2w / 2 + col1 : col1,
     cols = isMob && isDesk ? 12 : 6,
     step = col2w / cols,
-    iconSize = 24,
-    statusY = 10, statusDlt = 24,
+    iconSize = 20,
+    statusX = 30, statusY = 10, statusDlt = 24,
     colIcon = "#676769",
     colYes = "#E4F7E1",
     colNo = "#FBE3E3",
     col1h = 50, col2h = 45,
     h = col1h + col2h * 2;
 
-  out.add("<svg xmlns=\"http://www.w3.org/2000/svg\" %2width=\"%0\" height=\"%1\" viewbox=\"0 0 %0 %1\">",
+  out.add("<svg xmlns=\"http://www.w3.org/2000/svg\" %2width=\"%0\" viewbox=\"0 0 %0 %1\">",
     options.width, "##TMP##", mdnComp.url.length ? "xmlns:xlink=\"http://www.w3.org/1999/xlink\" " : "");
 
   out.add("<!-- Made with mdncomp version ", version, " -->");
@@ -60,17 +60,31 @@ function compatToSVG(mdnComp) {
   // todo
   addSymbol("flag", "M0 0h4v32h-4v-32z", "M26 20.094c2.582 0 4.83-0.625 6-1.547v-16c-1.17 0.922-3.418 1.547-6 1.547s-4.83-0.625-6-1.547v16c1.17 0.922 3.418 1.547 6 1.547z", "M19 1.016c-1.466-0.623-3.61-1.016-6-1.016-3.012 0-5.635 0.625-7 1.547v16c1.365-0.922 3.988-1.547 7-1.547 2.39 0 4.534 0.393 6 1.016v-16z");
 
+  if (mdnComp.standard)
+    addSymbol("html5", "M1.892 0l2.567 28.801 11.524 3.199 11.554-3.204 2.572-28.796h-28.216zM24.52 9.42h-13.517l0.322 3.617h12.874l-0.97 10.844-7.245 2.008-7.237-2.008-0.495-5.547h3.547l0.252 2.82 3.933 1.060 0.009-0.002 3.935-1.062 0.408-4.58h-12.242l-0.953-10.681h17.694l-0.316 3.532z");
+
   if (mdnComp.deprecated)
     addSymbol("thumb", "M17 5c-0.755 0-1.438 0.289-1.965 0.751-0.064-0.062-0.116-0.14-0.188-0.192-0.96-0.737-3.665-1.559-5.847-1.559-1.879 0-2.607 0.293-3.252 0.552-0.103 0.042-0.207 0.085-0.316 0.124-0.834 0.305-1.578 1.229-1.738 2.2l-0.664 5.972c-0.174 1.039 0.441 2.127 1.4 2.478 0.394 0.144 2.512 0.405 3.883 0.56-0.215 1.256-0.312 2.405-0.312 3.616 0 1.379 1.121 2.5 2.5 2.5s2.5-1.121 2.5-2.5c0-1.875 0.667-2.737 1.616-3.699 0.548 0.724 1.408 1.199 2.384 1.199 1.653 0 2.999-1.347 2.999-3v-6c-0.001-1.656-1.346-3.002-3-3.002zM11 19.5c0 0.275-0.225 0.5-0.5 0.5s-0.5-0.225-0.5-0.5c0-1.805 0.256-3.241 0.479-4.293l0.297-1.398-1.321 0.188c-0.605-0.050-3.934-0.447-4.335-0.552-0.058-0.028-0.132-0.18-0.108-0.321l0.663-5.976c0.037-0.223 0.291-0.539 0.443-0.594 0.131-0.049 0.254-0.099 0.377-0.146 0.544-0.219 1.015-0.408 2.506-0.408 1.914 0 4.118 0.753 4.633 1.146 0.156 0.12 0.366 0.564 0.366 0.854v4.977c-0.001 0.026-0.040 0.649-0.707 1.316-0.913 0.913-2.293 2.293-2.293 5.207zM18 14c0 0.552-0.448 1-1 1s-1-0.448-1-1v-6c0-0.552 0.448-1 1-1s1 0.448 1 1v6z");
 
   if (mdnComp.experimental)
     addSymbol("lab", "M29.884 25.14l-9.884-16.47v-6.671h1c0.55 0 1-0.45 1-1s-0.45-1-1-1h-10c-0.55 0-1 0.45-1 1s0.45 1 1 1h1v6.671l-9.884 16.47c-2.264 3.773-0.516 6.86 3.884 6.86h20c4.4 0 6.148-3.087 3.884-6.86zM7.532 20l6.468-10.779v-7.221h4v7.221l6.468 10.779h-16.935z");
 
-  if (mdnComp.url.length)
-    addSymbol("link", "M13.757 19.868c-0.416 0-0.832-0.159-1.149-0.476-2.973-2.973-2.973-7.81 0-10.783l6-6c1.44-1.44 3.355-2.233 5.392-2.233s3.951 0.793 5.392 2.233c2.973 2.973 2.973 7.81 0 10.783l-2.743 2.743c-0.635 0.635-1.663 0.635-2.298 0s-0.635-1.663 0-2.298l2.743-2.743c1.706-1.706 1.706-4.481 0-6.187-0.826-0.826-1.925-1.281-3.094-1.281s-2.267 0.455-3.094 1.281l-6 6c-1.706 1.706-1.706 4.481 0 6.187 0.635 0.635 0.635 1.663 0 2.298-0.317 0.317-0.733 0.476-1.149 0.476z", "M8 31.625c-2.037 0-3.952-0.793-5.392-2.233-2.973-2.973-2.973-7.81 0-10.783l2.743-2.743c0.635-0.635 1.664-0.635 2.298 0s0.635 1.663 0 2.298l-2.743 2.743c-1.706 1.706-1.706 4.481 0 6.187 0.826 0.826 1.925 1.281 3.094 1.281s2.267-0.455 3.094-1.281l6-6c1.706-1.706 1.706-4.481 0-6.187-0.635-0.635-0.635-1.663 0-2.298s1.663-0.635 2.298 0c2.973 2.973 2.973 7.81 0 10.783l-6 6c-1.44 1.44-3.355 2.233-5.392 2.233z")
+//  if (mdnComp.url.length)
+//    addSymbol("link", "M13.757 19.868c-0.416 0-0.832-0.159-1.149-0.476-2.973-2.973-2.973-7.81 0-10.783l6-6c1.44-1.44 3.355-2.233 5.392-2.233s3.951 0.793 5.392 2.233c2.973 2.973 2.973 7.81 0 10.783l-2.743 2.743c-0.635 0.635-1.663 0.635-2.298 0s-0.635-1.663 0-2.298l2.743-2.743c1.706-1.706 1.706-4.481 0-6.187-0.826-0.826-1.925-1.281-3.094-1.281s-2.267 0.455-3.094 1.281l-6 6c-1.706 1.706-1.706 4.481 0 6.187 0.635 0.635 0.635 1.663 0 2.298-0.317 0.317-0.733 0.476-1.149 0.476z", "M8 31.625c-2.037 0-3.952-0.793-5.392-2.233-2.973-2.973-2.973-7.81 0-10.783l2.743-2.743c0.635-0.635 1.664-0.635 2.298 0s0.635 1.663 0 2.298l-2.743 2.743c-1.706 1.706-1.706 4.481 0 6.187 0.826 0.826 1.925 1.281 3.094 1.281s2.267-0.455 3.094-1.281l6-6c1.706-1.706 1.706-4.481 0-6.187-0.635-0.635-0.635-1.663 0-2.298s1.663-0.635 2.298 0c2.973 2.973 2.973 7.81 0 10.783l-6 6c-1.44 1.44-3.355 2.233-5.392 2.233z")
+
+  // Header
+  text2(mdnComp.prePath, mdnComp.name, 30, 50, 32);
+
+  // status
+  if (mdnComp.deprecated) status("thumb", "Deprecated", 24);
+  if (mdnComp.experimental) status("lab", "Experimental");
+  if (mdnComp.standard) status("html5", "On standard track");
+
+  // link
+  if (mdnComp.url.length) link(mdnComp.url, mdnComp.url, 32, 92, 18);
 
   // Content
-  out.add("<g>");
+  out.add("<g transform=\"translate(0, 130)\">");
 
   // Draw background
   rect(0, 0, w, h, "#eaedf2");
@@ -85,7 +99,7 @@ function compatToSVG(mdnComp) {
   }
 
   // Draw grid
-  line(col1, 0, col1, h, 2);
+  if (col1) line(col1, 0, col1, h, 2);
   if (isMob) line(colM, 0, colM, h, 2);
 
   line(col1, col1h, w, col1h, 2);
@@ -97,12 +111,7 @@ function compatToSVG(mdnComp) {
   }
 
   // text
-  text(mdnComp.name, 7, col1h + col2h + 28);
-
-  // status
-  if (mdnComp.deprecated) status("thumb", "Deprecated", 24);
-  if (mdnComp.experimental) status("lab", "Experimental");
-  if (mdnComp.standard)  status(null, yes16 + " On standard track");  // todo need a better icon, this can be confused as legend for the status...
+  //text(mdnComp.name, 7, col1h + col2h + 28);
 
   // Fill in icons
   if (isDesk) {
@@ -131,16 +140,6 @@ function compatToSVG(mdnComp) {
     }
   }
 
-  // insert URL
-  if (mdnComp.url.length) {
-    h += 30;
-    use("link", 10, h - 12, 14, 14);
-    out.add("<a xlink:href=\"%0\" style=\"cursor:pointer\">", mdnComp.url);
-    text(mdnComp.url, 30, h, 16, true);
-    out.add("</a>");
-    h += 8;
-  }
-
   // insert notes
   //todo text formatter - we don't have access to box sizes nor canvas so we are left with guessing text width from a monospace font (or import overheadly (!) code) - not optimal but works..
   if (options.notes && notes.length) {
@@ -151,13 +150,13 @@ function compatToSVG(mdnComp) {
     });
   }
 
-  h += 40;
+  h += 45;
   text("Data from MDN - \"npm i -g mdncomp\" - version " + version + " by epistemex © 2018.", 10, h, 14, true);
 
-  h += 10;
-  out.replace("##TMP##", h);
+  //h += 10;
+  //out.replace("##TMP##", h);
 
-  line(0, h - 1, w, h - 1, 1);
+  line(0, h + 9, w, h + 9, 1);
 
   // close
   out.add("</g></svg>");
@@ -200,13 +199,13 @@ function compatToSVG(mdnComp) {
 
   function status(icon, txt, size) {
     size = size || 14;
-    let x = 10;
+    let y = 66;
     if (icon) {
-      use(icon, 10, statusY + (size === 14 ? 1 : 0), size, size);
-      x += 20;
+      use(icon, statusX, y + (size === 14 ? 1 : 0), size, size);
+      statusX += 20;
     }
-    text(txt, x, statusY + 15, 16, true);
-    statusY += statusDlt;
+    text(txt, statusX, y + 15, 16, true);
+    statusX += 105;
 
   }
 
@@ -223,6 +222,16 @@ function compatToSVG(mdnComp) {
 
   function text(txt, x, y, size, sans, color) {
     out.add("<text x=\"%1\" y=\"%2\" fill=\"%5\" font-family=\"%4\" font-size=\"%3\">%0</text>", txt, x, y, size||16, sans ? "sans-serif" : "Consolas, monospace", color ? color : "#000")
+  }
+
+  function text2(txt1, txt2, x, y, size) {
+    out.add("<text x=\"%2\" y=\"%3\" font-family=\"Consolas, monospace\" font-size=\"%4\"><tspan fill=\"#777\">%0</tspan><tspan fill=\"#000\">%1</tspan></text>", txt1, txt2, x, y, size||16)
+  }
+
+  function link(txt, url, x, y, size) {
+    out.add("<a xlink:href=\"%0\" style=\"cursor:pointer\">", url);
+    text(txt, x , y + size * 1.25, size, true);
+    out.add("</a>");
   }
 
   function textFmt(txt, max) {

@@ -9,16 +9,11 @@ function MDNComp(path) {
     obj = getPathAsObject(path).__compat,
     names = ["webview_android", "chrome", "chrome_android", "edge", "edge_mobile", "firefox", "firefox_android", "ie", "opera", "opera_android", "safari", "safari_ios"],
     isDesktop = [false, true, false, true, false, true, false, true, true, false, true, false],
-    status = obj.status,
+    status = obj.status || {},
     keys = Object.keys(obj.support);
 
-  if (!status) {
-    // todo check why status is missing
-    log(ANSI.fgRed, "TMP DEBUG:", path, "missing status object -> force exp.", ANSI.reset);
-    status = {experimental: true};
-  }
-
   this.path = path;
+  this.prePath = prePathFromPath(path),
   this.name = nameFromPath(path);
   this.url = obj.mdn_url || "";
   this.experimental = !!status.experimental;

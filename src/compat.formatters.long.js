@@ -69,8 +69,9 @@ function compatToLong(mdnComp) {
       if (browser) {
         status = browser.info[0].getVersion();
         if (browser.hasNotes()) {
-          status += ANSI.fgWhite + (options.notes ? refs[++ref] : "*") + ANSI.reset;
+          status += ANSI.fgWhite + (options.notes ? refs[ref] : "*") + ANSI.reset;
           notes.push(browser.getNotes(refs[ref]));
+          ref++;
         }
       }
       else {
