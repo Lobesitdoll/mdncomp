@@ -24,7 +24,7 @@ function compatToLong(mdnComp) {
 
   out.addLine(ANSI.reset);
   if (options.markdown && mdnComp.url.length) {
-    out.addLine("  [`%0%1`](%2) %3\n", prePath, mdnComp.name, mdnComp.url, mdnComp.getStatus());
+    out.addLine("  [`%0%1`](%2) %3" + lf, prePath, mdnComp.name, mdnComp.url, mdnComp.getStatus());
   }
   else {
     out.addLine("  %0%1%2%3%4 %5", ANSI.fgYellow, prePath, ANSI.fgCyan, mdnComp.name, ANSI.reset, mdnComp.getStatus());

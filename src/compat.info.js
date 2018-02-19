@@ -44,7 +44,7 @@ Info.prototype = {
     ref = ref ? ref + ") " : "";
     let
       out = new Output(0),
-      prefix = ref + (isNaN(this.added) ? "" : this.getVersion() + ":") + "\n",
+      prefix = ref + (isNaN(this.added) ? "" : this.getVersion() + ":") + lf,
       hasInfo = false;
 
     if (this.prefix.length) {

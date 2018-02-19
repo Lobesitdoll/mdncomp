@@ -24,7 +24,7 @@ $ mdncomp *html*toblob*
   --------+---------+---------+---------+---------+----------
      -    |    ?    |    4    |    ?    |    ?    |    ?
 
-Data from MDN - `npm i -g mdncomp` ver. 1.1.4-alpha by epistemex
+Data from MDN - `npm i -g mdncomp` ver. 1.1.5-alpha by epistemex
 ```
 
 It comes in colors, too!
@@ -33,7 +33,7 @@ It comes in colors, too!
 
 Export as a SVG file:
 
-![SVG example](https://i.imgur.com/HjK0eil.jpg)
+![SVG example](https://i.imgur.com/H0Velwj.jpg)
 
 In shorthand format in the terminal:
 
@@ -47,10 +47,10 @@ Combined with the `-a` option to list all results with shorthand information:
 ```text
 $ mdncomp *blob* -sa
 ->
-Blob:  DT: C:5 F:4 E:Y IE:10 O:11 S:5.1   MOB: A:- CA:? FA:14 EM:Y OA:? SI:?
-Blob.Blob:  DT: C:20 F:13* E:? IE:10 O:12 S:8   MOB: A:- CA:? FA:14* EM:? OA:? SI:?
-Blob.size:  DT: C:5 F:4 E:Y IE:10 O:11 S:5.1   MOB: A:- CA:? FA:? EM:Y OA:? SI:?
-Blob.slice:  DT: C:21 F:13* E:Y IE:10 O:12 S:5.1   MOB: A:- CA:? FA:14 EM:Y OA:? SI:?
+Blob       :  DT: C:5 F:4 E:Y IE:10 O:11 S:5.1   MOB: A:- CA:? FA:14 EM:Y OA:? SI:?
+Blob.Blob  :  DT: C:20 F:13* E:? IE:10 O:12 S:8   MOB: A:- CA:? FA:14* EM:? OA:? SI:?
+Blob.size  :  DT: C:5 F:4 E:Y IE:10 O:11 S:5.1   MOB: A:- CA:? FA:? EM:Y OA:? SI:?
+Blob.slice :  DT: C:21 F:13* E:Y IE:10 O:12 S:5.1   MOB: A:- CA:? FA:14 EM:Y OA:? SI:?
 ...
 ```
 

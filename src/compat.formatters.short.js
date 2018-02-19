@@ -3,10 +3,9 @@
  * @param {MDNComp} mdnComp
  * @returns {string}
  */
-function compatToShort(mdnComp) {
+function compatToShort(mdnComp, shortPad) {
   let
-    topLevel = mdnComp.path.indexOf(".") + 1,
-    prePath = mdnComp.path.substr(topLevel, mdnComp.path.length - mdnComp.name.length - topLevel) + mdnComp.name,
+    prePath = mdnComp.prePath + mdnComp.name,
     out = new Output(0),
     desktopList = ["chrome", "firefox", "edge", "ie", "opera", "safari"],
     mobileList = ["android", "chrome_android", "firefox_android", "edge_mobile", "opera_android", "safari_ios"],
@@ -20,7 +19,7 @@ function compatToShort(mdnComp) {
       notesEnd: !!options.noteend
     };
 
-  out.add(prePath, ":");
+  out.add((prePath).padEnd(shortPad), ":");
 
   if (opts.showDesktop) {
     out.add("%0  DT: %1", ANSI.fgYellow, ANSI.reset);

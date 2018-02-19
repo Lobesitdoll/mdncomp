@@ -106,10 +106,19 @@ function nameFromPath(path) {
 
 function prePathFromPath(path) {
   let
-    i = path.lastIndexOf(".") + 1,
-    prefix = path.substr(0, i ? i - 1 : 0),
-      part = prefix.length ? prefix.substr(prefix.lastIndexOf(".") + 1) : prefix;
-  return part + "."
+    parts = path.split("."),
+    o = mdn,
+    res = "";
+
+  parts.pop();
+  parts.forEach(part => {
+    if (o) {
+      if (o[part].__compat) res += part + ".";
+      o = o[part];
+    }
+  });
+
+  return res.length > 1 ? res : ""
 }
 
 /**

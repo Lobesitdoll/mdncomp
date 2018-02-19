@@ -76,15 +76,15 @@ function compatToSVG(mdnComp) {
   text2(mdnComp.prePath, mdnComp.name, 30, 50, 32);
 
   // status
-  if (mdnComp.deprecated) status("thumb", "Deprecated", 24);
-  if (mdnComp.experimental) status("lab", "Experimental");
-  if (mdnComp.standard) status("html5", "On standard track");
+  if (mdnComp.deprecated) status("thumb", "Deprecated", 24, "#a00");
+  if (mdnComp.experimental) status("lab", "Experimental", 0, "#c70");
+  if (mdnComp.standard) status("html5", "On standard track", 0, "#070");
 
   // link
-  if (mdnComp.url.length) link(mdnComp.url, mdnComp.url, 32, 92, 18);
+  if (mdnComp.url.length) link(mdnComp.url, mdnComp.url, 32, 92, mdnComp.url.length > 90 ? 16 : 18);
 
   // Content
-  out.add("<g transform=\"translate(0, 130)\">");
+  out.add("<g transform=\"translate(0, 132)\">");
 
   // Draw background
   rect(0, 0, w, h, "#eaedf2");
@@ -197,14 +197,14 @@ function compatToSVG(mdnComp) {
     });
   }
 
-  function status(icon, txt, size) {
+  function status(icon, txt, size, color) {
     size = size || 14;
-    let y = 66;
+    let y = 67;
     if (icon) {
-      use(icon, statusX, y + (size === 14 ? 1 : 0), size, size);
+      use(icon, statusX, y + (size === 14 ? 1 : 0), size, size, color);
       statusX += 20;
     }
-    text(txt, statusX, y + 15, 16, true);
+    text(txt, statusX, y + 15, 16, true, color);
     statusX += 105;
 
   }
@@ -240,7 +240,7 @@ function compatToSVG(mdnComp) {
       res.add("<tspan x=\"30\" dy=\"1.2em\">");
       res.add(part);
       res.add("</tspan>");
-      height += 10;
+      height += 14;
     });
 
     text(res.toString(), 10, h, 14);

@@ -51,6 +51,6 @@ MDNComp.prototype = {
     if (this.experimental) txt += ANSI.fgYellow + "EXPERIMENTAL" + ANSI.reset + ", ";
     if (this.deprecated) txt += ANSI.fgRed + "DEPRECATED" + ANSI.reset + ", ";
     if (this.standard) txt += ANSI.fgGreen + ANSI.bright + "On Standard Track" + ANSI.reset + ", ";
-    return txt.substr(0, txt.length - 2) + ")"
+    return txt.substr(0, Math.max(1, txt.length - 2)) + ")"
   }
 };

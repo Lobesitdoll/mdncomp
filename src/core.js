@@ -17,12 +17,14 @@ const
   args = process.argv,
   log = console.log.bind(console);
 
+let shortPad = 2;
+
 function init() {
 
   options
     .version(version, "-v, --version")
     .usage('[options] <apipath>')
-    .description("Get MDN Browser Compatibility data.\n  Version: " + version + "\n  (c) 2018 K3N / epistemex.com")
+    .description("Get MDN Browser Compatibility data." + lf + "  Version: " + version + lf + "  (c) 2018 K3N / epistemex.com")
     .option("-l, --list", "List paths starting with the given value or . for top-level")
     .option("-o, --out <path>", "Save information to file. Use option b to remove ANSI sequences.")
     .option("-d, --desktop", "Show desktop only")
@@ -57,12 +59,12 @@ function init() {
 }
 
 function outInfo(txt) {
-  if (Array.isArray(txt)) txt = txt.join("\n");
+  if (Array.isArray(txt)) txt = txt.join(lf);
   log(txt);
 }
 
 function outStore(txt, noFile) {
-  if (Array.isArray(txt)) txt = txt.join("\n");
+  if (Array.isArray(txt)) txt = txt.join(lf);
   if (noFile || !options.out) log(txt);
   else {
     saves.push(txt);
@@ -100,6 +102,7 @@ function go(path) {
     if (!result.length) outInfo("Not found.");
     else {
       if (result.length === 1 || (options.showAll && options.type === "txt")) {
+        if (options.shorthand) shortPad = getPadLength(result);
         result.forEach(function(entry) {outResult(entry)});
         if (options.type === "txt") outStore(ANSI.fgMagenta + "Data from MDN - `npm i -g mdncomp` ver. " + version + " by epistemex" + ANSI.reset + lf);
         commit();
@@ -118,7 +121,7 @@ function go(path) {
     }
     else {
       outStore(options.shorthand
-        ? compatToShort(convertCompat(entry))
+        ? compatToShort(convertCompat(entry), shortPad)
         : compatToLong(convertCompat(entry)));
     }
   }
@@ -129,10 +132,18 @@ function go(path) {
   function commit() {
     if (options.out && saves.length) {
       fs.writeFile(options.out, saves.join("\n"), function(err) {
-        if(err) return log("An error occurred:\n" + err);
+        if(err) return log("An error occurred:" + lf + err);
         log("Saved output to file \"" + options.out + "\"!");
       })
     }
   }
 
+  function getPadLength(list) {
+    let max = 0;
+    list.forEach(e => {
+      let len = (prePathFromPath(e) + nameFromPath(e)).length;
+      if (len > max) max = len;
+    });
+    return ++max
+  }
 }
