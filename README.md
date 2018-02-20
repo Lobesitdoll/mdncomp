@@ -12,25 +12,25 @@ $ mdncomp html*toblob
   https://developer.mozilla.org/docs/Web/API/HTMLCanvasElement/toBlob
 
   DESKTOP:
-  Chrome  | Edge    | Firefox | IE      | Opera   | Safari
-  --------+---------+---------+---------+---------+----------
-     50   |    -    |    19   |  10·×·  |    Y    |    Y¹
+  Chrome    | Edge      | Firefox   | IE        | Opera     | Safari
+  ----------+-----------+-----------+-----------+-----------+------------
+      50    |     -     |     19    |   10·×·   |     Y     |     Y¹
 
 ·×·) Prefix: ms
 ¹)
 - See WebKit bug 71270.
 
   MOBILE:
-  Android | Chrome  | Edge    | Firefox | Opera   | Safari
-  --------+---------+---------+---------+---------+----------
-     -    |    -    |    -    |    4    |    -    |    -
+  Webview/A | Chrome/A  | Edge      | Firefox/A | Opera/A   | Safari/iOS
+  ----------+-----------+-----------+-----------+-----------+------------
+      -     |     -     |     -     |     4     |     -     |     -
 
 Data from MDN - `npm i -g mdncomp` by epistemex
 ```
 
 It comes in colors, too!
 
-![color output](https://i.imgur.com/0jnxNSk.png)
+![color output](https://i.imgur.com/Cw8ns62.png)
 
 Export as a SVG file:
 
@@ -41,17 +41,17 @@ In shorthand format in the terminal:
 ```text
 $ mdncomp html*toblob -s
 ->
-HTMLCanvasElement.toBlob:  DT: C:50 F:19 E:? IE:10 O:Y S:Y*   MOB: A:- CA:? FA:4 EM:? OA:? SI:?
+HTMLCanvasElement.toBlob :  DT: C:50 E:- F:19 IE:10 O:Y S:Y*   MOB: WA:- CA:- FA:4 EM:- OA:- Si:-
 ```
 
 Combined with the `-a` option to list all results with shorthand information:
 ```text
 $ mdncomp blob -sa
 ->
-Blob       :  DT: C:5 F:4 E:Y IE:10 O:11 S:5.1   MOB: A:- CA:? FA:14 EM:Y OA:? SI:?
-Blob.Blob  :  DT: C:20 F:13* E:? IE:10 O:12 S:8   MOB: A:- CA:? FA:14* EM:? OA:? SI:?
-Blob.size  :  DT: C:5 F:4 E:Y IE:10 O:11 S:5.1   MOB: A:- CA:? FA:? EM:Y OA:? SI:?
-Blob.slice :  DT: C:21 F:13* E:Y IE:10 O:12 S:5.1   MOB: A:- CA:? FA:14 EM:Y OA:? SI:?
+Blob       :  DT: C:5 E:Y F:4 IE:10 O:11 S:5.1   MOB: WA:- CA:? FA:14 EM:Y OA:? Si:?
+Blob.Blob  :  DT: C:20 E:? F:13* IE:10 O:12 S:8   MOB: WA:- CA:? FA:14* EM:? OA:? Si:?
+Blob.size  :  DT: C:5 E:Y F:4 IE:10 O:11 S:5.1   MOB: WA:- CA:- FA:- EM:Y OA:- Si:-
+Blob.slice :  DT: C:21 E:Y F:13* IE:10 O:12 S:5.1   MOB: WA:- CA:? FA:14 EM:Y OA:? Si:?
 ...
 ```
 

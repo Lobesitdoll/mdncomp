@@ -103,7 +103,7 @@ function go(path) {
 
     if (!result.length) outInfo("Not found.");
     else {
-      if (result.length === 1 || (options.showAll && options.type === "txt")) {
+      if (result.length === 1 || (options.showAll && options.type !== "svg")) {
         if (options.shorthand) shortPad = getPadLength(result);
         result.forEach(entry => {outResult(entry)});
         if (options.type !== "svg") outStore(ANSI.fgMagenta + "Data from MDN - `npm i -g mdncomp` by epistemex" + ANSI.reset + lf);
