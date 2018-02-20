@@ -13,7 +13,7 @@ function MDNComp(path) {
     keys = Object.keys(obj.support);
 
   this.path = path;
-  this.prePath = prePathFromPath(path),
+  this.prePath = prePathFromPath(path);
   this.name = nameFromPath(path);
   this.url = obj.mdn_url || "";
   this.experimental = !!status.experimental;

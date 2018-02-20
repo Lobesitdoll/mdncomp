@@ -1,6 +1,9 @@
 mdncomp
 =======
 
+1.1.8-alpha
+FIX: Pre-path for default output
+
 1.1.7-alpha
 FIX: Correct machine name for Android/Webview browser data in formatters.
 ADD: Prefix list / mark (in default, svg).

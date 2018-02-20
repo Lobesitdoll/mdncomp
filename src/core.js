@@ -118,18 +118,19 @@ function go(path) {
   }
 
   function outResult(entry) {
+    let compat = convertCompat(entry);
     if (options.type === "svg") {
-      outStore(compatToSVG(convertCompat(entry)))
+      outStore(compatToSVG(compat))
     }
     else {
       outStore(options.shorthand
-        ? compatToShort(convertCompat(entry), shortPad)
-        : compatToLong(convertCompat(entry)));
+        ? compatToShort(compat, shortPad)
+        : compatToLong(compat));
     }
   }
 
   /**
-   * If --out is specified, commit all text to a single file.
+   * If --out is specified, commit all text (if any) to a single file.
    */
   function commit() {
     if (options.out && saves.length) {

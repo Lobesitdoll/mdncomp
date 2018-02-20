@@ -34,7 +34,7 @@ It comes in colors, too!
 
 Export as a SVG file:
 
-![SVG Example](https://i.imgur.com/70VOqoG.png))
+![SVG Example](https://i.imgur.com/70VOqoG.png)
 
 In shorthand format in the terminal:
 

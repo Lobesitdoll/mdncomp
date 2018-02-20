@@ -5,8 +5,6 @@
  */
 function compatToLong(mdnComp) {
   let
-    topLevel = mdnComp.path.indexOf(".") + 1,
-    prePath = mdnComp.path.substr(topLevel, mdnComp.path.length - mdnComp.name.length - topLevel),
     out = new Output(0),
     desktopList = ["chrome", "edge", "firefox", "ie", "opera", "safari"],
     mobileList = ["webview_android", "chrome_android", "edge_mobile", "firefox_android", "opera_android", "safari_ios"],
@@ -24,10 +22,10 @@ function compatToLong(mdnComp) {
 
   out.addLine(ANSI.reset);
   if (options.markdown && mdnComp.url.length) {
-    out.addLine("  [`%0%1`](%2) %3" + lf, prePath, mdnComp.name, mdnComp.url, mdnComp.getStatus());
+    out.addLine("  [`%0%1`](%2) %3" + lf, mdnComp.prePath, mdnComp.name, mdnComp.url, mdnComp.getStatus());
   }
   else {
-    out.addLine("  %0%1%2%3%4 %5", ANSI.fgYellow, prePath, ANSI.fgCyan, mdnComp.name, ANSI.reset, mdnComp.getStatus());
+    out.addLine("  %0%1%2%3%4 %5", ANSI.fgYellow, mdnComp.prePath, ANSI.fgCyan, mdnComp.name, ANSI.reset, mdnComp.getStatus());
     out.addLine("  ", mdnComp.url ? mdnComp.url : "-", lf);
   }
 
