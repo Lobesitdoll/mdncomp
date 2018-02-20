@@ -26,7 +26,8 @@ function init() {
     .usage('[options] <apipath>')
     .description("Get MDN Browser Compatibility data." + lf + "  Version: " + version + lf + "  (c) 2018 K3N / epistemex.com")
     .option("-l, --list", "List paths starting with the given value or . for top-level")
-    .option("-o, --out <path>", "Save information to file. Use option b to remove ANSI sequences.")
+    .option("-o, --out <path>", "Save information to file. Extension for type, or --type.")
+    .option("-t, --type <type>", "Output format (ansi, txt, svg)", "ansi")
     .option("-d, --desktop", "Show desktop only")
     .option("-m, --mobile", "Show mobile devices only")
     .option("-c, --case-sensitive", "Search in case-sensitive mode")
@@ -37,7 +38,6 @@ function init() {
     .option("-N, --no-notes", "Don't show notes")
     .option("-e, --noteend", "Show notes (-n) at end instead of in sections")
     .option("-f, --markdown", "Format link as markdown and turns off colors.")
-    .option("-t, --type <type>", "Used with -o, file type [txt, svg]", "txt")
     .option("-w, --width <width>", "Used with -o, Set width of image", 800)
     .action(go)
     .on("--help", function() {
@@ -45,12 +45,12 @@ function init() {
       log("  Default output is a formatted code block.");
       log();
       log("  Examples:");
-      log("   mdncomp arcTo                              show information for arcTo");
-      log("   mdncomp arc -a                             show information for all containing \"arc\"");
-      log("   mdncomp arc                                list all objects containing \"arc\"");
-      log("   mdncomp *html*toblob*                      information for HTMLCanvasElement.toBlob");
-      log("   mdncomp --list .                           list all top-levels");
-      log("   mdncomp *sharedar* -o info.svg -t svg      export as svg");
+      log("   mdncomp arcTo                     show information for arcTo");
+      log("   mdncomp arc -a                    show information for all containing \"arc\"");
+      log("   mdncomp arc                       list all objects containing \"arc\"");
+      log("   mdncomp *html*toblob*             will find HTMLCanvasElement.toBlob");
+      log("   mdncomp --list .                  list all top-levels");
+      log("   mdncomp *sharedar* -o info.svg    export as svg");
       log()
     })
     .parse(args);
@@ -76,8 +76,10 @@ function outStore(txt, noFile) {
  */
 function go(path) {
 
+  if (options.out && options.type === "ansi") options.type = getExt(options.out || ".txt");
+
   // invoke boring mode
-  if (!options.colors || options.markdown) {
+  if (!options.colors || options.markdown || options.type === "txt") {
     Object.keys(ANSI).forEach(color => {ANSI[color] = ""});
   }
 
@@ -103,8 +105,8 @@ function go(path) {
     else {
       if (result.length === 1 || (options.showAll && options.type === "txt")) {
         if (options.shorthand) shortPad = getPadLength(result);
-        result.forEach(function(entry) {outResult(entry)});
-        if (options.type === "txt") outStore(ANSI.fgMagenta + "Data from MDN - `npm i -g mdncomp` ver. " + version + " by epistemex" + ANSI.reset + lf);
+        result.forEach(entry => {outResult(entry)});
+        if (options.type === "txt") outStore(ANSI.fgMagenta + "Data from MDN - `npm i -g mdncomp` by epistemex" + ANSI.reset + lf);
         commit();
       }
       else {
@@ -145,5 +147,10 @@ function go(path) {
       if (len > max) max = len;
     });
     return ++max
+  }
+
+  function getExt(path) {
+    let i = path.lastIndexOf(".");
+    return i < 0 ? "" : path.substr(++i)
   }
 }

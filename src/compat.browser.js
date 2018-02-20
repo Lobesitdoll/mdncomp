@@ -23,9 +23,17 @@ function Browser(obj, name) {
 Browser.prototype = {
 
   hasNotes: function() {
-    let count = 0;
-    this.info.forEach(info => {count += info.notes.length});
-    return count > 0
+    for(let i = 0; i < this.info.length; i++) {
+      if (this.info[i].notes.length) return true;
+    }
+    return false
+  },
+
+  hasFlags: function() {
+    for(let i = 0; i < this.info.length; i++) {
+      if (this.info[i].flags.length) return true;
+    }
+    return false
   },
 
   getNotes: function(ref) {

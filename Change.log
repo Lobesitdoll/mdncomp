@@ -1,6 +1,23 @@
 mdncomp
 =======
 
+1.1.6-alpha
+FIX: if added was false it was interpreted as unknown, correct to "no".
+CHG: If type (-t) not specified when saving to file (-o), type is detected by file extension.
+CHG: If type (-t) = "txt" the -b option is automatically enabled. Use .ansi etc. for output with color codes.
+IMP: When a version range, a unknown removed is know represented as "?" instead of "Y"
+IMP: SVG formatting (flag indicator, details, Safari icon due to size)
+IMP: Internal refactorings
+
+1.1.5-alpha
+FIX: Proper parent object.
+FIX: Newline bug in notes list
+IMP: Link font size in SVG with long links
+IMP: Color for status in SVG
+IMP: -a option alignment
+IMP: Internal refactorings
+IMP: SVG formatting
+
 1.1.4-alpha
 FIX: status object is optional -> now normalized to an empty object
 FIX: footnote counter

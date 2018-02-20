@@ -24,7 +24,7 @@ $ mdncomp *html*toblob*
   --------+---------+---------+---------+---------+----------
      -    |    ?    |    4    |    ?    |    ?    |    ?
 
-Data from MDN - `npm i -g mdncomp` ver. 1.1.5-alpha by epistemex
+Data from MDN - `npm i -g mdncomp` by epistemex
 ```
 
 It comes in colors, too!
@@ -33,7 +33,7 @@ It comes in colors, too!
 
 Export as a SVG file:
 
-![SVG example](https://i.imgur.com/H0Velwj.jpg)
+![SVG example](https://i.imgur.com/b84roJ0.jpg)
 
 In shorthand format in the terminal:
 

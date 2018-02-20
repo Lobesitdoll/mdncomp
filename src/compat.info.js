@@ -6,8 +6,8 @@
  */
 function Info(obj) {
   this.prefix = obj.prefix || "";
-  this.added = obj.version_added ? this.toStatus(obj.version_added) : "?";
-  this.removed = this.added && obj.version_removed ? this.toStatus(obj.version_removed) : null;
+  this.added = this.toStatus(obj.version_added);
+  this.removed = this.toStatus(obj.version_removed);
   this.notes = obj.notes ? (Array.isArray(obj.notes) ? obj.notes : [obj.notes]) : [];
   this.partial = !!obj.partial_implementation;
   this.altName = obj.alternative_name || "";
@@ -18,7 +18,7 @@ function Info(obj) {
 Info.prototype = {
 
   getVersion: function() {
-    return this.removed ? this.added + "-" + this.removed : this.added
+    return this.removed ? this.added + "-" + this.removed.replace(yes, "?") : this.added
   },
 
   flagToString: function(flag) {
@@ -78,9 +78,11 @@ Info.prototype = {
   /**
    * Convert machine status to human readable status
    * @param {*} status - input
-   * @returns {string} if input = "true" (string or boolean) then output is "Yes", otherwise original input
+   * @returns {*} if input = "true" (string or boolean) then output is "Yes", otherwise original input
    */
   toStatus: function(status) {
-    return typeof status === "boolean" || status === "true" ? yes: status
+    if (typeof status === "boolean") return status ? yes : no;
+    else if (null === status) return "?";
+    return status ? status : null
   }
 };

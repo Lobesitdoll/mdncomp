@@ -8,7 +8,7 @@ function compatToLong(mdnComp) {
     topLevel = mdnComp.path.indexOf(".") + 1,
     prePath = mdnComp.path.substr(topLevel, mdnComp.path.length - mdnComp.name.length - topLevel),
     out = new Output(0),
-    desktopList = ["chrome", "firefox", "edge", "ie", "opera", "safari"],
+    desktopList = ["chrome", "edge", "firefox", "ie", "opera", "safari"],
     mobileList = ["android", "chrome_android", "firefox_android", "edge_mobile", "opera_android", "safari_ios"],
     //refs = ["➊", "➋", "➌", "➍", "➎", "➏", "➐", "➑", "➒", "➓"], // 0xxxxx
     refs = ["¹", "²", "³", "ª", "º", "*", "^", "`", "1", "2", "3", "4", "5"],

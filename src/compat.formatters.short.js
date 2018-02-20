@@ -1,15 +1,16 @@
 /**
  * Key formatter for ASCII output short-hand format (one line)
  * @param {MDNComp} mdnComp
+ * @param shortPad - pad path to equal length
  * @returns {string}
  */
 function compatToShort(mdnComp, shortPad) {
   let
     prePath = mdnComp.prePath + mdnComp.name,
     out = new Output(0),
-    desktopList = ["chrome", "firefox", "edge", "ie", "opera", "safari"],
+    desktopList = ["chrome", "edge", "firefox", "ie", "opera", "safari"],
     mobileList = ["android", "chrome_android", "firefox_android", "edge_mobile", "opera_android", "safari_ios"],
-    desktopShort = ["C:", "F:", "E:", "IE:", "O:", "S:"],
+    desktopShort = ["C:", "E:", "F:", "IE:", "O:", "S:"],
     mobileShort = ["A:", "CA:", "FA:", "EM:", "OA:", "SI:"],
     opts = {
       markdown: options.markdown,

@@ -105,11 +105,7 @@ function nameFromPath(path) {
 }
 
 function prePathFromPath(path) {
-  let
-    parts = path.split("."),
-    o = mdn,
-    res = "";
-
+  let parts = path.split("."), o = mdn, res = "";
   parts.pop();
   parts.forEach(part => {
     if (o) {
