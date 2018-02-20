@@ -2,6 +2,7 @@ mdncomp
 =======
 
 1.1.8-alpha
+IMP: Titles for the table header for mobile devices (issue #1)
 FIX: Pre-path for default output
 
 1.1.7-alpha

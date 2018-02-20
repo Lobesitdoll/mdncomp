@@ -31,8 +31,8 @@ function compatToLong(mdnComp) {
 
   if (opts.showDesktop) {
     out.addLine("  %0DESKTOP:", ANSI.fgYellow);
-    out.addLine("  %0Chrome  %1|%0 Edge    %1|%0 Firefox %1|%0 IE      %1|%0 Opera   %1|%0 Safari%1", ANSI.fgGreen + ANSI.bright, ANSI.reset);
-    out.addLine("  %0--------+---------+---------+---------+---------+----------%1", ANSI.fgWhite + ANSI.dim, ANSI.reset);
+    out.addLine("  %0Chrome    %1|%0 Edge      %1|%0 Firefox   %1|%0 IE        %1|%0 Opera     %1|%0 Safari%1", ANSI.fgGreen + ANSI.bright, ANSI.reset);
+    out.addLine("  %0----------+-----------+-----------+-----------+-----------+------------%1", ANSI.fgWhite + ANSI.dim, ANSI.reset);
 
     out.add(" ");
     versions(desktopList);
@@ -51,8 +51,8 @@ function compatToLong(mdnComp) {
 
   if (opts.showMobile) {
     out.addLine("  %0MOBILE:", ANSI.fgYellow);
-    out.addLine("  %0Android %1|%0 Chrome  %1|%0 Edge    %1|%0 Firefox %1|%0 Opera   %1|%0 Safari%1", ANSI.fgGreen + ANSI.bright, ANSI.reset);
-    out.addLine("  %0--------+---------+---------+---------+---------+----------%1", ANSI.fgWhite + ANSI.dim, ANSI.reset);
+    out.addLine("  %0Webview/A %1|%0 Chrome/A  %1|%0 Edge      %1|%0 Firefox/A %1|%0 Opera/A   %1|%0 Safari/iOS%1", ANSI.fgGreen + ANSI.bright, ANSI.reset);
+    out.addLine("  %0----------+-----------+-----------+-----------+-----------+------------%1", ANSI.fgWhite + ANSI.dim, ANSI.reset);
 
     out.add(" ");
     versions(mobileList);
@@ -89,7 +89,7 @@ function compatToLong(mdnComp) {
       else {
         status = ANSI.fgRed + no + ANSI.reset;
       }
-      out.add("%0" + status.center(9) + "%1" + "|", status.indexOf(no) >= 0 ? ANSI.fgRed : ANSI.fgCyan, ANSI.reset);
+      out.add("%0" + status.center(11) + "%1" + "|", status.indexOf(no) >= 0 ? ANSI.fgRed : ANSI.fgCyan, ANSI.reset);
     });
 
     if (prefixList.length) notes.unshift(prefixList + lf);

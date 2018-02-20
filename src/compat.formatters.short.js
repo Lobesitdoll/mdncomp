@@ -11,7 +11,7 @@ function compatToShort(mdnComp, shortPad) {
     desktopList = ["chrome", "edge", "firefox", "ie", "opera", "safari"],
     mobileList = ["android", "chrome_android", "firefox_android", "edge_mobile", "opera_android", "safari_ios"],
     desktopShort = ["C:", "E:", "F:", "IE:", "O:", "S:"],
-    mobileShort = ["A:", "CA:", "FA:", "EM:", "OA:", "SI:"],
+    mobileShort = ["WA:", "CA:", "FA:", "EM:", "OA:", "Si:"],
     opts = {
       markdown: options.markdown,
       showDesktop: !options.mobile,
