@@ -1,6 +1,13 @@
 mdncomp
 =======
 
+1.1.7-alpha
+FIX: Correct machine name for Android/Webview browser data in formatters.
+ADD: Prefix list / mark (in default, svg).
+CHG: Browser order is now alphabetic for each section.
+IMP: wildcard chars not needed at beginning or end anymore
+IMP: SVG formatting (header/status alignment to left edge)
+
 1.1.6-alpha
 FIX: if added was false it was interpreted as unknown, correct to "no".
 CHG: If type (-t) not specified when saving to file (-o), type is detected by file extension.

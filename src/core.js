@@ -106,7 +106,7 @@ function go(path) {
       if (result.length === 1 || (options.showAll && options.type === "txt")) {
         if (options.shorthand) shortPad = getPadLength(result);
         result.forEach(entry => {outResult(entry)});
-        if (options.type === "txt") outStore(ANSI.fgMagenta + "Data from MDN - `npm i -g mdncomp` by epistemex" + ANSI.reset + lf);
+        if (options.type !== "svg") outStore(ANSI.fgMagenta + "Data from MDN - `npm i -g mdncomp` by epistemex" + ANSI.reset + lf);
         commit();
       }
       else {

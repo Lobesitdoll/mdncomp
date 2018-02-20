@@ -41,11 +41,8 @@ Info.prototype = {
    * @returns {string}
    */
   toString: function(ref) {
-    ref = ref ? ref + ") " : "";
-    let
-      out = new Output(0),
-      prefix = ref + (isNaN(this.added) ? "" : this.getVersion() + ":") + lf,
-      hasInfo = false;
+    const prefix = (ref ? ref + ") " : "") + (isNaN(this.added) ? "" : this.getVersion() + ":") + lf;
+    let out = new Output(0), hasInfo = false;
 
     if (this.prefix.length) {
       hasInfo = true;

@@ -1,23 +1,22 @@
 /**
  * Formats and stores information objects per browser
  * via the Info object.
- * @param obj
- * @param name
+ * @param obj - __compat
+ * @param name - machine name of browser
  * @constructor
  */
 function Browser(obj, name) {
   this.name = name;
-  this.isDesktop = true;
   this.info = [];
+  //this.isDesktop = true;
 
-  let browser = obj.support[name];
+  // support_statement for this browser (by machine name)
+  let support = obj.support[name];
+  if (!Array.isArray(support)) support = [support];
 
-  if (!Array.isArray(browser)) browser = [browser];
-
-  browser.forEach(browserItem => {
-    this.info.push(new Info(browserItem));
+  support.forEach(supportItem => {
+    this.info.push(new Info(supportItem));
   })
-
 }
 
 Browser.prototype = {
@@ -32,6 +31,13 @@ Browser.prototype = {
   hasFlags: function() {
     for(let i = 0; i < this.info.length; i++) {
       if (this.info[i].flags.length) return true;
+    }
+    return false
+  },
+
+  hasPrefix: function() {
+    for(let i = 0; i < this.info.length; i++) {
+      if (this.info[i].prefix.length) return true;
     }
     return false
   },

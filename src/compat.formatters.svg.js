@@ -7,8 +7,8 @@ function compatToSVG(mdnComp) {
   const
     out = new Output(),
     desktopList = ["chrome", "edge", "firefox", "ie", "opera", "safari"],
-    mobileListIcons = ["android", "chrome,android", "firefox,android", "edge", "opera,android", "safari"],
-    mobileList = ["android", "chrome_android", "firefox_android", "edge_mobile", "opera_android", "safari_ios"],
+    mobileListIcons = ["android", "chrome,android", "edge", "firefox,android", "opera,android", "safari"],
+    mobileList = ["webview_android", "chrome_android", "edge_mobile", "firefox_android", "opera_android", "safari_ios"],
     opts = {
       showDesktop: !options.mobile,
       showMobile: !options.desktop,
@@ -32,7 +32,7 @@ function compatToSVG(mdnComp) {
   let
     notes = [],
     ref = 0,
-    statusX = indent,
+    statusX = 1,
     h = col1h + col2h * 2,
     i, x;
 
@@ -86,7 +86,7 @@ function compatToSVG(mdnComp) {
   // Header
   if (mdnComp.url.length) {
     out.add("<a xlink:href=\"%0\" style=\"cursor:pointer\" target=\"_blank\">", mdnComp.url);
-    text2(mdnComp.prePath, mdnComp.name, indent, 50, 32);
+    text2(mdnComp.prePath, mdnComp.name, 1, 50, 32);
     use("link", w - 40, 26, 24, 24, "#777");
     out.add("</a>");
   }
@@ -180,16 +180,22 @@ function compatToSVG(mdnComp) {
   *------------------------------------------------------------------------------------------------------------------*/
 
   function versions(list, offset, y) {
+    let prefixList = "";
     options.maxWidth = (w - 60) / 8;
     list.forEach((browserId, index) => {
       let
-        browser = mdnComp.getBrowser(browserId), status, refMark, flags,
+        browser = mdnComp.getBrowser(browserId), status, refMark, flags, prefix,
         x = offset + step * index,
         tx = x + step * 0.5;
 
       if (browser) {
         flags = browser.hasFlags();
+        prefix = browser.hasPrefix();
         status = browser.info[0].getVersion().replace("Y", yes16);
+        if (prefix) {
+          if (prefixList.length) prefixList += ", " + browser.info[0].prefix;
+          else prefixList = px8 + ") Prefix: " + browser.info[0].prefix;
+        }
         if (browser.hasNotes()) {
           refMark = options.notes ? ++ref : "*";
           notes.push(browser.getNotes(ref));
@@ -204,14 +210,19 @@ function compatToSVG(mdnComp) {
       if (status === "-")
         text(no16, tx, y + 28, 0, 0, "#c55", "middle");
       else
-        text(status, tx, y + 28, 0, 0, status.indexOf("-") < 0 && status.indexOf("?") < 0 ? "#070" : "#000", "middle");
+        text(status, tx, y + 28, w < 800 ? 12 : 0, 0, status.indexOf("-") < 0 && status.indexOf("?") < 0 ? "#070" : "#000", "middle");
 
       if (refMark)
         text(refMark, x + step - 11, y + 13, 10, "#000", "end");
 
       if(flags)
         use("flag", x + 5, y + 5, 10, 10, "#555");
+
+      if (prefix)
+        text("-×-", tx, y + 13, 12, false, "#009", "middle"); // w < 640 ? y + 40 : y + 13 if low on space
     });
+
+    if (prefixList.length) notes.unshift(prefixList + lf);
   }
 
   function status(icon, txt, size, color) {

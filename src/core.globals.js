@@ -28,7 +28,7 @@ const ANSI = {
   bgWhite: "\x1b[47m"
 };
 
-const lf = "\r\n", yes = "Y", no = "-", yes16 = "✔", no16 = "✘";
+const lf = "\r\n", yes = "Y", no = "-", yes16 = "✔", no16 = "✘", px8 = "·×·"; //¨·";
 
 String.prototype.center = function(length) {
   let
@@ -84,7 +84,8 @@ function listTopLevels() {
  * @returns {RegExp}
  */
 function getComparer(str) {
-  if (!str.includes("*")) str = "*" + str + "*";
+  if (!str.startsWith("*")) str = "*" + str;
+  if (!str.endsWith("*")) str += "*";
   return new RegExp("^" + str.split("*").join(".*") + "$")
 }
 
