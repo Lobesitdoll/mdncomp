@@ -34,6 +34,8 @@ It comes in colors, too!
 
 Export as a SVG file:
 
+    $ mdncomp html*toblob -o toBlob.svg
+
 ![SVG Example](https://i.imgur.com/70VOqoG.png)
 
 In shorthand format in the terminal:
@@ -125,9 +127,9 @@ operators
 statements
 ```
 
-Output to a file with no color information:
+Output to a text file with ANSI color information:
 
-    $ mdncomp html*toblob -o toBlob.txt -b
+    $ mdncomp html*toblob -o toBlob.ansi
 
 Main options:
 - Search case-sensitive
