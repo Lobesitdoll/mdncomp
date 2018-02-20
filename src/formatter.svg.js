@@ -10,7 +10,7 @@ function compatToSVG(mdnComp) {
     mobileListIcons = ["android", "chrome,android", "edge", "firefox,android", "opera,android", "safari"],
 
     desktopDesc = ["Chrome", "Edge", "Firefox", "IE", "Opera", "Safari"],
-    mobileDesc = ["Webview for Android", "Chrome for Android", "Edge for mobile", "Firefox for android", "Opera for android", "Safari for iOS"],
+    mobileDesc = ["Webview for Android", "Chrome for Android", "Edge for mobile", "Firefox for Android", "Opera for Android", "Safari for iOS"],
 
     mobileList = ["webview_android", "chrome_android", "edge_mobile", "firefox_android", "opera_android", "safari_ios"],
     opts = {
@@ -122,6 +122,10 @@ function compatToSVG(mdnComp) {
   }
 
   // Draw grid
+  for(x = col1; x < w; x += step) {
+    line(x|0, col1h, x|0, h, 1, "#999");
+  }
+
   if (col1) line(col1, 0, col1, h, 2);
   if (isMob) line(colM, 0, colM, h, 2);
 
@@ -129,9 +133,6 @@ function compatToSVG(mdnComp) {
   line(0, col1h + col2h, w, col1h + col2h, 1);
   line(0, h, w, h, 2);
 
-  for(x = col1; x < w; x += step) {
-    line(x|0, col1h, x|0, h, 1, "#999");
-  }
 
   // text
   //text(mdnComp.name, 7, col1h + col2h + 28);
@@ -223,7 +224,7 @@ function compatToSVG(mdnComp) {
         use("flag", x + 5, y + 5, 10, 10, "#555");
 
       if (prefix)
-        text("-×-", tx, y + 13, 12, false, "#009", "middle"); // w < 640 ? y + 40 : y + 13 if low on space
+        text("-×-", x + 5, y + 41, 12, false, "#009"); // w < 640 ? y + 40 : y + 13 if low on space
     });
 
     if (prefixList.length) notes.unshift(prefixList + lf);

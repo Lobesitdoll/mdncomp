@@ -1,9 +1,38 @@
 mdncomp
 =======
 
-Get [MDN Browser Compatibility](https://github.com/mdn/browser-compat-data) data directly in the shell / console / terminal.
+Provides [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data) directly in the terminal.
 
 ALPHA release.
+
+
+Features
+--------
+- Search and get key information about APIs and their browser compatibility status
+- List APIs by branch or non-normative status
+- Search case-insensitive or by option case-sensitive
+- Get shorthand text output for a single or multiple results
+- Format text links in markdown format for easy copy and paste to forums/QA etc.
+- Show just desktop or mobile devices' status
+- Get, or by option ignore, footnotes per browser
+- Show footnotes per section or by option collect footnotes in a single section
+- Export information as SVG file
+- Format max line width for text output
+- Format width for SVG output
+
+
+Install
+-------
+Make sure to have [Node.js](https://nodejs.org/en/) installed, then get
+`mdncomp` using NPM:
+
+    $ npm i -g mdncomp
+
+(add `--save` if the MDN compatibility data for some reason wasn't included).
+
+
+Examples
+--------
 
 ```text
 $ mdncomp html*toblob
@@ -63,13 +92,15 @@ To see all options:
     $ mdncomp -h
     $ mdncomp --help
 
-Install
--------
-Install globally using NPM:
+Note
+----
+The BCD team is working hard to convert all the browser compatibility
+data to their new format used by this tool. For this reason some APIs
+and objects may not be available quite yet.
 
-    $ npm i -g mdncomp
+Find out [how you can help them out here](https://developer.mozilla.org/en-US/docs/MDN/Contribute/Structures/Compatibility_tables)!
 
-(add `--save` if the MDN compatibility data for some reason wasn't included).
+Disclaimer: This tool is a independent tool not affiliated with any third-party.
 
 
 Usage Examples
@@ -127,19 +158,21 @@ operators
 statements
 ```
 
+List experimental APIs using special paths:
+
+    $ mdncomp -l experimental
+
+List deprecated APIs:
+
+    $ mdncomp -l deprecated
+
 Output to a text file with ANSI color information:
 
     $ mdncomp html*toblob -o toBlob.ansi
 
-Main options:
-- Search case-sensitive
-- Shorthand text output
-- Format link as markdown
-- Show just desktop or mobile
-- Ignore notes
-- Collect notes in one section
-- Format max line width
-- Export to SVG file
+To overwrite an existing file include the `-x` (or `--overwrite`) option:
+
+    $ mdncomp html*toblob -xo toBlob.svg
 
 
 License

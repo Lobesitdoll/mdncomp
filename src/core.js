@@ -10,6 +10,7 @@ module.exports = init;
 
 const
   mdn = require("mdn-browser-compat-data"),
+  readLine = require('readline'),
   saves = [],
   options = require("commander"),
   fs = require("fs"),
@@ -28,6 +29,7 @@ function init() {
     .option("-l, --list", "List paths starting with the given value or . for top-level")
     .option("-o, --out <path>", "Save information to file. Extension for type, or --type.")
     .option("-t, --type <type>", "Output format (ansi, txt, svg)", "ansi")
+    .option("-x, --overwrite", "Overwrites an existing file with --out option.")
     .option("-d, --desktop", "Show desktop only")
     .option("-m, --mobile", "Show mobile devices only")
     .option("-c, --case-sensitive", "Search in case-sensitive mode")
@@ -88,6 +90,9 @@ function go(path) {
     if (path === ".") {
       outInfo(listTopLevels());
     }
+    else if (["deprecated", "experimental"].indexOf(path) >= 0) {
+      outInfo(listOnStatus(path));
+    }
     else {
       let result = list(path, options.caseSensitive);
       outInfo(result);
@@ -134,9 +139,30 @@ function go(path) {
    */
   function commit() {
     if (options.out && saves.length) {
+      if (fs.existsSync(options.out) && !options.overwrite) {
+        const rl = readLine.createInterface({
+          input: process.stdin,
+          output: process.stdout
+        });
+
+        rl.question("A file exist with this name. Overwrite (y or yes, default no)? ", resp => {
+          if (resp.toLowerCase() === "y" || resp.toLowerCase() === "yes") _save(function() {
+            rl.close();
+          });
+          else {
+            log("File not saved.");
+            rl.close()
+          }
+        });
+      }
+      else _save();
+    }
+
+    function _save(callback) {
       fs.writeFile(options.out, saves.join("\n"), function(err) {
         if(err) return log("An error occurred:" + lf + err);
         log("Saved output to file \"" + options.out + "\"!");
+        if (callback) callback();
       })
     }
   }

@@ -11,7 +11,7 @@
  * @returns {Array}
  */
 function list(prefix, sensitive) {
-  let
+  const
     _prefix = sensitive ? prefix : prefix.toLowerCase(),
     tbl = buildTable(),
     result = [];
@@ -22,4 +22,30 @@ function list(prefix, sensitive) {
   });
 
   return result.length === 1 ? Object.keys(getPathAsObject(result[0]) || {}) : result
+}
+
+function listOnStatus(statTxt) {
+  const
+    result = [],
+    keys = listTopLevels();
+
+  keys.forEach(key1 => {
+    let o = mdn[key1];
+    if (o.__compat && _check(o)) result.push(key1);
+    Object.keys(mdn[key1]).forEach(key2 => {
+      let o = mdn[key1][key2];
+      if (o.__compat && _check(o)) result.push(key1 + "." + key2);
+      Object.keys(mdn[key1][key2]).forEach(key3 => {
+        let o = mdn[key1][key2][key3];
+        if (key3.__compat && _check(o)) result.push(key1 + "." + key2 + "." + key3);
+      });
+    });
+  });
+
+  function _check(compat) {
+    let status = compat.__compat.status || {};
+    return !!status[statTxt]
+  }
+
+  return result.sort();
 }

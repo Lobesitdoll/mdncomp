@@ -1,6 +1,13 @@
 mdncomp
 =======
 
+1.2.0-alpha
+ADD: two special paths for --list: "deprecated" and "experimental".
+ADD: block multi-listing with common root names adding "." at the end (f.ex. `mdncomp audiolistener.`)
+ADD: File overwrite protection. Prompts for confirmation if file exist (can be overridden with new option -x).
+ADD: File overwrite protection. Option -x / --overwrite added.
+IMP: SVG formatting (grid lines, prefix moved to left/bottom)
+
 1.1.8-alpha
 IMP: Titles for the table header for mobile devices (issue #1)
 FIX: Pre-path for default output

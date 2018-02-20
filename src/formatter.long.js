@@ -51,7 +51,7 @@ function compatToLong(mdnComp) {
 
   if (opts.showMobile) {
     out.addLine("  %0MOBILE:", ANSI.fgYellow);
-    out.addLine("  %0Webview/A %1|%0 Chrome/A  %1|%0 Edge      %1|%0 Firefox/A %1|%0 Opera/A   %1|%0 Safari/iOS%1", ANSI.fgGreen + ANSI.bright, ANSI.reset);
+    out.addLine("  %0Webview/A %1|%0 Chrome/A  %1|%0 Edge/mob  %1|%0 Firefox/A %1|%0 Opera/A   %1|%0 Safari/iOS%1", ANSI.fgGreen + ANSI.bright, ANSI.reset);
     out.addLine("  %0----------+-----------+-----------+-----------+-----------+------------%1", ANSI.fgWhite + ANSI.dim, ANSI.reset);
 
     out.add(" ");
