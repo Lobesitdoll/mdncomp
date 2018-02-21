@@ -3,7 +3,9 @@ function update(force) {
   const
     path = require("path"),
     clr = ANSI.clrToCursor + ANSI.cursorUp,
-    filePath = path.normalize(path.dirname(process.mainModule.filename) + "/../data/data.json");
+    filePathRoot = path.normalize(path.dirname(process.mainModule.filename) + "/../data/data."),
+    filePathDat = filePathRoot + "json",
+    filePathMD5 = filePathRoot + "md5";
 
   let count = 0;
 
@@ -12,8 +14,10 @@ function update(force) {
   if (force) serverData();
   else {
     serverMD5(md5 => {
-      if (md5 === fileMD5(filePath))
-        log(clr + ANSI.reset + ANSI.fgWhite + "No change in data - cancelling (or use the --fupdate option).");
+      let md5f = getCachedMD5(filePathMD5, filePathDat);
+      log((md5 === md5f ? ANSI.fgCyan : ANSI.fgYellow) + "Server MD5: " + md5 + lf + "File   MD5: " + md5f + lf);
+      if (md5 === md5f)
+        log(clr + ANSI.fgWhite + "No change in data - cancelling (or use the --fupdate option).");
       else
         serverData();
     });
@@ -26,24 +30,29 @@ function update(force) {
         return true
       },
       () => {
-        log(clr + ANSI.fgWhite + "Downloading data " + ANSI.fgGreen + ANSI.bright + ("").padEnd(((count += 0.25)|0) % 50, ".") + ANSI.fgBlack);
+        log(clr + ANSI.fgWhite + "Downloading data " + ANSI.fgGreen + ANSI.bright + (".").repeat((count += 0.25)|0) + ANSI.fgBlack);
       },
       data => {
-        if (!fs) fs = require("fs");
-        fs.writeFile(filePath, data, "utf8", err => {
-          if (err) log(clr + ANSI.fgRed + "Could not write new data to file...", err, ANSI.fgWhite);
-          else {
-            log(clr + ANSI.fgWhite + ("Updated with " + data.length + " bytes. All systems are GO!").padEnd(72, " "))
-          }
+        io.writeAll([{path: filePathDat, data: data}, {path: filePathMD5, data: calcMD5(data)}], (results, hasErrors) => {
+          if (hasErrors)
+            results.forEach(error => {
+              if (error.err) logErr("An error occurred writing data to file. Please retry: " + lf + error.path + ": " + error.err);
+            })
+          else
+            log(clr + ANSI.fgWhite + ("Updated with " + data.length + " bytes. All systems are GO!").padEnd(72, " "));
         })
       },
       err => {
-        log(ANSI.fgRed + "An error occurred:" + lf + "Status code: " + err.statusCode + lf + "Message: " + err.error + ANSI.fgWhite + ANSI.reset);
-      })
+        logErr(lf + "An error occurred:" + lf + "Status code: " + err.statusCode + lf + "Message: " + err.error);
+    })
   }
 
   function clrLine() {
     log(clr + ("").padStart(72, " "));
+  }
+
+  function logErr(txt) {
+    log(clr + ANSI.fgRed + txt + ANSI.fgWhite)
   }
 }
 
@@ -51,17 +60,31 @@ function serverMD5(callback) {
   io.request("https://raw.githubusercontent.com/epistemex/data-for-mdncomp/master/data.md5",
     () => {return true}, null, callback, (err) => {
       log("An error occurred:", err.statusCode, err.error)
-    })
+  })
 }
 
-function fileMD5(path) {
+/**
+ * Will try to load the cached MD5 hash. If not found the data is loaded
+ * and a MD5 is calculated.
+ * @param path - md5 cached file
+ * @param path2 - data file path if md5 isn't not found
+ * @returns {string} empty is MD5 couldn't be calc.
+ */
+function getCachedMD5(path, path2) {
   if (!fs) fs = require("fs");
   try {
-    return getMD5(fs.readFileSync(path));
+    return fs.readFileSync(path) + "";
+  } catch(err) {return calcFileMD5(path2)}
+}
+
+function calcFileMD5(path) {  // todo this can go in the future (v0.3.3a)
+  if (!fs) fs = require("fs");
+  try {
+    return calcMD5(fs.readFileSync(path));
   } catch(err) {return ""}
 }
 
-function getMD5(data) {
-  return require("crypto").createHash("md5").update(data).digest("hex")
+function calcMD5(data) {
+  return require("crypto").createHash("md5").update(data).digest("hex") + ""
 }
 

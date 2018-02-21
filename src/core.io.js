@@ -29,6 +29,37 @@ const io = {
       if (onError) onError({statusCode: res.statusCode, error: err});
       else log("Error", res, err);
     }
+  },
+
+  /**
+   *
+   * @param {Array} list - holding items: {path, data}
+   * @param callback - results array with {path, err} err is non-null if any error occurred
+   */
+  writeAll: function(list, callback) {
+    let results = [], count = list.length, errors = false;
+    list.forEach(item => {
+      io.write(item.path, item.data, _handler)
+    });
+
+    function _handler(o) {
+      results.push(o);
+      if (o.err) errors = true;
+      if (!--count) callback(results, errors)
+    }
+  },
+
+  /**
+   *
+   * @param {string} path - holding items: {path, data}
+   * @param data - the data to write
+   * @param callback - result object with {path, err} err is non-null if any error occurred
+   */
+  write: function(path, data, callback) {
+    if (!fs) fs = require("fs");
+    fs.writeFile(path, data, "utf8", err => {
+      callback({path: path, err: err ? err : null})
+    })
   }
 
 };

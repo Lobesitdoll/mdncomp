@@ -1,6 +1,11 @@
 mdncomp
 =======
 
+1.3.3-alpha
+ADD: Outputs MD5 hashes (server/local file) in console.
+ADD: Caches MD5 file for file for faster load and compare.
+IMP: Internal refactorings
+
 1.3.2-alpha
 ADD: MD5 hash check for remote data (for --update)
 
