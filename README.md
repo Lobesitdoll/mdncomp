@@ -99,11 +99,10 @@ $ mdncomp.js api.blob. --raw
       ...
 ```
 
-To see all options:
+Wiki
+----
+See the [Wiki](https://github.com/epistemex/mdncomp/wiki) for more details.
 
-    $ mdncomp
-    $ mdncomp -h
-    $ mdncomp --help
 
 Note
 ----
@@ -114,90 +113,6 @@ and objects may not be available quite yet.
 Find out [how you can help them out here](https://developer.mozilla.org/en-US/docs/MDN/Contribute/Structures/Compatibility_tables)!
 
 Disclaimer: This tool is a independent tool not affiliated with any third-party.
-
-Updating data
--------------
-
-Use the option `--update` to update the Browser Compatibility data:
-
-    $ mdncomp --update
-
-or forced update if you want to rewrite the current data:
-
-    $ mdncomp --fupdate
-
-
-Usage Examples
---------------
-Find an object to check compatibility for:
-```text
-$ mdncomp toblob
-->
-api.HTMLCanvasElement.toBlob
-api.OffscreenCanvas.toBlob
-```
-
-List information for all results:
-```text
-$ mdncomp toblob -a
-...
-```
-
-Or be more specific:
-```text
-$ mdncomp html*toblob
-...
-```
-
-Only show desktop versions:
-
-    $ mdncomp -d html*toblob
-
-Don't show any notes:
-
-    $ mdncomp api.HTMLCanvasElement.toBlob -N
-
-List top-level branches in the MDN browser compatibility data:
-```text
-$ mdncomp -l .
-->
-api
-browsers
-css
-html
-http
-javascript
-webextensions
-```
-
-List branches in the JavaScript section:
-```text
-$ mdncomp -l javascript
-->
-builtins
-classes
-functions
-grammar
-operators
-statements
-```
-
-List experimental APIs using special paths:
-
-    $ mdncomp -l experimental
-
-List deprecated APIs:
-
-    $ mdncomp -l deprecated
-
-Output to a text file with ANSI color information:
-
-    $ mdncomp html*toblob -o toBlob.ansi
-
-To overwrite an existing file include the `-x` (or `--overwrite`) option:
-
-    $ mdncomp html*toblob -xo toBlob.svg
-
 
 License
 -------

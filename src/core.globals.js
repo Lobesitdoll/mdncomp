@@ -10,6 +10,8 @@ const ANSI = {
   //hidden: "\x1b[8m",
   save: "\x1b7",
   restore: "\x1b8",
+  clrToCursor: "\x1b[1K",
+  cursorUp: "\x1b[1A",
 
   //fgBlack: "\x1b[30m",
   fgRed: "\x1b[31m",
