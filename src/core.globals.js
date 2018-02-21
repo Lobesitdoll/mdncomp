@@ -3,29 +3,31 @@ const ANSI = {
   reset: "\x1b[0m",
   bright: "\x1b[1m",
   dim: "\x1b[2m",
-  italic: "\x1b[3m",
-  underline: "\x1b[4m",
-  blink: "\x1b[5m",
-  reverse: "\x1b[7m",
-  hidden: "\x1b[8m",
+  //italic: "\x1b[3m",
+  //underline: "\x1b[4m",
+  //blink: "\x1b[5m",
+  //reverse: "\x1b[7m",
+  //hidden: "\x1b[8m",
+  save: "\x1b7",
+  restore: "\x1b8",
 
-  fgBlack: "\x1b[30m",
+  //fgBlack: "\x1b[30m",
   fgRed: "\x1b[31m",
   fgGreen: "\x1b[32m",
   fgYellow: "\x1b[33m",
   fgBlue: "\x1b[34m",
   fgMagenta: "\x1b[35m",
   fgCyan: "\x1b[36m",
-  fgWhite: "\x1b[37m",
+  fgWhite: "\x1b[37m"
 
-  bgBlack: "\x1b[40m",
-  bgRed: "\x1b[41m",
-  bgGreen: "\x1b[42m",
-  bgYellow: "\x1b[43m",
-  bgBlue: "\x1b[44m",
-  bgMagenta: "\x1b[45m",
-  bgCyan: "\x1b[46m",
-  bgWhite: "\x1b[47m"
+  //bgBlack: "\x1b[40m",
+  //bgRed: "\x1b[41m",
+  //bgGreen: "\x1b[42m",
+  //bgYellow: "\x1b[43m",
+  //bgBlue: "\x1b[44m",
+  //bgMagenta: "\x1b[45m",
+  //bgCyan: "\x1b[46m",
+  //bgWhite: "\x1b[47m"
 };
 
 const lf = "\r\n", yes = "Y", no = "-", yes16 = "✔", no16 = "✘", px8 = "·×·";
@@ -96,16 +98,30 @@ function getComparer(str) {
  * Converts a line path (api.Blob.slice) to the object,
  * in this case for slice.
  * @param path
+ * @param noChildren - remove child __compat objects
+ * @returns {*}
  */
-function getPathAsObject(path) {
+function getPathAsObject(path, noChildren) {
   let parts = path.split("."), obj = mdn;
-  parts.forEach(part => {if (obj) obj = obj[part]});
+  parts.forEach(part => {if (obj && obj[part]) obj = obj[part]});
+
+  if (noChildren) {
+    Object.keys(obj).forEach(key => {
+      if (obj && obj[key].__compat) delete obj[key];
+    })
+  }
+
   return obj
 }
 
 function nameFromPath(path) {
+  let last = getExt(path);
+  return last.length ? last : path
+}
+
+function getExt(path) {
   let i = path.lastIndexOf(".");
-  return i > 0 ? path.substr(i + 1) : path
+  return i < 0 ? "" : path.substr(++i)
 }
 
 function prePathFromPath(path) {
@@ -164,4 +180,33 @@ function breakLine(s, max) {
   out.add(line.trim());
 
   return out.toString()
+}
+
+// we'll go char-by-char here, regex can't be used for this afaik..
+function indent(txt) {
+  let out = "", level = 0, i, ch;
+  for(i = 0; i < txt.length; i++) {
+    ch = txt[i];
+    if (ch === ",") {
+      out += ch + lf + padding();
+    }
+    else if (ch === "{") {
+      level++;
+      out += ch + lf + padding();
+    }
+    else if (ch === "}") {
+      level--;
+      out += lf + padding() + ch;
+    }
+    else if (ch === ":") {
+      out += ch + " ";
+    }
+    else out += ch;
+  }
+
+  function padding() {
+    return ("").padStart(level<<1, " ")
+  }
+
+  return out
 }

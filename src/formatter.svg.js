@@ -185,7 +185,7 @@ function compatToSVG(mdnComp) {
   *------------------------------------------------------------------------------------------------------------------*/
 
   function versions(list, desc, offset, y) {
-    let prefixList = "";
+    //let prefixList = "";
     options.maxWidth = (w - 60) / 8;
     list.forEach((browserId, index) => {
       let
@@ -197,10 +197,10 @@ function compatToSVG(mdnComp) {
         flags = browser.hasFlags();
         prefix = browser.hasPrefix();
         status = browser.info[0].getVersion().replace("Y", yes16);
-        if (prefix) {
-          if (prefixList.length) prefixList += ", " + browser.info[0].prefix;
-          else prefixList = px8 + ") Prefix: " + browser.info[0].prefix;
-        }
+//        if (prefix) {
+//          if (prefixList.length) prefixList += ", " + browser.info[0].prefix;
+//          else prefixList = px8 + ") Prefix: " + browser.info[0].prefix;
+//        }
         if (browser.hasNotes()) {
           refMark = options.notes ? ++ref : "*";
           notes.push(browser.getNotes(ref));
@@ -224,10 +224,10 @@ function compatToSVG(mdnComp) {
         use("flag", x + 5, y + 5, 10, 10, "#555");
 
       if (prefix)
-        text("-×-", x + 5, y + 41, 12, false, "#009"); // w < 640 ? y + 40 : y + 13 if low on space
+        text(browser.info[0].prefix, x + 5, y + 41, 12, false, "#334"); // w < 640 ? y + 40 : y + 13 if low on space
     });
 
-    if (prefixList.length) notes.unshift(prefixList + lf);
+    //if (prefixList.length) notes.unshift(prefixList + lf);
   }
 
   function status(icon, txt, size, color) {

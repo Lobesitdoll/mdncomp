@@ -10,6 +10,7 @@ Features
 --------
 - Search and get key information about APIs and their browser compatibility status
 - List APIs by branch or non-normative status
+- Update browser compatibility data directly from the app.
 - Search case-insensitive or by option case-sensitive
 - Get shorthand text output for a single or multiple results
 - Format text links in markdown format for easy copy and paste to forums/QA etc.
@@ -23,12 +24,11 @@ Features
 
 Install
 -------
-Make sure to have [Node.js](https://nodejs.org/en/) installed, then get
-`mdncomp` using NPM:
+Make sure to have [Node.js](https://nodejs.org/en/) installed, then get `mdncomp` using NPM:
 
     $ npm i -g mdncomp
 
-(add `--save` if the MDN compatibility data for some reason wasn't included).
+This includes a precompiled dataset which can be updated at any time (see below).
 
 
 Examples
@@ -65,7 +65,7 @@ Export as a SVG file:
 
     $ mdncomp html*toblob -o toBlob.svg
 
-![SVG Example](https://i.imgur.com/70VOqoG.png)
+![SVG Example](https://i.imgur.com/YssRnNs.png)
 
 In shorthand format in the terminal:
 
@@ -86,6 +86,19 @@ Blob.slice :  DT: C:21 E:Y F:13* IE:10 O:12 S:5.1   MOB: WA:- CA:? FA:14 EM:Y OA
 ...
 ```
 
+See the raw underlying data (also notice the ending period on path which blocks branches
+on (in this case) `api.blob` to be considered):
+
+```text
+$ mdncomp.js api.blob. --raw
+-->
+{
+  "__compat": {
+    "mdn_url": "https: //developer.mozilla.org/docs/Web/API/Blob",
+    "support": {
+      ...
+```
+
 To see all options:
 
     $ mdncomp
@@ -101,6 +114,17 @@ and objects may not be available quite yet.
 Find out [how you can help them out here](https://developer.mozilla.org/en-US/docs/MDN/Contribute/Structures/Compatibility_tables)!
 
 Disclaimer: This tool is a independent tool not affiliated with any third-party.
+
+Updating data
+-------------
+
+Use the option `--update` to update the Browser Compatibility data:
+
+    $ mdncomp --update
+
+or forced update if you want to rewrite the current data:
+
+    $ mdncomp --fupdate
 
 
 Usage Examples

@@ -1,6 +1,13 @@
 mdncomp
 =======
 
+1.3.0-alpha
+ADD: Update functionality (-u, --update). Removed dependency on mdn-bcd, prefers precompiled data (we might change the format -> efficiency/normalized/less code).
+ADD: --raw option to see the json data as-is for an object.
+IMP: Slightly faster response for --help (loads components only when needed).
+CHG: Forced UTF-8 encoding of all saved files.
+CHG: New min. line length (text) 72 chars.
+
 1.2.0-alpha
 ADD: two special paths for --list: "deprecated" and "experimental".
 ADD: block multi-listing with common root names adding "." at the end (f.ex. `mdncomp audiolistener.`)
