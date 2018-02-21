@@ -13,7 +13,7 @@ const ANSI = {
   clrToCursor: "\x1b[1K",
   cursorUp: "\x1b[1A",
 
-  //fgBlack: "\x1b[30m",
+  fgBlack: "\x1b[30m",
   fgRed: "\x1b[31m",
   fgGreen: "\x1b[32m",
   fgYellow: "\x1b[33m",

@@ -1,8 +1,8 @@
 {
   "name": "mdncomp",
-  "version": "1.3.1-alpha",
+  "version": "1.3.2-alpha",
   "description": "Get MDN Browser Compatibility data.",
-  "main": "index.js",
+  "main": "build/mdncomp.min.js",
   "author": {
     "name": "K3N",
     "email": "epistemex@users.noreply.github.com"
@@ -13,8 +13,10 @@
     "documentation",
     "browser",
     "compatibility",
-    "shell",
+    "status",
+    "svg",
     "console",
+    "cli",
     "terminal"
   ],
   "license": "MIT",

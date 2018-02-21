@@ -1,52 +1,67 @@
 
-
 function update(force) {
   const
-    https = require("https"),
     path = require("path"),
-    clr = ANSI.clrToCursor + ANSI.cursorUp;
-
-  let
-    data = "",
-    count = 0,
+    clr = ANSI.clrToCursor + ANSI.cursorUp,
     filePath = path.normalize(path.dirname(process.mainModule.filename) + "/../data/data.json");
-    //filePath = path.normalize(path.dirname(require.resolve("../package.json")) + "/data/data.json");
+
+  let count = 0;
 
   log(ANSI.fgGreen + ANSI.bright+ "Connecting...");
 
-  https.get("https://raw.githubusercontent.com/epistemex/data-for-mdncomp/master/data.json", (res) => {
-    const fs = require("fs");
-    let dataLength = res.headers["content-length"]|0;
-    let fileLength = fs.statSync(filePath).size;
+  if (force) serverData();
+  else {
+    serverMD5(md5 => {
+      if (md5 === fileMD5(filePath))
+        log(clr + ANSI.reset + ANSI.fgWhite + "No change in data - cancelling (or use the --fupdate option).");
+      else
+        serverData();
+    });
+  }
 
-    // todo length is not a safe check, but it'll work for now.. -> simple MD5 checksum.
-    if (!force && dataLength === fileLength) {
-      log(clr + ANSI.reset + ANSI.fgWhite + "No change - cancelling.");
-    }
-    else {
-      if (res.statusCode === 200) {
-        res.on("data", (d) => {
-          data += d;
-          log(clr + ANSI.fgWhite + "Downloading data " + ANSI.fgGreen + ANSI.bright + ("").padStart(((count += 0.25)|0) % 50, "."));
-        });
-        res.on("end", () => {
-          // compare and save data if different
-          log(clr + ("").padStart(72, " "));
-          log(clr + ANSI.fgWhite + "Saving to: " + filePath);
-          fs.writeFile(filePath, data, "utf8", err => {
-            if (err) log(ANSI.fgRed + "Could not write new data to file...", err, ANSI.fgWhite);
-            else {
-              log("Updated with " + data.length + " bytes. All systems are GO!")
-            }
-          })
-        });
-      }
-      else {
-        log("An unknown error occurred. Status code:", res.statusCode);
-      }
-    }
-  }).on("error", (err) => {
-    log("An error occurred:", err, ANSI.reset + ANSI.fgWhite);
-  });
+  function serverData() {
+    io.request("https://raw.githubusercontent.com/epistemex/data-for-mdncomp/master/data.json",
+      () => {
+        clrLine();
+        return true
+      },
+      () => {
+        log(clr + ANSI.fgWhite + "Downloading data " + ANSI.fgGreen + ANSI.bright + ("").padEnd(((count += 0.25)|0) % 50, ".") + ANSI.fgBlack);
+      },
+      data => {
+        if (!fs) fs = require("fs");
+        fs.writeFile(filePath, data, "utf8", err => {
+          if (err) log(clr + ANSI.fgRed + "Could not write new data to file...", err, ANSI.fgWhite);
+          else {
+            log(clr + ANSI.fgWhite + ("Updated with " + data.length + " bytes. All systems are GO!").padEnd(72, " "))
+          }
+        })
+      },
+      err => {
+        log(ANSI.fgRed + "An error occurred:" + lf + "Status code: " + err.statusCode + lf + "Message: " + err.error + ANSI.fgWhite + ANSI.reset);
+      })
+  }
 
+  function clrLine() {
+    log(clr + ("").padStart(72, " "));
+  }
 }
+
+function serverMD5(callback) {
+  io.request("https://raw.githubusercontent.com/epistemex/data-for-mdncomp/master/data.md5",
+    () => {return true}, null, callback, (err) => {
+      log("An error occurred:", err.statusCode, err.error)
+    })
+}
+
+function fileMD5(path) {
+  if (!fs) fs = require("fs");
+  try {
+    return getMD5(fs.readFileSync(path));
+  } catch(err) {return ""}
+}
+
+function getMD5(data) {
+  return require("crypto").createHash("md5").update(data).digest("hex")
+}
+

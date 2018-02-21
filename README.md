@@ -10,16 +10,15 @@ Features
 --------
 - Search and get key information about APIs and their browser compatibility status
 - List APIs by branch or non-normative status
-- Update browser compatibility data directly from the app.
+- Update browser compatibility data directly from the app with MD5 check.
 - Search case-insensitive or by option case-sensitive
 - Get shorthand text output for a single or multiple results
 - Format text links in markdown format for easy copy and paste to forums/QA etc.
 - Show just desktop or mobile devices' status
 - Get, or by option ignore, footnotes per browser
 - Show footnotes per section or by option collect footnotes in a single section
-- Export information as SVG file
 - Format max line width for text output
-- Format width for SVG output
+- Export information as SVG file
 
 
 Install
@@ -28,7 +27,7 @@ Make sure to have [Node.js](https://nodejs.org/en/) installed, then get `mdncomp
 
     $ npm i -g mdncomp
 
-This includes a precompiled dataset which can be updated at any time (see below).
+This includes a precompiled dataset which can be updated at any time (see [options](https://github.com/epistemex/mdncomp/wiki/Options-for-mdncomp#--update---fupdate)).
 
 
 Examples
@@ -63,7 +62,9 @@ It comes in colors, too!
 
 Export as a SVG file:
 
-    $ mdncomp html*toblob -o toBlob.svg
+```text
+$ mdncomp html*toblob -o toBlob.svg
+```
 
 ![SVG Example](https://i.imgur.com/YssRnNs.png)
 
@@ -113,6 +114,7 @@ and objects may not be available quite yet.
 Find out [how you can help them out here](https://developer.mozilla.org/en-US/docs/MDN/Contribute/Structures/Compatibility_tables)!
 
 Disclaimer: This tool is a independent tool not affiliated with any third-party.
+
 
 License
 -------
