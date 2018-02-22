@@ -3,6 +3,8 @@ mdncomp
 
 Provides [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data) directly in the terminal.
 
+![color output](https://i.imgur.com/Cw8ns62.png)
+
 ALPHA release.
 
 
@@ -11,7 +13,8 @@ Features
 - Search and get key information about APIs and their browser compatibility status
 - List APIs by branch or non-normative status
 - Update browser compatibility data directly from the app with MD5 check.
-- Search case-insensitive or by option case-sensitive
+- Search with wildcards, case-insensitive or by option case-sensitive
+- Or search using regular expressions
 - Get shorthand text output for a single or multiple results
 - Format text links in markdown format for easy copy and paste to forums/QA etc.
 - Show just desktop or mobile devices' status
@@ -56,10 +59,6 @@ $ mdncomp html*toblob
 Data from MDN - `npm i -g mdncomp` by epistemex
 ```
 
-It comes in colors, too!
-
-![color output](https://i.imgur.com/Cw8ns62.png)
-
 Export as a SVG file:
 
 ```text
@@ -102,7 +101,7 @@ $ mdncomp.js api.blob. --raw
 
 Wiki
 ----
-See the [Wiki](https://github.com/epistemex/mdncomp/wiki) for more details.
+See the [wiki](https://github.com/epistemex/mdncomp/wiki) for more details.
 
 
 Note

@@ -1,18 +1,12 @@
 
-const ANSI = {
+const
+  ANSI = {
     reset: "\x1b[0m",
     bright: "\x1b[1m",
     dim: "\x1b[2m",
-    //italic: "\x1b[3m",
-    //underline: "\x1b[4m",
-    //blink: "\x1b[5m",
-    //reverse: "\x1b[7m",
-    //hidden: "\x1b[8m",
 
-    //save: "\x1b7",        // doesn't work in PowerShell..
-    //restore: "\x1b8",
-    clrToCursor: "\x1b[1K", // so clear to cursor, cursor to next line,
-    cursorUp: "\x1b[1A",    //   then cursor up..
+    clrToCursor: "\x1b[1K",
+    cursorUp: "\x1b[1A",
 
     black  : "\x1b[30m",
     red    : "\x1b[31m",
@@ -22,22 +16,22 @@ const ANSI = {
     magenta: "\x1b[35m",
     cyan   : "\x1b[36m",
     white  : "\x1b[37m"
-
-    //bgBlack: "\x1b[40m",
-    //bgRed: "\x1b[41m",
-    //bgGreen: "\x1b[42m",
-    //bgYellow: "\x1b[43m",
-    //bgBlue: "\x1b[44m",
-    //bgMagenta: "\x1b[45m",
-    //bgCyan: "\x1b[46m",
-    //bgWhite: "\x1b[47m"
   },
 
   lf = "\r\n", yes = "Y", no = "-", yes16 = "✔", no16 = "✘", px8 = "·×·",
 
+  saves = [],
+  version = require("../package.json").version,
+  args = process.argv,
+  log = console.log.bind(console),
+
   // for update()
   urlPrefix = "https://raw.githubusercontent.com/epistemex/data-for-mdncomp/master/";
 
+let
+  mdn,
+  options,
+  shortPad = 1;
 
 /**
  * Center string containing ANSI codes.
@@ -102,9 +96,27 @@ function listTopLevels() {
  * @returns {RegExp}
  */
 function getComparer(str) {
-  if (!str.startsWith("*")) str = "*" + str;
-  if (!str.endsWith("*")) str += "*";
-  return new RegExp("^" + str.split("*").join(".*") + "$")
+  let regex, parts, options = "";
+  if (str.startsWith("/")) {
+    str = str.substr(1);
+    parts = str.split("/");
+    str = parts[0];
+    options = parts[1]
+  }
+  else {
+    if (!str.startsWith("*")) str = "*" + str;
+    if (!str.endsWith("*")) str += "*";
+    str = "^" + str.split("*").join(".*") + "$";
+  }
+
+  try {
+    regex = new RegExp(str, options);
+  } catch(err) {
+    log("Invalid regular expression:", err.message);
+    process.exit(-1);
+  }
+
+  return regex
 }
 
 /**

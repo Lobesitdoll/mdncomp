@@ -1,5 +1,5 @@
 
-function update(force) {
+function update(force, checkOnly) {
   const
     path = require("path"),
     clr = ANSI.clrToCursor + ANSI.cursorUp,
@@ -7,7 +7,7 @@ function update(force) {
     filePathDat = filePathRoot + "json",
     filePathMD5 = filePathRoot + "md5";
 
-  log(ANSI.yellow + "Connecting...");
+  log("Connecting...");
 
   if (force) serverData();
   else {
@@ -19,17 +19,14 @@ function update(force) {
       if (md5 === md5f)
         log(clr + ANSI.white + "No change in data - cancelling (or use the --fupdate option).");
       else
-        serverData();
+        if (!checkOnly) serverData();
     });
   }
 
   function serverData() {
     io.request(urlPrefix + "data.json",
-      () => {
-        clrLine();
-        return true
-      },
-      (pct) => {
+      () => !clrLine(),
+      pct => {
         let width = 50, prog = Math.round(width * pct), rem = width - prog;
         log(clr + ANSI.white + "Downloading data " + ANSI.white + "[" + ANSI.green + ANSI.bright + "#".repeat(prog) + " ".repeat(rem) + ANSI.white + "]" + ANSI.black);
       },
@@ -43,9 +40,8 @@ function update(force) {
             log(clr + ANSI.white + ("Updated with " + data.length + " bytes. All systems are GO!").padEnd(72, " "));
         })
       },
-      err => {
-        logErr(lf + "An error occurred:" + lf + "Status code: " + err.statusCode + lf + "Message: " + err.error);
-    })
+      err => logErr(lf + "An error occurred -" + lf + "Status code: " + err.statusCode + (err.error ? lf + "Message: " + err.error : ""))
+    )
   }
 
   function clrLine() {
@@ -77,7 +73,7 @@ function getCachedMD5(path, path2) {
   } catch(err) {return calcFileMD5(path2)}
 }
 
-function calcFileMD5(path) {  // todo this can go in the future (v0.3.3a)
+function calcFileMD5(path) {  // todo this can go in the future (now@v1.3.3a)
   if (!fs) fs = require("fs");
   try {
     return calcMD5(fs.readFileSync(path)) + "";

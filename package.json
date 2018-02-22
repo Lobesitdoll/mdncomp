@@ -1,6 +1,6 @@
 {
   "name": "mdncomp",
-  "version": "1.4.0-alpha",
+  "version": "1.5.0-alpha",
   "description": "Get MDN Browser Compatibility data.",
   "main": "build/mdncomp.min.js",
   "author": {
@@ -11,9 +11,19 @@
     "start": "node ./bin/mdncomp.js"
   },
   "keywords": [
-    "mdn", "docs", "documentation", "browser", "compatibility",
-    "status", "svg", "console", "cli", "terminal", "information",
-    "developer", "tool"
+    "mdn",
+    "docs",
+    "documentation",
+    "browser",
+    "compatibility",
+    "status",
+    "svg",
+    "console",
+    "cli",
+    "terminal",
+    "information",
+    "developer",
+    "tool"
   ],
   "license": "MIT",
   "bin": {

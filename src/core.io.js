@@ -14,7 +14,7 @@ const io = {
     if (!https) https = require("https");
     onResp = onResp || function() {return true};
 
-    https.get(url, (res) => {
+    https.get(url, res => {
       let data = "";
 
       if (res.statusCode === 200 && onResp({headers: res.headers})) {
@@ -28,7 +28,7 @@ const io = {
       }
       else if (onError) _error(res, "");
 
-    }).on("error", err => {_error(res, err)});
+    }).on("error", err => _error(res, err));
 
     function _error(res, err) {
       if (onError) onError({statusCode: res.statusCode, error: err});

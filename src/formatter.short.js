@@ -11,27 +11,20 @@ function compatToShort(mdnComp, shortPad) {
     desktopList = ["chrome", "edge", "firefox", "ie", "opera", "safari"],
     mobileList = ["android", "chrome_android", "firefox_android", "edge_mobile", "opera_android", "safari_ios"],
     desktopShort = ["C:", "E:", "F:", "IE:", "O:", "S:"],
-    mobileShort = ["WA:", "CA:", "FA:", "EM:", "OA:", "Si:"],
-    opts = {
-      markdown: options.markdown,
-      showDesktop: !options.mobile,
-      showMobile: !options.desktop,
-      showNotes: !options.noNotes,
-      notesEnd: options.noteend
-    };
+    mobileShort = ["WA:", "CA:", "FA:", "EM:", "OA:", "Si:"];
 
   if (options.shorthandSplit)
     out.add(prePath, ":", lf);
   else
     out.add((prePath).padEnd(shortPad), ":");
 
-  if (opts.showDesktop) {
-    out.add("%0  DT: %1", ANSI.yellow, ANSI.reset);
+  if (!options.mobile) {
+    out.add("%0  DT: ", ANSI.yellow);
     versions(desktopList, desktopShort);
   }
 
-  if (opts.showMobile) {
-    out.add("%0 MOB: %1", ANSI.yellow, ANSI.reset);
+  if (!options.desktop) {
+    out.add("%0 MOB: ", ANSI.yellow);
     versions(mobileList, mobileShort);
   }
 
@@ -40,13 +33,13 @@ function compatToShort(mdnComp, shortPad) {
       let browser = mdnComp.getBrowser(browserId), status;
       if (browser) {
         status = browser.info[0].getVersion();
-        if (browser.hasNotes()) status += ANSI.white + "*" + ANSI.reset;
+        if (browser.hasNotes()) status += ANSI.white + "*";
       }
       else {
-        status = ANSI.red + no + ANSI.reset;
+        status = ANSI.red + no;
       }
 
-      out.add(ANSI.green, ANSI.bright, shortList[index], ANSI.reset, status, " ");
+      out.add(ANSI.green, ANSI.bright, shortList[index], ANSI.white, status, " ");
     });
   }
 

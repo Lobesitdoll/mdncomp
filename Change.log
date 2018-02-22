@@ -1,6 +1,10 @@
 mdncomp
 =======
 
+1.5.0-alpha
+ADD: Can now take regular expressions as search term (must be contained in forward slashes (f.ex "/blob/g").
+IMP: Code polishing before going beta.
+
 1.4.0-alpha
 ADD: New option -h, --shorthand-split to be used with -s, --shorthand to break a line into two.
 FIX: Branch stop is now prepending path (f.ex: mdncomp blob. -> show info for api.Blob and not list its objects)
