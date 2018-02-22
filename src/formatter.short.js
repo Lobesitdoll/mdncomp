@@ -17,18 +17,21 @@ function compatToShort(mdnComp, shortPad) {
       showDesktop: !options.mobile,
       showMobile: !options.desktop,
       showNotes: !options.noNotes,
-      notesEnd: !!options.noteend
+      notesEnd: options.noteend
     };
 
-  out.add((prePath).padEnd(shortPad), ":");
+  if (options.shorthandSplit)
+    out.add(prePath, ":", lf);
+  else
+    out.add((prePath).padEnd(shortPad), ":");
 
   if (opts.showDesktop) {
-    out.add("%0  DT: %1", ANSI.fgYellow, ANSI.reset);
+    out.add("%0  DT: %1", ANSI.yellow, ANSI.reset);
     versions(desktopList, desktopShort);
   }
 
   if (opts.showMobile) {
-    out.add("%0  MOB: %1", ANSI.fgYellow, ANSI.reset);
+    out.add("%0 MOB: %1", ANSI.yellow, ANSI.reset);
     versions(mobileList, mobileShort);
   }
 
@@ -37,13 +40,13 @@ function compatToShort(mdnComp, shortPad) {
       let browser = mdnComp.getBrowser(browserId), status;
       if (browser) {
         status = browser.info[0].getVersion();
-        if (browser.hasNotes()) status += ANSI.fgWhite + "*" + ANSI.reset;
+        if (browser.hasNotes()) status += ANSI.white + "*" + ANSI.reset;
       }
       else {
-        status = ANSI.fgRed + no + ANSI.reset;
+        status = ANSI.red + no + ANSI.reset;
       }
 
-      out.add(ANSI.fgGreen, ANSI.bright, shortList[index], ANSI.reset, status, " ");
+      out.add(ANSI.green, ANSI.bright, shortList[index], ANSI.reset, status, " ");
     });
   }
 

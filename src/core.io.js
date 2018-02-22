@@ -12,17 +12,22 @@ const io = {
    */
   request: function(url, onResp, onProgress, onData, onError) {
     if (!https) https = require("https");
+    onResp = onResp || function() {return true};
+
     https.get(url, (res) => {
       let data = "";
+
       if (res.statusCode === 200 && onResp({headers: res.headers})) {
+        let length = res.headers["content-length"]|0;
         res.on("data", (d) => {
           data += d;
-          if (onProgress) onProgress(d)
+          if (onProgress) onProgress(length ? data.length / length : (data.length % 7) / 7);
         }).on("end", () => {
           onData(data);
         });
       }
       else if (onError) _error(res, "");
+
     }).on("error", err => {_error(res, err)});
 
     function _error(res, err) {
@@ -38,28 +43,19 @@ const io = {
    */
   writeAll: function(list, callback) {
     let results = [], count = list.length, errors = false;
-    list.forEach(item => {
-      io.write(item.path, item.data, _handler)
-    });
+    if (!fs) fs = require("fs");
+
+    for(let item of list) {
+      fs.writeFile(item.path, item.data, "utf8", err => {
+        _handler({path: item.path, err: err})
+      })
+    }
 
     function _handler(o) {
       results.push(o);
       if (o.err) errors = true;
       if (!--count) callback(results, errors)
     }
-  },
-
-  /**
-   *
-   * @param {string} path - holding items: {path, data}
-   * @param data - the data to write
-   * @param callback - result object with {path, err} err is non-null if any error occurred
-   */
-  write: function(path, data, callback) {
-    if (!fs) fs = require("fs");
-    fs.writeFile(path, data, "utf8", err => {
-      callback({path: path, err: err ? err : null})
-    })
   }
 
 };

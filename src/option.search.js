@@ -8,14 +8,31 @@
  */
 function search(keyword, sensitive) {
   let
-    cmp = getComparer(sensitive ? keyword : keyword.toLowerCase()),
+    cmp,
     tbl = buildTable(),
     result = [];
 
-  tbl.forEach(path => {
-    let _path = sensitive ? path : path.toLowerCase();
-    if (cmp.test(_path) && isCompat(path)) result.push(path);
-  });
+  if (keyword.endsWith(".")) {
+    keyword = _toCase(keyword).substr(0, keyword.length - 1);
+    for(let path of tbl) {
+      let _path = _toCase(path);
+      if (_path.endsWith(keyword)) {
+        result.push(path);
+        break;
+      }
+    }
+  }
+  else {
+    cmp = getComparer(_toCase(keyword));
+    tbl.forEach(path => {
+      let _path = _toCase(path);
+      if (cmp.test(_path) && isCompat(path)) result.push(path);
+    });
+  }
+
+  function _toCase(txt) {
+    return sensitive ? txt : txt.toLowerCase()
+  }
 
   return result
 }

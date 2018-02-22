@@ -1,6 +1,10 @@
 mdncomp
 =======
 
+1.4.0-alpha
+ADD: New option -h, --shorthand-split to be used with -s, --shorthand to break a line into two.
+FIX: Branch stop is now prepending path (f.ex: mdncomp blob. -> show info for api.Blob and not list its objects)
+
 1.3.3-alpha
 ADD: Outputs MD5 hashes (server/local file) in console.
 ADD: Caches MD5 file for file for faster load and compare.

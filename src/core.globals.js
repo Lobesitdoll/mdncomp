@@ -1,53 +1,67 @@
 
 const ANSI = {
-  reset: "\x1b[0m",
-  bright: "\x1b[1m",
-  dim: "\x1b[2m",
-  //italic: "\x1b[3m",
-  //underline: "\x1b[4m",
-  //blink: "\x1b[5m",
-  //reverse: "\x1b[7m",
-  //hidden: "\x1b[8m",
-  save: "\x1b7",
-  restore: "\x1b8",
-  clrToCursor: "\x1b[1K",
-  cursorUp: "\x1b[1A",
+    reset: "\x1b[0m",
+    bright: "\x1b[1m",
+    dim: "\x1b[2m",
+    //italic: "\x1b[3m",
+    //underline: "\x1b[4m",
+    //blink: "\x1b[5m",
+    //reverse: "\x1b[7m",
+    //hidden: "\x1b[8m",
 
-  fgBlack: "\x1b[30m",
-  fgRed: "\x1b[31m",
-  fgGreen: "\x1b[32m",
-  fgYellow: "\x1b[33m",
-  fgBlue: "\x1b[34m",
-  fgMagenta: "\x1b[35m",
-  fgCyan: "\x1b[36m",
-  fgWhite: "\x1b[37m"
+    //save: "\x1b7",        // doesn't work in PowerShell..
+    //restore: "\x1b8",
+    clrToCursor: "\x1b[1K", // so clear to cursor, cursor to next line,
+    cursorUp: "\x1b[1A",    //   then cursor up..
 
-  //bgBlack: "\x1b[40m",
-  //bgRed: "\x1b[41m",
-  //bgGreen: "\x1b[42m",
-  //bgYellow: "\x1b[43m",
-  //bgBlue: "\x1b[44m",
-  //bgMagenta: "\x1b[45m",
-  //bgCyan: "\x1b[46m",
-  //bgWhite: "\x1b[47m"
-};
+    black  : "\x1b[30m",
+    red    : "\x1b[31m",
+    green  : "\x1b[32m",
+    yellow : "\x1b[33m",
+    blue   : "\x1b[34m",
+    magenta: "\x1b[35m",
+    cyan   : "\x1b[36m",
+    white  : "\x1b[37m"
 
-const lf = "\r\n", yes = "Y", no = "-", yes16 = "✔", no16 = "✘", px8 = "·×·";
+    //bgBlack: "\x1b[40m",
+    //bgRed: "\x1b[41m",
+    //bgGreen: "\x1b[42m",
+    //bgYellow: "\x1b[43m",
+    //bgBlue: "\x1b[44m",
+    //bgMagenta: "\x1b[45m",
+    //bgCyan: "\x1b[46m",
+    //bgWhite: "\x1b[47m"
+  },
 
-String.prototype.center = function(length) {
+  lf = "\r\n", yes = "Y", no = "-", yes16 = "✔", no16 = "✘", px8 = "·×·",
+
+  // for update()
+  urlPrefix = "https://raw.githubusercontent.com/epistemex/data-for-mdncomp/master/";
+
+
+/**
+ * Center string containing ANSI codes.
+ * @param length
+ * @returns {string}
+ */
+String.prototype.centerAnsi = function(length) {
   let
     aLen = this.ansiLength(),
     pad = (length - aLen)>>>1,
-    str = ("".padStart(pad) + this + "".padStart(pad));
+    str = (" ".repeat(pad) + this + " ".repeat(pad));
   return " ".substr(0, length - str.ansiLength()) + str
 };
 
+/**
+ * Get length of string containing ANSI codes
+ * @returns {number}
+ */
 String.prototype.ansiLength = function() {
   return this.replace(/\x1b[^m]*m/g, "").length;
 };
 
 /**
- * Flattens the object tree into lines:
+ * Flattens the object tree into array (each item = one line):
  * f.ex: api.Blob.slice
  * @returns {Array}
  */
@@ -88,11 +102,8 @@ function listTopLevels() {
  * @returns {RegExp}
  */
 function getComparer(str) {
-  //if (!str.startsWith("*") && !str.startsWith(".")) str = "*" + str;
   if (!str.startsWith("*")) str = "*" + str;
-  if (!str.endsWith("*") && !str.endsWith(".")) str += "*";
-  //if (str.startsWith(".")) str = str.substr(1);
-  if (str.endsWith(".")) str = str.substr(0, Math.max(0, str.length - 1));
+  if (!str.endsWith("*")) str += "*";
   return new RegExp("^" + str.split("*").join(".*") + "$")
 }
 
@@ -186,19 +197,15 @@ function breakLine(s, max) {
 
 // we'll go char-by-char here, regex can't be used for this afaik..
 function indent(txt) {
-  let out = "", level = 0, i, ch;
-  for(i = 0; i < txt.length; i++) {
-    ch = txt[i];
-    if (ch === ",") {
-      out += ch + lf + padding();
-    }
-    else if (ch === "{") {
-      level++;
-      out += ch + lf + padding();
+  let out = "", level = 0;
+  for (let ch of txt) {
+    if (ch === "," || ch === "{") {
+      if (ch === "{") level++;
+      out += ch + _nextIndent();
     }
     else if (ch === "}") {
       level--;
-      out += lf + padding() + ch;
+      out += _nextIndent() + ch;
     }
     else if (ch === ":") {
       out += ch + " ";
@@ -206,9 +213,18 @@ function indent(txt) {
     else out += ch;
   }
 
-  function padding() {
-    return ("").padStart(level<<1, " ")
+  function _nextIndent() {
+    return lf + "  ".repeat(level)
   }
 
   return out
+}
+
+function getMaxLength(list) {
+  let max = 0;
+  list.forEach(e => {
+    let len = (prePathFromPath(e) + nameFromPath(e)).length;
+    if (len > max) max = len;
+  });
+  return max
 }

@@ -7,30 +7,31 @@ function update(force) {
     filePathDat = filePathRoot + "json",
     filePathMD5 = filePathRoot + "md5";
 
-  let count = 0;
-
-  log(ANSI.fgGreen + ANSI.bright+ "Connecting...");
+  log(ANSI.yellow + "Connecting...");
 
   if (force) serverData();
   else {
     serverMD5(md5 => {
       let md5f = getCachedMD5(filePathMD5, filePathDat);
-      log((md5 === md5f ? ANSI.fgCyan : ANSI.fgYellow) + "Server MD5: " + md5 + lf + "File   MD5: " + md5f + lf);
+
+      clrLine();
+      log(ANSI.cursorUp + (md5 === md5f ? ANSI.cyan : ANSI.yellow) + "Server MD5: " + md5 + lf + "File   MD5: " + md5f + lf);
       if (md5 === md5f)
-        log(clr + ANSI.fgWhite + "No change in data - cancelling (or use the --fupdate option).");
+        log(clr + ANSI.white + "No change in data - cancelling (or use the --fupdate option).");
       else
         serverData();
     });
   }
 
   function serverData() {
-    io.request("https://raw.githubusercontent.com/epistemex/data-for-mdncomp/master/data.json",
+    io.request(urlPrefix + "data.json",
       () => {
         clrLine();
         return true
       },
-      () => {
-        log(clr + ANSI.fgWhite + "Downloading data " + ANSI.fgGreen + ANSI.bright + (".").repeat((count += 0.25)|0) + ANSI.fgBlack);
+      (pct) => {
+        let width = 50, prog = Math.round(width * pct), rem = width - prog;
+        log(clr + ANSI.white + "Downloading data " + ANSI.white + "[" + ANSI.green + ANSI.bright + "#".repeat(prog) + " ".repeat(rem) + ANSI.white + "]" + ANSI.black);
       },
       data => {
         io.writeAll([{path: filePathDat, data: data}, {path: filePathMD5, data: calcMD5(data)}], (results, hasErrors) => {
@@ -39,7 +40,7 @@ function update(force) {
               if (error.err) logErr("An error occurred writing data to file. Please retry: " + lf + error.path + ": " + error.err);
             })
           else
-            log(clr + ANSI.fgWhite + ("Updated with " + data.length + " bytes. All systems are GO!").padEnd(72, " "));
+            log(clr + ANSI.white + ("Updated with " + data.length + " bytes. All systems are GO!").padEnd(72, " "));
         })
       },
       err => {
@@ -52,14 +53,13 @@ function update(force) {
   }
 
   function logErr(txt) {
-    log(clr + ANSI.fgRed + txt + ANSI.fgWhite)
+    log(clr + ANSI.red + txt + ANSI.white)
   }
 }
 
 function serverMD5(callback) {
-  io.request("https://raw.githubusercontent.com/epistemex/data-for-mdncomp/master/data.md5",
-    () => {return true}, null, callback, (err) => {
-      log("An error occurred:", err.statusCode, err.error)
+  io.request(urlPrefix + "data.md5", null, null, callback, (err) => {
+    log("An error occurred:", err.statusCode, err.error)
   })
 }
 
@@ -80,7 +80,7 @@ function getCachedMD5(path, path2) {
 function calcFileMD5(path) {  // todo this can go in the future (v0.3.3a)
   if (!fs) fs = require("fs");
   try {
-    return calcMD5(fs.readFileSync(path));
+    return calcMD5(fs.readFileSync(path)) + "";
   } catch(err) {return ""}
 }
 

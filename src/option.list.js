@@ -4,7 +4,9 @@
  * @example
  * mdncomp -l .
  * mdncomp -l javascript.builtins
- * mdncomp -l javascript.builtins.NUmber
+ * mdncomp -l javascript.builtins.Number
+ * mdncomp -l experimental
+ * mdncomp -l deprecated
  *
  * @param prefix
  * @param sensitive

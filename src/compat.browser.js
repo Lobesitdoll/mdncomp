@@ -22,22 +22,22 @@ function Browser(obj, name) {
 Browser.prototype = {
 
   hasNotes: function() {
-    for(let i = 0; i < this.info.length; i++) {
-      if (this.info[i].notes.length) return true;
+    for(let info of this.info) {
+      if (info.notes.length) return true;
     }
     return false
   },
 
   hasFlags: function() {
-    for(let i = 0; i < this.info.length; i++) {
-      if (this.info[i].flags.length) return true;
+    for(let info of this.info) {
+      if (info.flags.length) return true;
     }
     return false
   },
 
   hasPrefix: function() {
-    for(let i = 0; i < this.info.length; i++) {
-      if (this.info[i].prefix.length) return true;
+    for(let info of this.info) {
+      if (info.prefix.length) return true;
     }
     return false
   },

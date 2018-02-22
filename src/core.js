@@ -16,15 +16,21 @@ const
   log = console.log.bind(console);
 
 let
-  mdn, //require("mdn-browser-compat-data"),
-  shortPad = 2;
+  mdn,
+  shortPad = 1;
+
+/*------------------------------------------------------------------------------------------------------------------*
+
+    INIT
+
+*------------------------------------------------------------------------------------------------------------------*/
 
 function init() {
-
-  // Update
+  // Update takeover
   if (args.length === 3 && (args[2] === "--update" || args[2] === "--fupdate")) {
     update(args[2] === "--fupdate");
   }
+  // Regular options
   else {
     options
       .version(version, "-v, --version")
@@ -39,6 +45,7 @@ function init() {
       .option("-c, --case-sensitive", "Search in case-sensitive mode")
       .option("-a, --show-all", "If search results in more than entry, show info for all.")
       .option("-s, --shorthand", "Show compatibility as shorthand with multiple results")
+      .option("-h, --shorthand-split", "Split a shorthand line into two lines (use with -s)")
       .option("-b, --no-colors", "Don't use colors in output", false)
       .option("--max-chars <width>", "Max number of chars per line before wrap.", 72)
       .option("-N, --no-notes", "Don't show notes")
@@ -48,25 +55,19 @@ function init() {
       .option("--raw", "Output the raw JSON data.")
       .option("--update, --fupdate", "Update MDN BCD data from remote (--fupdate forced update).")
       .action(go)
-      //    .on("--help", () => {
-      //      log();
-      //      log("  Examples:");
-      //      log("   mdncomp arcTo                     show information for arcTo");
-      //      log("   mdncomp arc -a                    show information for all containing \"arc\"");
-      //      log("   mdncomp arc                       list all objects containing \"arc\"");
-      //      log("   mdncomp *html*toblob*             will find HTMLCanvasElement.toBlob");
-      //      log("   mdncomp --list .                  list all top-levels");
-      //      log("   mdncomp *sharedar* -o info.svg    export as svg");
-      //      log()
-      //    })
-      //    .on("--remote", () => {
-      //      log("updating...");
-      //    })
+          .on("--help", () => {
+            log();
+            log("  Examples:");
+            log("   mdncomp arcTo                     show information for arcTo");
+            log("   mdncomp *html*toblob*             will find HTMLCanvasElement.toBlob");
+            log("   mdncomp --list .                  list all top-levels");
+            log("   mdncomp *sharedar* -o info.svg    export as svg");
+            log()
+          })
       .parse(args);
     if (!options.args.length) options.help();
   }
-
-}
+} // :init
 
 function outInfo(txt) {
   if (Array.isArray(txt)) txt = txt.join(lf);
@@ -81,19 +82,18 @@ function outStore(txt, noFile) {
   }
 }
 
-/*
-  Main call - invokes based on options
- */
+/*------------------------------------------------------------------------------------------------------------------*
+
+    MAIN
+
+*------------------------------------------------------------------------------------------------------------------*/
+
 function go(path) {
 
   mdn = require("../data/data.json");
 
-  if (options.update) {
-    log("Updating...");
-    return
-  }
-
-  if (options.out && options.type === "ansi") options.type = getExt(options.out || ".txt");
+  if (options.out && options.type === "ansi")
+    options.type = getExt(options.out || ".txt");
 
   // invoke boring mode
   if (!options.colors || options.markdown || options.type === "txt") {
@@ -111,12 +111,11 @@ function go(path) {
     else {
       let result = list(path, options.caseSensitive);
       outInfo(result);
-      //outInfo("Found " + result.length + " items.")
     }
   }
 
   /*
-    Main use: list all based on keyword
+    Main use: show info based on keyword
    */
   else {
     let result = search(path, options.caseSensitive);
@@ -124,9 +123,9 @@ function go(path) {
     if (!result.length) outInfo("Not found.");
     else {
       if (result.length === 1 || (options.showAll && (options.type !== "svg" || options.raw))) {
-        if (options.shorthand) shortPad = getPadLength(result);
+        if (options.shorthand) shortPad = getMaxLength(result);
         result.forEach(entry => {outResult(entry)});
-        if (options.type !== "svg") outStore(ANSI.fgMagenta + "Data from MDN - `npm i -g mdncomp` by epistemex" + ANSI.fgWhite + lf);
+        if (options.type !== "svg") outStore(ANSI.magenta + "Data from MDN - `npm i -g mdncomp` by epistemex" + ANSI.white + lf);
         commit();
       }
       else {
@@ -164,7 +163,7 @@ function go(path) {
             output: process.stdout
           });
 
-        rl.question(ANSI.fgYellow + "A file exist with this name. Overwrite (y, default no)? " + ANSI.fgWhite, resp => {
+        rl.question(ANSI.yellow + "A file exist with this name. Overwrite (y, default no)? " + ANSI.white, resp => {
           if (resp.toLowerCase() === "y" || resp.toLowerCase() === "yes") _save(function() {
             rl.close();
           });
@@ -184,15 +183,6 @@ function go(path) {
         if (callback) callback();
       })
     }
-  }
-
-  function getPadLength(list) {
-    let max = 0;
-    list.forEach(e => {
-      let len = (prePathFromPath(e) + nameFromPath(e)).length;
-      if (len > max) max = len;
-    });
-    return ++max
   }
 
 }
