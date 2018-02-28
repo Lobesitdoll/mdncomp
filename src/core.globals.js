@@ -64,13 +64,19 @@ function buildTable() {
     result = [],
     keys = listTopLevels();
 
-  // Iterates over every level in the mdn object
+  // Iterates over every level in the mdn object (max 5 levels)
   keys.forEach(key1 => {
     if (key1 !== "__compat") result.push(key1);
     Object.keys(mdn[key1]).forEach(key2 => {
       if (key2 !== "__compat") result.push(key1 + "." + key2);
       Object.keys(mdn[key1][key2]).forEach(key3 => {
         if (key3 !== "__compat") result.push(key1 + "." + key2 + "." + key3);
+        Object.keys(mdn[key1][key2][key3]).forEach(key4 => {
+          if (key4 !== "__compat") result.push(key1 + "." + key2 + "." + key3 + "." + key4);
+          Object.keys(mdn[key1][key2][key3][key4]).forEach(key5 => {
+            if (key5 !== "__compat") result.push(key1 + "." + key2 + "." + key3 + "." + key4 + "." + key5);
+          });
+        });
       });
     });
   });
