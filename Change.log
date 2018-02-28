@@ -1,6 +1,9 @@
 mdncomp
 =======
 
+1.5.2-alpha
+HOT: --update still updated when md5 was the same.
+
 1.5.1-alpha
 HOT: Too narrow drilling on branch levels. HOTFIX before going recursive (considered, not final)
 FIX: MD5 check color output

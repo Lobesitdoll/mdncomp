@@ -15,7 +15,7 @@ function update(force, checkOnly) {
       let md5f = getCachedMD5(filePathMD5, filePathDat);
       clrLine();
       log(clr + ANSI.white + (md5 === md5f ? "No change in data - cancelling (or use the --fupdate option)." : "Update is available (" + md5 + ")."));
-      if (!checkOnly) serverData();
+      if (!(checkOnly || md5 === md5f)) serverData();
     });
   }
 
