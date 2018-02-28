@@ -13,13 +13,9 @@ function update(force, checkOnly) {
   else {
     serverMD5(md5 => {
       let md5f = getCachedMD5(filePathMD5, filePathDat);
-
       clrLine();
-      log(ANSI.cursorUp + (md5 === md5f ? ANSI.cyan : ANSI.yellow) + "Server MD5: " + md5 + lf + "File   MD5: " + md5f + lf);
-      if (md5 === md5f)
-        log(clr + ANSI.white + "No change in data - cancelling (or use the --fupdate option).");
-      else
-        if (!checkOnly) serverData();
+      log(clr + ANSI.white + (md5 === md5f ? "No change in data - cancelling (or use the --fupdate option)." : "Update is available (" + md5 + ")."));
+      if (!checkOnly) serverData();
     });
   }
 

@@ -30,7 +30,7 @@ Make sure to have [Node.js](https://nodejs.org/en/) installed, then get `mdncomp
 
     $ npm i -g mdncomp
 
-This includes a precompiled dataset which can be updated at any time (see [options](https://github.com/epistemex/mdncomp/wiki/Options-for-mdncomp#--update---fupdate)).
+This includes a precompiled dataset which can be updated at any time (see [options](https://github.com/epistemex/mdncomp/wiki/Options-for-mdncomp#--update---fupdate---cupdate)).
 
 
 Examples

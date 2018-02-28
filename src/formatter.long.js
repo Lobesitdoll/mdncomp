@@ -11,10 +11,7 @@ function compatToLong(mdnComp) {
     refs = ["¹", "²", "³", "ª", "º", "^", "`"],
     ref = 0,
     notes = [],
-    opts = {
-      desktop: !options.mobile,
-      mobile: !options.desktop
-    };
+    line = " %0----------+-----------+-----------+-----------+-----------+-----------";
 
   out.addLine(ANSI.reset);
   if (options.markdown && mdnComp.url.length) {
@@ -25,37 +22,39 @@ function compatToLong(mdnComp) {
     out.addLine(" ", mdnComp.url ? mdnComp.url : "-", lf);
   }
 
-  if (opts.desktop) {
+  // Show desktop info?
+  if (!options.mobile) {
     out.addLine(" %0DESKTOP:", ANSI.yellow);
     out.addLine(" %0Chrome    %1|%0 Edge      %1|%0 Firefox   %1|%0 IE        %1|%0 Opera     %1|%0 Safari%1", ANSI.green, ANSI.white);
-    out.addLine(" %0----------+-----------+-----------+-----------+-----------+-----------", ANSI.white);
+    out.addLine(line, ANSI.white);
 
     //out.add(" ");
     versions(desktopList);
     out.addLine(lf);
 
     // insert notes
-    if (!options.noteend && options.notes && notes.length) out.addLine(notes.join(""));
+    if (!options.noteend && options.notes && notes.length)
+      out.addLine(notes.join(""));
 
     // reset for next section
     if (!options.noteend) {
       notes = [];
       ref = 0;
     }
+  } // :desktop
 
-  }
-
-  if (opts.mobile) {
+  // Show mobile info?
+  if (!options.desktop) {
     out.addLine(" %0MOBILE:", ANSI.yellow);
     out.addLine(" %0Webview/A %1|%0 Chrome/A  %1|%0 Edge/mob  %1|%0 Firefox/A %1|%0 Opera/A   %1|%0 Safari/iOS", ANSI.green , ANSI.white);
-    out.addLine(" %0----------+-----------+-----------+-----------+-----------+-----------", ANSI.white);
+    out.addLine(line, ANSI.white);
 
     //out.add(" ");
     versions(mobileList);
     out.addLine(lf);
 
     if (options.notes && notes.length) out.addLine(notes.join(""));
-  }
+  } // :mobile
 
   function versions(list) {
     let prefixList = "";
