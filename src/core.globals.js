@@ -88,7 +88,9 @@ function buildTable() {
  * @returns {string[]}
  */
 function listTopLevels() {
-  return Object.keys(mdn)
+  let keys = Object.keys(mdn), i = keys.indexOf("browsers");
+  if (i >= 0) keys.splice(i, 1);
+  return keys
 }
 
 function listBrowsers() {

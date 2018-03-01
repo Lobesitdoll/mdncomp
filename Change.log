@@ -1,6 +1,9 @@
 mdncomp
 =======
 
+1.7.1-alpha
+FIX: Should not list "browsers" via --list.
+
 1.7.0-alpha
 ADD: Browser information via new option --browser
 
