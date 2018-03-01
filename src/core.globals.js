@@ -56,32 +56,28 @@ String.prototype.ansiLength = function() {
 
 /**
  * Flattens the object tree into array (each item = one line):
- * f.ex: api.Blob.slice
+ * f.ex: mdn["api"]["Blob"]["slice"] => "api.Blob.slice"
  * @returns {Array}
  */
 function buildTable() {
-  const
-    result = [],
-    keys = listTopLevels();
+  const result = [];
 
-  // Iterates over every level in the mdn object (max 5 levels)
-  keys.forEach(key1 => {
-    if (key1 !== "__compat") result.push(key1);
-    Object.keys(mdn[key1]).forEach(key2 => {
-      if (key2 !== "__compat") result.push(key1 + "." + key2);
-      Object.keys(mdn[key1][key2]).forEach(key3 => {
-        if (key3 !== "__compat") result.push(key1 + "." + key2 + "." + key3);
-        Object.keys(mdn[key1][key2][key3]).forEach(key4 => {
-          if (key4 !== "__compat") result.push(key1 + "." + key2 + "." + key3 + "." + key4);
-          Object.keys(mdn[key1][key2][key3][key4]).forEach(key5 => {
-            if (key5 !== "__compat") result.push(key1 + "." + key2 + "." + key3 + "." + key4 + "." + key5);
-          });
-        });
+  listTopLevels()
+    .forEach(key => {_iterateNode(mdn, key, key)});
+
+  function _iterateNode(node, inKey, branch) {
+    const subNode = node[inKey];
+    if (typeof subNode === "object") {
+      Object.keys(subNode).forEach(key => {
+        if (key !== "__compat") {
+          result.push(branch + "." + key);
+          _iterateNode(subNode, key, branch + "." + key);
+        }
       });
-    });
-  });
+    }
+  }
 
-  return result.sort();
+  return result; //.sort()
 }
 
 /**
@@ -90,7 +86,7 @@ function buildTable() {
  * @returns {string[]}
  */
 function listTopLevels() {
-  return Object.keys(mdn);
+  return Object.keys(mdn)
 }
 
 /**
@@ -117,7 +113,8 @@ function getComparer(str) {
 
   try {
     regex = new RegExp(str, options);
-  } catch(err) {
+  }
+  catch(err) {
     log("Invalid regular expression:", err.message);
     process.exit(-1);
   }
@@ -176,7 +173,7 @@ function prePathFromPath(path) {
  */
 function isCompat(path) {
   let obj = getPathAsObject(path);
-  return obj ? typeof obj.__compat !== "undefined" : false
+  return obj ? typeof obj.__compat === "object" : false
 }
 
 /**

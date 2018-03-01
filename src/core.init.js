@@ -21,6 +21,7 @@ function init() {
       .option("-m, --mobile", "Show mobile devices only")
       .option("-c, --case-sensitive", "Search in case-sensitive mode")
       .option("-a, --show-all", "If search results in more than entry, show info for all.")
+      .option("-i, --index <index>", "Show this index from a multiple result list.", -1)
       .option("-s, --shorthand", "Show compatibility as shorthand with multiple results")
       .option("-h, --shorthand-split", "Split a shorthand line into two lines (use with -s)")
       .option("-b, --no-colors", "Don't use colors in output")
@@ -35,10 +36,10 @@ function init() {
           .on("--help", () => {
             log();
             log("  Examples:");
-            log("   mdncomp arcTo                     show information for arcTo");
-            log("   mdncomp *html*toblob*             will find HTMLCanvasElement.toBlob");
-            log("   mdncomp --list .                  list all top-levels");
-            log("   mdncomp *sharedar* -o info.svg    export as svg");
+            log("    mdncomp arcTo                   show information for arcTo");
+            log("    mdncomp toblob.                 will find HTMLCanvasElement.toBlob");
+            log("    mdncomp --list .                list all top-levels");
+            log("    mdncomp blob*der -o info.svg    export as svg");
             log()
           })
       .parse(args);
@@ -103,14 +104,19 @@ function go(path) {
 
     if (!result.length) outInfo("Not found.");
     else {
-      if (result.length === 1 || (options.showAll && (options.type !== "svg" || options.raw))) {
+      if (result.length === 1 || (options.index >= 0 && options.index < result.length) || (options.showAll && (options.type !== "svg" || options.raw))) {
         if (options.shorthand) shortPad = getMaxLength(result);
+        if (options.index >= 0 && options.index < result.length) result = result.splice(options.index, 1);
         result.forEach(entry => {outResult(entry)});
         if (options.type !== "svg") outStore(ANSI.magenta + "Data from MDN - `npm i -g mdncomp` by epistemex" + ANSI.white + lf);
         commit();
       }
       else {
-        outInfo(result);
+        let pad = (result.length + "").length;
+        result.forEach((item, i) => {
+          outInfo(ANSI.yellow + "[" + ANSI.green +(i + "").padStart(pad) + ANSI.yellow + "] " + ANSI.white + item);
+        });
+        //outInfo(result);
       }
     }
   }

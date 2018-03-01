@@ -8,7 +8,7 @@ function compatToLong(mdnComp) {
     out = new Output(0),
     desktopList = ["chrome", "edge", "firefox", "ie", "opera", "safari"],
     mobileList = ["webview_android", "chrome_android", "edge_mobile", "firefox_android", "opera_android", "safari_ios"],
-    refs = ["¹", "²", "³", "ª", "º", "^", "`"],
+    refs = ["¹", "²", "³", "ª", "º", "^", "`", "'", "\""],
     ref = 0,
     notes = [],
     line = " %0----------+-----------+-----------+-----------+-----------+-----------";

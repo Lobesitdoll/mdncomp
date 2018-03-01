@@ -37,24 +37,20 @@ Examples
 --------
 
 ```text
-$ mdncomp html*toblob
+$ mdncomp off*toblob
 
-  HTMLCanvasElement.toBlob (On Standard Track)
-  https://developer.mozilla.org/docs/Web/API/HTMLCanvasElement/toBlob
+ OffscreenCanvas.toBlob (EXPERIMENTAL, On Standard Track)
+ https://developer.mozilla.org/docs/Web/API/OffscreenCanvas/toBlob
 
-  DESKTOP:
-  Chrome    | Edge      | Firefox   | IE        | Opera     | Safari
-  ----------+-----------+-----------+-----------+-----------+------------
-      50    |     -     |     19    |   10·×·   |     Y     |     Y¹
+ DESKTOP:
+ Chrome    | Edge      | Firefox   | IE        | Opera     | Safari
+ ----------+-----------+-----------+-----------+-----------+-----------
+     -     |     ?     |     46    |     -     |     -     |     -
 
-·×·) Prefix: ms
-¹)
-- See WebKit bug 71270.
-
-  MOBILE:
-  Webview/A | Chrome/A  | Edge      | Firefox/A | Opera/A   | Safari/iOS
-  ----------+-----------+-----------+-----------+-----------+------------
-      -     |     -     |     -     |     4     |     -     |     -
+ MOBILE:
+ Webview/A | Chrome/A  | Edge/mob  | Firefox/A | Opera/A   | Safari/iOS
+ ----------+-----------+-----------+-----------+-----------+-----------
+     -     |     -     |     ?     |     46    |     -     |     -
 
 Data from MDN - `npm i -g mdncomp` by epistemex
 ```
@@ -62,7 +58,7 @@ Data from MDN - `npm i -g mdncomp` by epistemex
 Export as a SVG file:
 
 ```text
-$ mdncomp html*toblob -o toBlob.svg
+$ mdncomp off*toblob -o toBlob.svg
 ```
 
 ![SVG Example](https://i.imgur.com/YssRnNs.png)
