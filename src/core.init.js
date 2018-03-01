@@ -8,12 +8,11 @@ function init() {
   }
   // Regular options
   else {
-    options = require("commander");
-    options
+    (options = require("commander"))
       .version(version, "-v, --version")
-      .usage('[options] <apipath>')
+      .usage('[options] <feature>')
       .description("Get MDN Browser Compatibility data." + lf + "  Version: " + version + lf + "  (c) 2018 K3N / epistemex.com")
-      .option("-l, --list", "List paths starting with the given value or . for top-level")
+      .option("-l, --list", "List paths starting with the given value or '.' for top-level")
       .option("-o, --out <path>", "Save information to file. Extension for type, or --type.")
       .option("-t, --type <type>", "Output format (ansi, txt, svg)", "ansi")
       .option("-x, --overwrite", "Overwrites an existing file with --out option.")
@@ -30,6 +29,7 @@ function init() {
       .option("-e, --noteend", "Show notes (-n) at end instead of in sections (text)")
       .option("-f, --markdown", "Format link as markdown and turns off colors.")
       .option("-w, --width <width>", "Used with -o, Set width of image", 800)
+      .option("--browser", "Show information about this browser, or if '.' list.")
       .option("--raw", "Output the raw JSON data.")
       .option("--update, --fupdate, --cupdate", "Update BCD from remote (--fupdate=force, --cupdate=check).")
       .action(go)
@@ -82,17 +82,30 @@ function go(path) {
   if (!options.colors || options.markdown || options.type === "txt")
     Object.keys(ANSI).forEach(color => {ANSI[color] = ""});
 
-  // list tree data?
+  /*
+      List tree data?
+   */
   if (options.list) {
     if (path === ".") {
-      outInfo(listTopLevels());
+      outInfo(listTopLevels())
     }
     else if (["deprecated", "experimental"].indexOf(path) >= 0) {
       outInfo(listOnStatus(path));
     }
     else {
-      let result = list(path, options.caseSensitive);
-      outInfo(result);
+      outInfo(list(path, options.caseSensitive));
+    }
+  }
+
+  /*
+      List browser?
+   */
+  else if (options.browser) {
+    if (path === ".") {
+      outInfo(listBrowsers())
+    }
+    else {
+      outInfo(listBrowser(path));
     }
   }
 

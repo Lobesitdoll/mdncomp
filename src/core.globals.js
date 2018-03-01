@@ -10,12 +10,14 @@ const
 
     black  : "\x1b[30m",
     red    : "\x1b[31m",
-    green  : "\x1b[32m",
+    green  : "\x1b[32;1m",
     yellow : "\x1b[33m",
     blue   : "\x1b[34m",
     magenta: "\x1b[35m",
     cyan   : "\x1b[36m",
-    white  : "\x1b[37m"
+    white  : "\x1b[37m",
+    gray   : "\x1b[30;1m"
+    //orange : "\x1b[38;2;202m" \x1b[38;2;r;g;bm
   },
 
   lf = "\r\n", yes = "Y", no = "-", yes16 = "✔", no16 = "✘", px8 = "·×·",
@@ -63,7 +65,7 @@ function buildTable() {
   const result = [];
 
   listTopLevels()
-    .forEach(key => {_iterateNode(mdn, key, key)});
+    .forEach(key => {if (key !== "browsers") _iterateNode(mdn, key, key)});
 
   function _iterateNode(node, inKey, branch) {
     const subNode = node[inKey];
@@ -87,6 +89,10 @@ function buildTable() {
  */
 function listTopLevels() {
   return Object.keys(mdn)
+}
+
+function listBrowsers() {
+  return Object.keys(mdn.browsers)
 }
 
 /**

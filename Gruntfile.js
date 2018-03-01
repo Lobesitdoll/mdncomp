@@ -16,7 +16,8 @@ module.exports = function(grunt) {
             "src/core.io.js",
             "src/core.update.js",
             "src/option.search.js",
-            "src/option.list.js", "" +
+            "src/option.list.js",
+            "src/option.browser.js",
             "src/formatter.long.js",
             "src/formatter.short.js",
             "src/formatter.svg.js",

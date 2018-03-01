@@ -1,13 +1,15 @@
 mdncomp
 =======
 
+1.7.0-alpha
+ADD: Browser information via new option --browser
+
 1.6.0-alpha
 ADD: -i, --index option and result list with prefixed indices.
 CHG: Internal flattener rewritten to be recursive, faster and now uses less memory.
 FIX: Internal flattener was too greedy but also too narrow in previous (experimental) impl.
      See hotfix 1.5.1a; +Object.keys() incl. strings as objects (each char = key..).
 CHG: Now using grunt task to minimize JS - replaces internal task.
-TDO: Wrapper objects to be phased out to deal directly with changes in __compat (also combine with issue 2+3).
 
 1.5.2-alpha
 HOT: --update still updated when md5 was the same.

@@ -24,7 +24,7 @@ function update(force, checkOnly) {
       () => !clrLine(),
       pct => {
         let width = 50, prog = Math.round(width * pct), rem = width - prog;
-        log(clr + ANSI.white + "Downloading data " + ANSI.white + "[" + ANSI.green + ANSI.bright + "#".repeat(prog) + " ".repeat(rem) + ANSI.white + "]" + ANSI.black);
+        log(clr + ANSI.white + "Downloading data " + ANSI.white + "[" + ANSI.green + "#".repeat(prog) + " ".repeat(rem) + ANSI.white + "]" + ANSI.reset + ANSI.black);
       },
       data => {
         io.writeAll([{path: filePathDat, data: data}, {path: filePathMD5, data: calcMD5(data)}], (results, hasErrors) => {
