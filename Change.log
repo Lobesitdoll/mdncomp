@@ -1,6 +1,9 @@
 mdncomp
 =======
 
+1.7.6-alpha
+IMP: Output formatting for new --browser option (colors, alignment)
+
 1.7.5-alpha
 ADD: Browser status search added to --browser option (example: mdncomp --browser current).
 IMP: Dynamically obtain unique browser statuses
