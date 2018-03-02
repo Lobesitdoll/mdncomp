@@ -102,7 +102,9 @@ function go(path) {
    */
   else if (options.browser) {
     if (path === ".") {
-      outInfo(listBrowsers())
+      outInfo(listBrowsers());
+      outInfo(lf + "Valid statuses:");
+      outInfo(ANSI.green + getBrowserStatusList().join(", ") + ANSI.white);
     }
     else {
       outInfo(listBrowser(path));

@@ -16,6 +16,7 @@ Features
 - Search with wildcards, case-insensitive or by option case-sensitive
 - Or search using regular expressions
 - Get shorthand text output for a single or multiple results
+- Get browser release and status information
 - Format text links in markdown format for easy copy and paste to forums/QA etc.
 - Show just desktop or mobile devices' status
 - Get, or by option ignore, footnotes per browser
@@ -93,6 +94,20 @@ $ mdncomp.js api.blob. --raw
     "mdn_url": "https: //developer.mozilla.org/docs/Web/API/Blob",
     "support": {
       ...
+```
+
+**List currently active browsers:**
+
+```text
+mdncomp --browser current
+->
+chrome           Version: 64  Released: 2018-01-23
+edge             Version: 16  Released: 2017-09-26
+edge_mobile      Version: 16  Released: -
+firefox          Version: 57  Released: 2017-11-14
+firefox_android  Version: 57  Released: 2017-11-28
+ie               Version: 11  Released: 2013-10-17
+...etc.
 ```
 
 Wiki
