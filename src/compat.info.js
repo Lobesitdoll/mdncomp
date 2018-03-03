@@ -5,14 +5,18 @@
  * @constructor
  */
 function Info(obj) {
-  this.prefix = obj.prefix || "";
   this.added = this.toStatus(obj.version_added);
   this.removed = this.toStatus(obj.version_removed);
   this.notes = obj.notes ? (Array.isArray(obj.notes) ? obj.notes : [obj.notes]) : [];
   this.partial = !!obj.partial_implementation;
   this.altName = obj.alternative_name || "";
-  this.desc = obj.description || "";              //check for future use
-  this.flags = obj.flags || [];
+  this.flags = obj.flags || []; // todo add to notes
+
+  if (obj.prefix) this.notes.unshift("Prefix: " + obj.prefix);
+
+  this.flags.forEach(flag => {
+    this.notes.push(breakLine(cleanHTML(this.flagToString(flag), true), options.maxWidth))
+  });
 }
 
 Info.prototype = {
@@ -23,13 +27,13 @@ Info.prototype = {
 
   flagToString: function(flag) {
     switch(flag.type) {
-      case "preference": return line("- Behind flag ");
-      case "compile_flag": return line("- Compile with ");
-      case "runtime_flag": return line("- Run with ");
+      case "preference": return line("Behind flag " + ANSI.cyan);
+      case "compile_flag": return line("Compile with " + ANSI.cyan);
+      case "runtime_flag": return line("Run with " + ANSI.cyan);
     }
 
     function line(prefix) {
-      return prefix + flag.name + (flag.value_to_set ? " set to " + flag.value_to_set + "" : "") + ".";
+      return prefix + flag.name + ANSI.white + (flag.value_to_set ? " set to " + flag.value_to_set + "" : "") + ".";
     }
 
     return ""
@@ -41,32 +45,29 @@ Info.prototype = {
    * @returns {string}
    */
   toString: function(ref) {
-    const prefix = (ref ? ref + ") " : "") + (isNaN(this.added) ? "" : this.getVersion() + ":") + lf;
-    let out = new Output(0), hasInfo = false;
+    let
+      prefix = (ref ? ref + ") " : "") + (isNaN(this.added) ? "" : this.getVersion() + ": "),
+      indent = "",
+      out = new Output(0), hasInfo = false;
 
-    if (this.prefix.length) {
-      hasInfo = true;
-      out.addLine("- Prefix: " + this.prefix);
+//    if (this.altName.length) {
+//      hasInfo = true;
+//      out.addLine("- Alternative name: " + this.altName);
+//    }
+//
+//    if (this.partial) {
+//      hasInfo = true;
+//      out.addLine("- Is a partial implementation");
+//    }
+
+    if (this.notes.length > 1) {
+      prefix += lf;
+      indent = "- ";
     }
-
-    if (this.altName.length) {
-      hasInfo = true;
-      out.addLine("- Alternative name: " + this.altName);
-    }
-
-    if (this.partial) {
-      hasInfo = true;
-      out.addLine("- Is a partial implementation");
-    }
-
-    this.flags.forEach(flag => {
-      hasInfo = true;
-      out.addLine(breakLine(cleanHTML(this.flagToString(flag)), options.maxWidth))
-    });
 
     this.notes.forEach(note => {
       hasInfo = true;
-      out.addLine(breakLine(cleanHTML("- " + note), options.maxWidth))
+      out.addLine(breakLine(cleanHTML(indent + note, true), options.maxWidth))
     });
 
     return hasInfo ? prefix + out.toString() : ""

@@ -14,12 +14,19 @@ function compatToLong(mdnComp) {
     line = " %0----------+-----------+-----------+-----------+-----------+-----------";
 
   out.addLine(ANSI.reset);
+
+  // url
   if (options.markdown && mdnComp.url.length) {
     out.addLine(" [`%0%1`](%2) %3" + lf, mdnComp.prePath, mdnComp.name, mdnComp.url, mdnComp.getStatus());
   }
   else {
     out.addLine(" %0%1%2%3%4 %5", ANSI.yellow, mdnComp.prePath, ANSI.cyan, mdnComp.name, ANSI.white, mdnComp.getStatus());
     out.addLine(" ", mdnComp.url ? mdnComp.url : "-", lf);
+  }
+
+  // description
+  if (mdnComp.description) {
+    out.addLine(breakLine(cleanHTML(mdnComp.description), options.maxWidth), lf)
   }
 
   // Show desktop info?
@@ -60,24 +67,24 @@ function compatToLong(mdnComp) {
     let prefixList = "";
 
     list.forEach(browserId => {
-      let browser = mdnComp.getBrowser(browserId), status, prefix;
+      let browser = mdnComp.getBrowser(browserId), status; //, prefix;
 
       if (browser) {
         status = browser.info[0].getVersion();
-        prefix = browser.hasPrefix();
+        //prefix = browser.prefix;
 
-        if (prefix) {
-          if (prefixList.length) prefixList += ", " + browser.info[0].prefix;
-          else prefixList = px8 + ") Prefix: " + browser.info[0].prefix;
-        }
+//        if (prefix.length) {
+//          if (prefixList.length) prefixList += ", " + prefix; //browser.info[0].prefix;
+//          else prefixList = px8 + ") Prefix: " + prefix;
+//        }
 
         if (browser.hasNotes()) {
           status += ANSI.white + (options.notes ? refs[ref] : "*");
           notes.push(browser.getNotes(refs[ref]));
           ref = ++ref % refs.length; // cuz, running out of super chars in UTF8 single bytes...
         }
-        else if (browser.hasPrefix())
-          status += ANSI.white + px8;
+//        else if (browser.hasPrefix())
+//          status += ANSI.white + px8;
 
         if (status === "?")
           status = ANSI.yellow + "?";
@@ -89,7 +96,7 @@ function compatToLong(mdnComp) {
       out.add("%0" + status.centerAnsi(11) + ANSI.white + "|", status.indexOf(no) >= 0 ? ANSI.red : ANSI.cyan);
     }); // :list.feach
 
-    if (prefixList.length) notes.unshift(prefixList + lf);
+    //if (prefixList.length) notes.unshift(prefixList + lf);
 
     out.trimEnd(1);
   }

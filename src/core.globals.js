@@ -20,7 +20,7 @@ const
     //orange : "\x1b[38;2;202m" \x1b[38;2;r;g;bm
   },
 
-  lf = "\r\n", yes = "Y", no = "-", yes16 = "✔", no16 = "✘", px8 = "·×·",
+  lf = "\r\n", yes = "Y", no = "-", yes16 = "✔", no16 = "✘", //, px8 = "·×·",
 
   saves = [],
   version = require("../package.json").version,
@@ -187,10 +187,14 @@ function isCompat(path) {
 /**
  * Removes any HTML tags from a string.
  * @param str
+ * @param convTags
  * @returns {string}
  */
-function cleanHTML(str) {
-  return str.replace(/(<([^>]+)>)/ig, "")
+function cleanHTML(str, convTags) {
+  str = str.replace(/<code>/gi, ANSI.cyan).replace(/<\/code>/gi, ANSI.white);
+  str = str.replace(/(<([^>]+)>)/ig, "");
+  if (convTags) str = str.replace(/&lt;/gi, "<").replace(/&gt;/gi, ">");
+  return str
 }
 
 /**
