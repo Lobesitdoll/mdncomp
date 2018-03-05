@@ -3,7 +3,7 @@ mdncomp
 
 Provides [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data) directly in the terminal.
 
-![color output](https://i.imgur.com/Cw8ns62.png)
+![color output](https://i.imgur.com/F5yfP2S.png)
 
 ALPHA release.
 
@@ -46,12 +46,16 @@ $ mdncomp off*toblob
  DESKTOP:
  Chrome    | Edge      | Firefox   | IE        | Opera     | Safari
  ----------+-----------+-----------+-----------+-----------+-----------
-     -     |     ?     |     46    |     -     |     -     |     -
+     -     |     ?     |    46°    |     -     |     -     |     -
+
+°) 46: Behind flag gfx.offscreencanvas.enabled.
 
  MOBILE:
  Webview/A | Chrome/A  | Edge/mob  | Firefox/A | Opera/A   | Safari/iOS
  ----------+-----------+-----------+-----------+-----------+-----------
-     -     |     -     |     ?     |     46    |     -     |     -
+     -     |     -     |     ?     |    46°    |     -     |     -
+
+°) 46: Behind flag gfx.offscreencanvas.enabled.
 
 Data from MDN - `npm i -g mdncomp` by epistemex
 ```
@@ -62,7 +66,7 @@ Export as a SVG file:
 $ mdncomp off*toblob -o toBlob.svg
 ```
 
-![SVG Example](https://i.imgur.com/YssRnNs.png)
+![SVG Example](https://i.imgur.com/sZhEnYM.png)
 
 In shorthand format in the terminal:
 
