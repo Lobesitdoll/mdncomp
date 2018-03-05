@@ -1,7 +1,7 @@
 mdncomp
 =======
 
-Provides [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data) directly in the terminal.
+Provides [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data) directly in the command line.
 
 ![color output](https://i.imgur.com/F5yfP2S.png)
 
@@ -66,7 +66,7 @@ Export as a SVG file:
 $ mdncomp off*toblob -o toBlob.svg
 ```
 
-![SVG Example](https://i.imgur.com/sZhEnYM.png)
+[![SVG Example](https://i.imgur.com/sZhEnYM.png)](https://developer.mozilla.org/docs/Web/API/OffscreenCanvas/toBlob)
 
 In shorthand format in the terminal:
 
@@ -85,19 +85,6 @@ Blob.Blob  :  DT: C:20 E:? F:13* IE:10 O:12 S:8   MOB: WA:- CA:? FA:14* EM:? OA:
 Blob.size  :  DT: C:5 E:Y F:4 IE:10 O:11 S:5.1   MOB: WA:- CA:- FA:- EM:Y OA:- Si:-
 Blob.slice :  DT: C:21 E:Y F:13* IE:10 O:12 S:5.1   MOB: WA:- CA:? FA:14 EM:Y OA:? Si:?
 ...
-```
-
-See the raw underlying data (also notice the ending period on path which blocks branches
-on (in this case) `api.blob` to be considered):
-
-```text
-$ mdncomp.js api.blob. --raw
--->
-{
-  "__compat": {
-    "mdn_url": "https: //developer.mozilla.org/docs/Web/API/Blob",
-    "support": {
-      ...
 ```
 
 **List currently active browsers:**
