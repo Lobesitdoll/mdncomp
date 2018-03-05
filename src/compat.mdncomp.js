@@ -6,26 +6,27 @@
  */
 function MDNComp(path) {
   let
-    obj = getPathAsObject(path).__compat,
+    compat = getPathAsObject(path).__compat,
     names = ["webview_android", "chrome", "chrome_android", "edge", "edge_mobile", "firefox", "firefox_android", "ie", "opera", "opera_android", "safari", "safari_ios"],
     isDesktop = [false, true, false, true, false, true, false, true, true, false, true, false],
-    status = obj.status || {},
-    keys = Object.keys(obj.support);
+    status = compat.status || {},
+    supportKeys = Object.keys(compat.support);
 
   this.path = path;
   this.prePath = prePathFromPath(path);
   this.name = nameFromPath(path);
-  this.url = obj.mdn_url || "";
-  this.experimental = !!status.experimental;
-  this.standard = !!status.standard_track;
-  this.deprecated = !!status.deprecated;
+  this.url = compat.mdn_url || "";
+  this.experimental = status.experimental;
+  this.standard = status.standard_track;
+  this.deprecated = status.deprecated;
   this.browsers = [];
+  this.description = compat.description;
 
   // Main loop parsing all attached information
-  keys.forEach(key => {
+  supportKeys.forEach(key => {
     let nameIndex = names.indexOf(key);
     if (nameIndex >= 0) {
-      let browser = new Browser(obj, key);
+      let browser = new Browser(compat, key);
       browser.isDesktop = isDesktop[nameIndex];
       this.browsers.push(browser)
     }
@@ -48,10 +49,15 @@ MDNComp.prototype = {
 
   getStatus: function() {
     let txt = "(";
-    if (this.experimental) txt += ANSI.yellow + "EXPERIMENTAL" + ANSI.reset + ", ";
-    if (this.deprecated) txt += ANSI.red + "DEPRECATED" + ANSI.reset + ", ";
-    if (this.standard) txt += ANSI.green + ANSI.bright + "On Standard Track" + ANSI.reset + ", ";
+    if (this.experimental)
+      txt += ANSI.yellow + "EXPERIMENTAL" + ANSI.reset + ", ";
+    if (this.deprecated)
+      txt += ANSI.red + "DEPRECATED" + ANSI.reset + ", ";
+    if (this.standard)
+      txt += ANSI.green + "On Standard Track" + ANSI.reset + ", ";
+
     txt = txt.substr(0, Math.max(1, txt.length - 2)) + ")";
+
     return txt === "()" ? "" : txt
   },
 

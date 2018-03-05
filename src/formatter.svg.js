@@ -162,8 +162,8 @@ function compatToSVG(mdnComp) {
 
   // insert notes
   if (options.notes && notes.length) {
+    h += 16;
     notes.forEach((note) => {
-      h += 16;
       textFmt(note, w - indent * 2)
     });
   }
@@ -181,7 +181,6 @@ function compatToSVG(mdnComp) {
   *------------------------------------------------------------------------------------------------------------------*/
 
   function versions(list, desc, offset, y) {
-    //let prefixList = "";
     options.maxWidth = (w - 60) / 8;
     list.forEach((browserId, index) => {
       let
@@ -193,13 +192,11 @@ function compatToSVG(mdnComp) {
         flags = browser.hasFlags();
         prefix = browser.hasPrefix();
         status = browser.info[0].getVersion().replace("Y", yes16);
-//        if (prefix) {
-//          if (prefixList.length) prefixList += ", " + browser.info[0].prefix;
-//          else prefixList = px8 + ") Prefix: " + browser.info[0].prefix;
-//        }
         if (browser.hasNotes()) {
           refMark = options.notes ? ++ref : "*";
-          notes.push(browser.getNotes(ref));
+          let txt = browser.getNotes(ref);
+          txt = (txt+"").ansiFree().replace(/</g, "&lt;").replace(/>/g, "&gt;");
+          notes.push(txt);
         }
       }
       else {
@@ -214,16 +211,15 @@ function compatToSVG(mdnComp) {
         text(status, tx, y + 28, w < 800 ? 12 : 0, 0, status.indexOf("-") < 0 && status.indexOf("?") < 0 ? "#070" : "#000", "middle");
 
       if (refMark)
-        text(refMark, x + step - 11, y + 13, 10, "#000", "end");
+        text(refMark, x + step - 12, y + 13, 10, "#000", "end");
 
       if(flags)
         use("flag", x + 5, y + 5, 10, 10, "#555");
 
       if (prefix)
-        text(browser.info[0].prefix, x + 5, y + 41, 12, false, "#334"); // w < 640 ? y + 40 : y + 13 if low on space
+        text(browser.prefix, x + 5, y + 41, 12, false, "#334"); // w < 640 ? y + 40 : y + 13 if low on space
     });
 
-    //if (prefixList.length) notes.unshift(prefixList + lf);
   }
 
   function status(icon, txt, size, color) {
@@ -264,17 +260,16 @@ function compatToSVG(mdnComp) {
     out.add("</a>");
   }
 
-  function textFmt(txt) { //}, max) {
-    let parts = txt.split(lf), res = new Output(), height = 0;
+  function textFmt(txt) {
+    let parts = txt.split(lf), res = new Output();
     parts.forEach(part => {
       res.add("<tspan x=\"%0\" dy=\"1.3em\">", indent);
       res.add(part);
       res.add("</tspan>");
-      height += 15;
     });
 
     text(res.toString(), 10, h, 14);
-    h += height;
+    h += parts.length * 15;
   }
 
   function use(name, x, y, width, height, col, desc) {

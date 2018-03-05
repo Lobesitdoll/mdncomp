@@ -8,14 +8,19 @@ function Info(obj) {
   this.added = this.toStatus(obj.version_added);
   this.removed = this.toStatus(obj.version_removed);
   this.notes = obj.notes ? (Array.isArray(obj.notes) ? obj.notes : [obj.notes]) : [];
-  this.partial = !!obj.partial_implementation;
-  this.altName = obj.alternative_name || "";
-  this.flags = obj.flags || []; // todo add to notes
+  this.flags = obj.flags || [];
 
-  if (obj.prefix) this.notes.unshift("Prefix: " + obj.prefix);
+  if (obj.prefix)
+    this.notes.unshift("Prefix: " + obj.prefix);
+
+  if (obj.partial_implementation)
+    this.notes.unshift("Is partial implementation.");
+
+  if (obj.alternative_name)
+    this.notes.unshift("Uses a non-standard name: " + obj.alternative_name);
 
   this.flags.forEach(flag => {
-    this.notes.push(breakLine(cleanHTML(this.flagToString(flag), true), options.maxWidth))
+    this.notes.push(this.flagToString(flag));
   });
 }
 
@@ -44,21 +49,12 @@ Info.prototype = {
    * @param ref
    * @returns {string}
    */
+  // todo should be neutral or produce per context (text, svg etc. => move to formatter)
   toString: function(ref) {
     let
       prefix = (ref ? ref + ") " : "") + (isNaN(this.added) ? "" : this.getVersion() + ": "),
       indent = "",
       out = new Output(0), hasInfo = false;
-
-//    if (this.altName.length) {
-//      hasInfo = true;
-//      out.addLine("- Alternative name: " + this.altName);
-//    }
-//
-//    if (this.partial) {
-//      hasInfo = true;
-//      out.addLine("- Is a partial implementation");
-//    }
 
     if (this.notes.length > 1) {
       prefix += lf;

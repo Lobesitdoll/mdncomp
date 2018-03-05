@@ -1,6 +1,12 @@
 mdncomp
 =======
 
+1.7.7-alpha
+CHG: (internal) Prefix history, alt. name, partial status, flags now part of footnotes.
+CHG: Prefix is now only part of footnotes for text output
+ADD: Support for the description field (if used).
+BUG: SVG footnotes line-formatting in some (long) cases.
+
 1.7.6-alpha
 IMP: Output formatting for new --browser option (colors, alignment)
 

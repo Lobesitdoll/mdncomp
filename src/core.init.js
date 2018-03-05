@@ -2,16 +2,18 @@
  * Initialize options and actions, initialize main modules -or- invoke update process.
  */
 function init() {
-  // Update takeover
+
+  // Update
   if (args.length === 3 && (args[2] === "--update" || args[2] === "--fupdate" || args[2] === "--cupdate")) {
     update(args[2] === "--fupdate", args[2] === "--cupdate");
   }
+
   // Regular options
   else {
     (options = require("commander"))
       .version(version, "-v, --version")
       .usage('[options] <feature>')
-      .description("Get MDN Browser Compatibility data." + lf + "  Version: " + version + lf + "  (c) 2018 K3N / epistemex.com")
+      .description("Get MDN Browser Compatibility data." + lf + "  Version: " + version + lf + "  (c) 2018 epistemex.com")
       .option("-l, --list", "List paths starting with the given value or '.' for top-level")
       .option("-o, --out <path>", "Save information to file. Extension for type, or --type.")
       .option("-t, --type <type>", "Output format (ansi, txt, svg)", "ansi")
@@ -98,7 +100,7 @@ function go(path) {
   }
 
   /*
-      List browser?
+      List browser info?
    */
   else if (options.browser) {
     if (path === ".") {
@@ -117,13 +119,23 @@ function go(path) {
   else {
     let result = search(path, options.caseSensitive);
 
-    if (!result.length) outInfo("Not found.");
+    if (!result.length) {
+      outInfo("Not found.");
+    }
     else {
       if (result.length === 1 || (options.index >= 0 && options.index < result.length) || (options.showAll && (options.type !== "svg" || options.raw))) {
-        if (options.shorthand) shortPad = getMaxLength(result);
-        if (options.index >= 0 && options.index < result.length) result = result.splice(options.index, 1);
+
+        if (options.shorthand)
+          shortPad = getMaxLength(result);
+
+        if (options.index >= 0 && options.index < result.length)
+          result = result.splice(options.index, 1);
+
         result.forEach(entry => {outResult(entry)});
-        if (options.type !== "svg") outStore(ANSI.magenta + "Data from MDN - `npm i -g mdncomp` by epistemex" + ANSI.white + lf);
+
+        if (options.type !== "svg")
+          outStore(ANSI.magenta + "Data from MDN - `npm i -g mdncomp` by epistemex" + ANSI.white + lf);
+
         commit();
       }
       else {
@@ -175,7 +187,8 @@ function go(path) {
           }
         });
       }
-      else _save();
+      else
+        _save();
     }
 
     function _save(callback) {
@@ -187,4 +200,4 @@ function go(path) {
     }
   }
 
-}
+} // :go

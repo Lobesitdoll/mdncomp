@@ -8,7 +8,7 @@ function compatToLong(mdnComp) {
     out = new Output(0),
     desktopList = ["chrome", "edge", "firefox", "ie", "opera", "safari"],
     mobileList = ["webview_android", "chrome_android", "edge_mobile", "firefox_android", "opera_android", "safari_ios"],
-    refs = ["¹", "²", "³", "ª", "º", "^", "`", "'", "\""],
+    refs = ["°", "¹", "²", "³", "ª", "^", "`", "'", "\"", "'\"", "\"\"", "\"\"'", "º"],
     ref = 0,
     notes = [],
     line = " %0----------+-----------+-----------+-----------+-----------+-----------";
@@ -64,27 +64,17 @@ function compatToLong(mdnComp) {
   } // :mobile
 
   function versions(list) {
-    let prefixList = "";
-
     list.forEach(browserId => {
-      let browser = mdnComp.getBrowser(browserId), status; //, prefix;
+      let browser = mdnComp.getBrowser(browserId), status;
 
       if (browser) {
         status = browser.info[0].getVersion();
-        //prefix = browser.prefix;
-
-//        if (prefix.length) {
-//          if (prefixList.length) prefixList += ", " + prefix; //browser.info[0].prefix;
-//          else prefixList = px8 + ") Prefix: " + prefix;
-//        }
 
         if (browser.hasNotes()) {
           status += ANSI.white + (options.notes ? refs[ref] : "*");
           notes.push(browser.getNotes(refs[ref]));
           ref = ++ref % refs.length; // cuz, running out of super chars in UTF8 single bytes...
         }
-//        else if (browser.hasPrefix())
-//          status += ANSI.white + px8;
 
         if (status === "?")
           status = ANSI.yellow + "?";
@@ -95,8 +85,6 @@ function compatToLong(mdnComp) {
 
       out.add("%0" + status.centerAnsi(11) + ANSI.white + "|", status.indexOf(no) >= 0 ? ANSI.red : ANSI.cyan);
     }); // :list.feach
-
-    //if (prefixList.length) notes.unshift(prefixList + lf);
 
     out.trimEnd(1);
   }

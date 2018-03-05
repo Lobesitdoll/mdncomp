@@ -40,8 +40,8 @@ function listBrowser(browserId) {
   function _cmp(a, b) {
     let
       aArr = a.split("."), bArr = b.split("."),
-      aNum = (aArr[0]|0) + ((aArr[1]|0) * 0.0001) + ((aArr[2]|0) * 0.000001) + ((aArr[3]|0) * 0.000000001),
-      bNum = (bArr[0]|0) + ((bArr[1]|0) * 0.0001) + ((bArr[2]|0) * 0.000001) + ((bArr[3]|0) * 0.000000001);
+      aNum = (aArr[0]|0) + (aArr[1]|0) * 0.0001 + (aArr[2]|0) * 0.000001 + (aArr[3]|0) * 0.000000001,
+      bNum = (bArr[0]|0) + (bArr[1]|0) * 0.0001 + (bArr[2]|0) * 0.000001 + (bArr[3]|0) * 0.000000001;
 
     return aNum > bNum ? 1 : (aNum < bNum ? -1 : 0)
   }

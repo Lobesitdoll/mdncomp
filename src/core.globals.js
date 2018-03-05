@@ -53,7 +53,11 @@ String.prototype.centerAnsi = function(length) {
  * @returns {number}
  */
 String.prototype.ansiLength = function() {
-  return this.replace(/\x1b[^m]*m/g, "").length;
+  return this.ansiFree().length;
+};
+
+String.prototype.ansiFree = function() {
+  return this.replace(/\x1b[^m]*m/g, "")
 };
 
 /**
