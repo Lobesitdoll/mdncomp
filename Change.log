@@ -1,6 +1,9 @@
 mdncomp
 =======
 
+1.7.10-alpha
+FIX: More colors, formatting
+
 1.7.9-alpha
 FIX: Colors in xterm etc. browser section (version bumped due to npm version lock).
 

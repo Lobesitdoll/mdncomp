@@ -31,7 +31,7 @@ function listBrowser(browserId) {
       status = browser.releases[version].status;
 
     txt += ANSI.white + "  Rel: " + (date ? ANSI.cyan + date : ANSI.gray + "-         ");
-    txt += "  " + (status ? _browserStatusColor(status) + status + ANSI.white : "-");
+    txt += "  " + (status ? _browserStatusColor(status) + status + ANSI.reset + ANSI.white : "-");
 
     result.push(txt + ANSI.white);
   });
@@ -40,8 +40,8 @@ function listBrowser(browserId) {
   function _cmp(a, b) {
     let
       aArr = a.split("."), bArr = b.split("."),
-      aNum = (aArr[0]|0) + (aArr[1]|0) * 0.0001 + (aArr[2]|0) * 0.000001 + (aArr[3]|0) * 0.000000001,
-      bNum = (bArr[0]|0) + (bArr[1]|0) * 0.0001 + (bArr[2]|0) * 0.000001 + (bArr[3]|0) * 0.000000001;
+      aNum = (aArr[0]|0) + (aArr[1]|0) * 1e-3 + (aArr[2]|0) * 1e-6 + (aArr[3]|0) * 1e-9,
+      bNum = (bArr[0]|0) + (bArr[1]|0) * 1e-3 + (bArr[2]|0) * 1e-6 + (bArr[3]|0) * 1e-9;
 
     return aNum > bNum ? 1 : (aNum < bNum ? -1 : 0)
   }
@@ -91,8 +91,10 @@ function getBrowserStatusList() {
 function _browserStatusColor(txt) {
   if (txt === "retired")
     return ANSI.red;
-  else if (txt === "beta" || txt === "nightly" || txt === "alpha")
+  else if (txt === "beta" || txt === "alpha")
     return ANSI.yellow;
+  else if (txt === "nightly")
+    return ANSI.blue;
   else if (txt === "current" || txt === "esr")
     return ANSI.green;
   else if (txt === "planned")
