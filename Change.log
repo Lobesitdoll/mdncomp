@@ -1,6 +1,10 @@
 mdncomp
 =======
 
+1.7.8-alpha
+FIX: Colors in xterm etc.
+TMP: Description field disabled for now until more mature.
+
 1.7.7-alpha
 CHG: (internal) Prefix history, alt. name, partial status, flags now part of footnotes.
 CHG: Prefix is now only part of footnotes for text output

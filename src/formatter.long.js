@@ -21,13 +21,13 @@ function compatToLong(mdnComp) {
   }
   else {
     out.addLine(" %0%1%2%3%4 %5", ANSI.yellow, mdnComp.prePath, ANSI.cyan, mdnComp.name, ANSI.white, mdnComp.getStatus());
-    out.addLine(" ", mdnComp.url ? mdnComp.url : "-", lf);
+    out.addLine(" ", mdnComp.url ? ANSI.white + mdnComp.url : "-", lf);
   }
 
-  // description
-  if (mdnComp.description) {
-    out.addLine(breakLine(cleanHTML(mdnComp.description), options.maxWidth), lf)
-  }
+  // description TODO We'll let this field mature more before activating.
+//  if (mdnComp.description) {
+//    out.addLine(breakLine(cleanHTML(mdnComp.description), options.maxWidth), lf)
+//  }
 
   // Show desktop info?
   if (!options.mobile) {

@@ -9,13 +9,13 @@ const
     cursorUp: "\x1b[1A",
 
     black  : "\x1b[30m",
-    red    : "\x1b[31m",
+    red    : "\x1b[31;1m",
     green  : "\x1b[32;1m",
-    yellow : "\x1b[33m",
+    yellow : "\x1b[33;1m",
     blue   : "\x1b[34m",
-    magenta: "\x1b[35m",
-    cyan   : "\x1b[36m",
-    white  : "\x1b[37m",
+    magenta: "\x1b[35;2m",
+    cyan   : "\x1b[36;1m",
+    white  : "\x1b[37;1m",
     gray   : "\x1b[30;1m"
     //orange : "\x1b[38;2;202m" \x1b[38;2;r;g;bm
   },

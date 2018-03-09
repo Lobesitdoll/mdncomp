@@ -106,7 +106,7 @@ function go(path) {
     if (path === ".") {
       outInfo(listBrowsers());
       outInfo(lf + "Valid statuses:");
-      outInfo(ANSI.green + getBrowserStatusList().join(", ") + ANSI.white);
+      outInfo(ANSI.green + getBrowserStatusList().join(", ") + ANSI.white + ANSI.reset);
     }
     else {
       outInfo(listBrowser(path.toLowerCase()));
@@ -134,14 +134,14 @@ function go(path) {
         result.forEach(entry => {outResult(entry)});
 
         if (options.type !== "svg")
-          outStore(ANSI.magenta + "Data from MDN - `npm i -g mdncomp` by epistemex" + ANSI.white + lf);
+          outStore(ANSI.magenta + "Data from MDN - `npm i -g mdncomp` by epistemex" + ANSI.white + lf + ANSI.reset);
 
         commit();
       }
       else {
         let pad = (result.length + "").length;
         result.forEach((item, i) => {
-          outInfo(ANSI.yellow + "[" + ANSI.green +(i + "").padStart(pad) + ANSI.yellow + "] " + ANSI.white + item);
+          outInfo(ANSI.yellow + "[" + ANSI.green +(i + "").padStart(pad) + ANSI.yellow + "] " + ANSI.white + item + ANSI.reset);
         });
         //outInfo(result);
       }

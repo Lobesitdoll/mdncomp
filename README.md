@@ -40,20 +40,20 @@ Examples
 ```text
 $ mdncomp off*toblob
 
- OffscreenCanvas.toBlob (EXPERIMENTAL, On Standard Track)
- https://developer.mozilla.org/docs/Web/API/OffscreenCanvas/toBlob
+OffscreenCanvas.toBlob (EXPERIMENTAL, On Standard Track)
+https://developer.mozilla.org/docs/Web/API/OffscreenCanvas/toBlob
 
- DESKTOP:
- Chrome    | Edge      | Firefox   | IE        | Opera     | Safari
- ----------+-----------+-----------+-----------+-----------+-----------
-     -     |     ?     |    46°    |     -     |     -     |     -
+DESKTOP:
+Chrome    | Edge      | Firefox   | IE        | Opera     | Safari
+----------+-----------+-----------+-----------+-----------+-----------
+    -     |     ?     |    46°    |     -     |     -     |     -
 
 °) 46: Behind flag gfx.offscreencanvas.enabled.
 
- MOBILE:
- Webview/A | Chrome/A  | Edge/mob  | Firefox/A | Opera/A   | Safari/iOS
- ----------+-----------+-----------+-----------+-----------+-----------
-     -     |     -     |     ?     |    46°    |     -     |     -
+MOBILE:
+Webview/A | Chrome/A  | Edge/mob  | Firefox/A | Opera/A   | Safari/iOS
+----------+-----------+-----------+-----------+-----------+-----------
+    -     |     -     |     ?     |    46°    |     -     |     -
 
 °) 46: Behind flag gfx.offscreencanvas.enabled.
 
@@ -112,7 +112,7 @@ The BCD team is working hard to convert all the browser compatibility
 data to their new format used by this tool. For this reason some APIs
 and objects may not be available quite yet.
 
-Find out [how you can help them out here](https://developer.mozilla.org/en-US/docs/MDN/Contribute/Structures/Compatibility_tables)!
+Find out [how you can help them out](https://developer.mozilla.org/en-US/docs/MDN/Contribute/Structures/Compatibility_tables)!
 
 Disclaimer: This tool is a independent tool not affiliated with any third-party.
 
