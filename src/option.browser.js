@@ -68,12 +68,12 @@ function listBrowserOnStatus(status) {
   });
 
   // output
-  result.push(ANSI.magenta + "STATUS: " + col + status.toUpperCase() + ANSI.white);
+  result.push(ANSI.magenta + "STATUS: " + ANSI.reset + ANSI.white + col + status.toUpperCase() + ANSI.reset);
   temp.forEach(o => {
     result.push(
       ANSI.white + o.browser.padEnd(bPad) + ANSI.white +
-      "  " + col + _fBrowserVersion(o.version, vPad, vPad2) + ANSI.white +
-      "  Rel: " + (o.date === "-" ? ANSI.gray : ANSI.cyan) + o.date + ANSI.white
+      "  " + col + _fBrowserVersion(o.version, vPad, vPad2) + ANSI.white + ANSI.dim +
+      "  Rel: " + (o.date === "-" ? ANSI.gray : ANSI.reset + ANSI.bright + ANSI.cyan) + o.date + ANSI.reset
     );
   });
 

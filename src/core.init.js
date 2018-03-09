@@ -109,7 +109,7 @@ function go(path) {
       outInfo(ANSI.green + getBrowserStatusList().join(", ") + ANSI.white + ANSI.reset);
     }
     else {
-      outInfo(listBrowser(path.toLowerCase()));
+      outInfo(listBrowser(path.toLowerCase()).join(lf) + ANSI.white + ANSI.reset);
     }
   }
 
