@@ -1,6 +1,9 @@
 mdncomp
 =======
 
+1.8.0-alpha
+CHG: -b option becomes short for --browser
+
 1.7.10-alpha
 FIX: More colors, formatting
 
