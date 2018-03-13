@@ -12,6 +12,8 @@ module.exports = function(grunt) {
           "build/build.min.js": [
             "src/core.js",
             "src/core.globals.js",
+            "src/help.options.js",
+            "src/help.parse.js",
             "src/core.init.js",
             "src/core.io.js",
             "src/core.update.js",

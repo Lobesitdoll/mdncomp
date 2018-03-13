@@ -1,6 +1,13 @@
 mdncomp
 =======
 
+1.9.0-alpha
+ADD: Help per option (ex: mdncomp --help --list)
+CHG: Option --show-all shortened to --all (-a stays the same)
+CHG: Correctly sorted by name for Mobile text output (long/short hand formats)
+IMP: end-marker (. or dot) now works with wildcards (e.g. "html*toblob.").
+FIX: --max-chars was used as --max-width internally.
+
 1.8.0-alpha
 CHG: -b option becomes short for --browser
 

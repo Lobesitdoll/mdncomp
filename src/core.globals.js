@@ -118,6 +118,7 @@ function getComparer(str) {
     options = parts[1]
   }
   else {
+    if (str.endsWith(".")) str = str.substr(0, str.length - 1) + "$";
     if (!str.startsWith("*")) str = "*" + str;
     if (!str.endsWith("*")) str += "*";
     str = "^" + str.split("*").join(".*") + "$";
@@ -211,7 +212,7 @@ function cleanHTML(str, convTags) {
 function breakLine(s, max) {
   let
     out = new Output(0),
-    _max = Math.max(62, (max>>>0 || 72)),
+    _max = Math.max(72, (max>>>0 || 72)),
     line = s.substr(0, _max), i;
 
   while(line.length === _max) {

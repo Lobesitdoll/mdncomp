@@ -7,7 +7,7 @@ function compatToLong(mdnComp) {
   let
     out = new Output(0),
     desktopList = ["chrome", "edge", "firefox", "ie", "opera", "safari"],
-    mobileList = ["webview_android", "chrome_android", "edge_mobile", "firefox_android", "opera_android", "safari_ios"],
+    mobileList = ["chrome_android", "edge_mobile", "firefox_android", "opera_android", "safari_ios", "webview_android"],
     refs = ["°", "¹", "²", "³", "ª", "^", "`", "'", "\"", "'\"", "\"\"", "\"\"'", "º"],
     ref = 0,
     notes = [],
@@ -53,7 +53,7 @@ function compatToLong(mdnComp) {
   // Show mobile info?
   if (!options.desktop) {
     out.addLine(" %0MOBILE:", ANSI.yellow);
-    out.addLine(" %0Webview/A %1|%0 Chrome/A  %1|%0 Edge/mob  %1|%0 Firefox/A %1|%0 Opera/A   %1|%0 Safari/iOS", ANSI.green , ANSI.white);
+    out.addLine(" %0Chrome/A  %1|%0 Edge/mob  %1|%0 Firefox/A %1|%0 Opera/A   %1|%0Safari/iOS | %0Webview/A%1", ANSI.green , ANSI.white);
     out.addLine(line, ANSI.white);
 
     //out.add(" ");

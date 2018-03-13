@@ -9,9 +9,11 @@ function compatToShort(mdnComp, shortPad) {
     prePath = mdnComp.prePath + mdnComp.name,
     out = new Output(0),
     desktopList = ["chrome", "edge", "firefox", "ie", "opera", "safari"],
-    mobileList = ["android", "chrome_android", "firefox_android", "edge_mobile", "opera_android", "safari_ios"],
+    mobileList = ["chrome_android", "firefox_android", "edge_mobile", "opera_android", "safari_ios", "android"],
     desktopShort = ["C:", "E:", "F:", "IE:", "O:", "S:"],
-    mobileShort = ["WA:", "CA:", "FA:", "EM:", "OA:", "Si:"];
+    mobileShort = ["CA:", "FA:", "EM:", "OA:", "Si:", "WA:"];
+
+  out.add(ANSI.white);
 
   if (options.shorthandSplit)
     out.add(prePath, ":", lf);
@@ -19,12 +21,12 @@ function compatToShort(mdnComp, shortPad) {
     out.add((prePath).padEnd(shortPad), ":");
 
   if (!options.mobile) {
-    out.add("%0  DT: ", ANSI.yellow);
+    out.add("%0  DT: ", ANSI.cyan);
     versions(desktopList, desktopShort);
   }
 
   if (!options.desktop) {
-    out.add("%0 MOB: ", ANSI.yellow);
+    out.add("%0 MOB: ", ANSI.cyan);
     versions(mobileList, mobileShort);
   }
 
@@ -39,7 +41,7 @@ function compatToShort(mdnComp, shortPad) {
         status = ANSI.red + no;
       }
 
-      out.add(ANSI.green, ANSI.bright, shortList[index], ANSI.white, status, " ");
+      out.add(ANSI.green, shortList[index], ANSI.white, status, " ");
     });
   }
 

@@ -12,23 +12,11 @@ function search(keyword, sensitive) {
     tbl = buildTable(),
     result = [];
 
-  if (keyword.endsWith(".")) {
-    keyword = _toCase(keyword).substr(0, keyword.length - 1);
-    for(let path of tbl) {
-      let _path = _toCase(path);
-      if (_path.endsWith(keyword)) {
-        result.push(path);
-        break;
-      }
-    }
-  }
-  else {
-    cmp = getComparer(_toCase(keyword));
-    tbl.forEach(path => {
-      let _path = _toCase(path);
-      if (cmp.test(_path) && isCompat(path)) result.push(path);
-    });
-  }
+  cmp = getComparer(_toCase(keyword));
+  tbl.forEach(path => {
+    let _path = _toCase(path);
+    if (cmp.test(_path) && isCompat(path)) result.push(path);
+  });
 
   function _toCase(txt) {
     return sensitive ? txt : txt.toLowerCase()

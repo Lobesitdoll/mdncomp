@@ -21,7 +21,7 @@ function init() {
       .option("-d, --desktop", "Show desktop only")
       .option("-m, --mobile", "Show mobile devices only")
       .option("-c, --case-sensitive", "Search in case-sensitive mode")
-      .option("-a, --show-all", "If search results in more than entry, show info for all.")
+      .option("-a, --all", "If search results in more than entry, show info for all.")
       .option("-i, --index <index>", "Show this index from a multiple result list.", -1)
       .option("-s, --shorthand", "Show compatibility as shorthand with multiple results")
       .option("-h, --shorthand-split", "Split a shorthand line into two lines (use with -s)")
@@ -35,15 +35,7 @@ function init() {
       .option("--raw", "Output the raw JSON data.")
       .option("--update, --fupdate, --cupdate", "Update BCD from remote (--fupdate=force, --cupdate=check).")
       .action(go)
-          .on("--help", () => {
-            log();
-            log("  Examples:");
-            log("    mdncomp arcTo                   show information for arcTo");
-            log("    mdncomp toblob.                 will find HTMLCanvasElement.toBlob");
-            log("    mdncomp --list .                list all top-levels");
-            log("    mdncomp blob*der -o info.svg    export as svg");
-            log()
-          })
+      .on("--help", () => {parseHelp(args)})
       .parse(args);
     if (!options.args.length) options.help();
   }
@@ -123,7 +115,7 @@ function go(path) {
       outInfo("Not found.");
     }
     else {
-      if (result.length === 1 || (options.index >= 0 && options.index < result.length) || (options.showAll && (options.type !== "svg" || options.raw))) {
+      if (result.length === 1 || (options.index >= 0 && options.index < result.length) || (options.all && (options.type !== "svg" || options.raw))) {
 
         if (options.shorthand)
           shortPad = getMaxLength(result);

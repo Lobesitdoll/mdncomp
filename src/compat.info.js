@@ -63,7 +63,7 @@ Info.prototype = {
 
     this.notes.forEach(note => {
       hasInfo = true;
-      out.addLine(breakLine(cleanHTML(indent + note, true), options.maxWidth))
+      out.addLine(breakLine(cleanHTML(indent + note, true), options.maxChars))
     });
 
     return hasInfo ? prefix + out.toString() : ""
