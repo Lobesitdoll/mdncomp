@@ -16,7 +16,7 @@ Features
 - Search browser compatibility data for APIs, CSS, HTML, HTTP, JavaScript and WebExtensions.
 - Get status for standard, experimental and deprecated features.
 - Show status notes, prefix status, flags and more.
-- Shows URL to documentation page for the feature at MDN.
+- Shows URL to documentation page for the feature on [MDN](https://developer.mozilla.org/).
 - List browser status per browser or per status.
 - Search or navigate per branch and path.
 - Use wildcards or regular expressions
@@ -75,7 +75,7 @@ In shorthand format in the terminal:
 ```text
 $ mdncomp html*toblob. -s
 ->
-HTMLCanvasElement.toBlob:  DT: C:50 E:- F:19 IE:10* O:37 S:Y*  MOB: WA:- CA:50 FA:4 EM:- OA:37 Si:-
+HTMLCanvasElement.toBlob:  DT: C:50 E:- F:19 IE:10* O:37 S:Y*  MOB: CA:50 FA:4 EM:- OA:37 Si:- WA:-
 Data from MDN - `npm i -g mdncomp` by epistemex
 ```
 
