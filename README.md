@@ -9,10 +9,6 @@ Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data
 **Note: ALPHA release. Fairly stable but its API and behavior are subject to change without prior notice.**
 This would also be a good time for [feature requests](https://github.com/epistemex/mdncomp/issues)!
 
-**NB**: If you want to play with the new config file option keep a copy in a safe place as npm update
-will remove that file from the installation's root folder. We're working on an solution for this for next release.
-
-
 Features
 --------
 
@@ -80,7 +76,7 @@ Export as a SVG file:
 $ mdncomp html*toblob. -o toBlob.svg
 ```
 
-[![SVG Example](https://i.imgur.com/AGrnxwd.png)](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob)
+[![SVG Example](https://i.imgur.com/O1eCOeF.png)](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob)
 
 In shorthand format in the terminal:
 

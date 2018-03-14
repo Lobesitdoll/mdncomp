@@ -1,6 +1,9 @@
 mdncomp
 =======
 
+1.9.6-alpha
+FIX: Config path: place in user data folder (f.ex. "c:\users\usr\AppData\Roaming\mdncomp\mdncomp.json", "/var/local/mdncomp/mdncomp.json" etc.)
+
 1.9.5-alpha
 ADD: Config file support (mdncomp.json in root folder for now - needs testing with npm updates)
 IMP: Minor SVG text size tweaks to encounter very long path.names.

@@ -237,7 +237,7 @@ Ignores the config file if specified. As the config file will override options
 this option will allow bypassing those overrides.
 
 Options that will be ignored regardless are:
---out, --all, --index, --browser, --list, --version, --update, --cupdate, --fupdate and --help.`;
+--no-config, --out, --all, --index, --browser, --list, --version, --update, --cupdate, --fupdate and --help.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["--update"] = help["--cupdate"] = help["--fupdate"] = `

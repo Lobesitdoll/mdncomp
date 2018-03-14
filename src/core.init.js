@@ -73,10 +73,7 @@ function go(path) {
 
   // load config file if any
   try {
-    if (options.config) {
-      cfg = require("../mdncomp.json");
-      parseConfig();
-    }
+    loadConfig();
   } catch(err) {}
 
   // default type
@@ -209,13 +206,37 @@ function go(path) {
 
 } // :go
 
-function parseConfig() {
-  if (cfg) {
+function loadConfig() {
+  if (!fs) fs = require("fs");
+  const
+    path = require("path"),
+    file = path.resolve(cfgPath, "mdncomp/mdncomp.json");
+
+  let
+    unres = false;  // detect possible access issues
+
+    // todo temp - to detect possible unresolved paths on unknown systems
+  if (!fs.existsSync(cfgPath)) {
+    log();
+    log(ANSI.red + "Could not detect user data area on this system for config file!");
+    log("Please report to: https://github.com/epistemex/mdncomp/issues");
+    log("and include the following data (replace username with just user):");
+    log("  Unresolved path: '" + cfgPath + "'");
+    log("  OS: '" + process.platform + "' + the path you would normally use for user data.");
+    log("  APPDATA: " + process.env.APPDATA);
+    log("  HOME: " + process.env.HOME);
+    log(ANSI.reset);
+    unres = true;
+  }
+
+  if (fs.existsSync(file)) {
+    cfg = require(file);
     delete cfg.browser;
     delete cfg.list;
     delete cfg.out;
     delete cfg.all;
     delete cfg.index;
     Object.assign(options, cfg);
+    if (unres) log(ANSI.red + "*** If you see this line please include with the above. ***" + ANSI.reset);
   }
 }
