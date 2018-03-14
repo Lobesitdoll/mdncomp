@@ -6,7 +6,7 @@
 
 const help = {};
 
-// Use string literals and start on the -next- line to prepend a line-feed.
+// Use string literals and start on the -next- line to prepend a line-feed. Likewise DON'T allow linefeed at the end (is added by parser).
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["-v"] = help["--version"] = `
@@ -21,36 +21,35 @@ There are currently 3 "special" branches:
 
 "." (a single dot) will list the top-level branches, the roots if you will:
 
-  mdncomp -l .
-  ->
-  api
-  css
-  html
-  http
-  javascript
-  webextensions
+    mdncomp -l .
+    ->
+    api
+    css
+    html
+    http
+    javascript
+    webextensions
 
-From there you can list all branches on for example "api":
+From there you can list all branches on for example "css":
 
-  mdncomp -l api
-  ->
-  AbortController
-  AbortSignal
-  AbstractWorker
-  AnalyserNode
-  --X8--
+    mdncomp -l css
+    ->
+    css.at-rules
+    css.properties
+    css.selectors
+    css.types
 
 and so on.
 
 "experimental" will list all APIs and objects that are marked experimental:
 
-  mdncomp -l experimental
-  ->
-  api.AbortController
-  api.AbortSignal
-  api.Animation
-  api.AnimationEffectReadOnly
-  --X8--
+    mdncomp -l experimental
+    ->
+    api.AbortController
+    api.AbortSignal
+    api.Animation
+    api.AnimationEffectReadOnly
+    --X8--
 
 "deprecated" will list all APIs and objects that are obsolete or deprecated from the standard.`;
 
@@ -121,8 +120,7 @@ result list. To list one particular result from that list, use this option:
 
 To list index 6, "api.BlobEvent" do:
 
-    $ mdncomp blob -i 6
-`;
+    $ mdncomp blob -i 6`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["-s"] = help["--shorthand"] = `
@@ -132,8 +130,7 @@ For example:
 
     $ mdncomp blobbuilder -s
     ->
-    BlobBuilder: DT: C:8 E:Y F:?-18* IE:10 O:- S:- MOB: CA:? FA:?-18* EM:Y OA:- Si:- WA:-
-`;
+    BlobBuilder: DT: C:8 E:Y F:?-18* IE:10 O:- S:- MOB: CA:? FA:?-18* EM:Y OA:- Si:- WA:-`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["-h"] = help["--shorthand-split"] = `
@@ -147,8 +144,7 @@ Used with the "-s, --shorthand" option to split a line into two. For example:
       DT: C:20 E:? F:13* IE:10 O:12 S:8  MOB: CA:? FA:14* EM:? OA:? Si:? WA:-
     Blob.size:
       DT: C:5 E:Y F:4 IE:10 O:11 S:5.1  MOB: CA:- FA:- EM:Y OA:- Si:- WA:-
-    --X8--
-`;
+    --X8--`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["-b"] = help["--browser"] = `
@@ -197,14 +193,12 @@ So to list for example the current active browsers:
     firefox_android  57   Rel: 2017-11-28
     ie               11   Rel: 2013-10-17
     nodejs            4   Rel: 2015-09-08
-    --X8--
-`;
+    --X8--`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["-N"] = help["--no-notes"] = `
 Don't list footnotes with the information. A browser will still be marked
-having footnotes but with a generic astrix symbol instead.
-`;
+having footnotes but with a generic astrix symbol instead.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["-e"] = help["--noteend"] = `
@@ -238,6 +232,14 @@ List raw JSON object output instead of formatted output.
 You can combine this option with the "-a, --all" option.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
+help["--no-config"] = `
+Ignores the config file if specified. As the config file will override options
+this option will allow bypassing those overrides.
+
+Options that will be ignored regardless are:
+--out, --all, --index, --browser, --list, --version, --update, --cupdate, --fupdate and --help.`;
+
+/*----------------------------------------------------------------------------------------------------------------------------------*/
 help["--update"] = help["--cupdate"] = help["--fupdate"] = `
 Update the precompiled Browser Compatibility Data object. If the data is
 considered to be the same (using MD5 hash against server file) no data will
@@ -264,11 +266,15 @@ Two files in the root directory (this may change in the future) are loaded:
     data.json
     data.md5
 
-These are saved locally to "[npm-install-folder]/mdncomp/data/".
-`;
+These are saved locally to "[npm-install-folder]/mdncomp/data/".`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
-help["-h"] = help["--help"] = `Show general help text, or help per option (mdncomp option --help)`;
+help["-h"] = help["--help"] = `
+List options, or show more detailed help per option (no options will default to \`--help\`):
+
+    mdncomp
+    mdncomp --help
+    mdncomp -h -l      # shows help for the --list option`;
 
 
-module.exports["help"] = help; // temp. in quotes due to coloring bug in IDE...
+module.exports.help = help;

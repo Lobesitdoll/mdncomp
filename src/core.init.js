@@ -34,6 +34,7 @@ function init() {
       .option("--max-chars <width>", "Max number of chars per line before wrap.", 72)
       .option("--raw", "Output the raw JSON data.")
       .option("--update, --fupdate, --cupdate", "Update BCD from remote (--fupdate=force, --cupdate=check).")
+      .option("--no-config", "Ignore config file (mdncomp.json) in root folder.")
       .action(go)
       .on("--help", () => {parseHelp(args)})
       .parse(args);
@@ -62,7 +63,21 @@ function outStore(txt, noFile) {
 
 function go(path) {
 
-  mdn = require("../data/data.json");
+  // load data
+  try {
+    mdn = require("../data/data.json");
+  } catch(err) {
+    log("Critical error: data file not found. Try running using option --fupdate to download latest snapshot.");
+    return
+  }
+
+  // load config file if any
+  try {
+    if (options.config) {
+      cfg = require("../mdncomp.json");
+      parseConfig();
+    }
+  } catch(err) {}
 
   // default type
   if (options.out && options.type === "ansi")
@@ -193,3 +208,14 @@ function go(path) {
   }
 
 } // :go
+
+function parseConfig() {
+  if (cfg) {
+    delete cfg.browser;
+    delete cfg.list;
+    delete cfg.out;
+    delete cfg.all;
+    delete cfg.index;
+    Object.assign(options, cfg);
+  }
+}

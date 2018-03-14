@@ -86,8 +86,8 @@ function compatToSVG(mdnComp) {
   // Header
   if (mdnComp.url.length) {
     out.add("<a xlink:href=\"%0\" style=\"cursor:pointer\" target=\"_blank\">", mdnComp.url);
-    text2(mdnComp.prePath, mdnComp.name, 1, 50, 32);
-    use("link", w - 40, 26, 24, 24, "#777");
+    text2(mdnComp.prePath, mdnComp.name, 1, 46, 26);
+    use("link", w - 28, 26, 24, 24, "#777");
     out.add("</a>");
   }
   else {
@@ -230,7 +230,7 @@ function compatToSVG(mdnComp) {
       statusX += 20;
     }
     text(txt, statusX, y + 15, 16, true, color);
-    statusX += 105;
+    statusX += 110;
   }
 
   function line(x1, y1, x2, y2, lw, col) {

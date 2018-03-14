@@ -13,17 +13,18 @@ This would also be a good time for [feature requests](https://github.com/epistem
 Features
 --------
 
-- Search browser compatibility data for APIs, CSS, HTML, HTTP, JavaScript and WebExtensions.
+- Search Browser Compatibility Data (BCD) for APIs, CSS, HTML, HTTP, JavaScript and WebExtensions.
 - Get status for standard, experimental and deprecated features.
 - Show status notes, prefix status, flags and more.
 - Shows URL to documentation page for the feature on [MDN](https://developer.mozilla.org/).
-- List browser status per browser or per status.
+- List browser status and release dates per browser, or list browsers per status.
 - Search or navigate per branch and path.
-- Use wildcards or regular expressions
+- Use paths, wildcards or regular expressions to find features
 - Search case (in)sensitive
 - Show desktop and/or mobile information
 - List to terminal as table or as shorthand formats
 - Export as SVG
+- Define permanent/often used options in a config file (can be suspended at will).
 - Built-in help per option.
 - Documented with [wiki](https://github.com/epistemex/mdncomp/wiki) pages
 
@@ -61,6 +62,14 @@ $ mdncomp html*toblob.
 
 Data from MDN - `npm i -g mdncomp` by epistemex
 ```
+
+Or using the absolute path method:
+
+    $ mdncomp api.HTMLCanvasElement.toBlob
+
+Or as a regular expression:
+
+    $ mdncomp /.*html.*toblob$/
 
 Export as a SVG file:
 

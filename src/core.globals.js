@@ -32,6 +32,7 @@ const
 
 let
   mdn,
+  cfg,
   options,
   shortPad = 1;
 

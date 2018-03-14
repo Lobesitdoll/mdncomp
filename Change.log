@@ -1,6 +1,11 @@
 mdncomp
 =======
 
+1.9.5-alpha
+ADD: Config file support (mdncomp.json in root folder for now - needs testing with npm updates)
+IMP: Minor SVG text size tweaks to encounter very long path.names.
+INT: Minor improvements (incl. more help text)
+
 1.9.0-alpha
 ADD: Help per option (ex: mdncomp --help --list)
 CHG: Option --show-all shortened to --all (-a stays the same)
