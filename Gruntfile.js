@@ -20,6 +20,8 @@ module.exports = function(grunt) {
             "src/option.search.js",
             "src/option.list.js",
             "src/option.browser.js",
+            "src/option.doc.js",
+            "src/option.doc.tagparser.js",
             "src/formatter.long.js",
             "src/formatter.short.js",
             "src/formatter.svg.js",

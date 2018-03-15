@@ -226,6 +226,25 @@ prefer longer lines this can be set here. Using "-1" (negative one) as value
 means no line limit.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
+help["--doc"] = `
+Show an excerpt from the official documentation for this feature.
+
+The documentation is loaded from MDN server and parsed into text in the terminal.
+The HTML excerpt is cached in the "[installation folder]/cached" with a MD5 as file
+name based on the URL.
+
+To update cache either delete the folder, an entry or use the --docforce option`;
+
+/*----------------------------------------------------------------------------------------------------------------------------------*/
+help["--docforce"] = `
+Same as --doc but will force fetch the content, re-parse and update the cache.`;
+
+/*----------------------------------------------------------------------------------------------------------------------------------*/
+help["--mdn"] = `
+If a documentation link is defined for the feature this option will attempt opening the link in
+the default browser.`;
+
+/*----------------------------------------------------------------------------------------------------------------------------------*/
 help["--raw"] = `
 List raw JSON object output instead of formatted output.
 
@@ -276,5 +295,5 @@ List options, or show more detailed help per option (no options will default to 
     mdncomp --help
     mdncomp -h -l      # shows help for the --list option`;
 
-
+/*----------------------------------------------------------------------------------------------------------------------------------*/
 module.exports.help = help;

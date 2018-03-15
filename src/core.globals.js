@@ -12,7 +12,7 @@ const
     red    : "\x1b[31;1m",
     green  : "\x1b[32;1m",
     yellow : "\x1b[33;1m",
-    blue   : "\x1b[34m",
+    blue   : "\x1b[34;1m",
     magenta: "\x1b[35;2m",
     cyan   : "\x1b[36;1m",
     white  : "\x1b[37;1m",
@@ -236,6 +236,46 @@ function breakLine(s, max) {
   out.add(line.trim());
 
   return out.toString()
+}
+
+function breakAnsiLine(s, max) {
+  let
+    lines = [],
+    i = 0, len = 0, ch,
+    lineStart = 0, lastBreak = -1,
+    inAnsi = false,
+    _lf = "\n",
+    _max = Math.max(72, (max>>>0 || 72));
+
+  //s = s.replace(new RegExp(lf, "gm"), "\n");
+
+  while(ch = s[i]) {
+    if (!inAnsi) {
+      if (ch === "\x1b") inAnsi = true;
+      else {
+        if (ch === " " || ch === _lf) lastBreak = i;
+        len++;
+        if (len === _max || ch === _lf) {
+          if (lastBreak < 0) lastBreak = i;
+          lines.push(s.substring(lineStart, lastBreak).trim());
+          lineStart = lastBreak;
+          lastBreak = -1;
+          len = i - lineStart;
+        }
+      }
+    }
+    else {
+      if (ch === "m") inAnsi = false;
+    }
+    i++
+  }
+
+  if (len) lines.push(s.substr(lineStart));
+
+  // A little clean-up
+  lines.forEach((line, i) => {lines[i] = line.trim()});
+
+  return lines.join(lf);
 }
 
 // we'll go char-by-char here, regex can't be used for this afaik..

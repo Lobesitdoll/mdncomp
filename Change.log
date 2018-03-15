@@ -1,6 +1,12 @@
 mdncomp
 =======
 
+1.10.0-alpha
+ADD: option --doc, --docforce Shows an document excerpt in the terminal
+ADD: option --mdn open url in default browser
+ADD: Documentation cache
+ADD: Support for redirected URLs
+
 1.9.6-alpha
 FIX: Config path: place in user data folder (f.ex. "c:\users\usr\AppData\Roaming\mdncomp\mdncomp.json", "/var/local/mdncomp/mdncomp.json" etc.)
 

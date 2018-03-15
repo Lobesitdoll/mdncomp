@@ -31,7 +31,7 @@ function update(force, checkOnly) {
           if (hasErrors)
             results.forEach(error => {
               if (error.err) logErr("An error occurred writing data to file. Please retry: " + lf + error.path + ": " + error.err + ANSI.reset);
-            })
+            });
           else
             log(clr + ANSI.white + ("Updated with " + data.length + " bytes. All systems are GO!").padEnd(72, " ") + ANSI.reset);
         })

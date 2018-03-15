@@ -1,5 +1,5 @@
 
-let https, fs;
+let https, fs, path;
 
 const io = {
   /**
@@ -17,7 +17,11 @@ const io = {
     https.get(url, res => {
       let data = "";
 
-      if (res.statusCode === 200 && onResp({headers: res.headers})) {
+      // handle redirects
+      if (res.statusCode === 301 || res.statusCode === 302) {
+        return this.request(res.headers.location, onResp, onProgress, onData, onError);
+      }
+      else if (res.statusCode === 200 && onResp({headers: res.headers})) {
         let length = res.headers["content-length"]|0;
         res.on("data", (d) => {
           data += d;
@@ -33,6 +37,47 @@ const io = {
     function _error(res, err) {
       if (onError) onError({statusCode: res.statusCode, error: err});
       else log("Error", res, err);
+    }
+  },
+
+  /**
+   * Open default program on the system based on the argument (cmd).
+   * @param {string} cmd - an URL or path
+   * @returns {*}
+   */
+  run: function(cmd) {
+    return require("opn")(cmd);
+  },
+
+  exist: function(path) {
+    if (!fs) fs = require("fs");
+    return fs.existsSync(path)
+  },
+
+  getCachedPath: function(str) {
+    if (!path) path = require("path");
+    let root = path.resolve(__dirname, "../cache/");
+    if (!fs.existsSync(root)) {
+      fs.mkdirSync(root);
+    }
+    return path.resolve(__dirname, "../cache/" + calcMD5(str))
+  },
+
+  getCached: function(str) {
+    let data = null;
+    try {
+      data = fs.readFileSync(io.getCachedPath(str)).toString();
+    } catch(err) {}
+
+    return data
+  },
+
+  setCached: function(str, data) {
+
+    try {
+      fs.writeFileSync(io.getCachedPath(str), data);
+    } catch(err) {
+      log(ANSI.red + err)
     }
   },
 

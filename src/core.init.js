@@ -32,6 +32,9 @@ function init() {
       .option("-w, --width <width>", "Used with -o, Set width of image", 800)
       .option("--no-colors", "Don't use colors in output")
       .option("--max-chars <width>", "Max number of chars per line before wrap.", 72)
+      .option("--doc", "Show documentation. Show cached or fetch")
+      .option("--docforce", "Show documentation. Force fetch from server.")
+      .option("--mdn", "Open entry's document URL in default browser.")
       .option("--raw", "Output the raw JSON data.")
       .option("--update, --fupdate, --cupdate", "Update BCD from remote (--fupdate=force, --cupdate=check).")
       .option("--no-config", "Ignore config file (mdncomp.json) in root folder.")
@@ -141,6 +144,32 @@ function go(path) {
           outStore(ANSI.magenta + "Data from MDN - `npm i -g mdncomp` by epistemex" + ANSI.white + lf + ANSI.reset);
 
         commit();
+
+        if (result.length === 1) {
+          let compat = new MDNComp(result[0]);
+
+          // check --doc link
+          if (options.doc || options.docforce) {
+            let compat = new MDNComp(result[0]);
+            if (compat.url.length) {
+              getDoc(compat.url)
+            }
+            else {
+              log(ANSI.red + "Documentation URL is not defined for this feature." + ANSI.reset);
+            }
+          }
+
+          // check --mdn link
+          if (options.mdn) {
+            if (compat.url.length) {
+              io.run(compat.url);
+            }
+            else {
+              log("No URL is defined for this entry.");
+            }
+          }
+
+        }
       }
       else {
         let pad = (result.length + "").length;
@@ -208,8 +237,8 @@ function go(path) {
 
 function loadConfig() {
   if (!fs) fs = require("fs");
+  if (!path) path = require("path");
   const
-    path = require("path"),
     file = path.resolve(cfgPath, "mdncomp/mdncomp.json");
 
   let

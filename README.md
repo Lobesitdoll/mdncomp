@@ -12,20 +12,27 @@ This would also be a good time for [feature requests](https://github.com/epistem
 Features
 --------
 
-- Search Browser Compatibility Data (BCD) for APIs, CSS, HTML, HTTP, JavaScript and WebExtensions.
-- Get status for standard, experimental and deprecated features.
-- Show status notes, prefix status, flags and more.
-- Shows URL to documentation page for the feature on [MDN](https://developer.mozilla.org/).
-- List browser status and release dates per browser, or list browsers per status.
-- Search or navigate per branch and path.
-- Use paths, wildcards or regular expressions to find features
-- Search case (in)sensitive
-- Show desktop and/or mobile information
+- Browser Compatibility Data (BCD)
+  - Search in APIs, CSS, HTML, HTTP, JavaScript, SVG and WebExtensions.
+  - Get status for standard, experimental and deprecated features.
+  - Show status notes, prefix status, flags and more.
+  - Search or navigate per branch and path.
+  - Use paths, wildcards or regular expressions to find features
+  - Search case (in)sensitive
+  - Show desktop and/or mobile information
+- Browser status
+  - List status and release dates per browser
+  - List browsers per status
+- Documentation:
+  - Shows URL to documentation page for the feature on [MDN](https://developer.mozilla.org/).
+  - Download and show documentation excerpt on the command line as well as cache the data.
+  - Open documentation links in the default browser from the command line.
 - List to terminal as table or as shorthand formats
 - Export as SVG
 - Define permanent/often used options in a config file (can be suspended at will).
 - Built-in help per option.
 - Documented with [wiki](https://github.com/epistemex/mdncomp/wiki) pages
+- Runs on Windows, Mac, Linux and other platforms where node and npm is available.
 
 
 Install
@@ -143,6 +150,10 @@ edge  15  Rel: 2017-04-11  retired
 edge  16  Rel: 2017-09-26  current
 edge  17  Rel: -           nightly
 ```
+
+Get documentation excerpts:
+
+![documentation excerpts](https://i.imgur.com/VjTQMZ6.png)
 
 
 Wiki
