@@ -13,7 +13,7 @@ Features
 --------
 
 - Browser Compatibility Data (BCD)
-  - Search in APIs, CSS, HTML, HTTP, JavaScript, SVG and WebExtensions.
+  - Search in APIs, CSS, HTML, HTTP, JavaScript, SVG, WebDriver and WebExtensions.
   - Get status for standard, experimental and deprecated features.
   - Show status notes, prefix status, flags and more.
   - Search or navigate per branch and path.
