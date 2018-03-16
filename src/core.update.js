@@ -77,6 +77,7 @@ function calcFileMD5(path) {  // todo this can go in the future (now@v1.3.3a)
 }
 
 function calcMD5(data) {
-  return require("crypto").createHash("md5").update(data).digest("hex") + ""
+  if (!crypto) crypto = require("crypto");
+  return crypto.createHash("md5").update(data).digest("hex") + ""
 }
 

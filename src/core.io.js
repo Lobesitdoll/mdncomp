@@ -54,16 +54,38 @@ const io = {
     return fs.existsSync(path)
   },
 
+//  mkdir: function(path) {
+//    let
+//      parts = path.split(path.sep),
+//      cPath = "";
+//    parts.forEach(part => {
+//      cPath = path.resolve(cPath, part);
+//      if (!fs.existsSync(cPath)) {
+//        fs.mkdirSync(cPath);
+//      }
+//    })
+//  },
+
   getCachedPath: function(str) {
     if (!path) path = require("path");
-    let root = path.resolve(__dirname, "../cache/");
+    if (!fs) fs = require("fs");
+
+    let root = path.resolve(cfgPath, "mdncomp");
     if (!fs.existsSync(root)) {
       fs.mkdirSync(root);
     }
-    return path.resolve(__dirname, "../cache/" + calcMD5(str))
+
+    root = path.resolve(root, "cache");
+    if (!fs) fs = require("fs");
+    if (!fs.existsSync(root)) {
+      fs.mkdirSync(root);
+    }
+
+    return path.resolve(root, calcMD5(str))
   },
 
   getCached: function(str) {
+    //if (!fs) fs = require("fs");
     let data = null;
     try {
       data = fs.readFileSync(io.getCachedPath(str)).toString();
@@ -73,11 +95,11 @@ const io = {
   },
 
   setCached: function(str, data) {
-
+    //if (!fs) fs = require("fs");
     try {
       fs.writeFileSync(io.getCachedPath(str), data);
     } catch(err) {
-      log(ANSI.red + err)
+      log(ANSI.red + "Could not save file: " + str + ANSI.reset + lf + err)
     }
   },
 
@@ -87,8 +109,8 @@ const io = {
    * @param callback - results array with {path, err} err is non-null if any error occurred
    */
   writeAll: function(list, callback) {
-    let results = [], count = list.length, errors = false;
     if (!fs) fs = require("fs");
+    let results = [], count = list.length, errors = false;
 
     for(let item of list) {
       fs.writeFile(item.path, item.data, "utf8", err => {

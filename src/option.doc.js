@@ -12,7 +12,10 @@ function getDoc(url) {
   else {
     log(ANSI.green + "Fetching documentation...");
 
-    io.request(url,
+    // removes redirect
+    let langUrl = url.replace("mozilla.org/", "mozilla.org/" + isoLang + "/");
+
+    io.request(langUrl,
       () => !clrLine(),
       pct => {
         let width = 50, prog = Math.round(width * pct),
@@ -22,26 +25,30 @@ function getDoc(url) {
       data => {
         // extract article from article top to example
         const start = "<article id=\"wikiArticle\">", end = "</article>";
-        let i1 = data.indexOf(start), i2, i3;
-        if (i1 < 0) {
-          log("Could not parse the doc page.");
+        let
+          i1 = data.indexOf(start),
+          i2 = data.indexOf(end, i1 + start.length),
+          i3;
+
+        if (i1 < 0 || i2 < 0) {
+          log(ANSI.red + "Warning: Could not parse the doc page." + ANSI.reset + lf);
           return
         }
 
-        i2 = data.indexOf(end, i1 + start.length);
-        if (i1 < 0) {
-          log("Could not parse the doc page.");
-          return
-        }
+        // scope out article
+        data = data.substring(i1 + start.length, i2 - 1);
 
-        // extract article until examples
-        i3 = data.indexOf("id=\"Example", i1 + start.length);
-        if (i3 >= 0) i2 = i3 - (i3 - data.lastIndexOf("<", i3));
+        // get rid of Example(s) if any
+        i3 = data.indexOf("id=\"Example");
+        if (i3 >= 0) data = trimArticle(data, i3);
 
         // get rid of BCD if any
-        data = data.substring(i1 + start.length, i2 - 1);
         i3 = data.indexOf("id=\"Browser_compatibility");
-        if (i3 >= 0) data = data.substr(0, i3 - (i3 - data.lastIndexOf("<", i3)));
+        if (i3 >= 0) data = trimArticle(data, i3);
+
+        //get rid of specifications if any
+        i3 = data.indexOf("id=\"Specification");
+        if (i3 >= 0) data = trimArticle(data, i3);
 
         // save to cache
         io.setCached(url, data);
@@ -50,6 +57,10 @@ function getDoc(url) {
         parse(data)
       },
       err => logErr(lf + "An error occurred -" + lf + "Status code: " + err.statusCode + (err.error ? lf + "Message: " + err.error : "") + ANSI.reset));
+
+    function trimArticle(data, endPos) {
+      return data.substr(0, endPos - (endPos - data.lastIndexOf("<", endPos)));
+    }
 
     function logErr(txt) {
       log(clr + ANSI.red + txt + ANSI.white)
@@ -67,10 +78,37 @@ function getDoc(url) {
     let str = ANSI.reset + data, _lf = "#LF#", inPre = false;
 
     // convert
-    let preLine = ANSI.blue + "-".repeat(options.maxChars - 1);
+    let
+      preLine = ANSI.blue + "-".repeat(options.maxChars - 1),
+      optional = false;
+    const
+      rxPre = /=.*brush:\s?(html|css)/i,
+      rxOptional = /.*class=.*optionalInline/i,
+      rxNote = /.*class=.*(experimental|deprecated)/i;
+
+    //tagParser.skip = false;
+    function testTag(str, rx, tag) {
+      return rx.test(str.substring(tag.tagStart, tag.tagEnd))
+    }
 
     str = tagParser(str, e => {
       switch(e.name) {
+        case "div":
+          if (testTag(str, rxNote, e)) tagParser.skip = true;
+          return "";
+        case "/div":
+          if (!inPre) tagParser.skip = false;
+          return "";
+        case "span":
+          if (testTag(str, rxOptional, e)) optional = true;
+          return optional ? ANSI.white + " (" + ANSI.green : "";
+        case "/span":
+          let resSpan = "";
+          if (!inPre && optional) {
+            optional = false;
+            resSpan = ANSI.white + ") " + ANSI.reset;
+          }
+          return resSpan;
         case "ul":
         case "br":
         case "/p":
@@ -83,15 +121,17 @@ function getDoc(url) {
         case "/dt":
         case "/dd":
         case "/li":
-          return _lf + ANSI.reset;
+          return ANSI.reset + _lf;
         case "pre":
           inPre = true;
-          return preLine + _lf + ANSI.cyan;
+          if (testTag(str, rxPre, e)) tagParser.skip = true;
+          return tagParser.skip ? "" : preLine + ANSI.cyan + _lf;
         case "code":
           return ANSI.cyan;
         case "/pre":
-          inPre = false;
-          return _lf + preLine + _lf + ANSI.reset;
+          let res = tagParser.skip ? "" : _lf + preLine + ANSI.reset + _lf;
+          inPre = tagParser.skip = false;
+          return res;
         case "/code":
           return ANSI.reset;
         case "dt":

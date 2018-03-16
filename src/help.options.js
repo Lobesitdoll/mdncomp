@@ -28,6 +28,7 @@ There are currently 3 "special" branches:
     html
     http
     javascript
+    webdriver
     webextensions
 
 From there you can list all branches on for example "css":
@@ -243,6 +244,21 @@ Same as --doc but will force fetch the content, re-parse and update the cache.`;
 help["--mdn"] = `
 If a documentation link is defined for the feature this option will attempt opening the link in
 the default browser.`;
+
+/*----------------------------------------------------------------------------------------------------------------------------------*/
+help["--random"] = `
+Feel like exploring? Discover new features using this option. Currently you need to specify
+a root path as a single dot - if there is interest we'll might add random within a branch.
+
+    $ mdncomp --random .
+
+It can be combined with documentation excerpts (if the URL for it is available):
+
+    $ mdncomp --random . --doc
+
+As well as --mdn (opens browser for this feature if URL for it is available) etc.
+
+Note that some options are ignored using this option.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["--raw"] = `

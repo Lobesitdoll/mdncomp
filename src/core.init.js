@@ -35,6 +35,7 @@ function init() {
       .option("--doc", "Show documentation. Show cached or fetch")
       .option("--docforce", "Show documentation. Force fetch from server.")
       .option("--mdn", "Open entry's document URL in default browser.")
+      .option("--random", "Show a random entry. (mdncomp --random . )")
       .option("--raw", "Output the raw JSON data.")
       .option("--update, --fupdate, --cupdate", "Update BCD from remote (--fupdate=force, --cupdate=check).")
       .option("--no-config", "Ignore config file (mdncomp.json) in root folder.")
@@ -47,7 +48,7 @@ function init() {
 
 function outInfo(txt) {
   if (Array.isArray(txt)) txt = txt.join(lf);
-  log(txt);
+  log(txt + ANSI.reset);
 }
 
 function outStore(txt, noFile) {
@@ -92,6 +93,14 @@ function go(path) {
     Object.keys(ANSI).forEach(color => {ANSI[color] = ""});
 
   /*
+      Random ?
+   */
+  if (options.random) {
+    path = randomCompat();
+    options.index = 0;
+  }
+
+  /*
       List tree data?
    */
   if (options.list) {
@@ -102,7 +111,13 @@ function go(path) {
       outInfo(listOnStatus(path));
     }
     else {
-      outInfo(list(path, options.caseSensitive));
+      let _list = list(path, options.caseSensitive);
+      if (_list.length === 1 && isCompat(_list[0])) {
+        options.list = undefined;
+        go(_list[0]);
+      }
+      else
+        outInfo(_list);
     }
   }
 
@@ -113,10 +128,10 @@ function go(path) {
     if (path === ".") {
       outInfo(listBrowsers());
       outInfo(lf + "Valid statuses:");
-      outInfo(ANSI.green + getBrowserStatusList().join(", ") + ANSI.white + ANSI.reset);
+      outInfo(ANSI.green + getBrowserStatusList().join(", "));
     }
     else {
-      outInfo(listBrowser(path.toLowerCase()).join(lf) + ANSI.white + ANSI.reset);
+      outInfo(listBrowser(path.toLowerCase()).join(lf));
     }
   }
 
@@ -265,6 +280,7 @@ function loadConfig() {
     delete cfg.out;
     delete cfg.all;
     delete cfg.index;
+    delete cfg.random;
     Object.assign(options, cfg);
     if (unres) log(ANSI.red + "*** If you see this line please include with the above. ***" + ANSI.reset);
   }

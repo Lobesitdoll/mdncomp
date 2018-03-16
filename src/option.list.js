@@ -16,14 +16,20 @@ function list(prefix, sensitive) {
   const
     _prefix = sensitive ? prefix : prefix.toLowerCase(),
     tbl = buildTable(),
-    result = [];
+    result = [],
+    maxSegments = _prefix.split(".").length + 1;
+
+  let
+    last = "", _path;
 
   tbl.forEach(path => {
-    let _path = sensitive ? path : path.toLowerCase();
-    if (_path.startsWith(_prefix) && !isCompat(path)) result.push(path);
+    _path = sensitive ? path : path.toLowerCase();
+    if (_path.startsWith(_prefix) && path.split(".").length <= maxSegments && path !== last) {
+      result.push(last = path);
+    }
   });
 
-  return result.length === 1 ? Object.keys(getPathAsObject(result[0]) || {}) : result
+  return result
 }
 
 function listOnStatus(statTxt) {

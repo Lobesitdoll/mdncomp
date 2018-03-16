@@ -44,7 +44,7 @@ function tagParser(html, onTag, onChar) {
         // end of tag?
         if (ch === ">") {
           inTag = false;
-          txt += onTag({tagStart: t, tagEnd: i, name: name.toLowerCase()});
+          txt += onTag({tagStart: t, tagEnd: i + 1, name: name.toLowerCase()});
         }
       }
     }
@@ -55,7 +55,7 @@ function tagParser(html, onTag, onChar) {
         name = "";
       }
       else {
-        txt += onChar(ch);
+        if (!tagParser.skip) txt += onChar(ch);
       }
     }
     i++
@@ -63,3 +63,5 @@ function tagParser(html, onTag, onChar) {
 
   return txt
 }
+
+tagParser.skip = false;

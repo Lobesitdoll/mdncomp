@@ -30,7 +30,7 @@ const
   // for update()
   urlPrefix = "https://raw.githubusercontent.com/epistemex/data-for-mdncomp/master/",
 
-  // for config
+  // for config and cache
   /* From user Luke @ https://stackoverflow.com/a/26227660:
   The expected result is:
     OS X - '/Users/user/Library/Preferences'
@@ -43,7 +43,9 @@ const
 let
   mdn,
   cfg,
+  crypto,
   options,
+  isoLang = "en-US",  // todo can be set by user in the future
   shortPad = 1;
 
 /**

@@ -1,6 +1,12 @@
 mdncomp
 =======
 
+1.11.0-alpha
+FIX: --list option now list branches correctly
+ADD: new --random option to explore features. Just for fun/curiosity
+CHG: Path for documentation excerpts cache.
+IMP: text formatting and output of doc entries (--doc)
+
 1.10.0-alpha
 ADD: option --doc, --docforce Shows an document excerpt in the terminal
 ADD: option --mdn open url in default browser

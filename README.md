@@ -155,6 +155,15 @@ Get documentation excerpts:
 
 ![documentation excerpts](https://i.imgur.com/VjTQMZ6.png)
 
+These are loaded from the MDN site and cached locally.
+
+
+Misc
+----
+Feel like exploring? Try the `--random` option.
+
+Get the raw JSON version of the feature using the `--raw` option.
+
 
 Wiki
 ----
