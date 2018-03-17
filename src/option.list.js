@@ -29,6 +29,13 @@ function list(prefix, sensitive) {
     }
   });
 
+  // colorize
+  let t = prefix.lastIndexOf(".") + 1;
+  result.forEach((res, i) => {
+    let t2 = res.lastIndexOf(".") + 1;
+    result[i] = ANSI.reset + (t ? res.substr(0, t) + ANSI.cyan + (t2 > t ? res.substring(t, t2) + ANSI.white + res.substr(t2) : res.substr(t)) : res);
+  });
+
   return result
 }
 
@@ -36,6 +43,8 @@ function listOnStatus(statTxt) {
   const
     result = [],
     keys = listTopLevels();
+
+  if (statTxt === "standard") statTxt = "standard_track";
 
   keys.forEach(key1 => {
     let o = mdn[key1];
@@ -46,6 +55,10 @@ function listOnStatus(statTxt) {
       Object.keys(mdn[key1][key2]).forEach(key3 => {
         let o = mdn[key1][key2][key3];
         if (key3.__compat && _check(o)) result.push(key1 + "." + key2 + "." + key3);
+//        Object.keys(mdn[key1][key2][key3]).forEach(key4 => {
+//          let o = mdn[key1][key2][key3][key4];
+//          if (key4.__compat && _check(o)) result.push(key1 + "." + key2 + "." + key3 + "." + key4);
+//        });
       });
     });
   });
@@ -54,6 +67,56 @@ function listOnStatus(statTxt) {
     let status = compat.__compat.status || {};
     return !!status[statTxt]
   }
+
+  // colorize
+  let
+    color = statTxt === "deprecated" ? ANSI.red : (statTxt === "experimental" ? ANSI.yellow : ANSI.green);
+
+  result.forEach((res, i) => {
+    let t = res.lastIndexOf(".") + 1;
+    result[i] = ANSI.reset + res.substr(0, t) + color + res.substr(t)
+  });
+
+  return result.sort();
+}
+
+function listOnProp(propTxt) {
+  const
+//    props = [
+//        {key: "missinglink", value: "mdn_url", not: true},
+//        {key: "partial", value: "partial_implementation", not: false}
+//      ],
+    result = [],
+    keys = buildTable();
+
+  // get technical name
+//  let value, not;
+//  for(let key of props) {
+//    if (key.key === propTxt) {
+//      value = key.value;
+//      not = key.not;
+//      break;
+//    }
+//  }
+
+//  if (!value) return [];
+
+  keys.forEach(path => {
+    let compat = getPathAsObject(path);
+    if (compat) {
+      compat = compat.__compat;
+      //if (compat && ((not && !compat[value]) || (!not && compat[value]))) result.push(path);
+      if (compat && (!(compat["mdn_url"] && compat["mdn_url"].length))) {
+        result.push(path);
+      }
+    }
+  });
+
+  // colorize
+  result.forEach((res, i) => {
+    let t = res.lastIndexOf(".") + 1;
+    result[i] = (ANSI.reset + res.substr(0, t) + ANSI.white + res.substr(t)).replace(/\./g, ANSI.blue + "." + ANSI.reset)
+  });
 
   return result.sort();
 }

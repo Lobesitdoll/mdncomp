@@ -267,6 +267,16 @@ List raw JSON object output instead of formatted output.
 You can combine this option with the "-a, --all" option.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
+help["--testurl"] = `
+Get status code for the documentation URL if any is provided.
+
+This is more useful to contributors that want to create pages for
+non-existing pages (404) etc., or to see if there is temporary
+connectivity issues.
+
+The option is ignored if --doc or --docforce is specified.`;
+
+/*----------------------------------------------------------------------------------------------------------------------------------*/
 help["--no-config"] = `
 Ignores the config file if specified. As the config file will override options
 this option will allow bypassing those overrides.

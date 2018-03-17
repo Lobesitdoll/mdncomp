@@ -1,7 +1,6 @@
 
 const
   ANSI = {
-    reset: "\x1b[0m",
     bright: "\x1b[1m",
     dim: "\x1b[2m",
 
@@ -16,8 +15,9 @@ const
     magenta: "\x1b[35;2m",
     cyan   : "\x1b[36;1m",
     white  : "\x1b[37;1m",
-    gray   : "\x1b[30;1m"
+    gray   : "\x1b[30;1m",
     //orange : "\x1b[38;2;202m" \x1b[38;2;r;g;bm
+    reset: "\x1b[0m"
   },
 
   lf = "\r\n", yes = "Y", no = "-", yes16 = "✔", no16 = "✘", //, px8 = "·×·",
@@ -122,8 +122,8 @@ function listBrowsers() {
  * @param str
  * @returns {RegExp}
  */
-function getComparer(str) {
-  let regex, parts, options = "";
+function getComparer(str, fuzzy) {
+  let regex, parts, options = "", endLine = "";
   if (str.startsWith("/")) {
     str = str.substr(1);
     parts = str.split("/");
@@ -131,10 +131,18 @@ function getComparer(str) {
     options = parts[1]
   }
   else {
-    if (str.endsWith(".")) str = str.substr(0, str.length - 1) + "$";
-    if (!str.startsWith("*")) str = "*" + str;
-    if (!str.endsWith("*")) str += "*";
-    str = "^" + str.split("*").join(".*") + "$";
+    if (fuzzy) {
+      str = getFuzzy(str.toLowerCase());
+    }
+    else {
+      if (str.endsWith(".")) {
+        str = str.substr(0, str.length - 1);
+        endLine = "$"
+      }
+      if (!str.startsWith("*")) str = "*" + str;
+      if (!str.endsWith("*") && !endLine.length) str += "*";
+      str = str.split("*").join(".*") + endLine;
+    }
   }
 
   try {
@@ -143,6 +151,20 @@ function getComparer(str) {
   catch(err) {
     log("Invalid regular expression:", err.message);
     process.exit(-1);
+  }
+
+  function getFuzzy(q) {
+    const spec = "\\^$.*+?()[]{}|";
+    let chars = [], endLine = "";
+
+    if (q.endsWith(".")) {
+      endLine = "$";
+      q = q.substr(0, q.length - 1);
+    }
+
+    for(let ch of q) chars.push(spec.includes(ch) ? "\\" + ch : ch);
+
+    return chars.join(".*?") + endLine
   }
 
   return regex

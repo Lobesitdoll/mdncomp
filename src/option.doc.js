@@ -1,5 +1,5 @@
 
-function getDoc(url) {
+function getDoc(url, callback) {
 
   let
     clr = ANSI.clrToCursor + ANSI.cursorUp,
@@ -56,7 +56,10 @@ function getDoc(url) {
         // parse
         parse(data)
       },
-      err => logErr(lf + "An error occurred -" + lf + "Status code: " + err.statusCode + (err.error ? lf + "Message: " + err.error : "") + ANSI.reset));
+      err => {
+        logErr(lf + "An error occurred -" + lf + "Status code: " + err.statusCode + (err.error ? lf + "Message: " + err.error : "") + ANSI.reset);
+        callback();
+      });
 
     function trimArticle(data, endPos) {
       return data.substr(0, endPos - (endPos - data.lastIndexOf("<", endPos)));
@@ -75,14 +78,16 @@ function getDoc(url) {
     clrLine();
     log(ANSI.cursorUp + ANSI.cursorUp);
 
+    //data = data.
     let str = ANSI.reset + data, _lf = "#LF#", inPre = false;
 
     // convert
     let
-      preLine = ANSI.blue + "-".repeat(options.maxChars - 1),
+      preLine = "-".repeat(options.maxChars - 1),
       optional = false;
     const
-      rxPre = /=.*brush:\s?(html|css)/i,
+      //rxPre = /=.*brush:\s?(html|css)/i,
+      rxPre = /=.*brush:\s?(html)/i,
       rxOptional = /.*class=.*optionalInline/i,
       rxNote = /.*class=.*(experimental|deprecated)/i;
 
@@ -109,6 +114,18 @@ function getDoc(url) {
             resSpan = ANSI.white + ") " + ANSI.reset;
           }
           return resSpan;
+        case "table":
+          tagParser.skipLF = true;
+          return ANSI.gray + preLine + ANSI.reset + _lf;
+          //return preLine + ANSI.white + _lf + "\x1b[16C\x1bH\x1b[1A" + _lf;
+        case "/table":
+          tagParser.skipLF = false;
+          return ANSI.gray + preLine + ANSI.reset + _lf;
+        case "/th":
+        case "/td":
+          return "\t";
+        case "/tr":
+          return _lf;
         case "ul":
         case "br":
         case "/p":
@@ -125,13 +142,13 @@ function getDoc(url) {
         case "pre":
           inPre = true;
           if (testTag(str, rxPre, e)) tagParser.skip = true;
-          return tagParser.skip ? "" : preLine + ANSI.cyan + _lf;
-        case "code":
-          return ANSI.cyan;
+          return tagParser.skip ? "" : ANSI.blue + preLine + ANSI.cyan + _lf;
         case "/pre":
-          let res = tagParser.skip ? "" : _lf + preLine + ANSI.reset + _lf;
+          let res = tagParser.skip ? "" : _lf + ANSI.blue + preLine + ANSI.reset + _lf;
           inPre = tagParser.skip = false;
           return res;
+        case "code":
+          return ANSI.cyan;
         case "/code":
           return ANSI.reset;
         case "dt":
@@ -161,14 +178,48 @@ function getDoc(url) {
     // hackish solution to get rid of empty lines in pre... todo improve..
     str = str.replace(lf + lf + ANSI.blue + "-------", lf + ANSI.blue + "-------");
 
-    let lines = str.split(lf);
+    let lines = str.split(lf), tabLen = -1;
     str = "";
-    lines.forEach(line => {
-      str += breakAnsiLine(line.replace(/\s\s+/g, " ").trim(), options.maxChars).trim() + lf;
+    lines.forEach((line, i) => {
+      let rxWS = /\s\s+/g;
+
+      // table? get max in 1. column
+      if (tabLen < 0 && line.includes("\t")) {
+        let y, l;
+        for(y = i; y < lines.length; y++) {
+          l = lines[y];
+          if (!l.includes("\t")) break;
+          l = l.split("\t")[0];
+          if (l.length > tabLen) tabLen = l.length
+        }
+        tabLen += 2;
+      }
+
+      if (line.includes("\t")) {
+        let l = line.split("\t");
+        line = ANSI.white + l[0].padEnd(tabLen) + ANSI.reset + (l[1] || "");
+        rxWS = "x79y"
+      }
+      else if (tabLen > 0) tabLen = -1; // ready for next table
+
+      str += breakAnsiLine(line.replace(rxWS, " ").trim(), options.maxChars).trim() + lf;
     });
 
-    str = ANSI.blue + "DOCUMENTATION EXCERPT" + ANSI.reset + lf + lf + str.trim() + lf;
+    // check for draft version
+    let draft = "", i = str.indexOf("Draft");
+    if (i >= 0 && i < 10) {
+      i = (options.maxChars - 7)>>1;
+      draft = ANSI.red + "/".repeat(i - 1) + ANSI.yellow + " DRAFT " + ANSI.red + "/".repeat(i) + ANSI.reset;
+      str = draft + str.substr(i + 7);
+    }
 
-    log(str);
+    // headers
+    //str = str.replace(ANSI.yellow + "Syntax" + ANSI.reset + lf, ANSI.yellow + "SYNTAX" + ANSI.reset + lf);
+
+    str = ANSI.reset + str.trim() + lf;
+    //str = ANSI.blue + "DOCUMENTATION EXCERPT" + ANSI.reset + lf + lf + str.trim() + lf;
+
+    outStore(str);
+    callback();
   }
 }

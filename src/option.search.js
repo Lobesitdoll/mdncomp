@@ -12,7 +12,7 @@ function search(keyword, sensitive) {
     tbl = buildTable(),
     result = [];
 
-  cmp = getComparer(_toCase(keyword));
+  cmp = getComparer(_toCase(keyword), options.fuzzy);
   tbl.forEach(path => {
     let _path = _toCase(path);
     if (cmp.test(_path) && isCompat(path)) result.push(path);

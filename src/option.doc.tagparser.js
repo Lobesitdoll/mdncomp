@@ -55,7 +55,10 @@ function tagParser(html, onTag, onChar) {
         name = "";
       }
       else {
-        if (!tagParser.skip) txt += onChar(ch);
+        if (tagParser.skipLF && (ch === "\n" || ch === "\r"))
+          ch = "";
+        if (!tagParser.skip)
+          txt += onChar(ch);
       }
     }
     i++
@@ -65,3 +68,4 @@ function tagParser(html, onTag, onChar) {
 }
 
 tagParser.skip = false;
+tagParser.skipLF = false;

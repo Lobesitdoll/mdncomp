@@ -16,10 +16,10 @@ Features
   - Search in APIs, CSS, HTML, HTTP, JavaScript, SVG, WebDriver and WebExtensions.
   - Get status for standard, experimental and deprecated features.
   - Show status notes, prefix status, flags and more.
-  - Search or navigate per branch and path.
-  - Use paths, wildcards or regular expressions to find features
+  - Find features using paths, wildcards, fuzzy terms or regular expressions
+  - Navigate by path and branches
   - Search case (in)sensitive
-  - Show desktop and/or mobile information
+  - Show desktop and/or mobile information for the most common browsers
 - Browser status
   - List status and release dates per browser
   - List browsers per status
@@ -27,6 +27,9 @@ Features
   - Shows URL to documentation page for the feature on [MDN](https://developer.mozilla.org/).
   - Download and show documentation excerpt on the command line as well as cache the data.
   - Open documentation links in the default browser from the command line.
+- Basic test tools:
+  - Test documentation URL status (404 missing pages, connectivity).
+  - List features with missing documentation URLs
 - List to terminal as table or as shorthand formats
 - Export as SVG
 - Define permanent/often used options in a config file (can be suspended at will).
@@ -160,7 +163,9 @@ These are loaded from the MDN site and cached locally.
 
 Misc
 ----
-Feel like exploring? Try the `--random` option.
+Feel like exploring? Try combining the `--random` option with `--doc`:
+
+    $ mdncomp --random --doc .
 
 Get the raw JSON version of the feature using the `--raw` option.
 

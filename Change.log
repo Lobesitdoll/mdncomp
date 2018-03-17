@@ -1,6 +1,13 @@
 mdncomp
 =======
 
+1.12.0-alpha
+ADD: Fuzzy search term option -z, --fuzzy (can be stored in the config file)
+ADD: "missinglink" argument to the --list option
+ADD: --test option to check a documentation URL against server
+ADD: Colorization in --list output
+ADD: parse html (--doc) tables into text (only 2-col support atm).
+
 1.11.0-alpha
 FIX: --list option now list branches correctly
 ADD: new --random option to explore features. Just for fun/curiosity

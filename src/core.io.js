@@ -40,6 +40,36 @@ const io = {
     }
   },
 
+  getUrlStatus: function(url, callback, followRedirects) {
+    if (!https) https = require("https");
+    const
+      { URL } = require('url'),
+      url2 = new URL(url),
+      options = {
+        method: "HEAD",
+        host: url2.hostname,
+        port: url2.port,
+        path: url2.pathname
+      };
+
+    let req = https.request(options, res => {
+      if (res.statusCode === 301 || res.statusCode === 302) {
+        if (followRedirects) {
+          io.getUrlStatus(res.headers.location, callback, followRedirects);
+        }
+        else {
+          callback({
+            statusCode: res.statusCode,
+            location: res.headers.location
+          })
+        }
+      }
+      else callback({statusCode: res.statusCode});
+    });
+
+    req.end();
+  },
+
   /**
    * Open default program on the system based on the argument (cmd).
    * @param {string} cmd - an URL or path

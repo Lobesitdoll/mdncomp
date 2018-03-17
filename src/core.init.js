@@ -4,7 +4,11 @@
 function init() {
 
   // Update
-  if (args.length === 3 && (args[2] === "--update" || args[2] === "--fupdate" || args[2] === "--cupdate")) {
+  if (args.length === 3 && args[2] === "--configpath") {
+    log(require("path").resolve(cfgPath, "mdncomp"));
+  }
+
+  else if (args.length === 3 && (args[2] === "--update" || args[2] === "--fupdate" || args[2] === "--cupdate")) {
     update(args[2] === "--fupdate", args[2] === "--cupdate");
   }
 
@@ -15,30 +19,33 @@ function init() {
       .usage('[options] <feature>')
       .description("Get MDN Browser Compatibility data." + lf + "  Version: " + version + lf + "  (c) 2018 epistemex.com")
       .option("-l, --list", "List paths starting with the given value or '.' for top-level")
-      .option("-o, --out <path>", "Save information to file. Extension for type, or --type.")
+      .option("-o, --out <path>", "Save information to file. Extension for type, or --type")
       .option("-t, --type <type>", "Output format (ansi, txt, svg)", "ansi")
-      .option("-x, --overwrite", "Overwrites an existing file with --out option.")
+      .option("-x, --overwrite", "Overwrites an existing file with --out option")
       .option("-d, --desktop", "Show desktop only")
       .option("-m, --mobile", "Show mobile devices only")
       .option("-c, --case-sensitive", "Search in case-sensitive mode")
-      .option("-a, --all", "If search results in more than entry, show info for all.")
-      .option("-i, --index <index>", "Show this index from a multiple result list.", -1)
+      .option("-a, --all", "If search results in more than entry, show info for all")
+      .option("-z, --fuzzy", "Use path as a fuzzy search term")
+      .option("-i, --index <index>", "Show this index from a multiple result list", -1)
       .option("-s, --shorthand", "Show compatibility as shorthand with multiple results")
       .option("-h, --shorthand-split", "Split a shorthand line into two lines (use with -s)")
-      .option("-b, --browser", "Show information about this browser, or if '.' list.")
+      .option("-b, --browser", "Show information about this browser, or if '.' list")
       .option("-N, --no-notes", "Don't show notes")
       .option("-e, --noteend", "Show notes (-n) at end instead of in sections (text)")
-      .option("-f, --markdown", "Format link as markdown and turns off colors.")
+      .option("-f, --markdown", "Format link as markdown and turns off colors")
       .option("-w, --width <width>", "Used with -o, Set width of image", 800)
       .option("--no-colors", "Don't use colors in output")
-      .option("--max-chars <width>", "Max number of chars per line before wrap.", 72)
+      .option("--max-chars <width>", "Max number of chars per line before wrap", 72)
       .option("--doc", "Show documentation. Show cached or fetch")
-      .option("--docforce", "Show documentation. Force fetch from server.")
-      .option("--mdn", "Open entry's document URL in default browser.")
+      .option("--docforce", "Show documentation. Force fetch from server")
+      .option("--mdn", "Open entry's document URL in default browser")
       .option("--random", "Show a random entry. (mdncomp --random . )")
-      .option("--raw", "Output the raw JSON data.")
-      .option("--update, --fupdate, --cupdate", "Update BCD from remote (--fupdate=force, --cupdate=check).")
-      .option("--no-config", "Ignore config file (mdncomp.json) in root folder.")
+      .option("--raw", "Output the raw JSON data")
+      .option("--testurl", "Test documentation URL and get status code")
+      .option("--update, --fupdate, --cupdate", "Update BCD from remote (--fupdate=force, --cupdate=check)")
+      .option("--no-config", "Ignore config file (mdncomp.json) in root folder")
+      .option("--configpath", "Show path to where config file and cache is stored")
       .action(go)
       .on("--help", () => {parseHelp(args)})
       .parse(args);
@@ -107,8 +114,13 @@ function go(path) {
     if (path === ".") {
       outInfo(listTopLevels())
     }
-    else if (["deprecated", "experimental"].indexOf(path) >= 0) {
+    // list on status
+    else if (["deprecated", "experimental", "standard"].indexOf(path) >= 0) {
       outInfo(listOnStatus(path));
+    }
+    // list on property
+    else if (["missinglink"].indexOf(path) >= 0) {
+      outInfo(listOnProp(path));
     }
     else {
       let _list = list(path, options.caseSensitive);
@@ -135,9 +147,12 @@ function go(path) {
     }
   }
 
-  /*
-    Main use: show info based on keyword
-   */
+  /*------------------------------------------------------------------------------------------------------------------*
+
+      MAIN USE: Show info based on keyword
+
+  *------------------------------------------------------------------------------------------------------------------*/
+
   else {
     let result = search(path, options.caseSensitive);
 
@@ -155,23 +170,34 @@ function go(path) {
 
         result.forEach(entry => {outResult(entry)});
 
-        if (options.type !== "svg")
-          outStore(ANSI.magenta + "Data from MDN - `npm i -g mdncomp` by epistemex" + ANSI.white + lf + ANSI.reset);
-
-        commit();
 
         if (result.length === 1) {
           let compat = new MDNComp(result[0]);
 
-          // check --doc link
-          if (options.doc || options.docforce) {
-            let compat = new MDNComp(result[0]);
+          // test url if any
+          if (options.testurl && !(options.doc || options.docforce)) {
             if (compat.url.length) {
-              getDoc(compat.url)
+              let langUrl = compat.url.replace("mozilla.org/", "mozilla.org/" + isoLang + "/");
+              io.getUrlStatus(langUrl, e => {
+                log(ANSI.white + "URL status: " + (e.statusCode === 200 ? ANSI.green : ANSI.red) + e.statusCode + lf)
+              }, true)
             }
             else {
-              log(ANSI.red + "Documentation URL is not defined for this feature." + ANSI.reset);
+              log(ANSI.white + "URL status: " + ANSI.reset + "-- no link --" + lf)
             }
+          }
+
+          // check --doc link
+          if (options.doc || options.docforce) {
+            if (compat.url.length) {
+              getDoc(compat.url, _commit)
+            }
+            else {
+              outInfo(ANSI.red + "Documentation URL is not defined for this feature." + ANSI.reset);
+            }
+          }
+          else {
+            _commit();
           }
 
           // check --mdn link
@@ -194,6 +220,15 @@ function go(path) {
         //outInfo(result);
       }
     }
+
+    function _commit() {
+      if (options.type !== "svg") addFooter();
+      commit();
+    }
+  }
+
+  function addFooter() {
+    outStore(ANSI.magenta + "Data from MDN - `npm i -g mdncomp` by epistemex" + ANSI.white + lf + ANSI.reset)
   }
 
   function outResult(entry) {
