@@ -5,7 +5,7 @@ function init() {
 
   // Update
   if (args.length === 3 && args[2] === "--configpath") {
-    log(require("path").resolve(cfgPath, "mdncomp"));
+    log(ANSI.white + require("path").resolve(cfgPath, "mdncomp") + ANSI.reset);
   }
 
   else if (args.length === 3 && (args[2] === "--update" || args[2] === "--fupdate" || args[2] === "--cupdate")) {
@@ -37,6 +37,7 @@ function init() {
       .option("-w, --width <width>", "Used with -o, Set width of image", 800)
       .option("--no-colors", "Don't use colors in output")
       .option("--max-chars <width>", "Max number of chars per line before wrap", 72)
+      //.option("--ext", "Extended information. Show all documented browsers.") // todo this will require sig. changes in formatters, not imp. enough at this stage
       .option("--doc", "Show documentation. Show cached or fetch")
       .option("--docforce", "Show documentation. Force fetch from server")
       .option("--mdn", "Open entry's document URL in default browser")
@@ -68,7 +69,7 @@ function outStore(txt, noFile) {
 
 /*------------------------------------------------------------------------------------------------------------------*
 
-    MAIN
+    PARSE KEY OPTIONS
 
 *------------------------------------------------------------------------------------------------------------------*/
 
@@ -108,7 +109,7 @@ function go(path) {
   }
 
   /*
-      List tree data?
+      List tree data ?
    */
   if (options.list) {
     if (path === ".") {
@@ -134,7 +135,7 @@ function go(path) {
   }
 
   /*
-      List browser info?
+      List browser info ?
    */
   else if (options.browser) {
     if (path === ".") {
@@ -149,7 +150,7 @@ function go(path) {
 
   /*------------------------------------------------------------------------------------------------------------------*
 
-      MAIN USE: Show info based on keyword
+      MAIN USE: Show info based on keyword (wildcard, fuzzy, regexp)
 
   *------------------------------------------------------------------------------------------------------------------*/
 
@@ -217,7 +218,6 @@ function go(path) {
         result.forEach((item, i) => {
           outInfo(ANSI.yellow + "[" + ANSI.green +(i + "").padStart(pad) + ANSI.yellow + "] " + ANSI.white + item + ANSI.reset);
         });
-        //outInfo(result);
       }
     }
 

@@ -105,6 +105,17 @@ information for all the results.
 Note: currently not supported with SVG output.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
+help["-z"] = help["--fuzzy"] = `
+Search using a "fuzzy" search term. This simply mean expressing the search
+term as chosen letters from the target path:
+
+    mndcomp -z htcetblb.
+
+will produce the result for "HTMLCanvasElement.toBlob".
+
+The option can be stored in the "config file" if you want to use it permanently.`;
+
+/*----------------------------------------------------------------------------------------------------------------------------------*/
 help["-i"] = help["--index"] = `
 When multiple results are listed they are assigned a index number in the
 result list. To list one particular result from that list, use this option:
@@ -242,8 +253,8 @@ Same as --doc but will force fetch the content, re-parse and update the cache.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["--mdn"] = `
-If a documentation link is defined for the feature this option will attempt opening the link in
-the default browser.`;
+If a documentation link is defined for the feature this option will attempt 
+opening the link in the default browser.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["--random"] = `
@@ -277,12 +288,18 @@ connectivity issues.
 The option is ignored if --doc or --docforce is specified.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
+help["--configpath"] = `
+Show the path to the root folder used to store the optional config file and
+the documentation excerpts cache.`;
+
+/*----------------------------------------------------------------------------------------------------------------------------------*/
 help["--no-config"] = `
 Ignores the config file if specified. As the config file will override options
 this option will allow bypassing those overrides.
 
 Options that will be ignored regardless are:
---no-config, --out, --all, --index, --browser, --list, --version, --update, --cupdate, --fupdate and --help.`;
+--no-config, --out, --all, --index, --browser, --list,
+--version, --update, --cupdate, --fupdate and --help.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["--update"] = help["--cupdate"] = help["--fupdate"] = `
