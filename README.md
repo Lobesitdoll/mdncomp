@@ -156,7 +156,7 @@ edge  17  Rel: -           nightly
 
 Get documentation excerpts:
 
-![documentation excerpts](https://i.imgur.com/VjTQMZ6.png)
+![documentation excerpts](https://i.imgur.com/hlh3A51.png)
 
 These are loaded from the MDN site and cached locally.
 

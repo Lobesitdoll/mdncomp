@@ -78,8 +78,10 @@ function getDoc(url, callback) {
     clrLine();
     log(ANSI.cursorUp + ANSI.cursorUp);
 
-    //data = data.
     let str = ANSI.reset + data, _lf = "#LF#", inPre = false;
+
+    // tabs need to go, we'll use tabs for tables later (if any)
+    str = str.replace(/\t/gm, " ");
 
     // convert
     let
@@ -126,7 +128,14 @@ function getDoc(url, callback) {
           return "\t";
         case "/tr":
           return _lf;
+        case "dl":
         case "ul":
+          tagParser.skipLF = true;
+          return _lf;
+        case "/dl":
+        case "/ul":
+          tagParser.skipLF = false;
+          return "";
         case "br":
         case "/p":
           return _lf;
@@ -155,7 +164,7 @@ function getDoc(url, callback) {
           return ANSI.white;
         case "dd":
         case "li":
-          return ANSI.white + "-" + ANSI.reset + " ";
+          return ANSI.white + "- " + ANSI.reset;
         default:
           return ""
       }

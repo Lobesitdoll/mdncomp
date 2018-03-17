@@ -1,6 +1,9 @@
 mdncomp
 =======
 
+1.12.1-alpha
+HOT: Fixed HTML containing TAB chars. (--doc)
+
 1.12.0-alpha
 ADD: Fuzzy search term option -z, --fuzzy (can be stored in the config file)
 ADD: "missinglink" argument to the --list option
