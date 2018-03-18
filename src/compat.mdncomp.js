@@ -53,7 +53,7 @@ MDNComp.prototype = {
       txt += ANSI.yellow + "EXPERIMENTAL" + ANSI.reset + ", ";
     if (this.deprecated)
       txt += ANSI.red + "DEPRECATED" + ANSI.reset + ", ";
-    if (this.standard)
+    if (this.standard && !(this.deprecated || this.experimental))
       txt += ANSI.green + "On Standard Track" + ANSI.reset + ", ";
 
     txt = txt.substr(0, Math.max(1, txt.length - 2)) + ")";

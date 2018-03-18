@@ -237,30 +237,30 @@ function cleanHTML(str, convTags) {
   return str
 }
 
-/**
- * Format a long line into several lines based
- * on max char width.
- * @param s
- * @param max
- * @returns {string}
- */
-function breakLine(s, max) {
-  let
-    out = new Output(0),
-    _max = Math.max(72, (max>>>0 || 72)),
-    line = s.substr(0, _max), i;
-
-  while(line.length === _max) {
-    i = line.lastIndexOf(" ");
-    if (i < 0) i = _max;
-    out.addLine(line.substr(0, i).trim());
-    s = s.substr(i);
-    line = s.substr(1, _max)
-  }
-  out.add(line.trim());
-
-  return out.toString()
-}
+///**
+// * Format a long line into several lines based
+// * on max char width.
+// * @param s
+// * @param max
+// * @returns {string}
+// */
+//function breakLine(s, max) {
+//  let
+//    out = new Output(0),
+//    _max = Math.max(72, (max>>>0 || 72)),
+//    line = s.substr(0, _max), i;
+//
+//  while(line.length === _max) {
+//    i = line.lastIndexOf(" ");
+//    if (i < 0) i = _max;
+//    out.addLine(line.substr(0, i).trim());
+//    s = s.substr(i);
+//    line = s.substr(1, _max)
+//  }
+//  out.add(line.trim());
+//
+//  return out.toString()
+//}
 
 function breakAnsiLine(s, max) {
   let
@@ -270,8 +270,6 @@ function breakAnsiLine(s, max) {
     inAnsi = false,
     _lf = "\n",
     _max = Math.max(72, (max>>>0 || 72));
-
-  //s = s.replace(new RegExp(lf, "gm"), "\n");
 
   while(ch = s[i]) {
     if (!inAnsi) {
@@ -299,7 +297,7 @@ function breakAnsiLine(s, max) {
   // A little clean-up
   lines.forEach((line, i) => {lines[i] = line.trim()});
 
-  return lines.join(lf);
+  return lines.length ? lines.join(lf) : "";
 }
 
 // we'll go char-by-char here, regex can't be used for this afaik..

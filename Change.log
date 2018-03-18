@@ -1,6 +1,13 @@
 mdncomp
 =======
 
+1.12.2-alpha
+ADD: Indents for text output tables/lists (--doc)
+FIX: Line length for some footnotes when prefixed on the same line.
+FIX: Some conversion issues with HTML to text (--doc)
+CHG: "On standard track" not shown if deprecated.
+IMP: Cache files smaller while still remaining flexible in regards to --max-chars (auto updates existing cache, no need for --docforce)
+
 1.12.1-alpha
 HOT: Fixed HTML containing TAB chars. (--doc)
 

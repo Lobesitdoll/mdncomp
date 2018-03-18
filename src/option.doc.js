@@ -7,7 +7,7 @@ function getDoc(url, callback) {
 
   if (cached && !options.docforce) {
     log();
-    parse(cached);
+    format(cached);
   }
   else {
     log(ANSI.green + "Fetching documentation...");
@@ -50,9 +50,6 @@ function getDoc(url, callback) {
         i3 = data.indexOf("id=\"Specification");
         if (i3 >= 0) data = trimArticle(data, i3);
 
-        // save to cache
-        io.setCached(url, data);
-
         // parse
         parse(data)
       },
@@ -78,14 +75,14 @@ function getDoc(url, callback) {
     clrLine();
     log(ANSI.cursorUp + ANSI.cursorUp);
 
-    let str = ANSI.reset + data, _lf = "#LF#", inPre = false;
+    let str = ANSI.reset + data, _lf = "#LF#", inPre = false, indent = 0;
 
     // tabs need to go, we'll use tabs for tables later (if any)
     str = str.replace(/\t/gm, " ");
 
     // convert
     let
-      preLine = "-".repeat(options.maxChars - 1),
+      preLine = "--LINE--",
       optional = false;
     const
       //rxPre = /=.*brush:\s?(html|css)/i,
@@ -145,8 +142,10 @@ function getDoc(url, callback) {
         case "/h2":
         case "/h3":
         case "/dt":
+          return ANSI.reset + _lf;
         case "/dd":
         case "/li":
+          indent--;
           return ANSI.reset + _lf;
         case "pre":
           inPre = true;
@@ -164,7 +163,8 @@ function getDoc(url, callback) {
           return ANSI.white;
         case "dd":
         case "li":
-          return ANSI.white + "- " + ANSI.reset;
+          indent++;
+          return ANSI.white + "-".repeat(indent) + ANSI.reset + " ";
         default:
           return ""
       }
@@ -175,6 +175,7 @@ function getDoc(url, callback) {
     // entities
     str = str.replace(/&nbsp;/gmi, " ");
     str = str.replace(/&quot;/gmi, "\"");
+    str = str.replace(/&amp;/gmi, "&");
     str = str.replace(/&lt;/gmi, "<");
     str = str.replace(/&gt;/gmi, ">");
 
@@ -185,7 +186,31 @@ function getDoc(url, callback) {
     str = str.replace(new RegExp(_lf, "gm"), lf);
 
     // hackish solution to get rid of empty lines in pre... todo improve..
-    str = str.replace(lf + lf + ANSI.blue + "-------", lf + ANSI.blue + "-------");
+    str = str.replace(lf + lf + ANSI.blue + preLine, lf + ANSI.blue + preLine);
+
+    // mark data as parsed:
+    str = "#" + str;
+
+    // save to cache
+    io.setCached(url, str);
+
+    // format output
+    format(str);
+  }
+
+  function format(str) {
+
+    // todo to be cache set/get point in the future
+    if (!str.startsWith("#")) {
+      parse(str);
+      return;
+    }
+
+    str = str.substr(1);
+
+    // pre-lines
+    let preLine = "-".repeat(options.maxChars - 1);
+    str = str.replace(/--LINE--/gm, preLine);
 
     let lines = str.split(lf), tabLen = -1;
     str = "";
@@ -198,15 +223,15 @@ function getDoc(url, callback) {
         for(y = i; y < lines.length; y++) {
           l = lines[y];
           if (!l.includes("\t")) break;
-          l = l.split("\t")[0];
+          l = l.split("\t")[0].trim();
           if (l.length > tabLen) tabLen = l.length
         }
-        tabLen += 2;
+        tabLen++;
       }
 
       if (line.includes("\t")) {
         let l = line.split("\t");
-        line = ANSI.white + l[0].padEnd(tabLen) + ANSI.reset + (l[1] || "");
+        line = ANSI.white + (l[0].trim().padEnd(tabLen) + ANSI.reset + (l[1].trim() || ""));
         rxWS = "x79y"
       }
       else if (tabLen > 0) tabLen = -1; // ready for next table
@@ -215,11 +240,17 @@ function getDoc(url, callback) {
     });
 
     // check for draft version
-    let draft = "", i = str.indexOf("Draft");
-    if (i >= 0 && i < 10) {
-      i = (options.maxChars - 7)>>1;
-      draft = ANSI.red + "/".repeat(i - 1) + ANSI.yellow + " DRAFT " + ANSI.red + "/".repeat(i) + ANSI.reset;
-      str = draft + str.substr(i + 7);
+    // check for obsolete version
+    markTop("Draft", ANSI.yellow);
+    markTop("Obsolete", ANSI.red);
+
+    function markTop(keyword, color) {
+      let draft = "", i = str.indexOf(keyword), kl = keyword.length;
+      if (i >= 0 && i < 10) {
+        i = (options.maxChars - kl - 2)>>1;
+        draft = ANSI.red + "/".repeat(i - 1) + color + " " + keyword.toUpperCase() + " " + ANSI.red + "/".repeat(i) + ANSI.reset + lf;
+        str = draft + str.substr(i + kl + 1);
+      }
     }
 
     // headers

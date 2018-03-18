@@ -46,7 +46,8 @@ Browser.prototype = {
   getNotes: function(ref) {
     let out = new Output(0);
     this.info.forEach(info => {
-      out.add(info.toString(ref))
+      let str = breakAnsiLine(info.toString(ref), options.maxChars);
+      if (str.length) out.addLine(str);
     });
 
     return out.toString()

@@ -56,17 +56,18 @@ Info.prototype = {
       indent = "",
       out = new Output(0), hasInfo = false;
 
+    if (!this.notes.length) return "";
+
     if (this.notes.length > 1) {
       prefix += lf;
       indent = "- ";
     }
 
     this.notes.forEach(note => {
-      hasInfo = true;
-      out.addLine(breakLine(cleanHTML(indent + note, true), options.maxChars))
+      out.addLine(cleanHTML(indent + note, true))
     });
 
-    return hasInfo ? prefix + out.toString() : ""
+    return prefix + out.toString()
   },
 
   /**

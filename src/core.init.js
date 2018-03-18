@@ -194,7 +194,8 @@ function go(path) {
               getDoc(compat.url, _commit)
             }
             else {
-              outInfo(ANSI.red + "Documentation URL is not defined for this feature." + ANSI.reset);
+              outInfo(ANSI.red + "Documentation URL is not defined for this feature." + ANSI.reset + lf);
+              _commit();
             }
           }
           else {
