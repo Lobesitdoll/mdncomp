@@ -20,8 +20,8 @@ function compatToLong(mdnComp) {
     out.addLine(" [`%0%1`](%2) %3" + lf, mdnComp.prePath, mdnComp.name, mdnComp.url, mdnComp.getStatus());
   }
   else {
-    out.addLine(" %0%1%2%3%4 %5", ANSI.yellow, mdnComp.prePath, ANSI.cyan, mdnComp.name, ANSI.white, mdnComp.getStatus());
-    out.addLine(" ", mdnComp.url ? ANSI.white + mdnComp.url : "-", lf);
+    out.addLine(" %0%1%2%3%4 %5", ANSI.cyan, mdnComp.prePath, ANSI.white, mdnComp.name, ANSI.white, mdnComp.getStatus());
+    out.addLine(" ", mdnComp.url ? ANSI.gray + mdnComp.url : "-", lf);
   }
 
   // description TODO We'll let this field mature more before activating.

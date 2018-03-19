@@ -1,6 +1,9 @@
 mdncomp
 =======
 
+1.12.3-alpha
+FIX: Some conversion issues with HTML to text (--doc) (<math>)
+
 1.12.2-alpha
 ADD: Indents for text output tables/lists (--doc)
 FIX: Line length for some footnotes when prefixed on the same line.

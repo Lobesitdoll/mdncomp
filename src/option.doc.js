@@ -120,6 +120,12 @@ function getDoc(url, callback) {
         case "/table":
           tagParser.skipLF = false;
           return ANSI.gray + preLine + ANSI.reset + _lf;
+        case "math":
+          tagParser.skip = true;
+          return ANSI.blue + " --math formula not shown--" + ANSI.reset;
+        case "/math":
+          tagParser.skip = false;
+          return "";
         case "/th":
         case "/td":
           return "\t";
@@ -160,11 +166,11 @@ function getDoc(url, callback) {
         case "/code":
           return ANSI.reset;
         case "dt":
-          return ANSI.white;
+          return ANSI.white + "*".repeat(Math.max(0, indent + 1)) + ANSI.reset + " ";
         case "dd":
         case "li":
           indent++;
-          return ANSI.white + "-".repeat(indent) + ANSI.reset + " ";
+          return ANSI.white + "-".repeat(Math.max(0, indent)) + ANSI.reset + " ";
         default:
           return ""
       }
