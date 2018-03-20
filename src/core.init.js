@@ -79,7 +79,7 @@ function go(path) {
   try {
     mdn = require("../data/data.json");
   } catch(err) {
-    log("Critical error: data file not found. Try running using option --fupdate to download latest snapshot.");
+    log("Critical error: data file not found. Try running with option --fupdate to download latest snapshot.");
     return
   }
 
@@ -98,7 +98,9 @@ function go(path) {
 
   // invoke boring mode
   if (!options.colors || options.markdown || options.type === "txt")
-    Object.keys(ANSI).forEach(color => {ANSI[color] = ""});
+    Object.keys(ANSI).forEach(color => {
+      if (!color.toLowerCase().includes("cursor")) ANSI[color] = "";
+    });
 
   /*
       Random ?
@@ -139,7 +141,7 @@ function go(path) {
    */
   else if (options.browser) {
     if (path === ".") {
-      outInfo(listBrowsers());
+      outInfo(ANSI.white + listBrowsers().join(lf) + ANSI.reset);
       outInfo(lf + "Valid statuses:");
       outInfo(ANSI.green + getBrowserStatusList().join(", "));
     }
@@ -290,7 +292,7 @@ function loadConfig() {
   if (!fs) fs = require("fs");
   if (!path) path = require("path");
   const
-    file = path.resolve(cfgPath, "mdncomp/mdncomp.json");
+    file = path.resolve(io.getConfigPath(), "mdncomp.json");
 
   let
     unres = false;  // detect possible access issues
@@ -310,6 +312,7 @@ function loadConfig() {
   }
 
   if (fs.existsSync(file)) {
+    // todo use whitelisting here
     cfg = require(file);
     delete cfg.browser;
     delete cfg.list;

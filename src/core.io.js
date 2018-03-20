@@ -2,6 +2,7 @@
 let https, fs, path;
 
 const io = {
+
   /**
    * Request data from an URL
    * @param {string} url - the (HTTPS) url to load
@@ -14,12 +15,12 @@ const io = {
     if (!https) https = require("https");
     onResp = onResp || function() {return true};
 
-    https.get(url, res => {
+    const req = https.get(url, res => {
       let data = "";
 
       // handle redirects
       if (res.statusCode === 301 || res.statusCode === 302) {
-        return this.request(res.headers.location, onResp, onProgress, onData, onError);
+        return io.request(res.headers.location, onResp, onProgress, onData, onError);
       }
       else if (res.statusCode === 200 && onResp({headers: res.headers})) {
         let length = res.headers["content-length"]|0;
@@ -33,6 +34,7 @@ const io = {
       else if (onError) _error(res, "");
 
     }).on("error", err => _error(res, err));
+    req.end();
 
     function _error(res, err) {
       if (onError) onError({statusCode: res.statusCode, error: err});
@@ -84,50 +86,66 @@ const io = {
     return fs.existsSync(path)
   },
 
-//  mkdir: function(path) {
-//    let
-//      parts = path.split(path.sep),
-//      cPath = "";
-//    parts.forEach(part => {
-//      cPath = path.resolve(cPath, part);
-//      if (!fs.existsSync(cPath)) {
-//        fs.mkdirSync(cPath);
-//      }
-//    })
+//  getDataPath: function() {
+//    return path.normalize(path.dirname(process.mainModule.filename) + "/../data");
 //  },
 
-  getCachedPath: function(str) {
+  /**
+   * Get config path and/or sub folders within the config path.
+   * Will create the directories that are missing.
+   *
+   * @example
+   *
+   *    getConfigPath()         --> [userdata]/mdncomp
+   *    getConfigPath("cache")  --> [userdata]/mdncomp/cache
+   *    etc.
+   *
+   * @returns {string}
+   */
+  getConfigPath: function() {
     if (!path) path = require("path");
     if (!fs) fs = require("fs");
 
+    // root config path
     let root = path.resolve(cfgPath, "mdncomp");
-    if (!fs.existsSync(root)) {
-      fs.mkdirSync(root);
+    _check(root);
+
+    // check/create sub-folders if defined
+    for(let i = 0; i < arguments.length; i++) {
+      _check(root = path.resolve(root, arguments[i]));
     }
 
-    root = path.resolve(root, "cache");
-    if (!fs) fs = require("fs");
-    if (!fs.existsSync(root)) {
-      fs.mkdirSync(root);
+    function _check(root) {
+      if (!fs.existsSync(root)) {
+        try {
+          fs.mkdirSync(root);
+        } catch(err) {
+          log(`${ANSI.red}Could not create config folder:\n${root}\n${err.message}${ANSI.reset}`);
+        }
+      }
     }
 
-    return path.resolve(root, calcMD5(str))
+    return root
   },
 
-  getCached: function(str) {
-    //if (!fs) fs = require("fs");
+  getCachedFilename: function(str) {
+    return path.resolve(io.getConfigPath("cache"), calcMD5(str))
+  },
+
+  getCachedData: function(str) {
+    if (!fs) fs = require("fs");
     let data = null;
     try {
-      data = fs.readFileSync(io.getCachedPath(str)).toString();
+      data = fs.readFileSync(io.getCachedFilename(str)).toString();
     } catch(err) {}
 
     return data
   },
 
-  setCached: function(str, data) {
-    //if (!fs) fs = require("fs");
+  setCachedData: function(str, data) {
+    if (!fs) fs = require("fs");
     try {
-      fs.writeFileSync(io.getCachedPath(str), data);
+      fs.writeFileSync(io.getCachedFilename(str), data);
     } catch(err) {
       log(ANSI.red + "Could not save file: " + str + ANSI.reset + lf + err)
     }

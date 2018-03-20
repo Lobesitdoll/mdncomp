@@ -9,9 +9,9 @@ function compatToLong(mdnComp) {
     desktopList = ["chrome", "edge", "firefox", "ie", "opera", "safari"],
     mobileList = ["chrome_android", "edge_mobile", "firefox_android", "opera_android", "safari_ios", "webview_android"],
     refs = ["°", "¹", "²", "³", "ª", "^", "`", "'", "\"", "'\"", "\"\"", "\"\"'", "º"],
+    line = " %0----------+-----------+-----------+-----------+-----------+-----------",
     ref = 0,
-    notes = [],
-    line = " %0----------+-----------+-----------+-----------+-----------+-----------";
+    notes = [];
 
   out.addLine(ANSI.reset);
 
@@ -24,7 +24,7 @@ function compatToLong(mdnComp) {
     out.addLine(" ", mdnComp.url ? ANSI.gray + mdnComp.url : "-", lf);
   }
 
-  // description TODO We'll let this field mature more before activating.
+  // description TODO Covered by the --doc option for now.
 //  if (mdnComp.description) {
 //    out.addLine(breakLine(cleanHTML(mdnComp.description), options.maxWidth), lf)
 //  }
@@ -35,7 +35,6 @@ function compatToLong(mdnComp) {
     out.addLine(" %0Chrome    %1|%0 Edge      %1|%0 Firefox   %1|%0 IE        %1|%0 Opera     %1|%0 Safari%1", ANSI.green, ANSI.white);
     out.addLine(line, ANSI.white);
 
-    //out.add(" ");
     versions(desktopList);
     out.addLine(lf);
 
@@ -56,7 +55,6 @@ function compatToLong(mdnComp) {
     out.addLine(" %0Chrome/A  %1|%0 Edge/mob  %1|%0 Firefox/A %1|%0 Opera/A   %1|%0Safari/iOS | %0Webview/A%1", ANSI.green , ANSI.white);
     out.addLine(line, ANSI.white);
 
-    //out.add(" ");
     versions(mobileList);
     out.addLine(lf);
 

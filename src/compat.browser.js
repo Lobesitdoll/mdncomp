@@ -13,8 +13,6 @@ function Browser(obj, name) {
   let support = obj.support[name];
   if (!Array.isArray(support)) support = [support];
 
-  // todo consolidate similar notes
-
   this.prefix = (support[support.length - 1] || {}).prefix || "";
 
   support.forEach(supportItem => {
@@ -52,5 +50,4 @@ Browser.prototype = {
 
     return out.toString()
   }
-
 };

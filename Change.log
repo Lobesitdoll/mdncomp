@@ -1,6 +1,9 @@
 mdncomp
 =======
 
+1.12.4-alpha
+FIX: --doc progressbar using --no-colors
+
 1.12.3-alpha
 FIX: Some conversion issues with HTML to text (--doc) (<math>)
 

@@ -1,3 +1,8 @@
+
+function listBrowsers() {
+  return Object.keys(mdn.browsers)
+}
+
 /**
  * This will list release and status information for a *browser* based on the given ID.
  * Using `.` (a single dot) will list all the currently valid IDs:
@@ -68,7 +73,7 @@ function listBrowserOnStatus(status) {
   });
 
   // output
-  result.push(ANSI.magenta + "STATUS: " + ANSI.reset + ANSI.white + col + status.toUpperCase() + ANSI.reset);
+  result.push(ANSI.reset + "STATUS: " + ANSI.reset + ANSI.white + col + status.toUpperCase() + ANSI.reset);
   temp.forEach(o => {
     result.push(
       ANSI.white + o.browser.padEnd(bPad) + ANSI.white +
@@ -119,3 +124,4 @@ function _fBrowserVersion(version, padStart, padEnd) {
   let verArr = version.split(".");
   return verArr[0].padStart(padStart) + verArr.join(".").substr(verArr[0].length).padEnd(padEnd)
 }
+

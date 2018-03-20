@@ -20,6 +20,7 @@ Features
   - Navigate by path and branches
   - Search case (in)sensitive
   - Show desktop and/or mobile information for the most common browsers
+  - Works offline for the main data
 - Browser status
   - List status and release dates per browser
   - List browsers per status
@@ -79,6 +80,10 @@ Or using the absolute path method:
 Or as a regular expression:
 
     $ mdncomp /.*html.*toblob$/
+
+Or as a fuzzy expression:
+
+    $ mdncomp -z htctblb.
 
 Export as a SVG file:
 

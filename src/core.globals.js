@@ -43,6 +43,7 @@ const
 let
   mdn,
   cfg,
+  util,
   crypto,
   options,
   isoLang = "en-US",  // todo can be set by user in the future
@@ -72,6 +73,12 @@ String.prototype.ansiLength = function() {
 String.prototype.ansiFree = function() {
   return this.replace(/\x1b[^m]*m/g, "")
 };
+
+//String.prototype.byteLength = function() {
+//  if (!util) util = require("util");
+//  const enc = new (util.TextEncoder)();
+//  return enc.encode(this).length
+//};
 
 /**
  * Flattens the object tree into array (each item = one line):
@@ -108,10 +115,6 @@ function listTopLevels() {
   let keys = Object.keys(mdn), i = keys.indexOf("browsers");
   if (i >= 0) keys.splice(i, 1);
   return keys
-}
-
-function listBrowsers() {
-  return Object.keys(mdn.browsers)
 }
 
 /**
@@ -237,31 +240,6 @@ function cleanHTML(str, convTags) {
   return str
 }
 
-///**
-// * Format a long line into several lines based
-// * on max char width.
-// * @param s
-// * @param max
-// * @returns {string}
-// */
-//function breakLine(s, max) {
-//  let
-//    out = new Output(0),
-//    _max = Math.max(72, (max>>>0 || 72)),
-//    line = s.substr(0, _max), i;
-//
-//  while(line.length === _max) {
-//    i = line.lastIndexOf(" ");
-//    if (i < 0) i = _max;
-//    out.addLine(line.substr(0, i).trim());
-//    s = s.substr(i);
-//    line = s.substr(1, _max)
-//  }
-//  out.add(line.trim());
-//
-//  return out.toString()
-//}
-
 function breakAnsiLine(s, max) {
   let
     lines = [],
@@ -269,7 +247,7 @@ function breakAnsiLine(s, max) {
     lineStart = 0, lastBreak = -1,
     inAnsi = false,
     _lf = "\n",
-    _max = Math.max(72, (max>>>0 || 72));
+    _max = Math.max(72, max>>>0);
 
   while(ch = s[i]) {
     if (!inAnsi) {

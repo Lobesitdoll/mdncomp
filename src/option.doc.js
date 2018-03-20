@@ -3,7 +3,7 @@ function getDoc(url, callback) {
 
   let
     clr = ANSI.clrToCursor + ANSI.cursorUp,
-    cached = io.getCached(url);
+    cached = io.getCachedData(url);
 
   if (cached && !options.docforce) {
     log();
@@ -18,7 +18,9 @@ function getDoc(url, callback) {
     io.request(langUrl,
       () => !clrLine(),
       pct => {
-        let width = 50, prog = Math.round(width * pct),
+        let
+          width = 50,
+          prog = Math.round(width * pct),
           rem = width - prog;
         log(clr + ANSI.white + "Downloading doc " + ANSI.white + "[" + ANSI.green + "#".repeat(prog) + " ".repeat(rem) + ANSI.white + "]" + ANSI.reset + ANSI.black);
       },
@@ -56,7 +58,8 @@ function getDoc(url, callback) {
       err => {
         logErr(lf + "An error occurred -" + lf + "Status code: " + err.statusCode + (err.error ? lf + "Message: " + err.error : "") + ANSI.reset);
         callback();
-      });
+
+      }, {"Range": "bytes=16384-"});
 
     function trimArticle(data, endPos) {
       return data.substr(0, endPos - (endPos - data.lastIndexOf("<", endPos)));
@@ -72,6 +75,7 @@ function getDoc(url, callback) {
   }
 
   function parse(data) {
+
     clrLine();
     log(ANSI.cursorUp + ANSI.cursorUp);
 
@@ -116,14 +120,17 @@ function getDoc(url, callback) {
         case "table":
           tagParser.skipLF = true;
           return ANSI.gray + preLine + ANSI.reset + _lf;
-          //return preLine + ANSI.white + _lf + "\x1b[16C\x1bH\x1b[1A" + _lf;
         case "/table":
           tagParser.skipLF = false;
           return ANSI.gray + preLine + ANSI.reset + _lf;
+//        case "iframe":
+//          tagParser.skip = true;
+//          return "";
         case "math":
           tagParser.skip = true;
           return ANSI.blue + " --math formula not shown--" + ANSI.reset;
         case "/math":
+//        case "/iframe":
           tagParser.skip = false;
           return "";
         case "/th":
@@ -198,7 +205,7 @@ function getDoc(url, callback) {
     str = "#" + str;
 
     // save to cache
-    io.setCached(url, str);
+    io.setCachedData(url, str);
 
     // format output
     format(str);
@@ -206,9 +213,8 @@ function getDoc(url, callback) {
 
   function format(str) {
 
-    // todo to be cache set/get point in the future
-    if (!str.startsWith("#")) {
-      parse(str);
+    if (!str.startsWith("#")) { // for transition from old html format to pre-parsed format
+      parse(str);               // todo cache upgrade can be a one-time part of --update process
       return;
     }
 
