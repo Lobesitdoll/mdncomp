@@ -176,7 +176,8 @@ Get the raw JSON version of the feature using the `--raw` option:
 
     $ mdncomp html*toblob. --raw
 
-Open documentation link in the default browser:
+Open documentation link in the default browser (in terminals such as xterm you
+can also try <kbd>CTRL</kbd>-click the displayed link):
 
     $ mdncomp html*toblob. --mdn
 
