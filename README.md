@@ -172,7 +172,13 @@ Feel like exploring? Try combining the `--random` option with `--doc`:
 
     $ mdncomp --random --doc .
 
-Get the raw JSON version of the feature using the `--raw` option.
+Get the raw JSON version of the feature using the `--raw` option:
+
+    $ mdncomp html*toblob. --raw
+
+Open documentation link in the default browser:
+
+    $ mdncomp html*toblob. --mdn
 
 
 Wiki
