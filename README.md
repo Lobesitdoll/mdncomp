@@ -3,7 +3,7 @@ mdncomp
 
 Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data) on the command line.
 
-![termx color output](https://i.imgur.com/bZtTVUY.png)<br>
+![termx color output](https://i.imgur.com/UdjNG4q.png)<br>
 <sup>*cygwin/xterm snapshot*</sup>
 
 **Note: ALPHA release. Fairly stable but its API and behavior are subject to change without prior notice.**
@@ -161,7 +161,7 @@ edge  17  Rel: -           nightly
 
 Get documentation excerpts:
 
-![documentation excerpts](https://i.imgur.com/hlh3A51.png)
+![documentation excerpts](https://i.imgur.com/jN9Ct3o.png)
 
 These are loaded from the MDN site and cached locally.
 
@@ -182,9 +182,8 @@ See the [wiki pages](https://github.com/epistemex/mdncomp/wiki) for more details
 
 Note
 ----
-The BCD team at the Mozilla Developer Network is working hard to convert all the
-browser compatibility data to their new format as used by this tool. For this reason
-some APIs and objects may not be available quite yet.
+The BCD team is working hard to convert all the browser compatibility data to their new
+format as used by this tool. For this reason some APIs and objects may not be available quite yet.
 
 Find out [how you can help them out](https://developer.mozilla.org/en-US/docs/MDN/Contribute/Structures/Compatibility_tables)!
 
