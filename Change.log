@@ -1,8 +1,10 @@
 mdncomp
 =======
 
-1.12.4-alpha
+1.13.0-alpha
+ADD: Option --ext to show data for an extended list of browsers (not yet for SVG output and not much data at this point)
 FIX: --doc progressbar using --no-colors
+IMP: --random will show any feature, combined with --doc only if there is an url
 
 1.12.3-alpha
 FIX: Some conversion issues with HTML to text (--doc) (<math>)

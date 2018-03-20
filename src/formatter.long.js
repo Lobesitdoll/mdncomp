@@ -8,6 +8,7 @@ function compatToLong(mdnComp) {
     out = new Output(0),
     desktopList = ["chrome", "edge", "firefox", "ie", "opera", "safari"],
     mobileList = ["chrome_android", "edge_mobile", "firefox_android", "opera_android", "safari_ios", "webview_android"],
+    extList = ["nodejs", "samsunginternet_android", "qq_android", "uc_android", "uc_chinese_android"],
     refs = ["°", "¹", "²", "³", "ª", "^", "`", "'", "\"", "'\"", "\"\"", "\"\"'", "º"],
     line = " %0----------+-----------+-----------+-----------+-----------+-----------",
     ref = 0,
@@ -56,6 +57,18 @@ function compatToLong(mdnComp) {
     out.addLine(line, ANSI.white);
 
     versions(mobileList);
+    out.addLine(lf);
+
+    if (options.notes && notes.length) out.addLine(notes.join(""));
+  } // :mobile
+
+  // Show mobile info?
+  if (options.ext) {
+    out.addLine(" %0OTHERS:", ANSI.yellow);
+    out.addLine(" %0Node JS   %1|%0 Samsung/A %1|%0 QQ/A      %1|%0 UC/A      %1|%0 UC/A Ch%1", ANSI.green , ANSI.white);
+    out.addLine(line.substr(0, line.length - 12), ANSI.white);
+
+    versions(extList);
     out.addLine(lf);
 
     if (options.notes && notes.length) out.addLine(notes.join(""));

@@ -1,7 +1,7 @@
 {
   "name": "mdncomp",
-  "version": "1.12.4-alpha",
-  "description": "Get MDN Browser Compatibility Data on the command line.",
+  "version": "1.13.0-alpha",
+  "description": "Browser Compatibility Data on the command line.",
   "main": "build/mdncomp.min.js",
   "author": {
     "name": "K3N",
@@ -25,8 +25,7 @@
     "cli",
     "terminal",
     "information",
-    "developer",
-    "mozilla"
+    "developer"
   ],
   "license": "MIT",
   "bin": {

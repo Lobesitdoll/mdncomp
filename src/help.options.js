@@ -228,6 +228,10 @@ help["-w"] = help["--width"] = `
 Width in pixels for image output. Currently only used for SVG files.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
+help["--ext"] = `
+Will show an additional table for less common browsers.`;
+
+/*----------------------------------------------------------------------------------------------------------------------------------*/
 help["--no-colors"] = `
 Turns off ANSI colors and codes in the terminal.`;
 

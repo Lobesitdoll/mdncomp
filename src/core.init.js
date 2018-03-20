@@ -35,6 +35,7 @@ function init() {
       .option("-e, --noteend", "Show notes (-n) at end instead of in sections (text)")
       .option("-f, --markdown", "Format link as markdown and turns off colors")
       .option("-w, --width <width>", "Used with -o, Set width of image", 800)
+      .option("--ext", "Show extended table of browsers")
       .option("--no-colors", "Don't use colors in output")
       .option("--max-chars <width>", "Max number of chars per line before wrap", 72)
       //.option("--ext", "Extended information. Show all documented browsers.") // todo this will require sig. changes in formatters, not imp. enough at this stage

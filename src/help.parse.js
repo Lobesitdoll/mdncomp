@@ -15,7 +15,7 @@ function parseHelp(args) {
       option = (args[2].toLowerCase() === "-h" || args[2].toLowerCase() === "--help") ? args[3] : args[2],
       text = help[option];
     log();
-    log(`${ANSI.white}Help for option "${option}"${ANSI.reset}`);
+    log(`${ANSI.yellow}Help for option "${option}"${ANSI.reset}`);
     log(text ? text : "Unknown option.");
     log();
   }

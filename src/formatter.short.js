@@ -10,8 +10,10 @@ function compatToShort(mdnComp, shortPad) {
     out = new Output(0),
     desktopList = ["chrome", "edge", "firefox", "ie", "opera", "safari"],
     mobileList = ["chrome_android", "firefox_android", "edge_mobile", "opera_android", "safari_ios", "android"],
+    extList = ["nodejs", "samsunginternet_android", "qq_android", "uc_android", "uc_chinese_android"],
     desktopShort = ["C:", "E:", "F:", "IE:", "O:", "S:"],
-    mobileShort = ["CA:", "FA:", "EM:", "OA:", "Si:", "WA:"];
+    mobileShort = ["CA:", "FA:", "EM:", "OA:", "Si:", "WA:"],
+    extShort = ["ND:", "SM:", "QQ:", "UC:", "UCC:"];
 
   out.add(ANSI.white);
 
@@ -28,6 +30,11 @@ function compatToShort(mdnComp, shortPad) {
   if (!options.desktop) {
     out.add("%0 MOB: ", ANSI.cyan);
     versions(mobileList, mobileShort);
+  }
+
+  if (options.ext) {
+    out.add("%0 OTH: ", ANSI.cyan);
+    versions(extList, extShort);
   }
 
   function versions(list, shortList) {
