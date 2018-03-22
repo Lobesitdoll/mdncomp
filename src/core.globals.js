@@ -11,6 +11,7 @@ const
     red    : "\x1b[31;1m",
     green  : "\x1b[32;1m",
     yellow : "\x1b[33;1m",
+    orange : "\x1b[33;2m",
     blue   : "\x1b[34;1m",
     magenta: "\x1b[35;2m",
     cyan   : "\x1b[36;1m",
@@ -234,7 +235,7 @@ function isCompat(path) {
  * @returns {string}
  */
 function cleanHTML(str, convTags) {
-  str = str.replace(/<code>/gi, ANSI.cyan).replace(/<\/code>/gi, ANSI.white);
+  str = str.replace(/<code>/gi, ANSI.cyan).replace(/<\/code>/gi, ANSI.reset);
   str = str.replace(/(<([^>]+)>)/ig, "");
   if (convTags) str = str.replace(/&lt;/gi, "<").replace(/&gt;/gi, ">");
   return str

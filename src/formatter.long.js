@@ -32,16 +32,16 @@ function compatToLong(mdnComp) {
 
   // Show desktop info?
   if (!options.mobile) {
-    out.addLine(" %0DESKTOP:", ANSI.yellow);
-    out.addLine(" %0Chrome    %1|%0 Edge      %1|%0 Firefox   %1|%0 IE        %1|%0 Opera     %1|%0 Safari%1", ANSI.green, ANSI.white);
-    out.addLine(line, ANSI.white);
+    //out.addLine(" %0DESKTOP:%1", ANSI.reset + ANSI.orange, ANSI.reset);
+    out.addLine(" %0Chrome    %1|%0 Edge      %1|%0 Firefox   %1|%0 IE        %1|%0 Opera     %1|%0 Safari%1", ANSI.green, ANSI.gray);
+    out.addLine(line, ANSI.gray);
 
     versions(desktopList);
     out.addLine(lf);
 
     // insert notes
     if (!options.noteend && options.notes && notes.length)
-      out.addLine(notes.join(""));
+      out.addLine(ANSI.reset + notes.join(""));
 
     // reset for next section
     if (!options.noteend) {
@@ -52,26 +52,27 @@ function compatToLong(mdnComp) {
 
   // Show mobile info?
   if (!options.desktop) {
-    out.addLine(" %0MOBILE:", ANSI.yellow);
-    out.addLine(" %0Chrome/A  %1|%0 Edge/mob  %1|%0 Firefox/A %1|%0 Opera/A   %1|%0Safari/iOS | %0Webview/A%1", ANSI.green , ANSI.white);
-    out.addLine(line, ANSI.white);
+    //out.addLine(" %0MOBILE:%1", ANSI.reset + ANSI.orange, ANSI.reset);
+    out.addLine(" %0Chrome/A  %1|%0 Edge/mob  %1|%0 Firefox/A %1|%0 Opera/A   %1|%0Safari/iOS %1|%0 %0Webview/A%1", ANSI.green , ANSI.gray);
+    out.addLine(line, ANSI.gray);
 
     versions(mobileList);
     out.addLine(lf);
 
-    if (options.notes && notes.length) out.addLine(notes.join(""));
+    if (!options.noteend && options.notes && notes.length)
+      out.addLine(ANSI.reset + notes.join(""));
   } // :mobile
 
   // Show mobile info?
   if (options.ext) {
-    out.addLine(" %0OTHERS:", ANSI.yellow);
-    out.addLine(" %0Node JS   %1|%0 QQ/A      %1|%0 Samsung/A %1|%0 UC/A      %1|%0 UC-Ch/A%1", ANSI.green , ANSI.white);
-    out.addLine(line.substr(0, line.length - 12), ANSI.white);
+    //out.addLine(" %0OTHERS:%1", ANSI.reset + ANSI.orange, ANSI.reset);
+    out.addLine(" %0Node JS   %1|%0 QQ/A      %1|%0 Samsung/A %1|%0 UC/A      %1|%0 UC-Ch/A%1", ANSI.green , ANSI.gray);
+    out.addLine(line.substr(0, line.length - 12), ANSI.gray);
 
     versions(extList);
     out.addLine(lf);
 
-    if (options.notes && notes.length) out.addLine(notes.join(""));
+    if (options.notes && notes.length) out.addLine(ANSI.reset + notes.join(""));
   } // :mobile
 
   function versions(list) {
@@ -94,7 +95,7 @@ function compatToLong(mdnComp) {
         status = ANSI.red + no;
       } // :if browser
 
-      out.add("%0" + status.centerAnsi(11) + ANSI.white + "|", status.indexOf(no) >= 0 ? ANSI.red : ANSI.cyan);
+      out.add("%0" + status.centerAnsi(11) + ANSI.gray + "|", status.indexOf(no) >= 0 ? ANSI.red : ANSI.cyan);
     }); // :list.feach
 
     out.trimEnd(1);

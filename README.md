@@ -3,7 +3,7 @@ mdncomp
 
 Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data) on the command line.
 
-![termx color output](https://i.imgur.com/UdjNG4q.png)<br>
+![termx color output](https://i.imgur.com/mhXWklc.png)<br>
 <sup>*cygwin/xterm snapshot*</sup>
 
 **Note: ALPHA release. Fairly stable but its API and behavior are subject to change without prior notice.**
@@ -161,7 +161,7 @@ edge  17  Rel: -           nightly
 
 Get documentation excerpts:
 
-![documentation excerpts](https://i.imgur.com/jN9Ct3o.png)
+![documentation excerpts](https://i.imgur.com/JVZ4wgF.png)
 
 These are loaded from the MDN site and cached locally.
 

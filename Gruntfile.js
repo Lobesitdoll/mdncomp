@@ -5,7 +5,7 @@ module.exports = function(grunt) {
       my_target: {
         options: {
           output: {
-            comments:  /(?:^!|@(?:license|preserve|cc_on))/
+            comments: /(?:^!|@(?:license|preserve|cc_on))/
           }
         },
         files: {

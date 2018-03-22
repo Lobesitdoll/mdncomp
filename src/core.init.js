@@ -47,7 +47,7 @@ function init() {
       .option("--raw", "Output the raw JSON data")
       .option("--testurl", "Test documentation URL and get status code")
       .option("--update, --fupdate, --cupdate", "Update BCD from remote (--fupdate=force, --cupdate=check)")
-      .option("--no-config", "Ignore config file (mdncomp.json) in root folder")
+      .option("--no-config", "Ignore config file (mdncomp.json) in config folder")
       .option("--configpath", "Show path to where config file and cache is stored")
       .action(go)
       .on("--help", () => {parseHelp(args)})
@@ -293,6 +293,7 @@ function go(path) {
 function loadConfig() {
   if (!fs) fs = require("fs");
   if (!path) path = require("path");
+
   const
     file = path.resolve(io.getConfigPath(), "mdncomp.json");
 
@@ -316,13 +317,14 @@ function loadConfig() {
   if (fs.existsSync(file)) {
     // todo use whitelisting here
     cfg = require(file);
-    delete cfg.browser;
-    delete cfg.list;
-    delete cfg.out;
-    delete cfg.all;
-    delete cfg.index;
-    delete cfg.random;
-    Object.assign(options, cfg);
+    let cfgOptions = cfg.options || cfg || {};
+    delete cfgOptions.browser;
+    delete cfgOptions.list;
+    delete cfgOptions.out;
+    delete cfgOptions.all;
+    delete cfgOptions.index;
+    delete cfgOptions.random;
+    Object.assign(options, cfgOptions);
     if (unres) log(ANSI.red + "*** If you see this line please include with the above. ***" + ANSI.reset);
   }
 }

@@ -54,7 +54,7 @@ Info.prototype = {
     let
       prefix = (ref ? ref + ") " : "") + (isNaN(this.added) ? "" : this.getVersion() + ": "),
       indent = "",
-      out = new Output(0), hasInfo = false;
+      out = new Output(0);
 
     if (!this.notes.length) return "";
 
