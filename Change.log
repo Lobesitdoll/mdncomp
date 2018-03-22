@@ -1,6 +1,10 @@
 mdncomp
 =======
 
+1.13.1-alpha
+IMP: Download speed and size of doc fragments (--doc/--docforce)
+FIX: Alphabetic order of --ext browsers
+
 1.13.0-alpha
 ADD: Option --ext to show data for an extended list of browsers (not yet for SVG output and not much data at this point)
 FIX: --doc progressbar using --no-colors

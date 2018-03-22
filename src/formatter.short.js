@@ -10,10 +10,10 @@ function compatToShort(mdnComp, shortPad) {
     out = new Output(0),
     desktopList = ["chrome", "edge", "firefox", "ie", "opera", "safari"],
     mobileList = ["chrome_android", "firefox_android", "edge_mobile", "opera_android", "safari_ios", "android"],
-    extList = ["nodejs", "samsunginternet_android", "qq_android", "uc_android", "uc_chinese_android"],
+    extList = ["nodejs", "qq_android", "samsunginternet_android", "uc_android", "uc_chinese_android"],
     desktopShort = ["C:", "E:", "F:", "IE:", "O:", "S:"],
     mobileShort = ["CA:", "FA:", "EM:", "OA:", "Si:", "WA:"],
-    extShort = ["ND:", "SM:", "QQ:", "UC:", "UCC:"];
+    extShort = ["ND:", "QQ:", "SM:", "UC:", "UCC:"];
 
   out.add(ANSI.white);
 

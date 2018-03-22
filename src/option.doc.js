@@ -13,7 +13,7 @@ function getDoc(url, callback) {
     log(ANSI.green + "Fetching documentation...");
 
     // removes redirect
-    let langUrl = url.replace("mozilla.org/", "mozilla.org/" + isoLang + "/");
+    let langUrl = url.replace("mozilla.org/", "mozilla.org/" + isoLang + "/") + "?raw&macros";
 
     io.request(langUrl,
       () => !clrLine(),
@@ -25,32 +25,29 @@ function getDoc(url, callback) {
         log(clr + ANSI.white + "Downloading doc " + ANSI.white + "[" + ANSI.green + "#".repeat(prog) + " ".repeat(rem) + ANSI.white + "]" + ANSI.reset + ANSI.black);
       },
       data => {
-        // extract article from article top to example
-        const start = "<article id=\"wikiArticle\">", end = "</article>";
+        // extract article content
         let
-          i1 = data.indexOf(start),
-          i2 = data.indexOf(end, i1 + start.length),
-          i3;
+          starts = ["<article id=\"wikiArticle\">", "</section>"],
+          ends = ["id=\"Example", "id=\"Browser_compatibility", "id=\"Specification"],
+          i1, i2;
 
-        if (i1 < 0 || i2 < 0) {
-          log(ANSI.red + "Warning: Could not parse the doc page." + ANSI.reset + lf);
+        for(let start of starts) {
+          i1 = data.indexOf(start);
+          if (i1 >= 0) break;
+        }
+
+        if (i1 < 0) {
+          log("Cannot parse this documentation source.");
           return
         }
 
-        // scope out article
-        data = data.substring(i1 + start.length, i2 - 1);
+        for(let end of ends) {
+          i2 = data.indexOf(end, i1);
+          if (i2 >= 0) break;
+        }
 
-        // get rid of Example(s) if any
-        i3 = data.indexOf("id=\"Example");
-        if (i3 >= 0) data = trimArticle(data, i3);
-
-        // get rid of BCD if any
-        i3 = data.indexOf("id=\"Browser_compatibility");
-        if (i3 >= 0) data = trimArticle(data, i3);
-
-        //get rid of specifications if any
-        i3 = data.indexOf("id=\"Specification");
-        if (i3 >= 0) data = trimArticle(data, i3);
+        if (i2 < 0) i2 = data.length; // todo need more tags (id=references?)
+        data = data.substring(i1, i2);
 
         // parse
         parse(data)
@@ -59,11 +56,7 @@ function getDoc(url, callback) {
         logErr(lf + "An error occurred -" + lf + "Status code: " + err.statusCode + (err.error ? lf + "Message: " + err.error : "") + ANSI.reset);
         callback();
 
-      }, {"Range": "bytes=16384-"});
-
-    function trimArticle(data, endPos) {
-      return data.substr(0, endPos - (endPos - data.lastIndexOf("<", endPos)));
-    }
+      });
 
     function logErr(txt) {
       log(clr + ANSI.red + txt + ANSI.white)
@@ -129,7 +122,11 @@ function getDoc(url, callback) {
         case "math":
           tagParser.skip = true;
           return ANSI.blue + " --math formula not shown--" + ANSI.reset;
+        case "section":
+          tagParser.skip = true;
+          return "";
         case "/math":
+        case "/section":
 //        case "/iframe":
           tagParser.skip = false;
           return "";

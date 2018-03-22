@@ -16,6 +16,7 @@ function MDNComp(path) {
   this.prePath = prePathFromPath(path);
   this.name = nameFromPath(path);
   this.url = compat.mdn_url || "";
+  //this.specs = compat.spec_url[s] // todo scraper before this is manifested officially?
   this.experimental = status.experimental;
   this.standard = status.standard_track;
   this.deprecated = status.deprecated;
