@@ -11,6 +11,7 @@ module.exports = function(grunt) {
         files: {
           "build/build.min.js": [
             "src/core.js",
+            "src/core.polyfills.js",
             "src/core.globals.js",
             "src/help.options.js",
             "src/help.parse.js",
