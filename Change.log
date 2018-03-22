@@ -1,6 +1,9 @@
 mdncomp
 =======
 
+1.13.3-alpha
+HOT: Version bump, polyfill filename was wrong and not included in main file.
+
 1.13.2-alpha
 FIX: Pre Node 8 support issue #5 (polyfills for ES6 native objects -> string.padStart, string.padEnd, string.includes ..).
 CHG: Config file: forced options in config file must be set on a new branch "options" (see https://github.com/epistemex/mdncomp/wiki/Config-file).
