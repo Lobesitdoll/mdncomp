@@ -309,6 +309,7 @@ function loadConfig() {
     log("  HOME: " + process.env.HOME);
     log(ANSI.reset);
     unres = true;
+
   }
 
   if (fs.existsSync(file)) {
