@@ -38,7 +38,7 @@ Info.prototype = {
     }
 
     function line(prefix) {
-      return prefix + flag.name + ANSI.white + (flag.value_to_set ? " set to " + flag.value_to_set + "" : "") + ".";
+      return prefix + flag.name + ANSI.reset + (flag.value_to_set ? " set to " + flag.value_to_set + "" : "") + ".";
     }
 
     return ""

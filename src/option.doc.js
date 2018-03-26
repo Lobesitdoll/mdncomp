@@ -148,9 +148,11 @@ function getDoc(url, callback) {
           return _lf;
         case "h2":
         case "h3":
+        case "h4":
           return _lf + ANSI.yellow;
         case "/h2":
         case "/h3":
+        case "/h4":
         case "/dt":
           return ANSI.reset + _lf;
         case "/dd":

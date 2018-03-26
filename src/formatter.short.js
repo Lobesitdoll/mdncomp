@@ -23,17 +23,17 @@ function compatToShort(mdnComp, shortPad) {
     out.add((prePath).padEnd(shortPad), ":");
 
   if (!options.mobile) {
-    out.add("%0  DT: ", ANSI.cyan);
+    out.add(ANSI.cyan + "  D: ");
     versions(desktopList, desktopShort);
   }
 
   if (!options.desktop) {
-    out.add("%0 MOB: ", ANSI.cyan);
+    out.add(ANSI.cyan + "  M: ");
     versions(mobileList, mobileShort);
   }
 
   if (options.ext) {
-    out.add("%0 OTH: ", ANSI.cyan);
+    out.add(ANSI.cyan + "  X: ");
     versions(extList, extShort);
   }
 

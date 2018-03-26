@@ -17,7 +17,7 @@ function init() {
     (options = require("commander"))
       .version(version, "-v, --version")
       .usage('[options] <feature>')
-      .description("Get MDN Browser Compatibility data." + lf + "  Version: " + version + lf + "  (c) 2018 epistemex.com")
+      .description("Get MDN Browser Compatibility Data." + lf + "  Version: " + version + lf + "  (c) 2018 epistemex.com")
       .option("-l, --list", "List paths starting with the given value or '.' for top-level")
       .option("-o, --out <path>", "Save information to file. Extension for type, or --type")
       .option("-t, --type <type>", "Output format (ansi, txt, svg)", "ansi")
@@ -44,7 +44,7 @@ function init() {
       .option("--docforce", "Show documentation. Force fetch from server")
       .option("--mdn", "Open entry's document URL in default browser")
       .option("--random", "Show a random entry. (mdncomp --random . )")
-      .option("--raw", "Output the raw JSON data")
+      //.option("--raw", "Output the raw JSON data")
       .option("--testurl", "Test documentation URL and get status code")
       .option("--update, --fupdate, --cupdate", "Update BCD from remote (--fupdate=force, --cupdate=check)")
       .option("--no-config", "Ignore config file (mdncomp.json) in config folder")
@@ -165,7 +165,7 @@ function go(path) {
       outInfo("Not found.");
     }
     else {
-      if (result.length === 1 || (options.index >= 0 && options.index < result.length) || (options.all && (options.type !== "svg" || options.raw))) {
+      if (result.length === 1 || (options.index >= 0 && options.index < result.length) || (options.all && (options.type !== "svg"))) {
 
         if (options.shorthand)
           shortPad = getMaxLength(result);
@@ -238,10 +238,7 @@ function go(path) {
 
   function outResult(entry) {
     let compat = new MDNComp(entry);
-    if (options.raw) {
-      outInfo(indent(JSON.stringify(getPathAsObject(compat.path, true))));
-    }
-    else if (options.type === "svg") {
+    if (options.type === "svg") {
       outStore(compatToSVG(compat))
     }
     else {

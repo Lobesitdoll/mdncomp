@@ -276,12 +276,6 @@ As well as --mdn (opens browser for this feature if URL for it is available) etc
 Note that some options are ignored using this option.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
-help["--raw"] = `
-List raw JSON object output instead of formatted output.
-
-You can combine this option with the "-a, --all" option.`;
-
-/*----------------------------------------------------------------------------------------------------------------------------------*/
 help["--testurl"] = `
 Get status code for the documentation URL if any is provided.
 

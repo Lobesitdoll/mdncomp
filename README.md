@@ -57,7 +57,6 @@ $ mdncomp html*toblob.
  HTMLCanvasElement.toBlob (On Standard Track)
  https://developer.mozilla.org/docs/Web/API/HTMLCanvasElement/toBlob
 
- DESKTOP:
  Chrome    | Edge      | Firefox   | IE        | Opera     | Safari
  ----------+-----------+-----------+-----------+-----------+-----------
      50    |     -     |     19    |    10°    |     37    |     Y¹
@@ -65,7 +64,6 @@ $ mdncomp html*toblob.
 °) 10: Prefix: ms
 ¹) See WebKit bug 71270.
 
- MOBILE:
  Chrome/A  | Edge/mob  | Firefox/A | Opera/A   |Safari/iOS | Webview/A
  ----------+-----------+-----------+-----------+-----------+-----------
      50    |     -     |     4     |     37    |     -     |     50
@@ -106,13 +104,13 @@ Combined with the `-a` option to list all results with shorthand information:
 ```text
 $ mdncomp blob -sa
 ->
-Blob       :  DT: C:5 E:Y F:4 IE:10 O:11 S:5.1  MOB: CA:? FA:14 EM:Y OA:? Si:? WA:-
-Blob.Blob  :  DT: C:20 E:? F:13* IE:10 O:12 S:8  MOB: CA:? FA:14* EM:? OA:? Si:? WA:-
-Blob.size  :  DT: C:5 E:Y F:4 IE:10 O:11 S:5.1  MOB: CA:- FA:- EM:Y OA:- Si:- WA:-
-Blob.type  :  DT: C:5 E:Y F:4 IE:10 O:11 S:5.1  MOB: CA:- FA:- EM:Y OA:- Si:- WA:-
-Blob.slice :  DT: C:21* E:Y F:13* IE:10 O:12 S:5.1*  MOB: CA:? FA:14 EM:Y OA:? Si:? WA:-
-BlobBuilder:  DT: C:8* E:Y F:?-18* IE:10* O:- S:-  MOB: CA:? FA:?-18* EM:Y OA:- Si:- WA:-
-BlobEvent  :  DT: C:49 E:? F:22 IE:- O:36 S:-  MOB: CA:49 FA:22 EM:? OA:36 Si:- WA:-
+Blob       :  D: C:5 E:Y F:4 IE:10 O:11 S:5.1   M: CA:? FA:14 EM:Y OA:? Si:? WA:-
+Blob.Blob  :  D: C:20 E:? F:13* IE:10 O:12 S:8   M: CA:? FA:14* EM:? OA:? Si:? WA:-
+Blob.size  :  D: C:5 E:12 F:4 IE:10 O:11 S:5.1   M: CA:- FA:- EM:Y OA:- Si:- WA:-
+Blob.type  :  D: C:5 E:12 F:4 IE:10 O:11 S:5.1   M: CA:- FA:- EM:Y OA:- Si:- WA:-
+Blob.slice :  D: C:21* E:12 F:13* IE:10 O:12 S:5.1*   M: CA:? FA:14 EM:Y OA:? Si:? WA:-
+BlobBuilder:  D: C:8* E:Y F:Y-18* IE:10* O:- S:-   M: CA:? FA:Y-18* EM:Y OA:- Si:- WA:-
+BlobEvent  :  D: C:49 E:? F:22 IE:- O:36 S:-   M: CA:49 FA:22 EM:? OA:36 Si:- WA:-
 --8X--
 ```
 
@@ -136,13 +134,13 @@ api.AnimationEffectReadOnly
 ```text
 mdncomp --browser current
 ->
-chrome           65  Rel: 2018-03-06
-edge             16  Rel: 2017-09-26
-edge_mobile      16  Rel: -
-firefox          57  Rel: 2017-11-14
-firefox_android  57  Rel: 2017-11-28
-ie               11  Rel: 2013-10-17
-nodejs            4  Rel: 2015-09-08
+chrome            65  Rel: 2018-03-06
+edge              16  Rel: 2017-10-17
+edge_mobile       16  Rel: 2017-09-26
+firefox           59  Rel: 2018-03-13
+firefox_android   59  Rel: 2018-03-13
+ie                11  Rel: 2013-10-17
+nodejs             4  Rel: 2015-09-08
 --8X--
 ```
 
@@ -151,11 +149,11 @@ List release history for a single browser:
 ```text
 mdncomp -b edge
 ->
-edge  12  Rel: 2015-07-15  retired
-edge  13  Rel: 2015-11-05  retired
+edge  12  Rel: 2015-07-28  retired
+edge  13  Rel: 2015-11-12  retired
 edge  14  Rel: 2016-08-02  retired
-edge  15  Rel: 2017-04-11  retired
-edge  16  Rel: 2017-09-26  current
+edge  15  Rel: 2017-04-05  retired
+edge  16  Rel: 2017-10-17  current
 edge  17  Rel: -           nightly
 ```
 
@@ -172,10 +170,6 @@ Feel like exploring? Try combining the `--random` option with `--doc`:
 
     $ mdncomp --random --doc .
 
-Get the raw JSON version of the feature using the `--raw` option:
-
-    $ mdncomp html*toblob. --raw
-
 Open documentation link in the default browser (in terminals such as xterm you
 can also try <kbd>CTRL</kbd>-click the displayed link):
 
@@ -187,17 +181,19 @@ Wiki
 See the [wiki pages](https://github.com/epistemex/mdncomp/wiki) for more details on each options and usage examples.
 
 
-Note
-----
+Want to help?
+-------------
+
 The BCD team is working hard to convert all the browser compatibility data to their new
 format as used by this tool. For this reason some APIs and objects may not be available quite yet.
 
 Find out [how you can help them out](https://developer.mozilla.org/en-US/docs/MDN/Contribute/Structures/Compatibility_tables)!
 
-Disclaimer: This tool is a independent tool not affiliated with any third-party.
-
 License
 -------
+
+Disclaimer: This tool is a independent tool not affiliated with any third-party.
+
 [MIT](http://choosealicense.com/licenses/mit/).
 
 *&copy; Epistemex 2018*

@@ -23,7 +23,6 @@
   "type"          : "ansi",
   "maxChars"      : 72,
   "width"         : 800,
-  "raw"           : false,
   "doc"           : false,
   "docforce"      : false,
   "ext"           : false

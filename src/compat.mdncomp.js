@@ -50,12 +50,15 @@ MDNComp.prototype = {
 
   getStatus: function() {
     let txt = "(";
-    if (this.experimental)
-      txt += ANSI.yellow + "EXPERIMENTAL" + ANSI.reset + ", ";
-    if (this.deprecated)
+    if (this.deprecated) {
       txt += ANSI.red + "DEPRECATED" + ANSI.reset + ", ";
-    if (this.standard && !(this.deprecated || this.experimental))
-      txt += ANSI.green + "On Standard Track" + ANSI.reset + ", ";
+    }
+    else {
+      if (this.experimental)
+        txt += ANSI.yellow + "EXPERIMENTAL" + ANSI.reset + ", ";
+      if (this.standard)
+        txt += ANSI.green + "On Standard Track" + ANSI.reset + ", ";
+    }
 
     txt = txt.substr(0, Math.max(1, txt.length - 2)) + ")";
 
