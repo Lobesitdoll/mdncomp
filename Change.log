@@ -1,6 +1,9 @@
 mdncomp
 =======
 
+1.14.2-alpha
+BMP: and fix as a dot char was left in the root for linux (moved to io.getconfigpath)
+
 1.14.1-alpha
 HOT: Config path on linux (now user folder).
 

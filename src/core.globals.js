@@ -47,7 +47,7 @@ function getCfgPath() {
   let path = process.env.HOME;
   path = path.endsWith("/") ? path : path + "/";
   if (process.platform === "darwin") return path + "Library/Preferences";
-  return path + "."; //mdncomp"
+  return path
 
 }
 
