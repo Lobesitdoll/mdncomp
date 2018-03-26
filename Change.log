@@ -1,6 +1,9 @@
 mdncomp
 =======
 
+1.14.1-alpha
+HOT: Config path on linux (now user folder).
+
 1.14.0-alpha
 HOT: Darwin missing slash in path.
 REM: option --raw removed
