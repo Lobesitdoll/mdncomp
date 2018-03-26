@@ -106,8 +106,8 @@ const io = {
     if (!path) path = require("path");
     if (!fs) fs = require("fs");
 
-    // root config path
-    let root = path.resolve(cfgPath, "mdncomp");
+    // root config path, using . for *nix systems
+    let root = path.resolve(cfgPath, process.platform !== "win32" && process.platform !== "darwin" ? ".mdncomp" : "mdncomp");
     _check(root);
 
     // check/create sub-folders if defined

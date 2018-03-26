@@ -40,7 +40,16 @@ const
     Linux - '/var/local'
    */
   //cfgPath = process.env.APPDATA || (process.platform === "darwin" ? (process.env.HOME + (process.env.HOME.endsWith("/") ? "" : "/")) + "Library/Preferences" : "/var/local");
-  cfgPath = process.env.APPDATA || (process.platform === "darwin" ? (process.env.HOME + (process.env.HOME.endsWith("/") ? "" : "/")) + "Library/Preferences" : "~/.mdncomp");
+  cfgPath = getCfgPath();
+
+function getCfgPath() {
+  if (process.env.APPDATA) return process.env.APPDATA;
+  let path = process.env.HOME;
+  path = path.endsWith("/") ? path : path + "/";
+  if (process.platform === "darwin") return path + "Library/Preferences";
+  return path + "."; //mdncomp"
+
+}
 
 let
   mdn,
