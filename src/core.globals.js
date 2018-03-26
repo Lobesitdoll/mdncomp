@@ -39,7 +39,7 @@ const
     Windows XP - 'C:\Documents and Settings\User\Application Data'
     Linux - '/var/local'
    */
-  cfgPath = process.env.APPDATA || (process.platform === "darwin" ? process.env.HOME + "Library/Preferences" : "/var/local");
+  cfgPath = process.env.APPDATA || (process.platform === "darwin" ? (process.env.HOME + (process.env.HOME.endsWith("/") ? "" : "/")) + "Library/Preferences" : "/var/local");
 
 let
   mdn,
