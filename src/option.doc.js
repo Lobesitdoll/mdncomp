@@ -27,8 +27,8 @@ function getDoc(url, callback) {
       data => {
         // extract article content
         let
-          starts = ["<article id=\"wikiArticle\">", "</section>"],
-          ends = ["id=\"Example", "id=\"Browser_compatibility", "id=\"Specification"],
+          starts = ["id=\"wikiArticle\"", "</section>"],
+          ends = ["id=\"Example", "id=\"Specification", "id=\"Browser_compatibility"],
           i1, i2;
 
         for(let start of starts) {
@@ -47,7 +47,7 @@ function getDoc(url, callback) {
         }
 
         if (i2 < 0) i2 = data.length; // todo need more tags (id=references?)
-        data = data.substring(i1, i2);
+        data = data.substring(data.lastIndexOf("<", i1), data.lastIndexOf("<", i2));
 
         // parse
         parse(data)
@@ -269,6 +269,9 @@ function getDoc(url, callback) {
 
     str = ANSI.reset + str.trim() + lf;
     //str = ANSI.blue + "DOCUMENTATION EXCERPT" + ANSI.reset + lf + lf + str.trim() + lf;
+
+    // no colors?
+    if (!options.colors) str = str.replace(/\x1b[^m]*m/gm, "");
 
     outStore(str);
     callback();

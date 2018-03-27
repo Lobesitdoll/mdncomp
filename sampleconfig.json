@@ -1,6 +1,6 @@
 {
   "_help1_delete": "This file allow you to permanently set options you use frequently.",
-  "_help2_delete": "You can suspend the settings in here using the option -no-config.",
+  "_help2_delete": "You can suspend the settings in here using the option --no-config.",
 
   "_help3_delete": "Only define options you use frequently. Any other options below should be deleted to",
   "_help4_delete": "allow them being used from the command line (these help entries should be deleted as well)",
