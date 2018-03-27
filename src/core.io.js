@@ -90,24 +90,36 @@ const io = {
 //    return path.normalize(path.dirname(process.mainModule.filename) + "/../data");
 //  },
 
+  getConfigRootPath: function() {
+    //if (process.env.APPDATA) return process.env.APPDATA;
+    return (process.platform === "darwin")
+      ? require("path").resolve(process.env.HOME, "/Library/Preferences")
+      : process.env.HOME
+  },
+
+  getConfigPath: function() {
+    let path = require("path");
+    return path.resolve(io.getConfigRootPath(), ".mdncomp")
+  },
+
   /**
    * Get config path and/or sub folders within the config path.
    * Will create the directories that are missing.
    *
    * @example
    *
-   *    getConfigPath()         --> [userdata]/mdncomp
-   *    getConfigPath("cache")  --> [userdata]/mdncomp/cache
+   *    getConfigData()         --> [userdata]/.mdncomp
+   *    getConfigData("cache")  --> [userdata]/.mdncomp/cache
    *    etc.
    *
    * @returns {string}
    */
-  getConfigPath: function() {
+  getConfigDataPath: function() {
     if (!path) path = require("path");
     if (!fs) fs = require("fs");
 
     // root config path, using . for *nix systems
-    let root = path.resolve(cfgPath, process.platform !== "win32" && process.platform !== "darwin" ? ".mdncomp" : "mdncomp");
+    let root = io.getConfigPath();
     _check(root);
 
     // check/create sub-folders if defined
@@ -129,7 +141,7 @@ const io = {
   },
 
   getCachedFilename: function(str) {
-    return path.resolve(io.getConfigPath("cache"), calcMD5(str))
+    return path.resolve(io.getConfigDataPath("cache"), calcMD5(str))
   },
 
   getCachedData: function(str) {

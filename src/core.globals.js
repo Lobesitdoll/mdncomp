@@ -29,27 +29,7 @@ const
   log = console.log.bind(console),
 
   // for update()
-  urlPrefix = "https://raw.githubusercontent.com/epistemex/data-for-mdncomp/master/",
-
-  // for config and cache
-  /* From user Luke @ https://stackoverflow.com/a/26227660:
-  The expected result is:
-    OS X - '/Users/user/Library/Preferences'
-    Windows 8 - 'C:\Users\User\AppData\Roaming'
-    Windows XP - 'C:\Documents and Settings\User\Application Data'
-    Linux - '/var/local'
-   */
-  //cfgPath = process.env.APPDATA || (process.platform === "darwin" ? (process.env.HOME + (process.env.HOME.endsWith("/") ? "" : "/")) + "Library/Preferences" : "/var/local");
-  cfgPath = getCfgPath();
-
-function getCfgPath() {
-  if (process.env.APPDATA) return process.env.APPDATA;
-  let path = process.env.HOME;
-  path = path.endsWith("/") ? path : path + "/";
-  if (process.platform === "darwin") return path + "Library/Preferences";
-  return path
-
-}
+  urlPrefix = "https://raw.githubusercontent.com/epistemex/data-for-mdncomp/master/";
 
 let
   mdn,

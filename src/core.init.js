@@ -5,7 +5,7 @@ function init() {
 
   // Update
   if (args.length === 3 && args[2] === "--configpath") {
-    log(ANSI.white + require("path").resolve(cfgPath, "mdncomp") + ANSI.reset);
+    log(ANSI.white + io.getConfigPath() + ANSI.reset);
   }
 
   else if (args.length === 3 && (args[2] === "--update" || args[2] === "--fupdate" || args[2] === "--cupdate")) {
@@ -37,7 +37,6 @@ function init() {
       .option("-w, --width <width>", "Used with -o, Set width of image", 800)
       .option("--ext", "Show extended table of browsers")
       //.option("--specs", "Show specification links")
-      //.option("--summary", "Shows a summary about the feature")
       .option("--no-colors", "Don't use colors in output")
       .option("--max-chars <width>", "Max number of chars per line before wrap", 72)
       .option("--doc", "Show documentation. Show cached or fetch")
@@ -292,7 +291,7 @@ function loadConfig() {
   if (!path) path = require("path");
 
   const
-    file = path.resolve(io.getConfigPath(), "mdncomp.json");
+    file = path.resolve(io.getConfigDataPath(), ".config.json");
 
 //  let
 //    unres = false;  // detect possible access issues
