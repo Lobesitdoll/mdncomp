@@ -26,9 +26,9 @@ function compatToLong(mdnComp) {
   }
 
   // description TODO Covered by the --doc option for now.
-//  if (mdnComp.description) {
-//    out.addLine(breakLine(cleanHTML(mdnComp.description), options.maxWidth), lf)
-//  }
+  if (options.desc && mdnComp.description) {
+    out.addLine(ANSI.reset + breakAnsiLine(cleanHTML(mdnComp.description), options.maxWidth), lf)
+  }
 
   // Show desktop info?
   if (!options.mobile) {

@@ -232,6 +232,11 @@ help["--ext"] = `
 Shows an additional table for less common browsers.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
+help["--desc"] = `
+Will include a short description of the feature after the link in the default
+long output format, if available.`;
+
+/*----------------------------------------------------------------------------------------------------------------------------------*/
 help["--no-colors"] = `
 Turns off ANSI colors and codes in the terminal.`;
 

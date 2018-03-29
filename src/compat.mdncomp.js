@@ -21,7 +21,7 @@ function MDNComp(path) {
   this.standard = status.standard_track;
   this.deprecated = status.deprecated;
   this.browsers = [];
-  this.description = compat.description;
+  this.description = compat.description || "";
 
   // Main loop parsing all attached information
   supportKeys.forEach(key => {

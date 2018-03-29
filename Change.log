@@ -1,6 +1,9 @@
 mdncomp
 =======
 
+1.15.0-alpha
+ADD: New option --desc which will show a short description of the feature after the link in the default long format.
+
 1.14.5-alpha
 CHG: Config folder more unison on all systems using .mdncomp in main user directory (Windows -> users/-user-/.mdncomp/, Linux/Darwin folder -> .mdncomp in HOME directory)
 CHG: Config file name is now ".config.json" renamed from "mdncomp.json"

@@ -2,10 +2,10 @@
 const
   ANSI = {
     bright: "\x1b[1m",
-    dim: "\x1b[2m",
+    dim   : "\x1b[2m",
 
     clrToCursor: "\x1b[1K",
-    cursorUp: "\x1b[1A",
+    cursorUp   : "\x1b[1A",
 
     black  : "\x1b[30m",
     red    : "\x1b[31;1m",
@@ -17,11 +17,10 @@ const
     cyan   : "\x1b[36;1m",
     white  : "\x1b[37;1m",
     gray   : "\x1b[30;1m",
-    //orange : "\x1b[38;2;202m" \x1b[38;2;r;g;bm
-    reset: "\x1b[0m"
+    reset  : "\x1b[0m"
   },
 
-  lf = "\r\n", yes = "Y", no = "-", yes16 = "✔", no16 = "✘", //, px8 = "·×·",
+  lf = "\r\n", yes = "Y", no = "-", // yes16 = "✔", no16 = "✘", //, px8 = "·×·",
 
   saves = [],
   version = require("../package.json").version,
