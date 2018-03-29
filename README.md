@@ -26,6 +26,7 @@ Features
   - List browsers per status
 - Documentation:
   - Shows URL to documentation page for the feature on [MDN](https://developer.mozilla.org/).
+  - Can show a short description (summary) for each feature.
   - Download and show documentation excerpt on the command line as well as cache the data.
   - Open documentation links in the default browser from the command line.
 - Basic test tools:
@@ -182,7 +183,8 @@ can also try <kbd>CTRL</kbd>-click the displayed link):
 
 Wiki
 ----
-See the [wiki pages](https://github.com/epistemex/mdncomp/wiki) for more details on each options and usage examples.
+See the [wiki pages](https://github.com/epistemex/mdncomp/wiki) for more details on each options, how to create
+a config file and for usage examples.
 
 
 Want to help?
@@ -195,6 +197,8 @@ Find out [how you can help them out](https://developer.mozilla.org/en-US/docs/MD
 License
 -------
 Disclaimer: This tool is a independent tool not affiliated with any third-party.
+
+This project is being built using JetBrains' [WebStorm](https://www.jetbrains.com/webstorm/).
 
 [MIT](http://choosealicense.com/licenses/mit/).
 
