@@ -26,7 +26,7 @@ function compatToLong(mdnComp) {
   }
 
   // description TODO Covered by the --doc option for now.
-  if (options.desc && mdnComp.description) {
+  if (options.desc && mdnComp.description && mdnComp.description.length) {
     out.addLine(ANSI.reset + breakAnsiLine(cleanHTML(mdnComp.description), options.maxWidth), lf)
   }
 
@@ -63,7 +63,7 @@ function compatToLong(mdnComp) {
       out.addLine(ANSI.reset + notes.join(""));
   } // :mobile
 
-  // Show mobile info?
+  // Show extended info?
   if (options.ext) {
     //out.addLine(" %0OTHERS:%1", ANSI.reset + ANSI.orange, ANSI.reset);
     out.addLine(" %0Node JS   %1|%0 QQ/A      %1|%0 Samsung/A %1|%0 UC/A      %1|%0 UC-Ch/A%1", ANSI.green , ANSI.gray);
@@ -73,7 +73,7 @@ function compatToLong(mdnComp) {
     out.addLine(lf);
 
     if (options.notes && notes.length) out.addLine(ANSI.reset + notes.join(""));
-  } // :mobile
+  } // :ext
 
   function versions(list) {
     list.forEach(browserId => {

@@ -12,7 +12,7 @@ function getDoc(url, callback) {
   else {
     log(ANSI.green + "Fetching documentation...");
 
-    // removes redirect
+    // avoids redirect
     let langUrl = url.replace("mozilla.org/", "mozilla.org/" + isoLang + "/") + "?raw&macros";
 
     io.request(langUrl,
@@ -27,7 +27,7 @@ function getDoc(url, callback) {
       data => {
         // extract article content
         let
-          starts = ["id=\"wikiArticle\"", "</section>"],
+          starts = ["id=\"wikiArticle\"", "</section>"],  //todo consolidate summary/description from json (1.15.0a+) instead of parsing that here
           ends = ["id=\"Example", "id=\"Specification", "id=\"Browser_compatibility"],
           i1, i2;
 
@@ -46,7 +46,8 @@ function getDoc(url, callback) {
           if (i2 >= 0) break;
         }
 
-        if (i2 < 0) i2 = data.length; // todo need more tags (id=references?)
+        // todo need more tags (id=references?) <- will rewrite intermediate process to include doc excerpts from mdn/json format; needs its own process though
+        if (i2 < 0) i2 = data.length;
         data = data.substring(data.lastIndexOf("<", i1), data.lastIndexOf("<", i2));
 
         // parse

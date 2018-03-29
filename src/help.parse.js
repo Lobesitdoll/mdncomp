@@ -13,7 +13,8 @@ function parseHelp(args) {
   else {
     let
       option = (args[2].toLowerCase() === "-h" || args[2].toLowerCase() === "--help") ? args[3] : args[2],
-      text = help[option];
+      text = require("./help").help[option];
+
     log();
     log(`${ANSI.yellow}Help for option "${option}"${ANSI.reset}`);
     log(text ? text : "Unknown option.");

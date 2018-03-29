@@ -1,6 +1,6 @@
 {
   "name": "mdncomp",
-  "version": "1.15.0-alpha",
+  "version": "1.15.1-alpha",
   "description": "Browser Compatibility Data on the command line.",
   "main": "build/mdncomp.min.js",
   "author": {
@@ -12,20 +12,20 @@
   },
   "keywords": [
     "mdn",
-    "api",
-    "bcd",
-    "docs",
+    "developer",
     "documentation",
     "browser",
     "compatibility",
-    "status",
-    "svg",
-    "command",
-    "console",
     "cli",
     "terminal",
-    "information",
-    "developer"
+    "bcd",
+    "docs",
+    "status",
+    "api",
+    "command",
+    "console",
+    "summary",
+    "information"
   ],
   "license": "MIT",
   "bin": {

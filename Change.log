@@ -1,6 +1,12 @@
 mdncomp
 =======
 
+1.15.1-alpha
+INT: Modularized help
+INT: Modularized svg path data
+IMP: Improved checking for description field in json.
+FIX: Accidentally removed yes/no symbols for svg output
+
 1.15.0-alpha
 ADD: New option --desc which will show a short description of the feature after the link in the default long format.
 

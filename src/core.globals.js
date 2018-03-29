@@ -20,7 +20,7 @@ const
     reset  : "\x1b[0m"
   },
 
-  lf = "\r\n", yes = "Y", no = "-", // yes16 = "✔", no16 = "✘", //, px8 = "·×·",
+  lf = "\r\n", yes = "Y", no = "-", yes16 = "✔", no16 = "✘",
 
   saves = [],
   version = require("../package.json").version,

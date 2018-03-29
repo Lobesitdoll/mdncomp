@@ -9,11 +9,12 @@ module.exports = function(grunt) {
           }
         },
         files: {
+          "build/help.js": ["src/help.options.js"],
+          "build/svgdefs.js": ["src/formatter.svg.defs.js"],
           "build/build.min.js": [
             "src/core.js",
             "src/core.polyfills.js",
             "src/core.globals.js",
-            "src/help.options.js",
             "src/help.parse.js",
             "src/core.init.js",
             "src/core.io.js",

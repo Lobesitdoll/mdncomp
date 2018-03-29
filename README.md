@@ -157,7 +157,11 @@ edge  16  Rel: 2017-10-17  current
 edge  17  Rel: -           nightly
 ```
 
-Get documentation excerpts:
+**Get feature description summary:**
+
+![Descripotion summary example](https://i.imgur.com/up2RgWq.png)
+
+**Get documentation excerpts:**
 
 ![documentation excerpts](https://i.imgur.com/JVZ4wgF.png)
 
@@ -183,7 +187,6 @@ See the [wiki pages](https://github.com/epistemex/mdncomp/wiki) for more details
 
 Want to help?
 -------------
-
 The BCD team is working hard to convert all the browser compatibility data to their new
 format as used by this tool. For this reason some APIs and objects may not be available quite yet.
 
@@ -191,7 +194,6 @@ Find out [how you can help them out](https://developer.mozilla.org/en-US/docs/MD
 
 License
 -------
-
 Disclaimer: This tool is a independent tool not affiliated with any third-party.
 
 [MIT](http://choosealicense.com/licenses/mit/).
