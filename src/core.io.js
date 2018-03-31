@@ -91,14 +91,13 @@ const io = {
 //  },
 
   getConfigRootPath: function() {
-    //if (process.env.APPDATA) return process.env.APPDATA;
+    let app = process.env.HOME || path.resolve(process.env.APPDATA, "../../");
     return (process.platform === "darwin")
-      ? require("path").resolve(process.env.HOME, "/Library/Preferences")
-      : process.env.HOME
+           ? require("path").resolve(app, "/Library/Preferences") : app
   },
 
   getConfigPath: function() {
-    let path = require("path");
+    if (!path) path = require("path");
     return path.resolve(io.getConfigRootPath(), ".mdncomp")
   },
 
@@ -156,10 +155,11 @@ const io = {
 
   setCachedData: function(str, data) {
     if (!fs) fs = require("fs");
+    let filename = io.getCachedFilename(str);
     try {
-      fs.writeFileSync(io.getCachedFilename(str), data);
+      fs.writeFileSync(filename, data);
     } catch(err) {
-      log(ANSI.red + "Could not save file: " + str + ANSI.reset + lf + err)
+      log(ANSI.red + "Could not save file: " + filename + ANSI.reset + lf + err)
     }
   },
 

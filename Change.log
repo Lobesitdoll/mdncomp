@@ -1,6 +1,9 @@
 mdncomp
 =======
 
+1.15.3-alpha
+FIX: Couldn't write to doc cache from CMD/Windows
+
 1.15.2-alpha
 CHG: Data format change phase 1 - more compact URLs (transport), description field added where available
 ADD: option --random can now also take keyword/search terms (i.e. "--random audio").
