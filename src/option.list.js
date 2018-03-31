@@ -80,32 +80,15 @@ function listOnStatus(statTxt) {
   return result.sort();
 }
 
-function listOnProp(propTxt) {
+function listOnProp() {
   const
-//    props = [
-//        {key: "missinglink", value: "mdn_url", not: true},
-//        {key: "partial", value: "partial_implementation", not: false}
-//      ],
     result = [],
     keys = buildTable();
-
-  // get technical name
-//  let value, not;
-//  for(let key of props) {
-//    if (key.key === propTxt) {
-//      value = key.value;
-//      not = key.not;
-//      break;
-//    }
-//  }
-
-//  if (!value) return [];
 
   keys.forEach(path => {
     let compat = getPathAsObject(path);
     if (compat) {
       compat = compat.__compat;
-      //if (compat && ((not && !compat[value]) || (!not && compat[value]))) result.push(path);
       if (compat && (!(compat["mdn_url"] && compat["mdn_url"].length))) {
         result.push(path);
       }

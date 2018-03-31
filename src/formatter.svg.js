@@ -85,7 +85,7 @@ function compatToSVG(mdnComp) {
   *------------------------------------------------------------------------------------------------------------------*/
 
   // Header
-  if (mdnComp.url.length) {
+  if (mdnComp.url) {
     out.add("<a xlink:href=\"%0\" style=\"cursor:pointer\" target=\"_blank\">", mdnComp.url);
     text2(mdnComp.prePath, mdnComp.name, 1, 46, 26);
     use("link", w - 28, 26, 24, 24, "#777");

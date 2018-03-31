@@ -113,9 +113,11 @@ function listTopLevels() {
  * automatically considered to be `*toBlob*` while
  * `to*blob` is: starts with "to" and ends with "blob".
  * @param str
+ * @param fuzzy
+ * @param insensitive
  * @returns {RegExp}
  */
-function getComparer(str, fuzzy) {
+function getComparer(str, fuzzy, insensitive) {
   let regex, parts, options = "", endLine = "";
   if (str.startsWith("/")) {
     str = str.substr(1);
@@ -137,6 +139,9 @@ function getComparer(str, fuzzy) {
       str = str.split("*").join(".*") + endLine;
     }
   }
+
+  // insensitive search
+  if (insensitive && !options.includes("i")) options += "i";
 
   try {
     regex = new RegExp(str, options);

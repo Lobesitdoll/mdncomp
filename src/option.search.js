@@ -12,15 +12,10 @@ function search(keyword, sensitive) {
     tbl = buildTable(),
     result = [];
 
-  cmp = getComparer(_toCase(keyword), options.fuzzy);
+  cmp = getComparer(keyword, options.fuzzy, !sensitive);
   tbl.forEach(path => {
-    let _path = _toCase(path);
-    if (cmp.test(_path) && isCompat(path)) result.push(path);
+    if (cmp.test(path) && isCompat(path)) result.push(path);
   });
-
-  function _toCase(txt) {
-    return sensitive ? txt : txt.toLowerCase()
-  }
 
   return result
 }

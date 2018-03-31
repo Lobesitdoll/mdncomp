@@ -107,7 +107,7 @@ function go(path) {
       Random ?
    */
   if (options.random) {
-    path = randomCompat();
+    path = randomCompat(path);
     options.index = 0;
   }
 

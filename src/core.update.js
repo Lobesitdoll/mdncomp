@@ -20,7 +20,7 @@ function update(force, checkOnly) {
   }
 
   function serverData() {
-    io.request(urlPrefix + "data.json",
+    io.request(urlPrefix + "data2.json",
       () => !clrLine(),
       pct => {
         let width = 50, prog = Math.round(width * pct), rem = width - prog;
@@ -50,7 +50,7 @@ function update(force, checkOnly) {
 }
 
 function serverMD5(callback) {
-  io.request(urlPrefix + "data.md5", null, null, callback, (err) => {
+  io.request(urlPrefix + "data2.md5", null, null, callback, (err) => {
     log("An error occurred:", err.statusCode, err.error)
   })
 }

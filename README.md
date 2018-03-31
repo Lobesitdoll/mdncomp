@@ -24,9 +24,9 @@ Features
 - Browser status
   - List status and release dates per browser
   - List browsers per status
-- Documentation:
+- Additional documentation:
   - Shows URL to documentation page for the feature on [MDN](https://developer.mozilla.org/).
-  - Can show a short description (summary) for each feature.
+  - Can show a short description (summary) for each feature (works offline).
   - Download and show documentation excerpt on the command line as well as cache the data.
   - Open documentation links in the default browser from the command line.
 - Basic test tools:
@@ -169,14 +169,19 @@ edge  17  Rel: -           nightly
 These are loaded from the MDN site and cached locally.
 
 
-Misc
-----
-Feel like exploring? Try combining the `--random` option with `--doc`:
+Exploration
+-----------
+Feel like exploring? Try combining the `--random` option with `--desc`:
+
+    $ mdncomp --random --desc .
+
+Or maybe you prefer more details? Then try `--doc` instead which will download
+and cache details about syntax, properties, methods etc.:
 
     $ mdncomp --random --doc .
 
-Open documentation link in the default browser (in terminals such as xterm you
-can also try <kbd>CTRL</kbd>-click the displayed link):
+Open the documentation link in the default browser (in terminals such as xterm
+you can also try <kbd>CTRL</kbd>-click the displayed link):
 
     $ mdncomp html*toblob. --mdn
 
@@ -194,11 +199,20 @@ format as used by this tool. For this reason some APIs and objects may not be av
 
 Find out [how you can help them out](https://developer.mozilla.org/en-US/docs/MDN/Contribute/Structures/Compatibility_tables)!
 
+
+Additional information
+----------------------
+Disclaimer: This tool is a independent tool not affiliated with any third-parties.
+
+Build environment: [Node 8](https://nodejs.org/) and JetBrains' [WebStorm](https://www.jetbrains.com/webstorm/) on Windows.
+
+Test environments: Windows, Linux Ubuntu (VM)
+
+Dependency projects (data compiler): [data-for-mdncomp](https://github.com/epistemex/data-for-mdncomp).
+
+
 License
 -------
-Disclaimer: This tool is a independent tool not affiliated with any third-party.
-
-This project is being built using JetBrains' [WebStorm](https://www.jetbrains.com/webstorm/).
 
 [MIT](http://choosealicense.com/licenses/mit/).
 
