@@ -1,6 +1,10 @@
 mdncomp
 =======
 
+1.15.4-alpha
+FIX: Entity formatting in output from --desc option.
+FIX: Merging description data (separate offline process) used "old" data
+
 1.15.3-alpha
 FIX: Couldn't write to doc cache from CMD/Windows
 

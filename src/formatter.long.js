@@ -25,9 +25,15 @@ function compatToLong(mdnComp) {
     out.addLine(" ", mdnComp.url ? ANSI.gray + mdnComp.url : "-", lf);
   }
 
-  // description TODO Covered by the --doc option for now.
+  // description
   if (options.desc && mdnComp.description && mdnComp.description.length) {
-    out.addLine(ANSI.reset + breakAnsiLine(cleanHTML(mdnComp.description), options.maxWidth), lf)
+    let desc = ANSI.reset + breakAnsiLine(cleanHTML(mdnComp.description), options.maxWidth);
+    desc = desc.replace(/&nbsp;/gmi, " ");
+    desc = desc.replace(/&quot;/gmi, "\"");
+    desc = desc.replace(/&amp;/gmi, "&");
+    desc = desc.replace(/&lt;/gmi, "<");
+    desc = desc.replace(/&gt;/gmi, ">");
+    out.addLine(desc, lf)
   }
 
   // Show desktop info?
