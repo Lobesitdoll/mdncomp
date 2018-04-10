@@ -306,3 +306,12 @@ function getMaxLength(list) {
   });
   return max
 }
+
+function entities(txt) {
+  txt = txt.replace(/&nbsp;/gmi, " ");
+  txt = txt.replace(/&quot;/gmi, "\"");
+  txt = txt.replace(/&amp;/gmi, "&");
+  txt = txt.replace(/&lt;/gmi, "<");
+  txt = txt.replace(/&gt;/gmi, ">");
+  return txt
+}

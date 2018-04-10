@@ -247,6 +247,10 @@ Will include a short description of the feature after the link in the
 default long output format, if available.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
+help["--specs"] = `
+Show specification links and status, if available.`;
+
+/*----------------------------------------------------------------------------------------------------------------------------------*/
 help["--no-colors"] = `
 Turns off ANSI colors and codes in the terminal.`;
 
@@ -254,7 +258,9 @@ Turns off ANSI colors and codes in the terminal.`;
 help["--max-chars"] = `
 Set max number of characters on a (textual) line. Default is 72 but if
 you prefer longer lines this can be set here. Using "-1" (negative one)
-as value means no line limit.`;
+as value means no line limit.
+
+Note that width is ignored for links.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["--doc"] = `
@@ -299,16 +305,6 @@ As well as \`--mdn\` (opens browser for this feature if URL for it is
 available) etc.
 
 Note that some options are ignored using this option.`;
-
-/*----------------------------------------------------------------------------------------------------------------------------------*/
-help["--testurl"] = `
-Get status code for the documentation URL if any is provided.
-
-This is more useful to contributors that want to create pages for
-non-existing pages (404) etc., or to see if there is temporary
-connectivity issues.
-
-The option is ignored if --doc or --docforce is specified.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["--configpath"] = `

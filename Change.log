@@ -1,6 +1,15 @@
 mdncomp
 =======
 
+1.16.0-alpha
+ADD: option --specs shows specification details where available (incl. in data).
+REM: option --testurl (mechanism separated out to a standalone tool: https://github.com/epistemex/mdn-linkchecker)
+FIX: --browser option using unknown browser name resulted in unhandled exception.
+FIX: More config path issues (cygwin/msys on Windows will use their home location, not system home). Forced to c:\users\-user-\.mdncomp on Windows.
+FIX: Inaccessible response object in promise chain.
+FIX: Sample config file updated to new format.
+FIX: Some special cases or arguments.
+
 1.15.4-alpha
 FIX: Entity formatting in output from --desc option.
 FIX: Merging description data (separate offline process) used "old" data

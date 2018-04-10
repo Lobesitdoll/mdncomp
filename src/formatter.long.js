@@ -27,12 +27,7 @@ function compatToLong(mdnComp) {
 
   // description
   if (options.desc && mdnComp.description && mdnComp.description.length) {
-    let desc = ANSI.reset + breakAnsiLine(cleanHTML(mdnComp.description), options.maxWidth);
-    desc = desc.replace(/&nbsp;/gmi, " ");
-    desc = desc.replace(/&quot;/gmi, "\"");
-    desc = desc.replace(/&amp;/gmi, "&");
-    desc = desc.replace(/&lt;/gmi, "<");
-    desc = desc.replace(/&gt;/gmi, ">");
+    let desc = entities(ANSI.reset + breakAnsiLine(cleanHTML(mdnComp.description), options.maxWidth));
     out.addLine(desc, lf)
   }
 
@@ -80,6 +75,48 @@ function compatToLong(mdnComp) {
 
     if (options.notes && notes.length) out.addLine(ANSI.reset + notes.join(""));
   } // :ext
+
+  // Show specifications?
+  if (options.specs && mdnComp.specs && mdnComp.specs.length) {
+    out.addLine(ANSI.cyan + "Specifications:" + lf);
+    mdnComp.specs.forEach(spec => {
+      out.addLine(ANSI.white + `${entities(spec.name)}${lf}  ${getSpecStatus(spec.status)}  ${spec.url}`);
+    });
+    out.addLine();
+  } // :specs
+
+  function getSpecStatus(status) {
+    switch(status.toUpperCase()) {
+      case "REC":
+        return ANSI.green + "Recommendation" + ANSI.reset + lf;
+      case "PR":
+        return ANSI.yellow + "Proposed Recommendation" + ANSI.reset + lf;
+      case "CR":
+        return ANSI.cyan + "Candidate Recommendation" + ANSI.reset + lf;
+      case "RC":
+        return ANSI.cyan + "Release Candidate" + ANSI.reset + lf;
+      case "WD":
+        return ANSI.blue + "Working Draft" + ANSI.reset + lf;
+      case "ED":
+        return ANSI.green + "Editor's Draft" + ANSI.reset + lf;
+      case "OLD-TRANSFORMS":
+        return ANSI.orange + "This has been merged in another draft." + ANSI.reset + lf;
+      case "LIVING":
+        return ANSI.cyan + "Living Standard" + ANSI.reset + lf;
+      case "RFC":
+        return ANSI.yellow + "IETF RFC" + ANSI.reset + lf;
+      case "STANDARD":
+        return ANSI.green + "Standard" + ANSI.reset + lf;
+      case "DRAFT":
+        return ANSI.yellow + "Draft" + ANSI.reset + lf;
+      case "OBSOLETE":
+        return ANSI.red + "Obsolete" + ANSI.reset + lf;
+      case "LC":
+        return ANSI.yellow + "Last Call Working Draft" + ANSI.reset + lf;
+      default:
+        return ANSI.yellow + status + ANSI.reset + lf
+    }
+  }
 
   function versions(list) {
     list.forEach(browserId => {

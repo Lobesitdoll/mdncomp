@@ -32,17 +32,16 @@ function init() {
       .option("-h, --shorthand-split", "Split a shorthand line into two lines (use with -s)")
       .option("-b, --browser", "Show information about this browser, or if '.' list")
       .option("-N, --no-notes", "Don't show notes")
-      .option("-e, --noteend", "Show notes (-n) at end instead of in sections (text)")
+      .option("-e, --noteend", "Show notes at end instead of in sections (text)")
       .option("-f, --markdown", "Format link as markdown and turns off colors")
-      .option("-w, --width <width>", "Used with -o, Set width of image", 800)
+      .option("-w, --width <width>", "Used with -o, Set width of svg", 800)
       .option("--ext", "Show extended table of browsers")
       .option("--desc", "Show Short description of the feature")
-      //.option("--specs", "Show specification links")
+      .option("--specs", "Show specification links")
       .option("--doc", "Show documentation. Show cached or fetch")
       .option("--docforce", "Show documentation. Force fetch from server")
       .option("--mdn", "Open entry's document URL in default browser")
       .option("--random", "Show a random entry. (mdncomp --random . )")
-      .option("--testurl", "Test documentation URL and get status code")
       .option("--update, --fupdate, --cupdate", "Update BCD from remote (--fupdate=force, --cupdate=check)")
       .option("--no-colors", "Don't use colors in output")
       .option("--max-chars <width>", "Max number of chars per line before wrap", 72)
@@ -75,6 +74,9 @@ function outStore(txt, noFile) {
 *------------------------------------------------------------------------------------------------------------------*/
 
 function go(path) {
+
+  // produced by f.ex "\*" as argument
+  if (typeof path !== "string") path = ".";
 
   // load data
   try {
@@ -178,19 +180,6 @@ function go(path) {
         if (result.length === 1) {
           let compat = new MDNComp(result[0]);
 
-          // test url if any
-          if (options.testurl && !(options.doc || options.docforce)) {
-            if (compat.url.length) {
-              let langUrl = compat.url.replace("mozilla.org/", "mozilla.org/" + isoLang + "/");
-              io.getUrlStatus(langUrl, e => {
-                log(ANSI.white + "URL status: " + (e.statusCode === 200 ? ANSI.green : ANSI.red) + e.statusCode + lf)
-              }, true)
-            }
-            else {
-              log(ANSI.white + "URL status: " + ANSI.reset + "-- no link --" + lf)
-            }
-          }
-
           // check --doc link
           if (options.doc || options.docforce) {
             if (compat.url.length) {
@@ -261,13 +250,14 @@ function go(path) {
             output: process.stdout
           });
 
-        rl.question(ANSI.yellow + "A file exist with this name. Overwrite (y, default no)? " + ANSI.white, resp => {
-          if (resp.toLowerCase() === "y" || resp.toLowerCase() === "yes") _save(function() {
+        rl.question(ANSI.yellow + "A file with this name already exists. Overwrite? (y(es), default: no)? " + ANSI.white, resp => {
+          if (resp.toLowerCase().startsWith("y")) _save(() => {
             rl.close();
           });
           else {
             log("File not saved.");
-            rl.close()
+            rl.close();
+            process.exit();
           }
         });
       }
@@ -278,7 +268,7 @@ function go(path) {
     function _save(callback) {
       fs.writeFile(options.out, saves.join("\n"), "utf8", function(err) {
         if(err) return log("An error occurred:" + lf + err);
-        log("Saved output to file \"" + options.out + "\"!");
+        log(ANSI.green + `Saved output to file "${ANSI.cyan + options.out + ANSI.green}"!` + ANSI.reset);
         if (callback) callback();
       })
     }
@@ -293,34 +283,16 @@ function loadConfig() {
   const
     file = path.resolve(io.getConfigDataPath(), ".config.json");
 
-//  let
-//    unres = false;  // detect possible access issues
-
-    // todo temp - to detect possible unresolved paths on unknown systems
-//  if (!fs.existsSync(cfgPath)) {
-//    log("Warning: could not create config path: '" + cfgPath + "'");
-//    log(ANSI.red + "Could not detect user data area on this system for config file!");
-//    log("Please report to: https://github.com/epistemex/mdncomp/issues");
-//    log("and include the following data (replace username with just user):");
-//    log("  Unresolved path: '" + cfgPath + "'");
-//    log("  OS: '" + process.platform + "' + the path you would normally use for user data.");
-//    log("  APPDATA: " + process.env.APPDATA);
-//    log("  HOME: " + process.env.HOME);
-//    log(ANSI.reset);
-//    unres = true;
-//  }
-
   if (fs.existsSync(file)) {
     // todo use whitelisting here
     cfg = require(file);
     let cfgOptions = cfg.options || cfg || {};
     delete cfgOptions.browser;
     delete cfgOptions.list;
-    delete cfgOptions.out;
+    delete cfgOptions["out"];
     delete cfgOptions.all;
     delete cfgOptions.index;
-    delete cfgOptions.random;
+    delete cfgOptions["random"];
     Object.assign(options, cfgOptions);
-    //if (unres) log(ANSI.red + "*** If you see this line please include with the above. ***" + ANSI.reset);
   }
 }

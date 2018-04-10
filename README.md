@@ -13,31 +13,38 @@ Features
 --------
 
 - Browser Compatibility Data (BCD)
-  - Search in APIs, CSS, HTML, HTTP, JavaScript, SVG, WebDriver and WebExtensions.
+  - Shows data on command line as a table or as a shorthand list
+  - Search in APIs, CSS, HTML, HTTP, JavaScript, MathML, SVG, WebDriver and WebExtensions.
   - Get status for standard, experimental and deprecated features.
-  - Show status notes, prefix status, flags and more.
+  - Show notes, prefix use, security issues, flags and more.
   - Find features using paths, wildcards, fuzzy terms or regular expressions
   - Navigate by path and branches
   - Search case (in)sensitive
-  - Show desktop and/or mobile information for the most common browsers
+  - Show desktop and/or mobile information for the most common browsers.
+  - Extended option to include other browsers and Node.js.
   - Works offline for the main data
+
 - Browser status
+  - List current browser versions
+  - List beta and nightly versions
   - List status and release dates per browser
   - List browsers per status
+
 - Additional documentation:
-  - Shows URL to documentation page for the feature on [MDN](https://developer.mozilla.org/).
-  - Can show a short description (summary) for each feature (works offline).
-  - Download and show documentation excerpt on the command line as well as cache the data.
-  - Open documentation links in the default browser from the command line.
-- Basic test tools:
-  - Test documentation URL status (404 missing pages, connectivity).
+  - Show a summary description for each feature (included in the dataset).
+  - Provides the URL to the feature's documentation page on [MDN](https://developer.mozilla.org/).
+  - Specification references and status (W3C, WHATWG, KHRONOS, ECMA, IETF etc.)
+  - Downloads and show documentation excerpt on the command line (with built-in data cache).
+  - Open documentation link in the default browser from the command line.
+
+- Basic integrity tools:
   - List features with missing documentation URLs
-- List to terminal as table or as shorthand formats
-- Export as SVG
-- Define permanent/often used options in a config file (can be suspended at will).
+
+- Define permanent/often used options in a config file (which can be suspended at will).
+- Export tables as a SVG file
 - Built-in help per option.
 - Documented with [wiki](https://github.com/epistemex/mdncomp/wiki) pages
-- Runs on Windows, Mac, Linux and other platforms where node and npm is available.
+- Cross-platform (where node and npm is available).
 
 
 Install
@@ -92,13 +99,24 @@ $ mdncomp html*toblob. -o toBlob.svg
 
 [![SVG Example](https://i.imgur.com/O1eCOeF.png)](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob)
 
-In shorthand format in the terminal:
+Export as a text file:
+
+```text
+$ mdncomp html*toblob. -o toBlob.txt
+```
+
+Export as a ANSI text file:
+
+```text
+$ mdncomp html*toblob. -o toBlob.ansi
+```
+
+Show data in shorthand format:
 
 ```text
 $ mdncomp html*toblob. -s
 ->
 HTMLCanvasElement.toBlob:  DT: C:50 E:- F:19 IE:10* O:37 S:Y*  MOB: CA:50 FA:4 EM:- OA:37 Si:- WA:-
-Data from MDN - `npm i -g mdncomp` by epistemex
 ```
 
 Combined with the `-a` option to list all results with shorthand information:
@@ -168,6 +186,9 @@ edge  17  Rel: -           nightly
 
 These are loaded from the MDN site and cached locally.
 
+**Get specification links:**
+
+![Specification option](https://i.imgur.com/cGRnNWO.png)
 
 Exploration
 -----------
@@ -180,6 +201,10 @@ and cache details about syntax, properties, methods etc.:
 
     $ mdncomp --random --doc .
 
+You can also limit it to certain keywords:
+
+    $ mdncomp --random --desc audio
+
 Open the documentation link in the default browser (in terminals such as xterm
 you can also try <kbd>CTRL</kbd>-click the displayed link):
 
@@ -191,9 +216,11 @@ Wiki
 See the [wiki pages](https://github.com/epistemex/mdncomp/wiki) for more details on each options, how to create
 a config file and for usage examples.
 
+Also included as markdown files in the included [wiki folder](./wiki/).
 
-Want to help?
--------------
+
+Want to help making BCD awesome?
+--------------------------------
 The BCD team is working hard to convert all the browser compatibility data to their new
 format as used by this tool. For this reason some APIs and objects may not be available quite yet.
 

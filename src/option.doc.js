@@ -186,11 +186,7 @@ function getDoc(url, callback) {
     });
 
     // entities
-    str = str.replace(/&nbsp;/gmi, " ");
-    str = str.replace(/&quot;/gmi, "\"");
-    str = str.replace(/&amp;/gmi, "&");
-    str = str.replace(/&lt;/gmi, "<");
-    str = str.replace(/&gt;/gmi, ">");
+    str = entities(str);
 
     // white space
     str = str.replace(/\n\s*\n/gmi, "");

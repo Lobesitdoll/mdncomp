@@ -17,15 +17,17 @@ function listBrowser(browserId) {
   if (!browser) {
     return getBrowserStatusList().includes(browserId)
       ? listBrowserOnStatus(browserId)
-      : "Unknown browser-id: '" + browserId + "' - Use '.' to list all valid IDs.";
+      : ["Unknown browser-id: '" + browserId + "' - Use '.' to list all valid IDs."];
   }
 
   // Get padding width
   let vPad = 0, vPad2 = 0;
   Object.keys(browser.releases).forEach(version => {
     let verArr = version.split(".");
-    if (verArr[0].length > vPad) vPad = verArr[0].length;
-    if (version.length - verArr[0].length > vPad2) vPad2 = version.length - verArr[0].length;
+    if (verArr[0].length > vPad)
+      vPad = verArr[0].length;
+    if (version.length - verArr[0].length > vPad2)
+      vPad2 = version.length - verArr[0].length;
   });
 
   // Show information
@@ -94,17 +96,22 @@ function getBrowserStatusList() {
 }
 
 function _browserStatusColor(txt) {
-  if (txt === "retired")
-    return ANSI.red;
-  else if (txt === "beta" || txt === "alpha")
-    return ANSI.yellow;
-  else if (txt === "nightly")
-    return ANSI.blue;
-  else if (txt === "current" || txt === "esr")
-    return ANSI.green;
-  else if (txt === "planned")
-    return ANSI.magenta;
-  return ANSI.white
+  switch(txt) {
+    case "retired":
+      return ANSI.red;
+    case "beta":
+    case "alpha":
+      return ANSI.yellow;
+    case "nightly":
+      return ANSI.blue;
+    case "current":
+    case "esr":
+      return ANSI.green;
+    case "planned":
+      return ANSI.magenta;
+    default:
+      return ANSI.white
+  }
 }
 
 function _iterateBrowsers(callback) {

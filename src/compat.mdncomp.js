@@ -16,7 +16,7 @@ function MDNComp(path) {
   this.prePath = prePathFromPath(path);
   this.name = nameFromPath(path);
   this.url = compat.mdn_url && compat.mdn_url.length ? "https://developer.mozilla.org/docs/" + compat.mdn_url : null;
-  //this.specs = compat.spec_url[s] // todo scraper before this is manifested officially?
+  this.specs = compat.specs || [];
   this.experimental = status.experimental;
   this.standard = status.standard_track;
   this.deprecated = status.deprecated;

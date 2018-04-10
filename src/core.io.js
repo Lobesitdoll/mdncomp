@@ -7,7 +7,7 @@ const io = {
    * Request data from an URL
    * @param {string} url - the (HTTPS) url to load
    * @param {function} onResp - must return true, response header available, no data at this stage
-   * @param {function} [onProgress] - ondata callback
+   * @param {function} [onProgress] - onData callback
    * @param {function} onData - gets the data itself
    * @param {function} [onError] - if any errors
    */
@@ -15,8 +15,11 @@ const io = {
     if (!https) https = require("https");
     onResp = onResp || function() {return true};
 
+    let _res;
+
     const req = https.get(url, res => {
       let data = "";
+      _res = res;
 
       // handle redirects
       if (res.statusCode === 301 || res.statusCode === 302) {
@@ -33,43 +36,14 @@ const io = {
       }
       else if (onError) _error(res, "");
 
-    }).on("error", err => _error(res, err));
+    }).on("error", err => _error(_res, err));
+
     req.end();
 
     function _error(res, err) {
       if (onError) onError({statusCode: res.statusCode, error: err});
       else log("Error", res, err);
     }
-  },
-
-  getUrlStatus: function(url, callback, followRedirects) {
-    if (!https) https = require("https");
-    const
-      { URL } = require('url'),
-      url2 = new URL(url),
-      options = {
-        method: "HEAD",
-        host: url2.hostname,
-        port: url2.port,
-        path: url2.pathname
-      };
-
-    let req = https.request(options, res => {
-      if (res.statusCode === 301 || res.statusCode === 302) {
-        if (followRedirects) {
-          io.getUrlStatus(res.headers.location, callback, followRedirects);
-        }
-        else {
-          callback({
-            statusCode: res.statusCode,
-            location: res.headers.location
-          })
-        }
-      }
-      else callback({statusCode: res.statusCode});
-    });
-
-    req.end();
   },
 
   /**
@@ -86,12 +60,8 @@ const io = {
     return fs.existsSync(path)
   },
 
-//  getDataPath: function() {
-//    return path.normalize(path.dirname(process.mainModule.filename) + "/../data");
-//  },
-
   getConfigRootPath: function() {
-    let app = process.env.HOME || path.resolve(process.env.APPDATA, "../../");
+    let app = process.platform === "win32" ? path.resolve(process.env.APPDATA, "../../") : process.env.HOME;
     return (process.platform === "darwin")
            ? require("path").resolve(app, "/Library/Preferences") : app
   },
@@ -130,7 +100,8 @@ const io = {
       if (!fs.existsSync(root)) {
         try {
           fs.mkdirSync(root);
-        } catch(err) {
+        }
+        catch(err) {
           log(`${ANSI.red}Could not create config folder:\n${root}\n${err.message}${ANSI.reset}`);
         }
       }
@@ -148,7 +119,8 @@ const io = {
     let data = null;
     try {
       data = fs.readFileSync(io.getCachedFilename(str)).toString();
-    } catch(err) {}
+    }
+    catch(err) {}
 
     return data
   },
@@ -158,7 +130,8 @@ const io = {
     let filename = io.getCachedFilename(str);
     try {
       fs.writeFileSync(filename, data);
-    } catch(err) {
+    }
+    catch(err) {
       log(ANSI.red + "Could not save file: " + filename + ANSI.reset + lf + err)
     }
   },
