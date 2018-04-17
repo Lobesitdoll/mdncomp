@@ -20,7 +20,7 @@ function Info(obj) {
     this.notes.unshift("Uses a non-standard name: " + obj.alternative_name);
 
   this.flags.forEach(flag => {
-    this.notes.push(this.flagToString(flag));
+    this.notes.push(this.flagToString(flag, ANSI.yellow));  //todo lift last parameter up the chain
   });
 }
 
@@ -30,7 +30,7 @@ Info.prototype = {
     return this.removed ? this.added + "-" + this.removed.replace(yes, "?") : this.added
   },
 
-  flagToString: function(flag) {
+  flagToString: function(flag, resetColor) {
     switch(flag.type) {
       case "preference": return line("Behind flag " + ANSI.cyan);
       case "compile_flag": return line("Compile with " + ANSI.cyan);
@@ -38,7 +38,7 @@ Info.prototype = {
     }
 
     function line(prefix) {
-      return prefix + flag.name + ANSI.reset + (flag.value_to_set ? " set to " + flag.value_to_set + "" : "") + ".";
+      return prefix + flag.name + (resetColor || ANSI.reset) + (flag.value_to_set ? " set to " + flag.value_to_set + "" : "") + ".";
     }
 
     return ""
@@ -64,7 +64,7 @@ Info.prototype = {
     }
 
     this.notes.forEach(note => {
-      out.addLine(cleanHTML(indent + note, true))
+      out.addLine(cleanHTML(indent + note, true, ANSI.yellow))
     });
 
     return prefix + out.toString()

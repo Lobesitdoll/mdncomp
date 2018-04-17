@@ -1,3 +1,4 @@
+const tagParser = require("./tagparser");
 
 function getDoc(url, callback) {
 

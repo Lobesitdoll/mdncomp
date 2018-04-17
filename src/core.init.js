@@ -5,11 +5,11 @@ function init() {
 
   // Update
   if (args.length === 3 && args[2] === "--configpath") {
-    log(ANSI.white + io.getConfigPath() + ANSI.reset);
+    log(ANSI.white + require("./io").getConfigPath() + ANSI.reset);
   }
 
   else if (args.length === 3 && (args[2] === "--update" || args[2] === "--fupdate" || args[2] === "--cupdate")) {
-    update(args[2] === "--fupdate", args[2] === "--cupdate");
+    require("./update")(args[2] === "--fupdate", args[2] === "--cupdate");
   }
 
   // Regular options
@@ -19,8 +19,7 @@ function init() {
       .usage("[options] <feature>")
       .description("Get MDN Browser Compatibility Data." + lf + "  Version: " + version + lf + "  (c) 2018 epistemex.com")
       .option("-l, --list", "List paths starting with the given value or '.' for top-level")
-      .option("-o, --out <path>", "Save information to file. Extension for type, or --type")
-      .option("-t, --type <type>", "Output format (ansi, txt, svg)", "ansi")
+      .option("-o, --out <path>", "Save information to file. Use extension for type (.txt or .ansi)")
       .option("-x, --overwrite", "Overwrites an existing file with --out option")
       .option("-d, --desktop", "Show desktop only")
       .option("-m, --mobile", "Show mobile devices only")
@@ -29,20 +28,19 @@ function init() {
       .option("-z, --fuzzy", "Use path as a fuzzy search term")
       .option("-i, --index <index>", "Show this index from a multiple result list", -1)
       .option("-s, --shorthand", "Show compatibility as shorthand with multiple results")
-      .option("-h, --shorthand-split", "Split a shorthand line into two lines (use with -s)")
-      .option("-b, --browser", "Show information about this browser, or if '.' list")
+      .option("-h, --split", "Split a shorthand line into two lines (use with -s)")
+      .option("-b, --browser", "Show information about this browser, or list if '.'")
       .option("-N, --no-notes", "Don't show notes")
       .option("-e, --noteend", "Show notes at end instead of in sections (text)")
       .option("-f, --markdown", "Format link as markdown and turns off colors")
-      .option("-w, --width <width>", "Used with -o, Set width of svg", 800)
-      .option("--ext", "Show extended table of browsers")
+      .option("--ext", "Show extended table of browsers/servers")
       .option("--desc", "Show Short description of the feature")
       .option("--specs", "Show specification links")
       .option("--doc", "Show documentation. Show cached or fetch")
-      .option("--docforce", "Show documentation. Force fetch from server")
+      .option("--docforce", "Show documentation. Force fetch from MDN server")
       .option("--mdn", "Open entry's document URL in default browser")
       .option("--random", "Show a random entry. (mdncomp --random . )")
-      .option("--update, --fupdate, --cupdate", "Update BCD from remote (--fupdate=force, --cupdate=check)")
+      .option("--update, --fupdate, --cupdate", "Update data from remote (--fupdate=force, --cupdate=check)")
       .option("--no-colors", "Don't use colors in output")
       .option("--max-chars <width>", "Max number of chars per line before wrap", 72)
       .option("--no-config", "Ignore config file (mdncomp.json) in config folder")
@@ -75,15 +73,18 @@ function outStore(txt, noFile) {
 
 function go(path) {
 
-  // produced by f.ex "\*" as argument
+  io = require("./io");
+
+  // fixing non-valid args produced by f.ex "\*"
   if (typeof path !== "string") path = ".";
 
   // load data
   try {
     mdn = require("../data/data.json");
-  } catch(err) {
+  }
+  catch(err) {
     log("Critical error: data file not found. Try running with option --fupdate to download latest snapshot.");
-    return
+    process.exit(1);
   }
 
   // load config file if any
@@ -91,18 +92,14 @@ function go(path) {
     loadConfig();
   } catch(err) {}
 
-  // default type
-  if (options.out && options.type === "ansi")
-    options.type = getExt(options.out || ".txt");
-
   // both dt and mob -> cancel out the not options
   if (options.desktop && options.mobile)
     options.desktop = options.mobile = false;
 
   // invoke boring mode
-  if (!options.colors || options.markdown || options.type === "txt")
+  if (!options.colors || options.markdown || getExt(options.out || ".ansi") === "txt")
     Object.keys(ANSI).forEach(color => {
-      if (!color.toLowerCase().includes("cursor")) ANSI[color] = "";
+      if (!color.includes("ursor")) ANSI[color] = "";
     });
 
   /*
@@ -117,14 +114,15 @@ function go(path) {
       List tree data ?
    */
   if (options.list) {
+    // top-levels
     if (path === ".") {
       outInfo(listTopLevels())
     }
     // list on status
-    else if (["deprecated", "experimental", "standard"].indexOf(path) >= 0) {
+    else if (["deprecated", "experimental", "standard"].includes(path)) {
       outInfo(listOnStatus(path));
     }
-    // list on property
+    // list on (bcd) property
     else if (["missinglink"].indexOf(path) >= 0) {
       outInfo(listOnProp(path));
     }
@@ -166,7 +164,7 @@ function go(path) {
       outInfo("Not found.");
     }
     else {
-      if (result.length === 1 || (options.index >= 0 && options.index < result.length) || (options.all && (options.type !== "svg"))) {
+      if (result.length === 1 || (options.index >= 0 && options.index < result.length) || options.all) {
 
         if (options.shorthand)
           shortPad = getMaxLength(result);
@@ -175,7 +173,6 @@ function go(path) {
           result = result.splice(options.index, 1);
 
         result.forEach(entry => {outResult(entry)});
-
 
         if (result.length === 1) {
           let compat = new MDNComp(result[0]);
@@ -215,7 +212,7 @@ function go(path) {
     }
 
     function _commit() {
-      if (options.type !== "svg") addFooter();
+      addFooter();
       commit();
     }
   }
@@ -226,14 +223,9 @@ function go(path) {
 
   function outResult(entry) {
     let compat = new MDNComp(entry);
-    if (options.type === "svg") {
-      outStore(compatToSVG(compat))
-    }
-    else {
-      outStore(options.shorthand
-        ? compatToShort(compat, shortPad)
-        : compatToLong(compat));
-    }
+    outStore(options.shorthand
+             ? compatToShort(compat, shortPad)
+             : compatToLong(compat));
   }
 
   /**
@@ -243,6 +235,7 @@ function go(path) {
     let fs;
     if (options.out && saves.length) {
       fs = require("fs");
+      // todo race cond. in this scenario is theoretically possible..
       if (fs.existsSync(options.out) && !options.overwrite) {
         const readLine = require('readline'),
           rl = readLine.createInterface({
@@ -251,7 +244,7 @@ function go(path) {
           });
 
         rl.question(ANSI.yellow + "A file with this name already exists. Overwrite? (y(es), default: no)? " + ANSI.white, resp => {
-          if (resp.toLowerCase().startsWith("y")) _save(() => {
+          if (resp.startsWith("y")) _save(() => {
             rl.close();
           });
           else {

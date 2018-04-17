@@ -1,10 +1,10 @@
 {
   "name": "mdncomp",
-  "version": "1.16.0-alpha",
+  "version": "1.17.0-beta",
   "description": "Browser Compatibility Data on the command line.",
   "main": "build/mdncomp.min.js",
   "author": {
-    "name": "K3N",
+    "name": "epistemex",
     "email": "epistemex@users.noreply.github.com"
   },
   "scripts": {
@@ -22,6 +22,8 @@
     "docs",
     "status",
     "api",
+    "features",
+    "specifications",
     "command",
     "console",
     "summary",
@@ -40,7 +42,6 @@
     "build/",
     "data/",
     "package.json",
-    "package-lock.json",
     "README.md",
     "LICENSE-MIT.txt",
     "Change.log",

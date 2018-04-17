@@ -28,7 +28,7 @@ function MDNComp(path) {
     let nameIndex = names.indexOf(key);
     if (nameIndex >= 0) {
       let browser = new Browser(compat, key);
-      browser.isDesktop = isDesktop[nameIndex];
+      browser.isDesktop = isDesktop[nameIndex]; //todo reconsider
       this.browsers.push(browser)
     }
   });

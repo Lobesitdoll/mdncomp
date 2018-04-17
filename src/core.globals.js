@@ -1,74 +1,21 @@
 
 const
-  ANSI = {
-    bright: "\x1b[1m",
-    dim   : "\x1b[2m",
-
-    clrToCursor: "\x1b[1K",
-    cursorUp   : "\x1b[1A",
-
-    black  : "\x1b[30m",
-    red    : "\x1b[31;1m",
-    green  : "\x1b[32;1m",
-    yellow : "\x1b[33;1m",
-    orange : "\x1b[33;2m",
-    blue   : "\x1b[34;1m",
-    magenta: "\x1b[35;2m",
-    cyan   : "\x1b[36;1m",
-    white  : "\x1b[37;1m",
-    gray   : "\x1b[30;1m",
-    reset  : "\x1b[0m"
-  },
-
-  lf = "\r\n", yes = "Y", no = "-", yes16 = "✔", no16 = "✘",
-
-  saves = [],
+  ANSI = require("./ansi"),
   version = require("../package.json").version,
   args = process.argv,
   log = console.log.bind(console),
-
-  // for update()
-  urlPrefix = "https://raw.githubusercontent.com/epistemex/data-for-mdncomp/master/";
+  saves = [],
+  lf = "\r\n", yes = "Y", no = "-";
 
 let
   mdn,
+  io,
   cfg,
   util,
   crypto,
   options,
   isoLang = "en-US",  // todo can be set by user in the future
   shortPad = 1;
-
-/**
- * Center string containing ANSI codes.
- * @param length
- * @returns {string}
- */
-String.prototype.centerAnsi = function(length) {
-  let
-    aLen = this.ansiLength(),
-    pad = (length - aLen)>>>1,
-    str = (" ".repeat(pad) + this + " ".repeat(pad));
-  return " ".substr(0, length - str.ansiLength()) + str
-};
-
-/**
- * Get length of string containing ANSI codes
- * @returns {number}
- */
-String.prototype.ansiLength = function() {
-  return this.ansiFree().length;
-};
-
-String.prototype.ansiFree = function() {
-  return this.replace(/\x1b[^m]*m/g, "")
-};
-
-//String.prototype.byteLength = function() {
-//  if (!util) util = require("util");
-//  const enc = new (util.TextEncoder)();
-//  return enc.encode(this).length
-//};
 
 /**
  * Flattens the object tree into array (each item = one line):
@@ -194,6 +141,7 @@ function nameFromPath(path) {
 }
 
 function getExt(path) {
+  if (typeof path !== "string") return "";
   let i = path.lastIndexOf(".");
   return i < 0 ? "" : path.substr(++i)
 }
@@ -223,14 +171,18 @@ function isCompat(path) {
 }
 
 /**
- * Removes any HTML tags from a string.
+ * Removes any HTML tags from a string. <code> tags are replaced
+ * with ANSI colored text.
  * @param str
- * @param convTags
+ * @param convTags - convert entities for < and > to original form.
+ * @param [resetColor=ANSI.reset] - ANSI def. to reset to, if not given "reset" will be used
  * @returns {string}
  */
-function cleanHTML(str, convTags) {
-  str = str.replace(/<code>/gi, ANSI.cyan).replace(/<\/code>/gi, ANSI.reset);
-  str = str.replace(/(<([^>]+)>)/ig, "");
+function cleanHTML(str, convTags, resetColor) {
+  str = str
+    .replace(/<code>/gi, ANSI.cyan)
+    .replace(/<\/code>/gi, resetColor || ANSI.reset)
+    .replace(/(<([^>]+)>)/ig, "");
   if (convTags) str = str.replace(/&lt;/gi, "<").replace(/&gt;/gi, ">");
   return str
 }
@@ -273,31 +225,6 @@ function breakAnsiLine(s, max) {
   return lines.length ? lines.join(lf) : "";
 }
 
-// we'll go char-by-char here, regex can't be used for this afaik..
-function indent(txt) {
-  let out = "", level = 0;
-  for (let ch of txt) {
-    if (ch === "," || ch === "{") {
-      if (ch === "{") level++;
-      out += ch + _nextIndent();
-    }
-    else if (ch === "}") {
-      level--;
-      out += _nextIndent() + ch;
-    }
-    else if (ch === ":") {
-      out += ch + " ";
-    }
-    else out += ch;
-  }
-
-  function _nextIndent() {
-    return lf + "  ".repeat(level)
-  }
-
-  return out
-}
-
 function getMaxLength(list) {
   let max = 0;
   list.forEach(e => {
@@ -308,10 +235,10 @@ function getMaxLength(list) {
 }
 
 function entities(txt) {
-  txt = txt.replace(/&nbsp;/gmi, " ");
-  txt = txt.replace(/&quot;/gmi, "\"");
-  txt = txt.replace(/&amp;/gmi, "&");
-  txt = txt.replace(/&lt;/gmi, "<");
-  txt = txt.replace(/&gt;/gmi, ">");
   return txt
+    .replace(/&nbsp;/gmi, " ")
+    .replace(/&quot;/gmi, "\"")
+    .replace(/&amp;/gmi, "&")
+    .replace(/&lt;/gmi, "<")
+    .replace(/&gt;/gmi, ">");
 }

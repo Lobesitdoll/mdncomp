@@ -38,15 +38,13 @@ file is now named ".config.json".**
   "notes"         : true,
   "noteEnd"       : false,
   "shorthand"     : false,
-  "shorthandSplit": false,
+  "split"         : false,
   "caseSensitive" : false,
   "desktop"       : true,
   "mobile"        : true,
   "overwrite"     : false,
   "markdown"      : false,
-  "type"          : "ansi",
   "maxChars"      : 72,
-  "width"         : 800,
   "doc"           : false,
   "docforce"      : false,
   "ext"           : false,
@@ -98,14 +96,6 @@ Create and place the config in that folder with the name `mdncomp.json`.
 
 **Typical path locations:**
 
-Windows 7+:
-
-    C:\Users\-username-\.mdncomp\.config.json
-
-Window XP:
-
-    C:\Documents and Settings\-username-\.mdncomp\.config.json
-
 Linux:
 
     /home/-username-/.mdncomp/.config.json
@@ -113,6 +103,14 @@ Linux:
 OS X:
 
     /Users/-username-/Library/Preferences/.mdncomp/.config.json
+
+Windows 7+:
+
+    C:\Users\-username-\.mdncomp\.config.json
+
+Window XP:
+
+    C:\Documents and Settings\-username-\.mdncomp\.config.json
 
 (replace "-username-" with the username for that system/account).
 

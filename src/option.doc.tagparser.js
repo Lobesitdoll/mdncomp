@@ -1,7 +1,8 @@
-
 /*
-  TagParser (c) by K3N / epistemex.com
- */
+  tagParser module
+  Copyright (c) 2018 Epistemex
+  www.epistemex.com
+*/
 
 /**
  * Parse string holding html into text with callback per tag so it can
@@ -69,3 +70,5 @@ function tagParser(html, onTag, onChar) {
 
 tagParser.skip = false;
 tagParser.skipLF = false;
+
+module.exports = tagParser;

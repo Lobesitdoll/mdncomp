@@ -17,7 +17,7 @@ function compatToShort(mdnComp, shortPad) {
 
   out.add(ANSI.white);
 
-  if (options.shorthandSplit)
+  if (options.split)
     out.add(prePath, ":", lf);
   else
     out.add((prePath).padEnd(shortPad), ":");

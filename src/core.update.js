@@ -1,7 +1,13 @@
+const
+  io = require("./io"),
+  ANSI = require("./ansi"),
+  fs = require("fs"),
+  path = require("path"),
+  log = console.log.bind(console),
+  urlPrefix = "https://raw.githubusercontent.com/epistemex/data-for-mdncomp/master/";
 
-function update(force, checkOnly) {
+module.exports = function(force, checkOnly) {
   const
-    path = require("path"),
     clr = ANSI.clrToCursor + ANSI.cursorUp,
     filePathRoot = path.normalize(path.dirname(process.mainModule.filename) + "/../data/data."),
     filePathDat = filePathRoot + "json",
@@ -47,7 +53,7 @@ function update(force, checkOnly) {
   function logErr(txt) {
     log(clr + ANSI.red + txt + ANSI.white)
   }
-}
+};
 
 function serverMD5(callback) {
   io.request(urlPrefix + "data2.md5", null, null, callback, (err) => {
@@ -63,21 +69,18 @@ function serverMD5(callback) {
  * @returns {string} empty is MD5 couldn't be calc.
  */
 function getCachedMD5(path, path2) {
-  if (!fs) fs = require("fs");
   try {
     return fs.readFileSync(path) + "";
   } catch(err) {return calcFileMD5(path2)}
 }
 
 function calcFileMD5(path) {  // todo this can go in the future (now@v1.3.3a)
-  if (!fs) fs = require("fs");
   try {
     return calcMD5(fs.readFileSync(path)) + "";
   } catch(err) {return ""}
 }
 
 function calcMD5(data) {
-  if (!crypto) crypto = require("crypto");
-  return crypto.createHash("md5").update(data).digest("hex") + ""
+  return require("crypto").createHash("md5").update(data).digest("hex") + ""
 }
 

@@ -34,7 +34,7 @@ function compatToLong(mdnComp) {
   // Show desktop info?
   if (!options.mobile) {
     //out.addLine(" %0DESKTOP:%1", ANSI.reset + ANSI.orange, ANSI.reset);
-    out.addLine(" %0Chrome    %1|%0 Edge      %1|%0 Firefox   %1|%0 IE        %1|%0 Opera     %1|%0 Safari%1", ANSI.green, ANSI.gray);
+    out.addLine(" %0Chrome    %1|%0 Edge      %1|%0 Firefox   %1|%0 IE        %1|%0 Opera     %1|%0 Safari%1", ANSI.white, ANSI.gray);
     out.addLine(line, ANSI.gray);
 
     versions(desktopList);
@@ -42,7 +42,7 @@ function compatToLong(mdnComp) {
 
     // insert notes
     if (!options.noteend && options.notes && notes.length)
-      out.addLine(ANSI.reset + notes.join(""));
+      out.addLine(ANSI.yellow + notes.join(""));
 
     // reset for next section
     if (!options.noteend) {
@@ -54,26 +54,26 @@ function compatToLong(mdnComp) {
   // Show mobile info?
   if (!options.desktop) {
     //out.addLine(" %0MOBILE:%1", ANSI.reset + ANSI.orange, ANSI.reset);
-    out.addLine(" %0Chrome/A  %1|%0 Edge/mob  %1|%0 Firefox/A %1|%0 Opera/A   %1|%0Safari/iOS %1|%0 %0Webview/A%1", ANSI.green , ANSI.gray);
+    out.addLine(" %0Chrome/A  %1|%0 Edge/mob  %1|%0 Firefox/A %1|%0 Opera/A   %1|%0Safari/iOS %1|%0 %0Webview/A%1", ANSI.white , ANSI.gray);
     out.addLine(line, ANSI.gray);
 
     versions(mobileList);
     out.addLine(lf);
 
     if (!options.noteend && options.notes && notes.length)
-      out.addLine(ANSI.reset + notes.join(""));
+      out.addLine(ANSI.yellow + notes.join(""));
   } // :mobile
 
   // Show extended info?
   if (options.ext) {
     //out.addLine(" %0OTHERS:%1", ANSI.reset + ANSI.orange, ANSI.reset);
-    out.addLine(" %0Node JS   %1|%0 QQ/A      %1|%0 Samsung/A %1|%0 UC/A      %1|%0 UC-Ch/A%1", ANSI.green , ANSI.gray);
+    out.addLine(" %0Node JS   %1|%0 QQ/A      %1|%0 Samsung/A %1|%0 UC/A      %1|%0 UC-Ch/A%1", ANSI.white , ANSI.gray);
     out.addLine(line.substr(0, line.length - 12), ANSI.gray);
 
     versions(extList);
     out.addLine(lf);
 
-    if (options.notes && notes.length) out.addLine(ANSI.reset + notes.join(""));
+    if (options.notes && notes.length) out.addLine(ANSI.yellow + notes.join(""));
   } // :ext
 
   // Show specifications?
@@ -126,7 +126,7 @@ function compatToLong(mdnComp) {
         status = browser.info[0].getVersion();
 
         if (browser.hasNotes()) {
-          status += ANSI.white + (options.notes ? refs[ref] : "*");
+          status += ANSI.yellow + (options.notes ? refs[ref] : "*");
           notes.push(browser.getNotes(refs[ref]));
           ref = ++ref % refs.length; // cuz, running out of super chars in UTF8 single bytes...
         }
@@ -138,7 +138,7 @@ function compatToLong(mdnComp) {
         status = ANSI.red + no;
       } // :if browser
 
-      out.add("%0" + status.centerAnsi(11) + ANSI.gray + "|", status.indexOf(no) >= 0 ? ANSI.red : ANSI.cyan);
+      out.add("%0" + status.centerAnsi(11) + ANSI.gray + "|", status.indexOf(no) >= 0 ? ANSI.red : ANSI.green);
     }); // :list.feach
 
     out.trimEnd(1);

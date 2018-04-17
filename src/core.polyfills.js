@@ -74,3 +74,39 @@ if (!String.prototype.repeat) {
     return rpt
   }
 }
+
+if (!Array.prototype.includes) {
+  Array.prototype.includes = function(item) {return this.indexOf(item) >= 0}
+}
+
+/*-----------------------------------------------------------------------------------------------------------------*\
+
+    Extended polyfills
+
+\*-----------------------------------------------------------------------------------------------------------------*/
+
+/**
+ * Center string containing ANSI codes.
+ * @param length
+ * @returns {string}
+ */
+String.prototype.centerAnsi = function(length) {
+  let
+    aLen = this.ansiLength(),
+    pad = (length - aLen)>>>1,
+    str = (" ".repeat(pad) + this + " ".repeat(pad));
+  return " ".substr(0, length - str.ansiLength()) + str
+};
+
+/**
+ * Get length of string containing ANSI codes
+ * @returns {number}
+ */
+String.prototype.ansiLength = function() {
+  return this.ansiFree().length;
+};
+
+String.prototype.ansiFree = function() {
+  return this.replace(/\x1b[^m]*m/g, "")
+};
+

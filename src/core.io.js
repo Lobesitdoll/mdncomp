@@ -1,7 +1,16 @@
+/*
+  I/O module
+  Copyright (c) 2018 Epistemex
+  www.epistemex.com
+*/
 
-let https, fs, path;
+const
+  ANSI = require("./ansi"),
+  https = require("https"),
+  fs = require("fs"),
+  path = require("path");
 
-const io = {
+module.exports = {
 
   /**
    * Request data from an URL
@@ -12,7 +21,6 @@ const io = {
    * @param {function} [onError] - if any errors
    */
   request: function(url, onResp, onProgress, onData, onError) {
-    if (!https) https = require("https");
     onResp = onResp || function() {return true};
 
     let _res;
@@ -23,7 +31,7 @@ const io = {
 
       // handle redirects
       if (res.statusCode === 301 || res.statusCode === 302) {
-        return io.request(res.headers.location, onResp, onProgress, onData, onError);
+        return this.request(res.headers.location, onResp, onProgress, onData, onError);
       }
       else if (res.statusCode === 200 && onResp({headers: res.headers})) {
         let length = res.headers["content-length"]|0;
@@ -56,7 +64,6 @@ const io = {
   },
 
   exist: function(path) {
-    if (!fs) fs = require("fs");
     return fs.existsSync(path)
   },
 
@@ -67,8 +74,7 @@ const io = {
   },
 
   getConfigPath: function() {
-    if (!path) path = require("path");
-    return path.resolve(io.getConfigRootPath(), ".mdncomp")
+    return path.resolve(this.getConfigRootPath(), ".mdncomp")
   },
 
   /**
@@ -84,11 +90,8 @@ const io = {
    * @returns {string}
    */
   getConfigDataPath: function() {
-    if (!path) path = require("path");
-    if (!fs) fs = require("fs");
-
     // root config path, using . for *nix systems
-    let root = io.getConfigPath();
+    let root = this.getConfigPath();
     _check(root);
 
     // check/create sub-folders if defined
@@ -111,14 +114,13 @@ const io = {
   },
 
   getCachedFilename: function(str) {
-    return path.resolve(io.getConfigDataPath("cache"), calcMD5(str))
+    return path.resolve(this.getConfigDataPath("cache"), this.calcMD5(str))
   },
 
   getCachedData: function(str) {
-    if (!fs) fs = require("fs");
     let data = null;
     try {
-      data = fs.readFileSync(io.getCachedFilename(str)).toString();
+      data = fs.readFileSync(this.getCachedFilename(str)).toString();
     }
     catch(err) {}
 
@@ -126,8 +128,7 @@ const io = {
   },
 
   setCachedData: function(str, data) {
-    if (!fs) fs = require("fs");
-    let filename = io.getCachedFilename(str);
+    let filename = this.getCachedFilename(str);
     try {
       fs.writeFileSync(filename, data);
     }
@@ -142,7 +143,6 @@ const io = {
    * @param callback - results array with {path, err} err is non-null if any error occurred
    */
   writeAll: function(list, callback) {
-    if (!fs) fs = require("fs");
     let results = [], count = list.length, errors = false;
 
     for(let item of list) {
@@ -156,7 +156,10 @@ const io = {
       if (o.err) errors = true;
       if (!--count) callback(results, errors)
     }
+  },
+
+  calcMD5: function(data) {
+    return require("crypto").createHash("md5").update(data).digest("hex") + ""
   }
 
 };
-

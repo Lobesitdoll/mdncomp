@@ -59,30 +59,13 @@ deprecated from the standard.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["-o"] = help["--out"] = `
-Outputs the results to a file. The extension of the file can currently
-be "txt", "ansi" or "svg" and will determine output *type* unless
-overridden by option \`-t, --type\` (see below).
-
-Any other extension will be considered text.
+Outputs the results to a file. The extension of the file can currently be
+"txt" or "ansi", and will determine output type. Any other extension will be
+considered ansi.
 
 If a file with the same name already exists you will be prompted if you
-want to override or not. This unless the "-x, --overwrite" option 
-is used.
-
-Example:
-
-    mdncomp html*toblob. -o toBlob.svg
-
-Outputs the browser compatibility information for \`toBlob\` to file
-"toBlob.svg" as SVG graphics file.`;
-
-/*----------------------------------------------------------------------------------------------------------------------------------*/
-help["-t"] = help["--type"] = `
-Will dictate the file type to output to either STDOUT or to file when 
-option "-o, --out" is used.
-
-The following types are currently supported: "txt", "ansi", "svg".
-Any other type will default to "ansi".`;
+want to override or not. This unless the -x, --overwrite option is used
+(see below).`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["-x"] = help["--overwrite"] = `
@@ -153,7 +136,7 @@ For example:
  BlobBuilder: DT: C:8 E:Y F:?-18* IE:10 O:- S:- MOB: CA:? FA:?-18* EM:Y OA:- Si:- WA:-`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
-help["-h"] = help["--shorthand-split"] = `
+help["-h"] = help["--split"] = `
 Used with the "-s, --shorthand" option to split a line into two.
 For example:
 
@@ -232,10 +215,6 @@ By default footnotes are shown separately for each section.`;
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["-f"] = help["--markdown"] = `
 Formats the MDN link as markdown in the textual output.`;
-
-/*----------------------------------------------------------------------------------------------------------------------------------*/
-help["-w"] = help["--width"] = `
-Width in pixels for image output. Currently only used for SVG files.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["--ext"] = `

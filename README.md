@@ -3,11 +3,11 @@ mdncomp
 
 Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data) on the command line.
 
-![termx color output](https://i.imgur.com/mhXWklc.png)<br>
+![termx color output](https://i.imgur.com/4HuM30Q.png)<br>
 <sup>*cygwin/xterm snapshot*</sup>
 
-**Note: ALPHA release. Fairly stable but its API and behavior are subject to change without prior notice.**
-This would also be a good time for [feature requests](https://github.com/epistemex/mdncomp/issues)!
+**Currently in BETA.**
+
 
 Features
 --------
@@ -41,7 +41,6 @@ Features
   - List features with missing documentation URLs
 
 - Define permanent/often used options in a config file (which can be suspended at will).
-- Export tables as a SVG file
 - Built-in help per option.
 - Documented with [wiki](https://github.com/epistemex/mdncomp/wiki) pages
 - Cross-platform (where node and npm is available).
@@ -58,6 +57,8 @@ This includes a precompiled dataset which can be updated at any time (see [optio
 
 Examples
 --------
+
+Using wildcard:
 
 ```text
 $ mdncomp html*toblob.
@@ -79,37 +80,17 @@ $ mdncomp html*toblob.
 Data from MDN - `npm i -g mdncomp` by epistemex
 ```
 
-Or using the absolute path method:
+Or using the absolute path:
 
     $ mdncomp api.HTMLCanvasElement.toBlob
 
-Or as a regular expression:
+Or an regular expression:
 
     $ mdncomp /.*html.*toblob$/
 
-Or as a fuzzy expression:
+Or an fuzzy expression:
 
-    $ mdncomp -z htctblb.
-
-Export as a SVG file:
-
-```text
-$ mdncomp html*toblob. -o toBlob.svg
-```
-
-[![SVG Example](https://i.imgur.com/O1eCOeF.png)](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob)
-
-Export as a text file:
-
-```text
-$ mdncomp html*toblob. -o toBlob.txt
-```
-
-Export as a ANSI text file:
-
-```text
-$ mdncomp html*toblob. -o toBlob.ansi
-```
+    $ mdncomp -z hctbb.
 
 Show data in shorthand format:
 
@@ -190,6 +171,7 @@ These are loaded from the MDN site and cached locally.
 
 ![Specification option](https://i.imgur.com/cGRnNWO.png)
 
+
 Exploration
 -----------
 Feel like exploring? Try combining the `--random` option with `--desc`:
@@ -219,8 +201,8 @@ a config file and for usage examples.
 Also included as markdown files in the included [wiki folder](./wiki/).
 
 
-Want to help making BCD awesome?
---------------------------------
+Want to help make BCD awesome?
+------------------------------
 The BCD team is working hard to convert all the browser compatibility data to their new
 format as used by this tool. For this reason some APIs and objects may not be available quite yet.
 

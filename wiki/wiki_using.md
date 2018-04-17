@@ -143,14 +143,6 @@ Here we'll end up with a plain text file. If we wanted ANSI codes we could use:
 mdncomp blobuilder -o blob-builder.ansi
 ```
 
-We can also save out to SVG graphics file that can be used directly in the browser,
-some image upload services, in documents (Illustrator, PDF etc.) for print or
-screen usages:
-
-```text
-mdncomp blobuilder -o blob-builder.svg
-```
-
 Using --list
 ------------
 List can be powerful in two ways: it can navigate by branches which will give you a quick overview

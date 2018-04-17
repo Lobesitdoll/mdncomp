@@ -4,8 +4,7 @@ Options:
 ```text
 -v, --version          output the version number
 -l, --list             List paths starting with the given value or '.' for top-level
--o, --out <path>       Save information to file. Extension for type, or --type
--t, --type <type>      Output format (ansi, txt, svg) (default: ansi)
+-o, --out <path>       Save information to file. Use extension for type (.txt or .ansi)
 -x, --overwrite        Overwrites an existing file with --out option
 -d, --desktop          Show desktop only
 -m, --mobile           Show mobile devices only
@@ -14,21 +13,20 @@ Options:
 -z, --fuzzy            Use path as a fuzzy search term
 -i, --index <index>    Show this index from a multiple result list. (default: -1)
 -s, --shorthand        Show compatibility as shorthand with multiple results
--h, --shorthand-split  Split a shorthand line into two lines (use with -s)
--b, --browser          Show information about this browser, or if '.' list
+-h, --split            Split a shorthand line into two lines (use with -s)
+-b, --browser          Show information about this browser, or list if '.'
 -N, --no-notes         Don't show notes
 -e, --noteend          Show notes at end instead of in sections (text)
 -f, --markdown         Format link as markdown and turns off colors
--w, --width <width>    Used with -o, Set width of svg (default: 800)
---ext                  Show extended table of browsers
+--ext                  Show extended table of browsers/servers
 --desc                 Show Short description of the feature
 --specs                Show specification links
 --doc                  Show documentation. Show cached or fetch
---docforce             Show documentation. Force fetch from server
+--docforce             Show documentation. Force fetch from MDN server
 --mdn                  Open entry's document URL in default browser
 --random               Show a random entry. (mdncomp --random . )
 --update, --fupdate
---cupdate              Update BCD from remote (--fupdate=force, --cupdate=check)
+--cupdate              Update data from remote (--fupdate=force, --cupdate=check)
 --no-colors            Don't use colors in output
 --max-chars <width>    Max number of chars per line before wrap (default: 72)
 --no-config            Ignore config file (mdncomp.json) in config folder
@@ -78,7 +76,6 @@ css.types
 
 and so on.
 
-
 `experimental` will list all APIs and objects that are marked experimental:
 
 ```text
@@ -97,31 +94,12 @@ api.AnimationEffectReadOnly
 -o, --out <path>
 ----------------
 Outputs the results to a file. The extension of the file can currently be
-"txt", "ansi" or "svg" and will determine output *type* unless overridden
-by option `-t, --type` (see below).
-
-Any other extension will be considered text.
+"txt" or "ansi", and will determine output *type*. Any other extension will be
+considered ansi.
 
 If a file with the same name already exists you will be prompted if you
 want to override or not. This unless the `-x, --overwrite` option is used
 (see below).
-
-Example:
-
-```text
-mdncomp html*toblob -o toBlob.svg
-```
-
-Outputs the browser compatibility information for `toBlob` to file "toBlob.svg"
-as SVG graphics file.
-
--t, --type <type>
------------------
-Will dictate the file type to output to either STDOUT or to file when option
-`-o, --out` (see above) is used.
-
-The following types are currently supported: "txt", "ansi", "svg".
-Any other type will default to "ansi".
 
 -x, --overwrite
 ----------------
@@ -211,7 +189,7 @@ $ mdncomp blobbuilder -s
 BlobBuilder: DT: C:8 E:Y F:?-18* IE:10 O:- S:- MOB: CA:? FA:?-18* EM:Y OA:- Si:- WA:-
 ```
 
--h, --shorthand-split
+-h, --split
 ---------------------
 Used with the `-s, --shorthand` option to split a line into two. For example:
 
@@ -297,10 +275,6 @@ By default footnotes are shown separately for each section.
 -f, --markdown
 ----------------
 Formats the MDN link as markdown in the textual output.
-
--w, --width <width>
-----------------
-Width in pixels for image output. Currently only used for SVG files.
 
 --ext
 -----

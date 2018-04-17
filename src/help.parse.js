@@ -6,8 +6,8 @@ function parseHelp(args) {
     log("  Examples:");
     log("    mdncomp arcTo                   show information for arcTo");
     log("    mdncomp html*toblob.            will find HTMLCanvasElement.toBlob");
-    log("    mdncomp --list .                list all top-levels");
-    log("    mdncomp blob*der -o info.svg    export as svg");
+    log("    mdncomp -z hctbb.               will find HTMLCanvasElement.toBlob (fuzzy)");
+    log("    mdncomp --list .                list all top-level paths");
     log()
   }
   else {
