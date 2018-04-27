@@ -1,6 +1,9 @@
 mdncomp
 =======
 
+1.18.0-beta
+ADD: DIFF output when updating data ("mdncomp --update --diff"). Note: this will be a standalone option in the future.
+
 1.17.0-beta
 CHG: Entering beta.
 REM: SVG output removed (the BCD package can produce html tables and there is another package in the making from MDN to produce various outputs).

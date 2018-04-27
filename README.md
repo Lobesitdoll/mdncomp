@@ -159,17 +159,17 @@ edge  17  Rel: -           nightly
 
 **Get feature description summary:**
 
-![Descripotion summary example](https://i.imgur.com/up2RgWq.png)
+![Description summary example](https://i.imgur.com/9l3kyeB.png)
 
 **Get documentation excerpts:**
 
-![documentation excerpts](https://i.imgur.com/JVZ4wgF.png)
+![documentation excerpts](https://i.imgur.com/EK8I6TA.png)
 
-These are loaded from the MDN site and cached locally.
+Documentation excerpts are loaded from the MDN site and cached locally.
 
 **Get specification links:**
 
-![Specification option](https://i.imgur.com/cGRnNWO.png)
+![Specification option](https://i.imgur.com/Ix3G07g.png)
 
 
 Exploration

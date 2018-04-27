@@ -3,13 +3,18 @@
  */
 function init() {
 
-  // Update
+  // Check config path
   if (args.length === 3 && args[2] === "--configpath") {
     log(ANSI.white + require("./io").getConfigPath() + ANSI.reset);
   }
 
-  else if (args.length === 3 && (args[2] === "--update" || args[2] === "--fupdate" || args[2] === "--cupdate")) {
-    require("./update")(args[2] === "--fupdate", args[2] === "--cupdate");
+  // Update
+  else if (args.length >=3 && args.length <= 4 && (args[2] === "--update" || args[2] === "--fupdate" || args[2] === "--cupdate")) {
+    if (args.length === 4 && args[3] !== "--diff") {
+      log(ANSI.white + "Invalid option. Needs to be: --[*]update [--diff]" + ANSI.reset);
+      process.exit(1);
+    }
+    require("./update")(args[2] === "--fupdate", args[2] === "--cupdate", args[3] === "--diff");
   }
 
   // Regular options
@@ -41,6 +46,7 @@ function init() {
       .option("--mdn", "Open entry's document URL in default browser")
       .option("--random", "Show a random entry. (mdncomp --random . )")
       .option("--update, --fupdate, --cupdate", "Update data from remote (--fupdate=force, --cupdate=check)")
+      .option("--diff", "Only valid appended to --[*]update. Shows list of new features")
       .option("--no-colors", "Don't use colors in output")
       .option("--max-chars <width>", "Max number of chars per line before wrap", 72)
       .option("--no-config", "Ignore config file (mdncomp.json) in config folder")

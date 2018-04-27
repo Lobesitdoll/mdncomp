@@ -331,6 +331,15 @@ loaded:
 These are saved locally to "[npm-install-folder]/mdncomp/data/".`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
+help["--diff"] = `
+Shows the new features as a list and count when updating. Only valid appended
+to the options --update, --fupdate.
+
+Example:
+
+    mdncomp --update --diff`;
+
+/*----------------------------------------------------------------------------------------------------------------------------------*/
 help["-h"] = help["--help"] = `
 List options, or show more detailed help per option (no options will
 default to \`--help\`):

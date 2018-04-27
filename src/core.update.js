@@ -6,7 +6,7 @@ const
   log = console.log.bind(console),
   urlPrefix = "https://raw.githubusercontent.com/epistemex/data-for-mdncomp/master/";
 
-module.exports = function(force, checkOnly) {
+module.exports = function(force, checkOnly, showDiff) {
   const
     clr = ANSI.clrToCursor + ANSI.cursorUp,
     filePathRoot = path.normalize(path.dirname(process.mainModule.filename) + "/../data/data."),
@@ -33,6 +33,10 @@ module.exports = function(force, checkOnly) {
         log(clr + ANSI.white + "Downloading data " + ANSI.white + "[" + ANSI.green + "#".repeat(prog) + " ".repeat(rem) + ANSI.white + "]" + ANSI.reset + ANSI.black);
       },
       data => {
+        // get diff
+        let diff = showDiff ? getDiff(data) : "";
+
+        // write new data to disk
         io.writeAll([{path: filePathDat, data: data}, {path: filePathMD5, data: calcMD5(data)}], (results, hasErrors) => {
           if (hasErrors)
             results.forEach(error => {
@@ -40,10 +44,32 @@ module.exports = function(force, checkOnly) {
             });
           else
             log(clr + ANSI.white + ("Updated with " + data.length + " bytes. All systems are GO!").padEnd(72, " ") + ANSI.reset);
+            if (diff.length) log(diff);
         })
       },
       err => logErr(lf + "An error occurred -" + lf + "Status code: " + err.statusCode + (err.error ? lf + "Message: " + err.error : "") + ANSI.reset)
     )
+  }
+
+  function getDiff(newData) {
+    let res;
+    try {
+      let oldPaths = buildTable(require("../data/data.json"));
+      let newPaths = buildTable(JSON.parse(newData));
+      let diff = [];
+
+      // make diff
+      oldPaths.forEach(path => {
+        if (!newPaths.includes(path)) diff.push(path)
+      });
+
+      res = `--diff-- New features (${diff.length}):\n` + diff.join("\n")
+    }
+    catch(err) {
+      res = ANSI.red + "Could not perform diff:\n" + err.message + ANSI.reset
+    }
+
+    return res
   }
 
   function clrLine() {
@@ -54,6 +80,33 @@ module.exports = function(force, checkOnly) {
     log(clr + ANSI.red + txt + ANSI.white)
   }
 };
+
+function buildTable(mdn) {
+  const result = [];
+
+  listTopLevels(mdn)
+    .forEach(key => {if (key !== "browsers") _iterateNode(mdn, key, key)});
+
+  function _iterateNode(node, inKey, branch) {
+    const subNode = node[inKey];
+    if (typeof subNode === "object") {
+      Object.keys(subNode).forEach(key => {
+        if (key !== "__compat") {
+          result.push(branch + "." + key);
+          _iterateNode(subNode, key, branch + "." + key);
+        }
+      });
+    }
+  }
+
+  return result
+}
+
+function listTopLevels(mdn) {
+  let keys = Object.keys(mdn), i = keys.indexOf("browsers");
+  if (i >= 0) keys.splice(i, 1);
+  return keys
+}
 
 function serverMD5(callback) {
   io.request(urlPrefix + "data2.md5", null, null, callback, (err) => {
