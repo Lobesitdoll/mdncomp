@@ -22,7 +22,7 @@ function init() {
     (options = require("commander"))
       .version(version, "-v, --version")
       .usage("[options] <feature>")
-      .description("Get MDN Browser Compatibility Data." + lf + "  Version: " + version + lf + "  (c) 2018 epistemex.com")
+      .description("Get MDN Browser Compatibility Data, docs and specs." + lf + "  Version: " + version + lf + "  (c) 2018 epistemex.com")
       .option("-l, --list", "List paths starting with the given value or '.' for top-level")
       .option("-o, --out <path>", "Save information to file. Use extension for type (.txt or .ansi)")
       .option("-x, --overwrite", "Overwrites an existing file with --out option")

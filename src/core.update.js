@@ -59,8 +59,8 @@ module.exports = function(force, checkOnly, showDiff) {
       let diff = [];
 
       // make diff
-      oldPaths.forEach(path => {
-        if (!newPaths.includes(path)) diff.push(path)
+      newPaths.forEach(path => {
+        if (!oldPaths.includes(path)) diff.push(path)
       });
 
       res = `--diff-- New features (${diff.length}):\n` + diff.join("\n")

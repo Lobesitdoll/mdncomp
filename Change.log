@@ -1,6 +1,9 @@
 mdncomp
 =======
 
+1.18.1-beta
+FIX: Diff when updating.
+
 1.18.0-beta
 ADD: DIFF output when updating data ("mdncomp --update --diff"). Note: this will be a standalone option in the future.
 
