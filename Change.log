@@ -1,6 +1,9 @@
 mdncomp
 =======
 
+1.18.3-beta
+ADD: Option --no-notes can be used with --browser to ignore notes (links).
+
 1.18.2-beta
 ADD: Support for browser release notes in output (option --browser).
 IMP: Information for "--list ." option (valid statuses to list on)

@@ -46,7 +46,7 @@ function listBrowser(browserId) {
 
     txt += "  " + (date ? ANSI.cyan + date : ANSI.gray + "-         ");
     txt += "  " + (status ? _browserStatusColor(status) + status.padEnd(sPad) +
-      (notes ? "  " + notes : "") +
+      (options.notes && notes ? "  " + notes : "") +
       ANSI.reset + ANSI.white : "-");
 
     result.push(txt + ANSI.white);
@@ -95,7 +95,7 @@ function listBrowserOnStatus(status) {
       ANSI.white + o.browser.padEnd(bPad) + ANSI.white +
       "  " + col + _fBrowserVersion(o.version, vPad, vPad2) + ANSI.white + ANSI.dim +
       "  " + (o.date === "-" ? ANSI.gray : ANSI.reset + ANSI.bright + ANSI.cyan) + o.date +
-      (o.notes && o.notes.length ? "  " + o.notes : "") + ANSI.reset
+      (options.notes && o.notes && o.notes.length ? "  " + o.notes : "") + ANSI.reset
     );
   });
 

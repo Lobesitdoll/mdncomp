@@ -203,7 +203,9 @@ So to list for example the current active browsers:
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["-N"] = help["--no-notes"] = `
 Don't list footnotes with the information. A browser will still be
-marked having footnotes but with a generic astrix symbol instead.`;
+marked having footnotes but with a generic astrix symbol instead.
+
+For the --browser option the links will not be shown.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["-e"] = help["--noteend"] = `

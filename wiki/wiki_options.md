@@ -264,10 +264,14 @@ nodejs            6  2016-04-26  https://nodejs.org/en/blog/release/v6.0.0/
 ...etc.
 ```
 
+To not show the links at the end you can use the option [--no-notes, -N](https://github.com/epistemex/mdncomp/wiki/Options-for-mdncomp#-n---no-notes).
+
 -N, --no-notes
 ----------------
 Don't list footnotes with the information. A browser will still be marked
 having footnotes but with a generic astrix symbol instead.
+
+For the [--browser](https://github.com/epistemex/mdncomp/wiki/Options-for-mdncomp#-b---browser) option the links will not be shown.
 
 -e, --noteend
 ----------------
