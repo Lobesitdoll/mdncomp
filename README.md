@@ -157,7 +157,7 @@ edge  16  2017-10-17  current
 edge  17  -           nightly
 ```
 
-And if release notes are available they are listed as linkes:
+And if release notes are available they are listed as links (use --no-notes, -N to ignore these):
 
 ```text
 mdncomp -b nodejs
