@@ -1,11 +1,16 @@
 mdncomp
 =======
 
+1.18.2-beta
+ADD: Support for browser release notes in output (option --browser).
+IMP: Information for "--list ." option (valid statuses to list on)
+REM: "missinglinks" argument to --list (see github and mdn-linkchecker instead).
+
 1.18.1-beta
-FIX: Diff when updating.
+FIX: Diff when updating (was logging removed entries instead of added, both will be supported in future).
 
 1.18.0-beta
-ADD: DIFF output when updating data ("mdncomp --update --diff"). Note: this will be a standalone option in the future.
+ADD: Diff output when updating data ("mdncomp --update --diff"). Note: this will be a standalone option in the future.
 
 1.17.0-beta
 CHG: Entering beta.

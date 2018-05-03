@@ -30,15 +30,24 @@ function listBrowser(browserId) {
       vPad2 = version.length - verArr[0].length;
   });
 
+  // Get status padding
+  let sList = getBrowserStatusList(), sPad = 0;
+  sList.forEach(status => {
+    if (status.length > sPad) sPad = status.length;
+  });
+
   // Show information
   Object.keys(browser.releases).sort(_cmp).forEach(version => {
     let
       txt = ANSI.white + browserId + "  " + ANSI.green + _fBrowserVersion(version, vPad, vPad2),
       date = browser.releases[version].release_date,
+      notes = browser.releases[version].release_notes,
       status = browser.releases[version].status;
 
-    txt += ANSI.white + "  Rel: " + (date ? ANSI.cyan + date : ANSI.gray + "-         ");
-    txt += "  " + (status ? _browserStatusColor(status) + status + ANSI.reset + ANSI.white : "-");
+    txt += "  " + (date ? ANSI.cyan + date : ANSI.gray + "-         ");
+    txt += "  " + (status ? _browserStatusColor(status) + status.padEnd(sPad) +
+      (notes ? "  " + notes : "") +
+      ANSI.reset + ANSI.white : "-");
 
     result.push(txt + ANSI.white);
   });
@@ -62,7 +71,12 @@ function listBrowserOnStatus(status) {
     col = _browserStatusColor(status),
     temp = _iterateBrowsers((o, browser, release) => {
       let date = o.release_date;
-      return (o.status && o.status === status) ? {browser: browser, version: release, date: date ? date : "-"} : null;
+      return (o.status && o.status === status) ? {
+        browser: browser,
+        version: release,
+        notes: o.release_notes,
+        date: date ? date : "-"
+      } : null;
     });
 
   // paddings
@@ -80,7 +94,8 @@ function listBrowserOnStatus(status) {
     result.push(
       ANSI.white + o.browser.padEnd(bPad) + ANSI.white +
       "  " + col + _fBrowserVersion(o.version, vPad, vPad2) + ANSI.white + ANSI.dim +
-      "  Rel: " + (o.date === "-" ? ANSI.gray : ANSI.reset + ANSI.bright + ANSI.cyan) + o.date + ANSI.reset
+      "  " + (o.date === "-" ? ANSI.gray : ANSI.reset + ANSI.bright + ANSI.cyan) + o.date +
+      (o.notes && o.notes.length ? "  " + o.notes : "") + ANSI.reset
     );
   });
 

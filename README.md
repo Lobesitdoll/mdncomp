@@ -149,12 +149,26 @@ List release history for a single browser:
 ```text
 mdncomp -b edge
 ->
-edge  12  Rel: 2015-07-28  retired
-edge  13  Rel: 2015-11-12  retired
-edge  14  Rel: 2016-08-02  retired
-edge  15  Rel: 2017-04-05  retired
-edge  16  Rel: 2017-10-17  current
-edge  17  Rel: -           nightly
+edge  12  2015-07-28  retired
+edge  13  2015-11-12  retired
+edge  14  2016-08-02  retired
+edge  15  2017-04-05  retired
+edge  16  2017-10-17  current
+edge  17  -           nightly
+```
+
+And if release notes are available they are listed as linkes:
+
+```text
+mdncomp -b nodejs
+->
+nodejs   0.10  2013-03-11  retired  https://nodejs.org/en/blog/release/v0.10.0/
+nodejs   0.12  2015-02-06  retired  https://nodejs.org/en/blog/release/v0.12.0/
+nodejs   4     2015-09-08  retired  https://nodejs.org/en/blog/release/v4.0.0/
+nodejs   5     2015-10-29  retired  https://nodejs.org/en/blog/release/v5.0.0/
+nodejs   6     2016-04-26  current  https://nodejs.org/en/blog/release/v6.0.0/
+nodejs   7     2016-10-25  retired  https://nodejs.org/en/blog/release/v7.0.0/
+...
 ```
 
 **Get feature description summary:**

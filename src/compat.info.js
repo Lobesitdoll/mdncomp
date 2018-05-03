@@ -20,7 +20,7 @@ function Info(obj) {
     this.notes.unshift("Uses a non-standard name: " + obj.alternative_name);
 
   this.flags.forEach(flag => {
-    this.notes.push(this.flagToString(flag, ANSI.yellow));  //todo lift last parameter up the chain
+    this.notes.push(this.flagToString(flag, ANSI.yellow));  //todo lift last color parameter up the chain
   });
 }
 

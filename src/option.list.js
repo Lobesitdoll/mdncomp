@@ -79,27 +79,3 @@ function listOnStatus(statTxt) {
 
   return result.sort();
 }
-
-function listOnProp() {
-  const
-    result = [],
-    keys = buildTable();
-
-  keys.forEach(path => {
-    let compat = getPathAsObject(path);
-    if (compat) {
-      compat = compat.__compat;
-      if (compat && (!(compat["mdn_url"] && compat["mdn_url"].length))) {
-        result.push(path);
-      }
-    }
-  });
-
-  // colorize
-  result.forEach((res, i) => {
-    let t = res.lastIndexOf(".") + 1;
-    result[i] = (ANSI.reset + res.substr(0, t) + ANSI.white + res.substr(t)).replace(/\./g, ANSI.blue + "." + ANSI.reset)
-  });
-
-  return result.sort();
-}

@@ -251,23 +251,26 @@ to list all current versions of browsers:
 mdncomp -b current
 ->
 STATUS: CURRENT
-chrome                   65           Rel: 2018-03-06
-edge                     16           Rel: 2017-09-26
-edge_mobile              16           Rel: -
-firefox                  57           Rel: 2017-11-14
-firefox_android          57           Rel: 2017-11-28
-ie                       11           Rel: 2013-10-17
-nodejs                    4           Rel: 2015-09-08
-nodejs                    6           Rel: 2016-04-26
-nodejs                    8           Rel: 2017-05-30
-nodejs                    9           Rel: 2017-10-31
-opera                    51           Rel: 2018-02-07
-qq_android                8.2         Rel: -
-safari                   11           Rel: 2017-09-19
-safari_ios               11           Rel: -
-samsunginternet_android   6.2         Rel: 2017-10-26
-uc_android               12.0.0.1088  Rel: 2018-01-30
-uc_android               11.8.8.968   Rel: 2018-02-06
+chrome                   66           2018-04-17
+edge                     16           2017-10-17
+edge                     17           2018-05-01
+edge_mobile              16           2017-09-26
+edge_mobile              17           2018-05-01
+firefox                  59           2018-03-13  https://developer.mozilla.org/Firefox/Releases/59
+firefox_android          59           2018-03-13  https://developer.mozilla.org/Firefox/Releases/59
+ie                       11           2013-10-17
+nodejs                    6           2016-04-26  https://nodejs.org/en/blog/release/v6.0.0/
+nodejs                    8           2017-05-30  https://nodejs.org/en/blog/release/v8.0.0/
+nodejs                   10           2018-04-24  https://nodejs.org/en/blog/release/v10.0.0/
+opera                    52           2018-03-22  https://dev.opera.com/blog/opera-52/
+qq_android                8.2         2018-02-01
+safari                   11.1         2018-04-12  https://developer.apple.com/library/content/releasenotes/General/WhatsNewInSafari/Articles/Safari_11_1.html
+safari_ios               11.1         -
+samsunginternet_android   6.4         2018-02-19
+uc_android               12.0.0.1088  2018-01-30
+uc_android               12.2.0.1089  2018-03-09
+uc_chinese_android       11.8.8.968   2018-02-06
+uc_chinese_android       11.9.2.972   2018-03-21
 ```
 
 If you want to show current, future and old released of a particular browser:
@@ -275,12 +278,13 @@ If you want to show current, future and old released of a particular browser:
 ```text
 mdncomp -b edge
 ->
-edge  12  Rel: 2015-07-15  retired
-edge  13  Rel: 2015-11-05  retired
-edge  14  Rel: 2016-08-02  retired
-edge  15  Rel: 2017-04-11  retired
-edge  16  Rel: 2017-09-26  current
-edge  17  Rel: -           nightly
+edge  12  2015-07-28  retired
+edge  13  2015-11-12  retired
+edge  14  2016-08-02  retired
+edge  15  2017-04-05  retired
+edge  16  2017-10-17  current
+edge  17  2018-05-01  current
+edge  18  -           nightly
 ```
 
 Documentation
@@ -296,6 +300,10 @@ downloaded and cached. The latter can be updated at any time:
     $ mdncomp ht*toblob. --doc       # download and cache
     $ mdncomp ht*toblob. --docforce  # force update
 
+You can also get links to specifications by using the [--specs](https://github.com/epistemex/mdncomp/wiki/Options-for-mdncomp#--specs) option:
+
+    $ mdncomp ht*toblob. --specs     # show links to specification (if available)
+
 Combining this with the option --random can allow to explore less known APIs
 and features:
 
@@ -307,30 +315,4 @@ and features:
 Testing
 -------
 
-**Warning: testing tools and features will likely be obsolete in coming versions.**
-
-We have included some basic test tools more useful for contributors. Depending on interest
-we might include more in the future (but at the same time limit the ability to abuse the
-MDN servers with thousands of request within a short time).
-
-We added `--test` as an option that can be combines with a feature to display URL status
-for that documentation link. This will quickly indicate if the page is missing and
-therefor can be created.
-
-Or to test connectivity with the server. Redirects are handled internally. There might
-be a change to this so redirects (typically due to locales/languages) are reported as well.
-Currently locale uses "en-US" internally for all links.
-
-You can also find features which are missing a documentation link by using the
-`--list` option with `missinglink`:
-
-```text
-mdncomp -l missinglink
-```
-
-Note that this can produce very long lists so we recommend redirect the output to
-a file and then open that file instead:
-
-```text
-mdncomp -l missinglink > missinglinks.txt
-```
+For testing documentation links on MDN, see the tool [mdn-linkchecker](https://github.com/epistemex/mdn-linkchecker).

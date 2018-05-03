@@ -122,15 +122,13 @@ function go(path) {
   if (options.list) {
     // top-levels
     if (path === ".") {
-      outInfo(listTopLevels())
+      outInfo(listTopLevels());
+      outInfo(lf + "Valid statuses:");
+      outInfo(ANSI.green + "standard, experimental, deprecated" + ANSI.reset);
     }
     // list on status
     else if (["deprecated", "experimental", "standard"].includes(path)) {
       outInfo(listOnStatus(path));
-    }
-    // list on (bcd) property
-    else if (["missinglink"].indexOf(path) >= 0) {
-      outInfo(listOnProp(path));
     }
     else {
       let _list = list(path, options.caseSensitive);
@@ -241,7 +239,7 @@ function go(path) {
     let fs;
     if (options.out && saves.length) {
       fs = require("fs");
-      // todo race cond. in this scenario is theoretically possible..
+      // race cond. in this scenario is theoretically possible..
       if (fs.existsSync(options.out) && !options.overwrite) {
         const readLine = require('readline'),
           rl = readLine.createInterface({

@@ -231,12 +231,12 @@ Then pick an ID to obtain information about it:
 ```text
 mdncomp -b edge
 ->
-edge  12  Rel: 2015-07-15  retired
-edge  13  Rel: 2015-11-05  retired
-edge  14  Rel: 2016-08-02  retired
-edge  15  Rel: 2017-04-11  retired
-edge  16  Rel: 2017-09-26  current
-edge  17  Rel: -           nightly
+edge  12  2015-07-15  retired
+edge  13  2015-11-05  retired
+edge  14  2016-08-02  retired
+edge  15  2017-04-11  retired
+edge  16  2017-09-26  current
+edge  17  -           nightly
 ```
 
 You can also get a list of browser bases on status. The following status keywords
@@ -251,13 +251,16 @@ So to list for example the current active browsers:
 ```text
 mdncomp --browser current
 ->
-chrome           65   Rel: 2018-03-06
-edge             16   Rel: 2017-09-26
-edge_mobile      16   Rel: -
-firefox          57   Rel: 2017-11-14
-firefox_android  57   Rel: 2017-11-28
-ie               11   Rel: 2013-10-17
-nodejs            4   Rel: 2015-09-08
+STATUS: CURRENT
+chrome           66  2018-04-17
+edge             16  2017-10-17
+edge             17  2018-05-01
+edge_mobile      16  2017-09-26
+edge_mobile      17  2018-05-01
+firefox          59  2018-03-13  https://developer.mozilla.org/Firefox/Releases/59
+firefox_android  59  2018-03-13  https://developer.mozilla.org/Firefox/Releases/59
+ie               11  2013-10-17
+nodejs            6  2016-04-26  https://nodejs.org/en/blog/release/v6.0.0/
 ...etc.
 ```
 
