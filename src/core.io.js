@@ -63,9 +63,9 @@ module.exports = {
     return require("opn")(cmd);
   },
 
-  exist: function(path) {
-    return fs.existsSync(path)
-  },
+//  exist: function(path) {
+//    return fs.existsSync(path)
+//  },
 
   getConfigRootPath: function() {
     let app = process.platform === "win32" ? path.resolve(process.env.APPDATA, "../../") : process.env.HOME;

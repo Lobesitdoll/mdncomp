@@ -1,3 +1,5 @@
+//const utils = require("./utils");
+
 /**
  * This object formats and stores browser compatibility
  * information for this path.object.

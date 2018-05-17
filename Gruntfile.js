@@ -14,6 +14,7 @@ module.exports = function(grunt) {
           "build/io.js": ["src/core.io.js"],
           "build/update.js": ["src/core.update.js"],
           "build/tagparser.js": ["src/option.doc.tagparser.js"],
+          "build/utils.js": ["src/core.utils.js"],
           "build/build.min.js": [
             "src/core.js",
             "src/core.polyfills.js",

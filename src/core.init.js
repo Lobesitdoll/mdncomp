@@ -54,6 +54,7 @@ function init() {
       .action(go)
       .on("--help", () => {parseHelp(args)})
       .parse(args);
+
     if (!options.args.length) options.help();
   }
 } // :init

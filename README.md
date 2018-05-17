@@ -134,13 +134,16 @@ api.AnimationEffectReadOnly
 ```text
 mdncomp --browser current
 ->
-chrome            65  Rel: 2018-03-06
-edge              16  Rel: 2017-10-17
-edge_mobile       16  Rel: 2017-09-26
-firefox           59  Rel: 2018-03-13
-firefox_android   59  Rel: 2018-03-13
-ie                11  Rel: 2013-10-17
-nodejs             4  Rel: 2015-09-08
+STATUS: CURRENT
+Chrome              66           2018-04-17
+Edge                16           2017-10-17  https://docs.microsoft.com/en-us/microsoft-edge/dev-guide/whats-new/edgehtml-16
+Edge                17           2018-05-01
+Edge Mobile         16           2017-09-26
+Edge Mobile         17           2018-05-01
+Firefox             60           2018-05-09  https://developer.mozilla.org/Firefox/Releases/60
+Firefox Android     60           2018-05-09  https://developer.mozilla.org/Firefox/Releases/60
+Internet Explorer   11           2013-10-17
+Node.js              6           2016-04-26  https://nodejs.org/en/blog/release/v6.0.0/
 --8X--
 ```
 
@@ -149,27 +152,17 @@ List release history for a single browser:
 ```text
 mdncomp -b edge
 ->
-edge  12  2015-07-28  retired
-edge  13  2015-11-12  retired
-edge  14  2016-08-02  retired
-edge  15  2017-04-05  retired
-edge  16  2017-10-17  current
-edge  17  -           nightly
+Edge  12  2015-07-28  retired  https://docs.microsoft.com/en-us/microsoft-edge/dev-guide/whats-new/edgehtml-12
+Edge  13  2015-11-12  retired  https://docs.microsoft.com/en-us/microsoft-edge/dev-guide/whats-new/edgehtml-13
+Edge  14  2016-08-02  retired  https://docs.microsoft.com/en-us/microsoft-edge/dev-guide/whats-new/edgehtml-14
+Edge  15  2017-04-05  retired  https://docs.microsoft.com/en-us/microsoft-edge/dev-guide/whats-new/edgehtml-15
+Edge  16  2017-10-17  current  https://docs.microsoft.com/en-us/microsoft-edge/dev-guide/whats-new/edgehtml-16
+Edge  17  2018-05-01  current
+Edge  18  -           nightly
 ```
 
-And if release notes are available they are listed as links (use --no-notes, -N to ignore these):
-
-```text
-mdncomp -b nodejs
-->
-nodejs   0.10  2013-03-11  retired  https://nodejs.org/en/blog/release/v0.10.0/
-nodejs   0.12  2015-02-06  retired  https://nodejs.org/en/blog/release/v0.12.0/
-nodejs   4     2015-09-08  retired  https://nodejs.org/en/blog/release/v4.0.0/
-nodejs   5     2015-10-29  retired  https://nodejs.org/en/blog/release/v5.0.0/
-nodejs   6     2016-04-26  current  https://nodejs.org/en/blog/release/v6.0.0/
-nodejs   7     2016-10-25  retired  https://nodejs.org/en/blog/release/v7.0.0/
-...
-```
+And if release notes are available (as shown above) they are listed (you can use
+[`--no-notes, -N`](https://github.com/epistemex/mdncomp/wiki/Options-for-mdncomp#-n---no-notes) to ignore these).
 
 **Get feature description summary:**
 
@@ -215,12 +208,12 @@ a config file and for usage examples.
 Also included as markdown files in the included [wiki folder](./wiki/).
 
 
-Want to help make BCD awesome?
-------------------------------
-The BCD team is working hard to convert all the browser compatibility data to their new
-format as used by this tool. For this reason some APIs and objects may not be available quite yet.
+You can help the MDN team make BCD awesome
+------------------------------------------
+The MDN team is working hard to convert all the Browser Compatibility Data to their new
+format as used by this and other tools. For this reason some APIs and objects may not be available quite yet.
 
-Find out [how you can help them out](https://developer.mozilla.org/en-US/docs/MDN/Contribute/Structures/Compatibility_tables)!
+Find out [how you can help them out](https://developer.mozilla.org/en-US/docs/MDN/Contribute/Structures/Compatibility_tables).
 
 
 Additional information
@@ -229,7 +222,7 @@ Disclaimer: This tool is a independent tool not affiliated with any third-partie
 
 Build environment: [Node 8](https://nodejs.org/) and JetBrains' [WebStorm](https://www.jetbrains.com/webstorm/) on Windows.
 
-Test environments: Windows, Linux Ubuntu (VM)
+Test environments: Windows, Linux
 
 Dependency projects (data compiler): [data-for-mdncomp](https://github.com/epistemex/data-for-mdncomp).
 

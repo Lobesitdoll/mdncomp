@@ -3,10 +3,12 @@ const
   ANSI = require("./ansi"),
   fs = require("fs"),
   path = require("path"),
+  utils = require("./utils"),
   log = console.log.bind(console),
   urlPrefix = "https://raw.githubusercontent.com/epistemex/data-for-mdncomp/master/";
 
 module.exports = function(force, checkOnly, showDiff) {
+  //noinspection JSUnresolvedVariable
   const
     clr = ANSI.clrToCursor + ANSI.cursorUp,
     filePathRoot = path.normalize(path.dirname(process.mainModule.filename) + "/../data/data."),
@@ -18,7 +20,7 @@ module.exports = function(force, checkOnly, showDiff) {
   if (force) serverData();
   else {
     serverMD5(md5 => {
-      let md5f = getCachedMD5(filePathMD5, filePathDat);
+      let md5f = getCachedMD5(filePathMD5);
       clrLine();
       log(clr + ANSI.white + (md5 === md5f ? "No change in data - cancelling (or use the --fupdate option)." : "Update is available (" + md5 + ")."));
       if (!(checkOnly || md5 === md5f)) serverData();
@@ -37,7 +39,7 @@ module.exports = function(force, checkOnly, showDiff) {
         let diff = showDiff ? getDiff(data) : "";
 
         // write new data to disk
-        io.writeAll([{path: filePathDat, data: data}, {path: filePathMD5, data: calcMD5(data)}], (results, hasErrors) => {
+        io.writeAll([{path: filePathDat, data: data}, {path: filePathMD5, data: io.calcMD5(data)}], (results, hasErrors) => {
           if (hasErrors)
             results.forEach(error => {
               if (error.err) logErr("An error occurred writing data to file. Please retry: " + lf + error.path + ": " + error.err + ANSI.reset);
@@ -54,8 +56,8 @@ module.exports = function(force, checkOnly, showDiff) {
   function getDiff(newData) {
     let res;
     try {
-      let oldPaths = buildTable(require("../data/data.json"));
-      let newPaths = buildTable(JSON.parse(newData));
+      let oldPaths = utils.buildTable(require("../data/data.json"));
+      let newPaths = utils.buildTable(JSON.parse(newData));
       let diff = [];
 
       // make diff
@@ -63,7 +65,7 @@ module.exports = function(force, checkOnly, showDiff) {
         if (!oldPaths.includes(path)) diff.push(path)
       });
 
-      res = `--diff-- New features (${diff.length}):\n` + diff.join("\n")
+      res = `--diff-- Added features to BCD (${diff.length}):\n` + diff.join("\n")
     }
     catch(err) {
       res = ANSI.red + "Could not perform diff:\n" + err.message + ANSI.reset
@@ -81,33 +83,6 @@ module.exports = function(force, checkOnly, showDiff) {
   }
 };
 
-function buildTable(mdn) {
-  const result = [];
-
-  listTopLevels(mdn)
-    .forEach(key => {if (key !== "browsers") _iterateNode(mdn, key, key)});
-
-  function _iterateNode(node, inKey, branch) {
-    const subNode = node[inKey];
-    if (typeof subNode === "object") {
-      Object.keys(subNode).forEach(key => {
-        if (key !== "__compat") {
-          result.push(branch + "." + key);
-          _iterateNode(subNode, key, branch + "." + key);
-        }
-      });
-    }
-  }
-
-  return result
-}
-
-function listTopLevels(mdn) {
-  let keys = Object.keys(mdn), i = keys.indexOf("browsers");
-  if (i >= 0) keys.splice(i, 1);
-  return keys
-}
-
 function serverMD5(callback) {
   io.request(urlPrefix + "data2.md5", null, null, callback, (err) => {
     log("An error occurred:", err.statusCode, err.error)
@@ -118,22 +93,11 @@ function serverMD5(callback) {
  * Will try to load the cached MD5 hash. If not found the data is loaded
  * and a MD5 is calculated.
  * @param path - md5 cached file
- * @param path2 - data file path if md5 isn't not found
  * @returns {string} empty is MD5 couldn't be calc.
  */
-function getCachedMD5(path, path2) {
+function getCachedMD5(path) {
   try {
     return fs.readFileSync(path) + "";
-  } catch(err) {return calcFileMD5(path2)}
-}
-
-function calcFileMD5(path) {  // todo this can go in the future (now@v1.3.3a)
-  try {
-    return calcMD5(fs.readFileSync(path)) + "";
   } catch(err) {return ""}
-}
-
-function calcMD5(data) {
-  return require("crypto").createHash("md5").update(data).digest("hex") + ""
 }
 

@@ -39,14 +39,14 @@ function listBrowser(browserId) {
   // Show information
   Object.keys(browser.releases).sort(_cmp).forEach(version => {
     let
-      txt = ANSI.white + browserId + "  " + ANSI.green + _fBrowserVersion(version, vPad, vPad2),
+      txt = ANSI.white + (browser.name || browserId) + "  " + ANSI.green + _fBrowserVersion(version, vPad, vPad2),
       date = browser.releases[version].release_date,
       notes = browser.releases[version].release_notes,
       status = browser.releases[version].status;
 
     txt += "  " + (date ? ANSI.cyan + date : ANSI.gray + "-         ");
     txt += "  " + (status ? _browserStatusColor(status) + status.padEnd(sPad) +
-      (options.notes && notes ? "  " + notes : "") +
+      (options.notes && notes ? "  " + ANSI.reset + notes : "") +
       ANSI.reset + ANSI.white : "-");
 
     result.push(txt + ANSI.white);
@@ -69,10 +69,10 @@ function listBrowserOnStatus(status) {
   let
     result = [],
     col = _browserStatusColor(status),
-    temp = _iterateBrowsers((o, browser, release) => {
+    temp = _iterateBrowsers((o, browser, release, nil, name) => {
       let date = o.release_date;
       return (o.status && o.status === status) ? {
-        browser: browser,
+        browser: name || browser,
         version: release,
         notes: o.release_notes,
         date: date ? date : "-"
@@ -95,7 +95,7 @@ function listBrowserOnStatus(status) {
       ANSI.white + o.browser.padEnd(bPad) + ANSI.white +
       "  " + col + _fBrowserVersion(o.version, vPad, vPad2) + ANSI.white + ANSI.dim +
       "  " + (o.date === "-" ? ANSI.gray : ANSI.reset + ANSI.bright + ANSI.cyan) + o.date +
-      (options.notes && o.notes && o.notes.length ? "  " + o.notes : "") + ANSI.reset
+      (options.notes && o.notes && o.notes.length ? "  " + ANSI.reset + o.notes : "") + ANSI.reset
     );
   });
 
@@ -133,8 +133,9 @@ function _iterateBrowsers(callback) {
   const browsers = mdn.browsers, result = [];
 
   Object.keys(browsers).forEach(key => {
+    let name = browsers[key].name;
     Object.keys(browsers[key].releases).forEach(release => {
-      let ret = callback(browsers[key].releases[release], key, release, result);
+      let ret = callback(browsers[key].releases[release], key, release, result, name);
       if (ret) result.push(ret);
     })
   });

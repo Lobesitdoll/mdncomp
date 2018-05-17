@@ -1,6 +1,11 @@
 mdncomp
 =======
 
+1.18.4-beta
+ADD: Support for new browser property name.
+CHG: Notes colors for --browser now in neutral color instead of same as status.
+CHG: Minor internal changes for MD5 generation.
+
 1.18.3-beta
 ADD: Option --no-notes can be used with --browser to ignore notes (links).
 

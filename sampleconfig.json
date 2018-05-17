@@ -8,7 +8,7 @@
     "_help5_delete": "The options below are the same as in the usage except the --no-* options which  are only * (use inverted boolean),",
     "_help6_delete": "and in camel-type instead of dash (ie. '--no-colors' becomes 'colors', '--case-sensitive' becomes 'caseSensitive' etc.)",
 
-    "_help7_delete": "Remember to rename the file to mdncomp.json and place it in root folder of the mdncomp installation.",
+    "_help7_delete": "Remember to rename the file to mdncomp.json and place it in user root / .mdncomp folder (see option --configpath)",
 
     "colors"        : true,
     "notes"         : true,
