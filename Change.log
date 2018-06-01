@@ -1,6 +1,11 @@
 mdncomp
 =======
 
+1.18.5-beta
+ADD: Links that go to 404 (page not found) on MDN are now removed until available (via the data set, data update included).
+IMP: "--list ." header information
+IMP: "--browser ." header information
+
 1.18.4-beta
 ADD: Support for new browser property name.
 CHG: Notes colors for --browser now in neutral color instead of same as status.

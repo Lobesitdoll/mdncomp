@@ -1,6 +1,6 @@
 {
   "name": "mdncomp",
-  "version": "1.18.4-beta",
+  "version": "1.18.5-beta",
   "description": "Browser Compatibility Data on the command line.",
   "main": "build/mdncomp.min.js",
   "author": {
@@ -20,14 +20,10 @@
     "terminal",
     "bcd",
     "docs",
-    "status",
-    "api",
     "features",
     "specifications",
     "command",
-    "console",
-    "summary",
-    "information"
+    "console"
   ],
   "license": "MIT",
   "bin": {
@@ -45,10 +41,10 @@
     "README.md",
     "LICENSE-MIT.txt",
     "Change.log",
-    "mdncomp.example.json"
+    "sampleconfig.json"
   ],
   "dependencies": {
-    "commander": "^2.15.0",
+    "commander": "^2.15.1",
     "opn": "^5.3.0"
   },
   "devDependencies": {

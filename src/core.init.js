@@ -123,7 +123,8 @@ function go(path) {
   if (options.list) {
     // top-levels
     if (path === ".") {
-      outInfo(listTopLevels());
+      outInfo(ANSI.reset + "Valid path roots:");
+      outInfo(ANSI.green + listTopLevels().join(lf) + ANSI.reset);
       outInfo(lf + "Valid statuses:");
       outInfo(ANSI.green + "standard, experimental, deprecated" + ANSI.reset);
     }
@@ -147,7 +148,8 @@ function go(path) {
    */
   else if (options.browser) {
     if (path === ".") {
-      outInfo(ANSI.white + listBrowsers().join(lf) + ANSI.reset);
+      outInfo(ANSI.reset + "Valid browser identifiers:");
+      outInfo(ANSI.green + listBrowsers().join(lf) + ANSI.reset);
       outInfo(lf + "Valid statuses:");
       outInfo(ANSI.green + getBrowserStatusList().join(", "));
     }

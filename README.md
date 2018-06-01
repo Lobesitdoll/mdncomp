@@ -80,6 +80,8 @@ $ mdncomp html*toblob.
 Data from MDN - `npm i -g mdncomp` by epistemex
 ```
 
+(the dot at the end indicates you want to stop at this object and not consider its children objects).
+
 Or using the absolute path:
 
     $ mdncomp api.HTMLCanvasElement.toBlob
@@ -90,7 +92,7 @@ Or an regular expression:
 
 Or an fuzzy expression:
 
-    $ mdncomp -z hctbb.
+    $ mdncomp -z hcb.
 
 Show data in shorthand format:
 
