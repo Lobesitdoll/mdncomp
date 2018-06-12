@@ -1,6 +1,6 @@
 {
   "name": "mdncomp",
-  "version": "1.18.5-beta",
+  "version": "1.19.0-beta",
   "description": "Browser Compatibility Data on the command line.",
   "main": "build/mdncomp.min.js",
   "author": {
@@ -31,7 +31,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/epistemex/mdncomp.git"
+    "url": "https://gitlab.com/epistemex/mdncomp.git"
   },
   "files": [
     "bin/",

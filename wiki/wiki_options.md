@@ -24,6 +24,7 @@ Options:
 --doc                  Show documentation. Show cached or fetch
 --docforce             Show documentation. Force fetch from MDN server
 --mdn                  Open entry's document URL in default browser
+--waitkey              Wait for ENTER key before continuing
 --random               Show a random entry. (mdncomp --random . )
 --update, --fupdate
 --cupdate              Update data from remote (--fupdate=force, --cupdate=check)
@@ -315,6 +316,12 @@ Same as `--doc` but will force fetch the content, re-parse and update the cache.
 -----
 If a documentation link is defined for the feature this option will attempt opening the link in
 the default browser.
+
+--waitkey
+---------
+Wait for the ENTER key before continuing/exiting. This can be useful if mdncomp is used in
+a "popup" terminal so the terminal stays open until the <kbr>ENTER</kbr> key is hit before closing.
+
 
 --random
 --------

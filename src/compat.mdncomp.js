@@ -3,6 +3,11 @@
 /**
  * This object formats and stores browser compatibility
  * information for this path.object.
+ *
+ * Note: This is a normalizing object until schema and BCD format
+ * is out of alpha. It also extends the final format mdncomp uses
+ * with features such as spec list.
+ *
  * @param path
  * @constructor
  */

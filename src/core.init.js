@@ -44,6 +44,7 @@ function init() {
       .option("--doc", "Show documentation. Show cached or fetch")
       .option("--docforce", "Show documentation. Force fetch from MDN server")
       .option("--mdn", "Open entry's document URL in default browser")
+      .option("--waitkey", "Wait for ENTER key before continuing")
       .option("--random", "Show a random entry. (mdncomp --random . )")
       .option("--update, --fupdate, --cupdate", "Update data from remote (--fupdate=force, --cupdate=check)")
       .option("--diff", "Only valid appended to --[*]update. Shows list of new features")
@@ -221,6 +222,11 @@ function go(path) {
     function _commit() {
       addFooter();
       commit();
+      if (options.waitkey) {
+        console.log(ANSI.cursorUp + ANSI.cursorUp);
+        setTimeout(() => console.log("Waiting for ENTER key..." + ANSI.cursorUp), 3000);
+        process.stdin.on("data", () => process.exit());
+      }
     }
   }
 

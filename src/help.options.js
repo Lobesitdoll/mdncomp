@@ -265,6 +265,11 @@ If a documentation link is defined for the feature this option will
 attempt opening the link in the default browser.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
+help["--waitkey"] = `
+Wait for the ENTER key before continuing/exiting. This can be useful if mdncomp is used in
+a "popup" terminal so the terminal stays open until the ENTER key is hit before closing.`;
+
+/*----------------------------------------------------------------------------------------------------------------------------------*/
 help["--random"] = `
 Feel like exploring? Discover new features using this option. You can 
 specify either all by using a dot (.) or a keyword or search term 
