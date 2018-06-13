@@ -6,8 +6,6 @@ Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data
 ![termx color output](https://i.imgur.com/4HuM30Q.png)<br>
 <sup>*cygwin/xterm snapshot*</sup>
 
-**Currently in BETA.**
-
 
 Features
 --------
@@ -26,7 +24,7 @@ Features
 
 - Browser status
   - List current browser versions
-  - List beta and nightly versions
+  - List beta and nightly versions per browser
   - List status and release dates per browser
   - List browsers per status
 

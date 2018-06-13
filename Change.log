@@ -1,6 +1,9 @@
 mdncomp
 =======
 
+1.19.0
+CHG: Release version (no issues reported, found etc.)
+
 1.19.0-beta
 ADD: --waitkey option (wait for ENTER key before exiting/continuing)
 
