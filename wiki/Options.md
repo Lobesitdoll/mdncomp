@@ -152,7 +152,7 @@ mndcomp -z htcetblb.
 will produce the result for `HTMLCanvasElement.toBlob` since we added a
 stop character (dot) at the end as with wildcard searches.
 
-The option can be stored in the [config file](https://github.com/epistemex/mdncomp/wiki/Config-file) if you want to use it permanently.
+The option can be stored in the [config file](./Config.md) if you want to use it permanently.
 
 
 -i, --index <index>
@@ -265,14 +265,14 @@ nodejs            6  2016-04-26  https://nodejs.org/en/blog/release/v6.0.0/
 ...etc.
 ```
 
-To not show the links at the end you can use the option [--no-notes, -N](https://github.com/epistemex/mdncomp/wiki/Options-for-mdncomp#-n---no-notes).
+To not show the links at the end you can use the option [--no-notes, -N](./Options.md#-n-no-notes).
 
 -N, --no-notes
 ----------------
 Don't list footnotes with the information. A browser will still be marked
 having footnotes but with a generic astrix symbol instead.
 
-For the [--browser](https://github.com/epistemex/mdncomp/wiki/Options-for-mdncomp#-b---browser) option the links will not be shown.
+For the [--browser](./Options.md#-b-browser) option the links will not be shown.
 
 -e, --noteend
 ----------------
@@ -327,7 +327,7 @@ a "popup" terminal so the terminal stays open until the <kbr>ENTER</kbr> key is 
 --------
 Feel like exploring? Discover new features using this option. You can specify either all
 by using a dot (`.`) or a keyword or search term (which of course can be combined with
-[fuzzy](https://github.com/epistemex/mdncomp/wiki/Options-for-mdncomp#-z---fuzzy) search).
+[fuzzy](./Options.md#-z-fuzzy) search).
 
     $ mdncomp --random .
     $ mdncomp --random audio
@@ -387,10 +387,12 @@ Two files in the root directory (this may change in the future) are loaded:
 
 These are saved locally to `[npm-install-folder]/mdncomp/data/`
 
+The data update mechanism will change in the future when the BCD schema has stabilized.
+
 --diff
 ------
 Shows the new features as a list and count when updating. Only valid appended
-to the options [--update, --fupdate](https://github.com/epistemex/mdncomp/wiki/Options-for-mdncomp#--update---fupdate---cupdate).
+to the options [--update, --fupdate](./Options.md#-update-fupdate-cupdate).
 
 Example:
 
@@ -416,7 +418,7 @@ Options that will be ignored regardless are:
 `--no-config`, `--out`, `--all`, `--index`, `--browser`, `--list`,
 `--version`, `--update`, `--cupdate`, `--fupdate` and `--help`.
 
-See the [config file wiki](https://github.com/epistemex/mdncomp/wiki/Config-file) for more details.
+See the [config file wiki](./Config.md) for more details.
 
 --configpath
 ------------

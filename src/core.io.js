@@ -35,7 +35,7 @@ module.exports = {
       }
       else if (res.statusCode === 200 && onResp({headers: res.headers})) {
         let length = res.headers["content-length"]|0;
-        res.on("data", (d) => {
+        res.on("data", d => {
           data += d;
           if (onProgress) onProgress(length ? data.length / length : (data.length % 7) / 7);
         }).on("end", () => {

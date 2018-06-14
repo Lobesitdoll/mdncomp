@@ -26,6 +26,7 @@
     "docforce"      : false,
     "ext"           : false,
     "desc"          : false,
-    "specs"         : false
+    "specs"         : false,
+    "waitkey"       : false
   }
 }

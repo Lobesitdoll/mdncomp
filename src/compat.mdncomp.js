@@ -22,7 +22,7 @@ function MDNComp(path) {
   this.path = path;
   this.prePath = prePathFromPath(path);
   this.name = nameFromPath(path);
-  this.url = compat.mdn_url && compat.mdn_url.length ? "https://developer.mozilla.org/docs/" + compat.mdn_url : null;
+  this.url = compat.mdn_url && compat.mdn_url.length ? ("https://developer.mozilla.org/docs/" + compat.mdn_url).replace(".org/docs/Mozilla/Add-ons/", ".org/Add-ons/") : null;
   this.specs = compat.specs || [];
   this.experimental = status.experimental;
   this.standard = status.standard_track;

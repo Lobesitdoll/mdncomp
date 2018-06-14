@@ -46,7 +46,7 @@ mdncomp blob -i 11
 mdncomp api.HTMLCanvasElement.toBlob.image_quality
 ```
 
-- Or we could simply list information for all of the APIs using the [`-a, --all` option](https://github.com/epistemex/mdncomp/wiki/Options-for-mdncomp#-a---all):
+- Or we could simply list information for all of the APIs using the [`-a, --all` option](./Options.md#-a-all):
 
 ```text
 mdncomp blob -a
@@ -54,7 +54,7 @@ mdncomp blob -a
 
 In the latter case you may risk getting a lot of information in a very long page.
 For these cases, or when you just want a quick glimpse on the details, you can
-use the [`-s, --shorthand`](https://github.com/epistemex/mdncomp/wiki/Options-for-mdncomp#-s---shorthand) option:
+use the [`-s, --shorthand`](./Options.md#-s-shorthand) option:
 
 ```text
 mdncomp blob -as
@@ -117,7 +117,7 @@ or using wildcards:
 mdncomp html*toblob.
 ```
 
-or using fuzzy terms (add option [`--fuzzy` or `-z`](https://github.com/epistemex/mdncomp/wiki/Options-for-mdncomp#-z---fuzzy)):
+or using fuzzy terms (add option [`--fuzzy` or `-z`](./Options.md#-z-fuzzy)):
 
 ```text
 mdncomp -z hctblb.
@@ -131,7 +131,7 @@ Saving data to file
 
 We can also output the information to files instead of to the console.
 
-Simply add the option [`-o, --out`](https://github.com/epistemex/mdncomp/wiki/Options-for-mdncomp#-o---out-):
+Simply add the option [`-o, --out`](./Options.md#-o-out-):
 
 ```text
 mdncomp blobuilder -o blob-builder.txt
@@ -219,13 +219,14 @@ and so on.
 Browser release status
 ----------------------
 mdncomp will also list status of a browser, or all of a certain status using the
-[`-b, --browser`](https://github.com/epistemex/mdncomp/wiki/Options-for-mdncomp#-b---browser) option.
+[`-b, --browser`](./Options.md#-b-browser) option.
 
 To list supported browser names you can use a single dot:
 
 ```text
 mdncomp -b .
 ->
+Valid browser identifiers:
 chrome
 edge
 edge_mobile
@@ -239,9 +240,10 @@ safari
 safari_ios
 samsunginternet_android
 uc_android
+uc_chinese_android
 
 Valid statuses:
-beta, current, esr, nightly, planned, retired
+beta, current, esr, exclusive, nightly, planned, retired
 ```
 
 You can see at the bottom that you can also list browsers by status. If you want
@@ -251,26 +253,24 @@ to list all current versions of browsers:
 mdncomp -b current
 ->
 STATUS: CURRENT
-chrome                   66           2018-04-17
-edge                     16           2017-10-17
-edge                     17           2018-05-01
-edge_mobile              16           2017-09-26
-edge_mobile              17           2018-05-01
-firefox                  59           2018-03-13  https://developer.mozilla.org/Firefox/Releases/59
-firefox_android          59           2018-03-13  https://developer.mozilla.org/Firefox/Releases/59
-ie                       11           2013-10-17
-nodejs                    6           2016-04-26  https://nodejs.org/en/blog/release/v6.0.0/
-nodejs                    8           2017-05-30  https://nodejs.org/en/blog/release/v8.0.0/
-nodejs                   10           2018-04-24  https://nodejs.org/en/blog/release/v10.0.0/
-opera                    52           2018-03-22  https://dev.opera.com/blog/opera-52/
-qq_android                8.2         2018-02-01
-safari                   11.1         2018-04-12  https://developer.apple.com/library/content/releasenotes/General/WhatsNewInSafari/Articles/Safari_11_1.html
-safari_ios               11.1         -
-samsunginternet_android   6.4         2018-02-19
-uc_android               12.0.0.1088  2018-01-30
-uc_android               12.2.0.1089  2018-03-09
-uc_chinese_android       11.8.8.968   2018-02-06
-uc_chinese_android       11.9.2.972   2018-03-21
+Chrome              67           2018-05-29  https://chromereleases.googleblog.com/2018/05/stable-channel-update-for-desktop_58.html
+Edge                16           2017-10-17  https://docs.microsoft.com/en-us/microsoft-edge/dev-guide/whats-new/edgehtml-16
+Edge                17           2018-05-01
+Edge Mobile         16           2017-09-26
+Edge Mobile         17           2018-05-01
+Firefox             60           2018-05-09  https://developer.mozilla.org/Firefox/Releases/60
+Firefox Android     60           2018-05-09  https://developer.mozilla.org/Firefox/Releases/60
+Internet Explorer   11           2013-10-17
+Node.js              6           2016-04-26  https://nodejs.org/en/blog/release/v6.0.0/
+Node.js              8           2017-05-30  https://nodejs.org/en/blog/release/v8.0.0/
+Node.js             10           2018-04-24  https://nodejs.org/en/blog/release/v10.0.0/
+Opera               53           2018-05-10  https://dev.opera.com/blog/opera-53/
+QQ Browser           8.2         2018-02-01
+Safari              11.1         2018-04-12  https://developer.apple.com/library/content/releasenotes/General/WhatsNewInSafari/Articles/Safari_11_1.html
+iOS Safari          11.1         -
+Samsung Internet     6.4         2018-02-19
+UC Browser          12.5.0.1109  2018-05-04
+Chinese UC Browser  11.9.6.976   2018-05-04
 ```
 
 If you want to show current, future and old released of a particular browser:
@@ -298,9 +298,9 @@ Short descriptions are now part of the data file itself, while doc excerpts are
 downloaded and cached. The latter can be updated at any time:
 
     $ mdncomp ht*toblob. --doc       # download and cache
-    $ mdncomp ht*toblob. --docforce  # force update
+    $ mdncomp ht*toblob. --docforce  # force doc update
 
-You can also get links to specifications by using the [--specs](https://github.com/epistemex/mdncomp/wiki/Options-for-mdncomp#--specs) option:
+You can also get links to specifications by using the [--specs](./Options.md#-specs) option:
 
     $ mdncomp ht*toblob. --specs     # show links to specification (if available)
 
@@ -315,4 +315,4 @@ and features:
 Testing
 -------
 
-For testing documentation links on MDN, see the tool [mdn-linkchecker](https://github.com/epistemex/mdn-linkchecker).
+For testing documentation links on MDN, see the tool [mdn-linkchecker](https://gitlab.com/epistemex/mdn-linkchecker).

@@ -40,7 +40,7 @@ Features
 
 - Define permanent/often used options in a config file (which can be suspended at will).
 - Built-in help per option.
-- Documented with [wiki](https://github.com/epistemex/mdncomp/wiki) pages
+- Documented with [wiki](https://gitlab.com/epistemex/mdncomp/wikis/home) pages
 - Cross-platform (where node and npm is available).
 
 
@@ -50,7 +50,7 @@ Make sure to have [Node.js](https://nodejs.org/en/) and `npm` installed (include
 
     $ npm i -g mdncomp
 
-This includes a precompiled dataset which can be updated at any time (see [options](https://github.com/epistemex/mdncomp/wiki/Options-for-mdncomp#--update---fupdate---cupdate)).
+This includes a precompiled dataset which can be updated at any time (see [options](https://gitlab.com/epistemex/mdncomp/wikis/Options.md#-update-fupdate-cupdate)).
 
 
 Examples
@@ -162,7 +162,7 @@ Edge  18  -           nightly
 ```
 
 And if release notes are available (as shown above) they are listed (you can use
-[`--no-notes, -N`](https://github.com/epistemex/mdncomp/wiki/Options-for-mdncomp#-n---no-notes) to ignore these).
+[`--no-notes, -N`](https://gitlab.com/epistemex/mdncomp/wikis/Options.md#-n-no-notes) to ignore these).
 
 **Get feature description summary:**
 
@@ -202,14 +202,14 @@ you can also try <kbd>CTRL</kbd>-click the displayed link):
 
 Wiki
 ----
-See the [wiki pages](https://github.com/epistemex/mdncomp/wiki) for more details on each options, how to create
+See the [wiki pages](https://gitlab.com/epistemex/mdncomp/wikis/home) for more details on each options, how to create
 a config file and for usage examples.
 
-Also included as markdown files in the included [wiki folder](./wiki/).
+Also included as markdown files in the included [wiki folder](./wiki/Home.md).
 
 
-You can help the MDN team make BCD awesome
-------------------------------------------
+How you can help the MDN team
+-----------------------------
 The MDN team is working hard to convert all the Browser Compatibility Data to their new
 format as used by this and other tools. For this reason some APIs and objects may not be available quite yet.
 
@@ -222,10 +222,8 @@ Disclaimer: This tool is a independent tool not affiliated with any third-partie
 
 Build environment: [Node 8](https://nodejs.org/) and JetBrains' [WebStorm](https://www.jetbrains.com/webstorm/) on Windows.
 
-Test environments: Windows, Linux
-
-Dependency projects (data compiler): [data-for-mdncomp](https://github.com/epistemex/data-for-mdncomp).
-
+There is no guarantee it will work with earlier versions of Node.js but a simple polyfill is added to iron out some issues
+with these earlier versions.
 
 License
 -------

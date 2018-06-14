@@ -1,3 +1,7 @@
+
+const fs = require("fs");
+const path = require("path");
+
 /**
  * Initialize options and actions, initialize main modules -or- invoke update process.
  */
@@ -97,7 +101,7 @@ function go(path) {
 
   // load config file if any
   try {
-    loadConfig();
+    loadConfig()
   } catch(err) {}
 
   // both dt and mob -> cancel out the not options
@@ -245,9 +249,7 @@ function go(path) {
    * If --out is specified, commit all data (if any) to a single file.
    */
   function commit() {
-    let fs;
     if (options.out && saves.length) {
-      fs = require("fs");
       // race cond. in this scenario is theoretically possible..
       if (fs.existsSync(options.out) && !options.overwrite) {
         const readLine = require('readline'),
@@ -283,22 +285,34 @@ function go(path) {
 } // :go
 
 function loadConfig() {
-  if (!fs) fs = require("fs");
-  if (!path) path = require("path");
 
   const
     file = path.resolve(io.getConfigDataPath(), ".config.json");
 
   if (fs.existsSync(file)) {
-    // todo use whitelisting here
-    cfg = require(file);
-    let cfgOptions = cfg.options || cfg || {};
-    delete cfgOptions.browser;
-    delete cfgOptions.list;
-    delete cfgOptions["out"];
-    delete cfgOptions.all;
-    delete cfgOptions.index;
-    delete cfgOptions["random"];
-    Object.assign(options, cfgOptions);
+    let cfg = require(file);
+    cfg = cfg.options || cfg || {};
+
+    if (isBool(cfg.fuzzy)) options.fuzzy = cfg.fuzzy;
+    if (isBool(cfg.colors)) options.colors = cfg.colors;
+    if (isBool(cfg.notes)) options.notes = cfg.notes;
+    if (isBool(cfg.noteEnd)) options.noteEnd = cfg.noteEnd;
+    if (isBool(cfg.shorthand)) options.shorthand = cfg.shorthand;
+    if (isBool(cfg.split)) options.split = cfg.split;
+    if (isBool(cfg.caseSensitive)) options.caseSensitive = cfg.caseSensitive;
+    if (isBool(cfg.desktop)) options.desktop = cfg.desktop;
+    if (isBool(cfg.mobile)) options.mobile = cfg.mobile;
+    if (isBool(cfg.overwrite)) options.overwrite = cfg.overwrite;
+    if (isBool(cfg.markdown)) options.markdown = cfg.markdown;
+    if (isNum(cfg.maxChars)) options.maxChars = cfg.maxChars|0;
+    if (isBool(cfg.doc)) options.doc = cfg.doc;
+    if (isBool(cfg.docforce)) options.docforce = cfg.docforce;
+    if (isBool(cfg.ext)) options.ext = cfg.ext;
+    if (isBool(cfg.desc)) options.desc = cfg.desc;
+    if (isBool(cfg.specs)) options.specs = cfg.specs;
+    if (isBool(cfg.waitkey)) options.waitkey = cfg.waitkey;
+
+    function isBool(v) {return typeof v === "boolean"}
+    function isNum(v) {return typeof v === "number"}
   }
 }

@@ -49,7 +49,8 @@ file is now named ".config.json".**
   "docforce"      : false,
   "ext"           : false,
   "desc"          : false,
-  "specs"         : false
+  "specs"         : false,
+  "waitkey"       : false
  },
  "settings" : {}
 }
@@ -75,7 +76,7 @@ or if you prefer to output in shorthand format:
 }
 ```
 
-Then if you from time to time want to ignore the config file you could use the [`--no-config`](https://github.com/epistemex/mdncomp/wiki/Options-for-mdncomp#--no-config)
+Then if you from time to time want to ignore the config file you could use the [`--no-config`](./Options.md#-no-config)
 option:
 
     $ mdncomp --no-config ...
@@ -84,7 +85,7 @@ Path locations
 --------------
 
 The actual path depends on the system you're on. To see what path mdncomp is using on your
-system run it with the [`--configpath`](https://github.com/epistemex/mdncomp/wiki/Options-for-mdncomp#--no-config) option:
+system run it with the [`--configpath`](./Options.md#-configpath) option:
 
 ```text/json
 $ mdncomp --configpath

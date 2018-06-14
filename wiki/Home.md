@@ -15,5 +15,6 @@ Update the Browser Compatibility Data itself occasionally:
 Using mdncomp
 =============
 
-- [See information for all options](./wiki_options.md)
-- [See information for how to use](./wiki_using.md)
+- [See information for all options](./Options.md)
+- [See information for how to use](./Using.md)
+- [Details on the .config.json file](./Config.md)

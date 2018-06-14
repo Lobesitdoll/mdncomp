@@ -1,6 +1,13 @@
 mdncomp
 =======
 
+1.19.1
+FIX: Loading .config.json failed
+IMP: Options from .config.json are now white-listed and type checked.
+IMP: Fixed long WebExtension links in long format output
+CHG: Wiki links and location (now GitLab)
+FIX: Sample config file and new option --waitkey
+
 1.19.0
 CHG: Release version (no issues reported, found etc.)
 
