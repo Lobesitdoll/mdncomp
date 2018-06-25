@@ -56,6 +56,7 @@ function init() {
       .option("--max-chars <width>", "Max number of chars per line before wrap", 72)
       .option("--no-config", "Ignore config file (mdncomp.json) in config folder")
       .option("--configpath", "Show path to where config file and cache is stored")
+      //--license, --changes
       .action(go)
       .on("--help", () => {parseHelp(args)})
       .parse(args);
@@ -191,7 +192,7 @@ function go(path) {
 
           // check --doc link
           if (options.doc || options.docforce) {
-            if (compat.url.length) {
+            if (compat.url && compat.url.length) {
               getDoc(compat.url, _commit)
             }
             else {

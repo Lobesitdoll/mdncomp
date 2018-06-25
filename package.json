@@ -1,6 +1,6 @@
 {
   "name": "mdncomp",
-  "version": "1.19.1",
+  "version": "1.19.2",
   "description": "Browser Compatibility Data on the command line.",
   "main": "build/mdncomp.min.js",
   "author": {

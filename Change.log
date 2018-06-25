@@ -1,6 +1,9 @@
 mdncomp
 =======
 
+1.19.2
+FIX: null exception with missing url (--doc)
+
 1.19.1
 FIX: Loading .config.json failed
 IMP: Options from .config.json are now white-listed and type checked.
