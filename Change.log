@@ -1,6 +1,9 @@
 mdncomp
 =======
 
+1.20.0
+ADD: Support for short descriptions (shown wo/ any option needed)
+
 1.19.2
 FIX: null exception with missing url (--doc)
 

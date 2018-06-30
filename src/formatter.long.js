@@ -18,12 +18,19 @@ function compatToLong(mdnComp) {
 
   // url
   if (options.markdown && mdnComp.url) {
-    out.addLine(" [`%0%1`](%2) %3" + lf, mdnComp.prePath, mdnComp.name, mdnComp.url, mdnComp.getStatus());
+    out.addLine(" [`%0%1`](%2) %3", mdnComp.prePath, mdnComp.name, mdnComp.url, mdnComp.getStatus());
   }
   else {
     out.addLine(" %0%1%2%3%4 %5", ANSI.cyan, mdnComp.prePath, ANSI.white, mdnComp.name, ANSI.white, mdnComp.getStatus());
-    out.addLine(" ", mdnComp.url ? ANSI.gray + mdnComp.url : "-", lf);
+    out.addLine(" ", mdnComp.url ? ANSI.gray + mdnComp.url : "-");
   }
+
+  // short title
+  if (mdnComp.short && mdnComp.short.length) {
+    let short = entities(ANSI.reset + " " + breakAnsiLine(cleanHTML(mdnComp.short), options.maxWidth));
+    out.addLine(short, lf)
+  }
+  else out.addLine();
 
   // description
   if (options.desc && mdnComp.description && mdnComp.description.length) {

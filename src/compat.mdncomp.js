@@ -29,6 +29,7 @@ function MDNComp(path) {
   this.deprecated = status.deprecated;
   this.browsers = [];
   this.description = compat.description || "";
+  this.short = (compat.short || "").replace("→", "-&gt;");
 
   // Main loop parsing all attached information
   supportKeys.forEach(key => {
