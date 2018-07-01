@@ -25,6 +25,8 @@ let
 function buildTable() {
   const result = [];
 
+  // todo consider caching to disk (on first run + updates)
+
   listTopLevels()
     .forEach(key => {if (key !== "browsers") _iterateNode(mdn, key, key)});
 
@@ -32,7 +34,7 @@ function buildTable() {
     const subNode = node[inKey];
     if (typeof subNode === "object") {
       Object.keys(subNode).forEach(key => {
-        if (key !== "__compat") {
+        if (key !== "__compat" && key !== "worker_support" && key !== "SharedArrayBuffer_as_param") {
           result.push(branch + "." + key);
           _iterateNode(subNode, key, branch + "." + key);
         }
@@ -40,7 +42,7 @@ function buildTable() {
     }
   }
 
-  return result; //.sort()
+  return result //.sort()
 }
 
 /**

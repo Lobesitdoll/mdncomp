@@ -13,7 +13,8 @@
  */
 function MDNComp(path) {
   let
-    compat = getPathAsObject(path).__compat,
+    obj = getPathAsObject(path),
+    compat = obj.__compat,
     names = ["webview_android", "chrome", "chrome_android", "edge", "edge_mobile", "firefox", "firefox_android", "ie", "opera", "opera_android", "safari", "safari_ios"],
     isDesktop = [false, true, false, true, false, true, false, true, true, false, true, false],
     status = compat.status || {},
@@ -30,6 +31,13 @@ function MDNComp(path) {
   this.browsers = [];
   this.description = compat.description || "";
   this.short = (compat.short || "").replace("→", "-&gt;");
+
+  this.sharedAB = obj.SharedArrayBuffer_as_param ? new MDNComp(path + ".SharedArrayBuffer_as_param") : null;
+  this.workers = obj.worker_support ? new MDNComp(path + ".worker_support") : null;
+//  if (this.workers && obj.worker_support.worker_support) {
+//    delete obj.worker_support.worker_support;
+//    console.log(`WARNING: misconfigurated sub-feature: ${path}`);
+//  } // prevent oo recursive (safety valve for now)
 
   // Main loop parsing all attached information
   supportKeys.forEach(key => {
@@ -59,11 +67,11 @@ MDNComp.prototype = {
   getStatus: function() {
     let txt = "(";
     if (this.deprecated) {
-      txt += ANSI.red + "DEPRECATED" + ANSI.reset + ", ";
+      txt += ANSI.red + "Deprecated" + ANSI.reset + ", ";
     }
     else {
       if (this.experimental)
-        txt += ANSI.yellow + "EXPERIMENTAL" + ANSI.reset + ", ";
+        txt += ANSI.yellow + "Experimental" + ANSI.reset + ", ";
       if (this.standard)
         txt += ANSI.green + "On Standard Track" + ANSI.reset + ", ";
     }

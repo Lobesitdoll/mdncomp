@@ -3,7 +3,7 @@ mdncomp
 
 Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data) on the command line.
 
-![termx color output](https://i.imgur.com/4HuM30Q.png)<br>
+![xterm color output](https://i.imgur.com/fnxjQ0v.png)<br>
 <sup>*cygwin/xterm snapshot*</sup>
 
 
@@ -15,12 +15,14 @@ Features
   - Search in APIs, CSS, HTML, HTTP, JavaScript, MathML, SVG, WebDriver and WebExtensions.
   - Get status for standard, experimental and deprecated features.
   - Show notes, prefix use, security issues, flags and more.
+  - Show Web Worker support
+  - Show SharedArrayBuffer as param support (WebGL)
   - Find features using paths, wildcards, fuzzy terms or regular expressions
   - Navigate by path and branches
   - Search case (in)sensitive
   - Show desktop and/or mobile information for the most common browsers.
   - Extended option to include other browsers and Node.js.
-  - Works offline for the main data
+  - Works offline (only --doc(force) requires internet connection)
 
 - Browser status
   - List current browser versions
@@ -134,16 +136,13 @@ api.AnimationEffectReadOnly
 ```text
 mdncomp --browser current
 ->
-STATUS: CURRENT
-Chrome              66           2018-04-17
-Edge                16           2017-10-17  https://docs.microsoft.com/en-us/microsoft-edge/dev-guide/whats-new/edgehtml-16
-Edge                17           2018-05-01
-Edge Mobile         16           2017-09-26
-Edge Mobile         17           2018-05-01
-Firefox             60           2018-05-09  https://developer.mozilla.org/Firefox/Releases/60
-Firefox Android     60           2018-05-09  https://developer.mozilla.org/Firefox/Releases/60
-Internet Explorer   11           2013-10-17
-Node.js              6           2016-04-26  https://nodejs.org/en/blog/release/v6.0.0/
+Chrome             67  2018-05-29  https://chromereleases.googleblog.com/2018/05/stable-channel-update-for-desktop_58.html
+Edge               17  2018-04-30  https://docs.microsoft.com/en-us/microsoft-edge/dev-guide
+Edge Mobile        17  2018-04-30
+Firefox            61  2018-06-26  https://developer.mozilla.org/Firefox/Releases/61
+Firefox Android    61  2018-06-26  https://developer.mozilla.org/Firefox/Releases/61
+Internet Explorer  11  2013-10-17
+Node.js             6  2016-04-26  https://nodejs.org/en/blog/release/v6.0.0/
 --8X--
 ```
 
@@ -157,7 +156,7 @@ Edge  13  2015-11-12  retired  https://docs.microsoft.com/en-us/microsoft-edge/d
 Edge  14  2016-08-02  retired  https://docs.microsoft.com/en-us/microsoft-edge/dev-guide/whats-new/edgehtml-14
 Edge  15  2017-04-05  retired  https://docs.microsoft.com/en-us/microsoft-edge/dev-guide/whats-new/edgehtml-15
 Edge  16  2017-10-17  current  https://docs.microsoft.com/en-us/microsoft-edge/dev-guide/whats-new/edgehtml-16
-Edge  17  2018-05-01  current
+Edge  17  2018-04-30  current  https://docs.microsoft.com/en-us/microsoft-edge/dev-guide
 Edge  18  -           nightly
 ```
 
@@ -199,6 +198,10 @@ you can also try <kbd>CTRL</kbd>-click the displayed link):
 
     $ mdncomp html*toblob. --mdn
 
+Option file
+-----------
+Often used options can be permanently stored in a config file in user's home
+directory in JSON format.
 
 Wiki
 ----
@@ -208,12 +211,13 @@ a config file and for usage examples.
 Also included as markdown files in the included [wiki folder](./wiki/Home.md).
 
 
-How you can help the MDN team
------------------------------
-The MDN team is working hard to convert all the Browser Compatibility Data to their new
-format as used by this and other tools. For this reason some APIs and objects may not be available quite yet.
+How to Help the MDN Team
+------------------------
+The MDN team is working hard to convert all the Browser Compatibility Data to 
+their new format as used by this and other tools. For this reason some APIs and 
+objects are WIP and may not be available quite yet.
 
-Find out [how you can help them out](https://developer.mozilla.org/en-US/docs/MDN/Contribute/Structures/Compatibility_tables).
+[How you can help them out](https://developer.mozilla.org/en-US/docs/MDN/Contribute/Structures/Compatibility_tables).
 
 
 Additional information

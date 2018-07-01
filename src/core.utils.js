@@ -4,6 +4,8 @@
   www.epistemex.com
 */
 
+// TODO This is not currently in operation
+
 "use strict";
 
 const mdn = require("../data/data.json");
@@ -25,7 +27,7 @@ const utils = module.exports = {
       const subNode = node[inKey];
       if (typeof subNode === "object") {
         Object.keys(subNode).forEach(key => {
-          if (key !== "__compat") {
+          if (key !== "__compat" && key !== "worker_support" && key !== "SharedArrayBuffer_as_param") {
             result.push(branch + "." + key);
             _iterateNode(subNode, key, branch + "." + key);
           }

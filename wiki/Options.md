@@ -15,12 +15,14 @@ Options:
 -s, --shorthand        Show compatibility as shorthand with multiple results
 -h, --split            Split a shorthand line into two lines (use with -s)
 -b, --browser          Show information about this browser, or list if '.'
+-W, --no-workers       Don't show worker support information.
 -N, --no-notes         Don't show notes
 -e, --noteend          Show notes at end instead of in sections (text)
 -f, --markdown         Format link as markdown and turns off colors
 --ext                  Show extended table of browsers/servers
 --desc                 Show Short description of the feature
 --specs                Show specification links
+--sab                  Show support for SharedArrayBuffer as param (WebGL)
 --doc                  Show documentation. Show cached or fetch
 --docforce             Show documentation. Force fetch from MDN server
 --mdn                  Open entry's document URL in default browser
@@ -232,12 +234,13 @@ Then pick an ID to obtain information about it:
 ```text
 mdncomp -b edge
 ->
-edge  12  2015-07-15  retired
-edge  13  2015-11-05  retired
-edge  14  2016-08-02  retired
-edge  15  2017-04-11  retired
-edge  16  2017-09-26  current
-edge  17  -           nightly
+Edge  12  2015-07-28  retired
+Edge  13  2015-11-12  retired
+Edge  14  2016-08-02  retired
+Edge  15  2017-04-05  retired
+Edge  16  2017-10-17  retired
+Edge  17  2018-04-30  current
+Edge  18  -           nightly
 ```
 
 You can also get a list of browser bases on status. The following status keywords
@@ -253,19 +256,21 @@ So to list for example the current active browsers:
 mdncomp --browser current
 ->
 STATUS: CURRENT
-chrome           66  2018-04-17
-edge             16  2017-10-17
-edge             17  2018-05-01
-edge_mobile      16  2017-09-26
-edge_mobile      17  2018-05-01
-firefox          59  2018-03-13  https://developer.mozilla.org/Firefox/Releases/59
-firefox_android  59  2018-03-13  https://developer.mozilla.org/Firefox/Releases/59
-ie               11  2013-10-17
-nodejs            6  2016-04-26  https://nodejs.org/en/blog/release/v6.0.0/
+Chrome             67  2018-05-29  https://chromereleases.googleblog.com/2018/05/stable-channel-update-for-desktop_58.html
+Edge               17  2018-04-30  https://docs.microsoft.com/en-us/microsoft-edge/dev-guide
+Edge Mobile        17  2018-04-30
+Firefox            61  2018-06-26  https://developer.mozilla.org/Firefox/Releases/61
+Firefox Android    61  2018-06-26  https://developer.mozilla.org/Firefox/Releases/61
+Internet Explorer  11  2013-10-17
+Node.js             6  2016-04-26  https://nodejs.org/en/blog/release/v6.0.0/
 ...etc.
 ```
 
 To not show the links at the end you can use the option [--no-notes, -N](./Options.md#-n-no-notes).
+
+-W, --no-workers
+----------------
+Don't show information about support in Web Workers.
 
 -N, --no-notes
 ----------------
@@ -298,6 +303,10 @@ long output format, if available.
 -------
 Show specification links and status, if available.
 
+--sab
+-----
+Show support for SharedArrayBuffer as param (usually with WebGL).
+
 --doc
 -----
 Show an excerpt from the official documentation for this feature.
@@ -321,7 +330,6 @@ the default browser.
 ---------
 Wait for the ENTER key before continuing/exiting. This can be useful if mdncomp is used in
 a "popup" terminal so the terminal stays open until the <kbr>ENTER</kbr> key is hit before closing.
-
 
 --random
 --------
@@ -354,7 +362,6 @@ Set max number of characters on a (textual) line. Default is 72 but if you
 prefer longer lines this can be set here. Using "-1" (negative one) as value means no line limit.
 
 Note that width is ignored for *links*.
-
 
 --update, --fupdate, --cupdate
 ------------------------------

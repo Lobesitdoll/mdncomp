@@ -201,6 +201,10 @@ So to list for example the current active browsers:
     --X8--`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
+help["-W"] = help["--no-workers"] = `
+Don't show information about support in Web Workers.`;
+
+/*----------------------------------------------------------------------------------------------------------------------------------*/
 help["-N"] = help["--no-notes"] = `
 Don't list footnotes with the information. A browser will still be
 marked having footnotes but with a generic astrix symbol instead.
@@ -230,6 +234,10 @@ default long output format, if available.`;
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["--specs"] = `
 Show specification links and status, if available.`;
+
+/*----------------------------------------------------------------------------------------------------------------------------------*/
+help["--sab"] = `
+Show support for SharedArrayBuffer as param (usually with WebGL).`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["--no-colors"] = `

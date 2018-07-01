@@ -311,8 +311,3 @@ and features:
     $ mdncomp --random --doc .       # from any feature with documentation link
     $ mdncomp --random --desc audio  # short desc. for any feat. incl. "audio"
 
-
-Testing
--------
-
-For testing documentation links on MDN, see the tool [mdn-linkchecker](https://gitlab.com/epistemex/mdn-linkchecker).

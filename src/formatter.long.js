@@ -3,7 +3,7 @@
  * @param {MDNComp} mdnComp
  * @returns {string}
  */
-function compatToLong(mdnComp) {
+function compatToLong(mdnComp, noHeader) {
   let
     out = new Output(0),
     desktopList = ["chrome", "edge", "firefox", "ie", "opera", "safari"],
@@ -17,25 +17,32 @@ function compatToLong(mdnComp) {
   out.addLine(ANSI.reset);
 
   // url
-  if (options.markdown && mdnComp.url) {
-    out.addLine(" [`%0%1`](%2) %3", mdnComp.prePath, mdnComp.name, mdnComp.url, mdnComp.getStatus());
+  if (!noHeader) {
+    if (options.markdown && mdnComp.url) {
+      out.addLine(" [`%0%1`](%2) %3", mdnComp.prePath, mdnComp.name, mdnComp.url, mdnComp.getStatus());
+    }
+    else {
+      out.addLine(" %0%1%2%3%4 %5", ANSI.cyan, mdnComp.prePath, ANSI.white, mdnComp.name, ANSI.white, mdnComp.getStatus());
+      out.addLine(" ", mdnComp.url ? ANSI.gray + mdnComp.url : "-");
+    }
+
+    // short title
+    if (mdnComp.short && mdnComp.short.length) {
+      let short = entities(ANSI.reset + " " + breakAnsiLine(cleanHTML(mdnComp.short), options.maxWidth));
+      out.addLine(short, lf)
+    }
+    else out.addLine();
+
+    // description
+    if (options.desc && mdnComp.description && mdnComp.description.length) {
+      let desc = entities(ANSI.reset + breakAnsiLine(cleanHTML(mdnComp.description), options.maxWidth));
+      out.addLine(desc, lf)
+    }
   }
   else {
-    out.addLine(" %0%1%2%3%4 %5", ANSI.cyan, mdnComp.prePath, ANSI.white, mdnComp.name, ANSI.white, mdnComp.getStatus());
-    out.addLine(" ", mdnComp.url ? ANSI.gray + mdnComp.url : "-");
-  }
-
-  // short title
-  if (mdnComp.short && mdnComp.short.length) {
-    let short = entities(ANSI.reset + " " + breakAnsiLine(cleanHTML(mdnComp.short), options.maxWidth));
-    out.addLine(short, lf)
-  }
-  else out.addLine();
-
-  // description
-  if (options.desc && mdnComp.description && mdnComp.description.length) {
-    let desc = entities(ANSI.reset + breakAnsiLine(cleanHTML(mdnComp.description), options.maxWidth));
-    out.addLine(desc, lf)
+    // workers' status
+    let wStat = mdnComp.getStatus();
+    if (wStat.length) out.addLine(wStat.substring(1, wStat.length - 1) + lf);
   }
 
   // Show desktop info?
@@ -83,9 +90,21 @@ function compatToLong(mdnComp) {
     if (options.notes && notes.length) out.addLine(ANSI.yellow + notes.join(""));
   } // :ext
 
+  // worker support ?
+  if (options.workers && mdnComp.workers) {
+    out.addLine(ANSI.cyan + "WEB WORKER SUPPORT:");
+    out.add(compatToLong(mdnComp.workers, true) + lf)
+  }
+
+  // SharedArrayBuffer as param support ?
+  if (options.sab && mdnComp.sharedAB) {
+    out.addLine(ANSI.cyan + "SHAREDARRAYBUFFER AS PARAM SUPPORT:");
+    out.add(compatToLong(mdnComp.sharedAB, true) + lf)
+  }
+
   // Show specifications?
   if (options.specs && mdnComp.specs && mdnComp.specs.length) {
-    out.addLine(ANSI.cyan + "Specifications:" + lf);
+    out.addLine(ANSI.cyan + "SPECIFICATIONS:" + lf);
     mdnComp.specs.forEach(spec => {
       out.addLine(ANSI.white + `${entities(spec.name)}${lf}  ${getSpecStatus(spec.status)}  ${spec.url}`);
     });

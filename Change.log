@@ -1,6 +1,14 @@
 mdncomp
 =======
 
+1.21.0
+ADD: Support for new "worker_support" sub-feature in BCD schema (only in full format output)
+ADD: Support for SharedArrayBuffer as param (WebGL) sub-feature in BCD (only in full format output)
+ADD: New option (-W, --no-workers) to not show web worker support (if any) (only in full format output)
+ADD: New option (--sab) to show "SharedArrayBuffer as param" support (if any) (only in full format output)
+CHG: Feature standard status capitalized (i.e. "EXPERIMENTAL" -> "Experimental" etc.)
+CHG: Exit code when data file is not found changed from 1 to 2.
+
 1.20.0
 ADD: Support for short descriptions (shown wo/ any option needed)
 

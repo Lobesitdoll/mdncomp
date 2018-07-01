@@ -39,12 +39,14 @@ function init() {
       .option("-s, --shorthand", "Show compatibility as shorthand with multiple results")
       .option("-h, --split", "Split a shorthand line into two lines (use with -s)")
       .option("-b, --browser", "Show information about this browser, or list if '.'")
+      .option("-W, --no-workers", "Don't show worker support information.")
       .option("-N, --no-notes", "Don't show notes")
       .option("-e, --noteend", "Show notes at end instead of in sections (text)")
       .option("-f, --markdown", "Format link as markdown and turns off colors")
       .option("--ext", "Show extended table of browsers/servers")
       .option("--desc", "Show Short description of the feature")
       .option("--specs", "Show specification links")
+      .option("--sab", "Show support for SharedArrayBuffer as param.")
       .option("--doc", "Show documentation. Show cached or fetch")
       .option("--docforce", "Show documentation. Force fetch from MDN server")
       .option("--mdn", "Open entry's document URL in default browser")
@@ -96,7 +98,7 @@ function go(path) {
   }
   catch(err) {
     log("Critical error: data file not found. Try running with option --fupdate to download latest snapshot.");
-    process.exit(1);
+    process.exit(2);
   }
 
   // load config file if any
@@ -252,7 +254,7 @@ function go(path) {
     if (options.out && saves.length) {
       // race cond. in this scenario is theoretically possible..
       if (fs.existsSync(options.out) && !options.overwrite) {
-        const readLine = require('readline'),
+        const readLine = require("readline"),
           rl = readLine.createInterface({
             input: process.stdin,
             output: process.stdout
@@ -304,13 +306,15 @@ function loadConfig() {
     if (isBool(cfg.mobile)) options.mobile = cfg.mobile;
     if (isBool(cfg.overwrite)) options.overwrite = cfg.overwrite;
     if (isBool(cfg.markdown)) options.markdown = cfg.markdown;
-    if (isNum(cfg.maxChars)) options.maxChars = cfg.maxChars|0;
+    if (isNum(cfg.maxChars)) options.maxChars = Math.max(0, cfg.maxChars|0);
     if (isBool(cfg.doc)) options.doc = cfg.doc;
     if (isBool(cfg.docforce)) options.docforce = cfg.docforce;
     if (isBool(cfg.ext)) options.ext = cfg.ext;
     if (isBool(cfg.desc)) options.desc = cfg.desc;
     if (isBool(cfg.specs)) options.specs = cfg.specs;
     if (isBool(cfg.waitkey)) options.waitkey = cfg.waitkey;
+    if (isBool(cfg.workers)) options.workers = cfg.workers;
+    if (isBool(cfg.sab)) options.sab = cfg.sab;
 
     function isBool(v) {return typeof v === "boolean"}
     function isNum(v) {return typeof v === "number"}
