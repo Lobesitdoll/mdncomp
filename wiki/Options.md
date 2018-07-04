@@ -30,7 +30,6 @@ Options:
 --random               Show a random entry. (mdncomp --random . )
 --update, --fupdate
 --cupdate              Update data from remote (--fupdate=force, --cupdate=check)
---diff                 Only valid appended to --[*]update. Shows list of new features
 --no-colors            Don't use colors in output
 --max-chars <width>    Max number of chars per line before wrap (default: 72)
 --no-config            Ignore config file (mdncomp.json) in config folder
@@ -395,25 +394,6 @@ Two files in the root directory (this may change in the future) are loaded:
 These are saved locally to `[npm-install-folder]/mdncomp/data/`
 
 The data update mechanism will change in the future when the BCD schema has stabilized.
-
---diff
-------
-Shows the new features as a list and count when updating. Only valid appended
-to the options [--update, --fupdate](./Options.md#-update-fupdate-cupdate).
-
-Example:
-
-```text
-mdncomp --update --diff
-->
-Updated with 8013538 bytes. All systems are GO!
---diff-- New features (51):
-api.Request.Request.accept_readablestream
-webdriver.commands.Accept_Alert
-webdriver.commands.Add_Cookie
-webdriver.commands.Close_Window
-...
-```
 
 --no-config
 -----------

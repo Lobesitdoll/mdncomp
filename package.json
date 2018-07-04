@@ -1,6 +1,6 @@
 {
   "name": "mdncomp",
-  "version": "1.21.0",
+  "version": "1.22.0",
   "description": "Browser Compatibility Data on the command line.",
   "main": "build/mdncomp.min.js",
   "author": {
@@ -18,12 +18,12 @@
     "compatibility",
     "cli",
     "terminal",
+    "command",
+    "console",
     "bcd",
     "docs",
     "features",
-    "specifications",
-    "command",
-    "console"
+    "specifications"
   ],
   "license": "MIT",
   "bin": {
@@ -36,7 +36,8 @@
   "files": [
     "bin/",
     "build/",
-    "data/",
+    "data/data.json",
+    "data/data.md5",
     "package.json",
     "README.md",
     "LICENSE-MIT.txt",
@@ -45,7 +46,8 @@
   ],
   "dependencies": {
     "commander": "^2.15.1",
-    "opn": "^5.3.0"
+    "opn": "^5.3.0",
+    "rfc6902": "^2.4.0"
   },
   "devDependencies": {
     "grunt": "^1.0.2",

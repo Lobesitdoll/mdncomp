@@ -19,14 +19,15 @@ module.exports = {
    * @param {function} [onProgress] - onData callback
    * @param {function} onData - gets the data itself
    * @param {function} [onError] - if any errors
+   * @param {boolean} [rawBuffer=false] - if true send back raw buffer to callback, otherwise string
    */
-  request: function(url, onResp, onProgress, onData, onError) {
+  request: function(url, onResp, onProgress, onData, onError, rawBuffer) {
     onResp = onResp || function() {return true};
 
     let _res;
 
     const req = https.get(url, res => {
-      let data = "";
+      let buffer = [], current = 0;
       _res = res;
 
       // handle redirects
@@ -36,10 +37,11 @@ module.exports = {
       else if (res.statusCode === 200 && onResp({headers: res.headers})) {
         let length = res.headers["content-length"]|0;
         res.on("data", d => {
-          data += d;
-          if (onProgress) onProgress(length ? data.length / length : (data.length % 7) / 7);
+          buffer.push(d);
+          current += d.length;
+          if (onProgress) onProgress(length ? current / length : (current % 7) / 7);
         }).on("end", () => {
-          onData(data);
+          onData(rawBuffer ? Buffer.concat(buffer) : Buffer.concat(buffer).toString());
         });
       }
       else if (onError) _error(res, "");
@@ -62,10 +64,6 @@ module.exports = {
   run: function(cmd) {
     return require("opn")(cmd);
   },
-
-//  exist: function(path) {
-//    return fs.existsSync(path)
-//  },
 
   getConfigRootPath: function() {
     let app = process.platform === "win32" ? path.resolve(process.env.APPDATA, "../../") : process.env.HOME;
@@ -134,27 +132,6 @@ module.exports = {
     }
     catch(err) {
       log(ANSI.red + "Could not save file: " + filename + ANSI.reset + lf + err)
-    }
-  },
-
-  /**
-   *
-   * @param {Array} list - holding items: {path, data}
-   * @param callback - results array with {path, err} err is non-null if any error occurred
-   */
-  writeAll: function(list, callback) {
-    let results = [], count = list.length, errors = false;
-
-    for(let item of list) {
-      fs.writeFile(item.path, item.data, "utf8", err => {
-        _handler({path: item.path, err: err})
-      })
-    }
-
-    function _handler(o) {
-      results.push(o);
-      if (o.err) errors = true;
-      if (!--count) callback(results, errors)
     }
   },
 

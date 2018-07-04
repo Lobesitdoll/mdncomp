@@ -21,7 +21,7 @@ Features
   - Navigate by path and branches
   - Search case (in)sensitive
   - Show desktop and/or mobile information for the most common browsers.
-  - Extended option to include other browsers and Node.js.
+  - Option to also show extended set of browsers and Node.js.
   - Works offline (only --doc(force) requires internet connection)
 
 - Browser status
@@ -37,9 +37,11 @@ Features
   - Downloads and show documentation excerpt on the command line (with built-in data cache).
   - Open documentation link in the default browser from the command line.
 
-- Basic integrity tools:
-  - List features with missing documentation URLs
-
+- Integrated update mechanism (--update)
+  - (NEW) Compressed data transfers (v.1.22)
+  - (NEW) Patch/diff (RFC-6902) support for several versions back (v.1.22)
+  - Force update to reinitialize/clean all data, or with data corruption
+  
 - Define permanent/often used options in a config file (which can be suspended at will).
 - Built-in help per option.
 - Documented with [wiki](https://gitlab.com/epistemex/mdncomp/wikis/home) pages
@@ -210,7 +212,6 @@ a config file and for usage examples.
 
 Also included as markdown files in the included [wiki folder](./wiki/Home.md).
 
-
 How to Help the MDN Team
 ------------------------
 The MDN team is working hard to convert all the Browser Compatibility Data to 
@@ -219,20 +220,21 @@ objects are WIP and may not be available quite yet.
 
 [How you can help them out](https://developer.mozilla.org/en-US/docs/MDN/Contribute/Structures/Compatibility_tables).
 
-
 Additional information
 ----------------------
 Disclaimer: This tool is a independent tool not affiliated with any third-parties.
 
 Build environment: [Node 8](https://nodejs.org/) and JetBrains' [WebStorm](https://www.jetbrains.com/webstorm/) on Windows.
 
-There is no guarantee it will work with earlier versions of Node.js but a simple polyfill is added to iron out some issues
-with these earlier versions.
+There is no guarantee it will work with earlier versions of Node.js v8 but a simple polyfill is added to 
+iron out some issues with earlier versions.
+
+The software is provided AS-IS.
 
 License
 -------
 
-[MIT](http://choosealicense.com/licenses/mit/).
+[MIT](https://choosealicense.com/licenses/mit/).
 
 *&copy; Epistemex 2018*
 

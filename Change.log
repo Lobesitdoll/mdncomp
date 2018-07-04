@@ -1,6 +1,12 @@
 mdncomp
 =======
 
+1.22.0
+CHG: Rewrite of update module (see options --update, --fupdate, --cupdate).
+ADD: Patch/diff file support (RFC-6902) for update mechanism
+ADD: Updates and patches are now compressed from server.
+REM: --diff option removed (replaced with a short summary when using patches)
+
 1.21.0
 ADD: Support for new "worker_support" sub-feature in BCD schema (only in full format output)
 ADD: Support for SharedArrayBuffer as param (WebGL) sub-feature in BCD (only in full format output)
