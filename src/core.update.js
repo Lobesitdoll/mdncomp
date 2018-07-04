@@ -1,12 +1,13 @@
 /*
-  Update module for mdncomp
+  Update module v2 for mdncomp
   (c) 2018 epistemex.com
  */
 
-const io = require("./io");
 const fs = require("fs");
-const zlib = require("zlib");
 const path = require("path");
+const zlib = require("zlib");
+
+const io = require("./io");
 const ANSI = require("./ansi");
 const rfc6902 = require("rfc6902");
 
@@ -142,6 +143,8 @@ module.exports = function(force, checkOnly) {
       }
       catch(err) {log(err)}
 
+      clrLine();
+      log(`MD5 hashes: ${remoteMD5 === io.calcMD5(data) ? "OK!" : ANSI.red + "Error in hash!" + ANSI.reset}`);
       log("Data updated!");
     }
   })
