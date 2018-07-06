@@ -48,7 +48,7 @@ function init() {
       .option("--mdn", "Open entry's document URL in default browser")
       .option("--waitkey", "Wait for ENTER key before continuing")
       .option("--random", "Show a random entry. (mdncomp --random . )")
-      .option("--update, --fupdate, --cupdate", "Update data from remote (--fupdate=force, --cupdate=check)")
+      .option("--update, --fupdate, --cupdate", "Update data from remote (--f*=force, --c*=check)")
       .option("--no-colors", "Don't use colors in output")
       .option("--max-chars <width>", "Max number of chars per line before wrap", 72)
       .option("--no-config", "Ignore config file (mdncomp.json) in config folder")

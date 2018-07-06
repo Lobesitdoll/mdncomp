@@ -144,7 +144,7 @@ module.exports = function(force, checkOnly) {
       catch(err) {log(err)}
 
       clrLine();
-      log(`MD5 hashes: ${remoteMD5 === io.calcMD5(data) ? "OK!" : ANSI.red + "Error in hash!" + ANSI.reset}`);
+      //log(`MD5 hashes: ${remoteMD5 === io.calcMD5(data) ? "OK!" : ANSI.red + "Error in hash!" + ANSI.reset}`);
       log("Data updated!");
     }
   })

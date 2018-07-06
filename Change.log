@@ -1,6 +1,9 @@
 mdncomp
 =======
 
+1.22.1
+FIX: Removed hash check as local hash for patched data will most likely not be equal to full data set due to how patching works.
+
 1.22.0
 CHG: Rewrite of update module (see options --update, --fupdate, --cupdate).
 ADD: Patch/diff file support (RFC-6902) for update mechanism
