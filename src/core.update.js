@@ -96,7 +96,7 @@ module.exports = function(force, checkOnly) {
           let data = getCurrentData();
           let hasErrors = false;
 
-          log("Applying patch...");
+          log("Applying patch...\n");
           let patch = JSON.parse(patchStr);
           rfc6902.applyPatch(data, patch).forEach(err => {
             if (err) {
@@ -126,7 +126,7 @@ module.exports = function(force, checkOnly) {
 //        else if (entry.op === "move") moves++;
 //        else if (entry.op === "copy") copies++;
       });
-      log(`Diff: ${adds} adds, ${replacements} replacements, ${removes} removes`) //, ${copies} copies, ${moves} moves.`)
+      log(`Diff: ${adds} adds, ${replacements} replacements, ${removes} removes\n`) //, ${copies} copies, ${moves} moves.`)
     }
     function _remote() {
       getRemoteData((err, data) => {

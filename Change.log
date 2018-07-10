@@ -1,6 +1,9 @@
 mdncomp
 =======
 
+1.22.2
+FIX: When updating with patch the mini-summary was overwritten.
+
 1.22.1
 FIX: Removed hash check as local hash for patched data will most likely not be equal to full data set due to how patching works.
 
