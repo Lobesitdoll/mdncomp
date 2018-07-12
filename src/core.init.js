@@ -53,6 +53,7 @@ function init() {
       .option("--max-chars <width>", "Max number of chars per line before wrap", 72)
       .option("--no-config", "Ignore config file (mdncomp.json) in config folder")
       .option("--configpath", "Show path to where config file and cache is stored")
+      // interactive mode?
       .action(go)
       .on("--help", () => {parseHelp(args)})
       .parse(args);

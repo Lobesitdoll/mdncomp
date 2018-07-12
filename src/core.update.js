@@ -118,15 +118,17 @@ module.exports = function(force, checkOnly) {
     }
 
     function _diff(patch) {
-      let adds = 0, removes = 0, replacements = 0; //, moves = 0, copies = 0;
+      let adds = 0, removes = 0, updates = 0; //, moves = 0, copies = 0, entries = [];
       patch.forEach(entry => {
         if (entry.op === "add") adds++;
-        else if (entry.op === "remove") removes++;
-        else if (entry.op === "replace") replacements++;
-//        else if (entry.op === "move") moves++;
-//        else if (entry.op === "copy") copies++;
+        else if (entry.op === "remove") removes++;  //entries.push(entry);
+        else if (entry.op === "replace") updates++;
       });
-      log(`Diff: ${adds} adds, ${replacements} replacements, ${removes} removes\n`) //, ${copies} copies, ${moves} moves.`)
+      log(`Diff: ${adds} adds, ${updates} updates, ${removes} removes`); //, ${copies} copies, ${moves} moves.`)
+//      entries.forEach(entry => {
+//        log(`Removed: ${entry.path.replace("__compat/", "")}`)
+//      });
+//      log("\n")
     }
     function _remote() {
       getRemoteData((err, data) => {
@@ -144,7 +146,6 @@ module.exports = function(force, checkOnly) {
       catch(err) {log(err)}
 
       clrLine();
-      //log(`MD5 hashes: ${remoteMD5 === io.calcMD5(data) ? "OK!" : ANSI.red + "Error in hash!" + ANSI.reset}`);
       log("Data updated!");
     }
   })
