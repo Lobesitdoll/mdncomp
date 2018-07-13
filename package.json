@@ -2,7 +2,7 @@
   "name": "mdncomp",
   "version": "2.00.0-alpha",
   "description": "Browser Compatibility Data on the command line.",
-  "main": "build/mdncomp.min.js",
+  "main": "bin/mdncomp.min.js",
   "private": false,
   "publishConfig": {
     "registry": "http://localhost:4444",
