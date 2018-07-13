@@ -4,11 +4,10 @@
   www.epistemex.com
 */
 
-const
-  ANSI = require("./ansi"),
-  https = require("https"),
-  fs = require("fs"),
-  path = require("path");
+const fs = require("fs");
+const path = require("path");
+const https = require("https");
+const ANSI = require("./core.ansi");
 
 module.exports = {
 

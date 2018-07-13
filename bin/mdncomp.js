@@ -2,8 +2,14 @@
 //require("./../build/build.min.js")();
 
 global.lf = "\r\n";
+global.sepChar = "|";
 global.options = require("./../src/init.options.js");
 
+// Anything to do?
+if (!global.options.args.length) {
+  global.options.help();
+  return
+}
 console.log("to be continued...", `
 ooooooooo&&&&&&&&&&&&&&&&8888&&&&&&&&&ooooo&&&&&&&&&8&8&&m&&&8888888888888888888888&o*====o
 oooooooooooooooooooo&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&8888#8&&&&&&&88888&&888888888888&o====oo
@@ -49,4 +55,4 @@ oo***=:,,,..,=8mm88&&ooo==oo&88mmmm8&&mm88m8&*&mm####mmm8&8mmmmm888####mmmm8&o**
 ,..::=:===:*====*=***=:*==::::::::o===**o*==****&o&&&&&&&&8&oooo&o===**======*=***oo*:=====
 ,.,,,,=:::*:=:=**=*=*=:,=::=,::=*====*:*:,=*==::==o===o*=o=*=o*::=**=::**==**:=****:=:=*===
 .,,,,:,:==:=====,=o==::=,:=:,:=&:*==*=*==:==:::=*===:==*=*:*=*=*:=***=**=*=**==*o::*:=:=o:*
-`)
+`);

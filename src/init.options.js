@@ -12,6 +12,7 @@ const help = require("./init.help");
 const lf = global.lf;
 
 module.exports = (() => {
+
   commander
     .version(version, "-v, --version")
     .usage("[options] <feature>")
@@ -27,7 +28,7 @@ module.exports = (() => {
     .option("-z, --fuzzy", "Use path as a fuzzy search term")
     .option("-i, --index <index>", "Show this index from a multiple result list", -1)
     .option("-s, --shorthand", "Show compatibility as shorthand with multiple results")
-    .option("-h, --split", "Split a shorthand line into two lines (use with -s)")
+    .option("-t, --split", "Split a shorthand line into two lines (use with -s)")
     .option("-b, --browser", "Show information about this browser, or list if '.'")
     .option("-W, --no-workers", "Don't show worker support information.")
     .option("-N, --no-notes", "Don't show notes")
@@ -49,6 +50,9 @@ module.exports = (() => {
     .option("--configpath", "Show path to where config file and cache is stored")
     .on("--help", () => {help.show()})
     .parse(process.argv);
+
+  // apply config file settings if any
+  require("./init.config")(commander);
 
   return commander
 })();
