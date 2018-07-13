@@ -88,12 +88,12 @@ else if (options.list) {
 
 */
 else if (options.args.length) {
-  console.log("todo search:", options.args);
+  require(_base + "option.search")(options.args[0]);
 }
 
 /*---------------------------------------------------------
 
-    Unknown or no option
+    If no option, default to help
 
 */
 else options.help();

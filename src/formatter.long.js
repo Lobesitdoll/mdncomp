@@ -1,9 +1,11 @@
 /**
  * Key formatter for ASCII output long format
  * @param {MDNComp} mdnComp
+ * @param noHeader
+ * @param sepChar
  * @returns {string}
  */
-function compatToLong(mdnComp, noHeader) {
+function compatToLong(mdnComp, noHeader, sepChar = "|") {
   let
     out = new Output(0),
     desktopList = ["chrome", "edge", "firefox", "ie", "opera", "safari"],

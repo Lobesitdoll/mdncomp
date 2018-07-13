@@ -1,4 +1,4 @@
-/*
+/*!
   Utils module
   Copyright (c) 2018 Epistemex
   www.epistemex.com

@@ -46,7 +46,7 @@ module.exports = (() => {
     .option("--doc", "Show documentation. Show cached or fetch")
     .option("--docforce", "Show documentation. Force fetch from MDN server")
     .option("--mdn", "Open entry's document URL in default browser")
-    .option("--random", "Show a random entry. (mdncomp --random . )")
+    .option("--random <path>", "Show a random entry (use . for any)")
     .option("--update", "Update data from remote if available")
     .option("--fupdate", "Force update data from remote")
     .option("--cupdate", "Check if update is available")
