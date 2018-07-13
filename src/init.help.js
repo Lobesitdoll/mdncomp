@@ -32,4 +32,4 @@ function show() {
   process.exit()
 }
 
-module.exports = {show};
+module.exports = show;

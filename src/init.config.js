@@ -1,4 +1,4 @@
-/*
+/*!
   Config file module
   Copyright (c) 2018 Epistemex
   www.epistemex.com
@@ -8,45 +8,61 @@
 
 const io = require("./core.io");
 const path = require("path");
-const file = path.resolve(io.getConfigDataPath(), ".config.json");
+const filePath = path.resolve(io.getConfigDataPath(), ".config.json");
 
+/**
+ * The method tries to load a config file from the user area in the folder
+ * .mdncomp/*. If found settings are checked against a whitelist and applied
+ * to options (generated from commander) as well as global options such as
+ * sepChar.
+ * @param {*} options - commander options
+ * @private
+ */
 function loadConfig(options) {
   try {
-    let cfg = require(file);
-    let co = Object.assign({}, cfg.options);
+    let cfg = require(filePath);
+    let cfgOptions = Object.assign({}, cfg.options);
     let fmt = Object.assign({}, cfg.formatter);
 
-    if (isBool(co.fuzzy)) options.fuzzy = co.fuzzy;
-    if (isBool(co.colors)) options.colors = co.colors;
-    if (isBool(co.notes)) options.notes = co.notes;
-    if (isBool(co.noteEnd)) options.noteEnd = co.noteEnd;
-    if (isBool(co.shorthand)) options.shorthand = co.shorthand;
-    if (isBool(co.split)) options.split = co.split;
-    if (isBool(co.caseSensitive)) options.caseSensitive = co.caseSensitive;
-    if (isBool(co.desktop)) options.desktop = co.desktop;
-    if (isBool(co.mobile)) options.mobile = co.mobile;
-    if (isBool(co.overwrite)) options.overwrite = co.overwrite;
-    if (isBool(co.markdown)) options.markdown = co.markdown;
-    if (isNum(co.maxChars)) options.maxChars = Math.max(0, co.maxChars|0);
-    if (isBool(co.doc)) options.doc = co.doc;
-    if (isBool(co.docforce)) options.docforce = co.docforce;
-    if (isBool(co.ext)) options.ext = co.ext;
-    if (isBool(co.desc)) options.desc = co.desc;
-    if (isBool(co.specs)) options.specs = co.specs;
-    if (isBool(co.waitkey)) options.waitkey = co.waitkey;
-    if (isBool(co.workers)) options.workers = co.workers;
-    if (isBool(co.sab)) options.sab = co.sab;
+    if ( isBool(cfgOptions.fuzzy) ) options.fuzzy = cfgOptions.fuzzy;
+    if ( isBool(cfgOptions.colors) ) options.colors = cfgOptions.colors;
+    if ( isBool(cfgOptions.notes) ) options.notes = cfgOptions.notes;
+    if ( isBool(cfgOptions.noteEnd) ) options.noteEnd = cfgOptions.noteEnd;
+    if ( isBool(cfgOptions.shorthand) ) options.shorthand = cfgOptions.shorthand;
+    if ( isBool(cfgOptions.split) ) options.split = cfgOptions.split;
+    if ( isBool(cfgOptions.caseSensitive) ) options.caseSensitive = cfgOptions.caseSensitive;
+    if ( isBool(cfgOptions.desktop) ) options.desktop = cfgOptions.desktop;
+    if ( isBool(cfgOptions.mobile) ) options.mobile = cfgOptions.mobile;
+    if ( isBool(cfgOptions.overwrite) ) options.overwrite = cfgOptions.overwrite;
+    if ( isBool(cfgOptions.markdown) ) options.markdown = cfgOptions.markdown;
+    if ( isNum(cfgOptions.maxChars) ) options.maxChars = Math.max(0, cfgOptions.maxChars | 0);
+    if ( isBool(cfgOptions.doc) ) options.doc = cfgOptions.doc;
+    if ( isBool(cfgOptions.docforce) ) options.docforce = cfgOptions.docforce;
+    if ( isBool(cfgOptions.ext) ) options.ext = cfgOptions.ext;
+    if ( isBool(cfgOptions.desc) ) options.desc = cfgOptions.desc;
+    if ( isBool(cfgOptions.specs) ) options.specs = cfgOptions.specs;
+    if ( isBool(cfgOptions.waitkey) ) options.waitkey = cfgOptions.waitkey;
+    if ( isBool(cfgOptions.workers) ) options.workers = cfgOptions.workers;
+    if ( isBool(cfgOptions.sab) ) options.sab = cfgOptions.sab;
 
-    if (fmt.long && fmt.long.sepChar && typeof fmt.long.sepChar === "string" && fmt.long.sepChar.length === 1 && isValid(fmt.long.sepChar)) {
-      global.sepChar = fmt.long.sepChar
+    if ( fmt.long && fmt.long.sepChar && typeof fmt.long.sepChar === "string" && fmt.long.sepChar.length === 1 && isValid(fmt.long.sepChar) ) {
+      global.sepChar = fmt.long.sepChar;
     }
-
   }
-  catch(err) {}
+  catch(err) {/* No config was found/loadable; we'll ignore */
+  }
 
-  function isValid(c) {return " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_|+*{}[];:!\"#&/()=?\\.,".includes(c)}
-  function isBool(v) {return typeof v === "boolean"}
-  function isNum(v) {return typeof v === "number"}
+  function isValid(c) {
+    return " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_|+*{}[];:!\"#&/()=?\\.,".includes(c);
+  }
+
+  function isBool(v) {
+    return typeof v === "boolean";
+  }
+
+  function isNum(v) {
+    return typeof v === "number";
+  }
 }
 
 module.exports = loadConfig;

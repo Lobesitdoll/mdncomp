@@ -6,17 +6,23 @@
 
 "use strict";
 
-const commander = require("commander");
-const version = require("../package.json").version;
-const help = require("./init.help");
+const Path = require("path");
+const options = require("commander");
+const version = require("./../package.json").version;
 const lf = global.lf;
 
+/**
+ * Parse command line arguments.
+ * Provides a help text if no (valid) arguments are supplied.
+ * Can show help per option as well ("--help --browser").
+ * @type {options.CommanderStatic}
+ * @returns {*} The options object with flags and arguments.
+ */
 module.exports = (() => {
-
-  commander
+  options
     .version(version, "-v, --version")
     .usage("[options] <feature>")
-    .description("Get MDN Browser Compatibility Data, docs and specs." + lf + "  Version: " + version + lf + "  (c) 2018 epistemex.com")
+    .description(`Get MDN Browser Compatibility Data, docs and specs.${lf}  Version: ${version + lf}  (c) 2018 epistemex.com`)
 
     .option("-l, --list", "List paths starting with the given value or '.' for top-level")
     .option("-o, --out <path>", "Save information to file. Use extension for type (.txt or .ansi)")
@@ -48,11 +54,13 @@ module.exports = (() => {
     .option("--max-chars <width>", "Max number of chars per line before wrap", 72)
     .option("--no-config", "Ignore config file (mdncomp.json) in config folder")
     .option("--configpath", "Show path to where config file and cache is stored")
-    .on("--help", () => {help.show()})
+    .on("--help", () => {
+      require("./init.help")();
+    })
     .parse(process.argv);
 
   // apply config file settings if any
-  require("./init.config")(commander);
+  require("./init.config")(options);
 
-  return commander
+  return options
 })();

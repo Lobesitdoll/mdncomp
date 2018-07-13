@@ -8,9 +8,17 @@
 
 "use strict";
 
-const mdn = require("../data/data.json");
+//const mdn = global.loadMDN();
 
-const utils = module.exports = {
+const utils = {
+
+  nullANSI: () => {
+    Object
+      .keys(global.ANSI)
+      .filter(item => !item.includes("ursor"))
+      .forEach(color => ANSI[color] = "");
+  },
+
   /**
    * Flattens the object tree into array (each item = one line):
    * f.ex: mdn["api"]["Blob"]["slice"] => "api.Blob.slice"
@@ -240,3 +248,5 @@ const utils = module.exports = {
 
 
 };
+
+module.exports = utils;

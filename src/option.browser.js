@@ -1,4 +1,15 @@
+/*!
+  Browser option module
+  Copyright (c) 2018 Epistemex
+  www.epistemex.com
+ */
 
+const mdn = global.loadMDN();
+
+/**
+ * List available browser names
+ * @returns {string[]}
+ */
 function listBrowsers() {
   return Object.keys(mdn.browsers)
 }
@@ -10,9 +21,8 @@ function listBrowsers() {
  * @returns {*}
  */
 function listBrowser(browserId) {
-  const
-    browser = mdn.browsers[browserId],
-    result = [];
+  const browser = mdn.browsers[browserId];
+  const result = [];
 
   if (!browser) {
     return getBrowserStatusList().includes(browserId)
@@ -21,36 +31,46 @@ function listBrowser(browserId) {
   }
 
   // Get padding width
-  let vPad = 0, vPad2 = 0;
-  Object.keys(browser.releases).forEach(version => {
-    let verArr = version.split(".");
-    if (verArr[0].length > vPad)
-      vPad = verArr[0].length;
-    if (version.length - verArr[0].length > vPad2)
-      vPad2 = version.length - verArr[0].length;
-  });
+  let vPad = 0;
+  let vPad2 = 0;
+
+  Object
+    .keys(browser.releases)
+    .forEach(version => {
+      let verArr = version.split(".");
+      if (verArr[0].length > vPad) {
+        vPad = verArr[0].length;
+      }
+      if (version.length - verArr[0].length > vPad2) {
+        vPad2 = version.length - verArr[0].length;
+      }
+    });
 
   // Get status padding
-  let sList = getBrowserStatusList(), sPad = 0;
+  let sList = getBrowserStatusList();
+  let sPad = 0;
   sList.forEach(status => {
-    if (status.length > sPad) sPad = status.length;
+    if (status.length > sPad) sPad = status.length
   });
 
   // Show information
-  Object.keys(browser.releases).sort(_cmp).forEach(version => {
-    let
-      txt = ANSI.white + (browser.name || browserId) + "  " + ANSI.green + _fBrowserVersion(version, vPad, vPad2),
-      date = browser.releases[version].release_date,
-      notes = browser.releases[version].release_notes,
-      status = browser.releases[version].status;
+  Object
+    .keys(browser.releases)
+    .sort(_cmp)
+    .forEach(version => {
+      let
+        txt = ANSI.white + (browser.name || browserId) + "  " + ANSI.green + _fBrowserVersion(version, vPad, vPad2),
+        date = browser.releases[version].release_date,
+        notes = browser.releases[version].release_notes,
+        status = browser.releases[version].status;
 
-    txt += "  " + (date ? ANSI.cyan + date : ANSI.gray + "-         ");
-    txt += "  " + (status ? _browserStatusColor(status) + status.padEnd(sPad) +
-      (options.notes && notes ? "  " + ANSI.reset + notes : "") +
-      ANSI.reset + ANSI.white : "-");
+      txt += "  " + (date ? ANSI.cyan + date : ANSI.gray + "-         ");
+      txt += "  " + (status ? _browserStatusColor(status) + status.padEnd(sPad) +
+        (options.notes && notes ? "  " + ANSI.reset + notes : "") +
+        ANSI.reset + ANSI.white : "-");
 
-    result.push(txt + ANSI.white);
-  });
+      result.push(txt + ANSI.white);
+    });
 
   // to sort complex version numbers using semver, or not.
   function _cmp(a, b) {
@@ -134,10 +154,12 @@ function _iterateBrowsers(callback) {
 
   Object.keys(browsers).forEach(key => {
     let name = browsers[key].name;
-    Object.keys(browsers[key].releases).forEach(release => {
-      let ret = callback(browsers[key].releases[release], key, release, result, name);
-      if (ret) result.push(ret);
-    })
+    Object
+      .keys(browsers[key].releases)
+      .forEach(release => {
+        let ret = callback(browsers[key].releases[release], key, release, result, name);
+        if (ret) result.push(ret);
+      })
   });
 
   return result
@@ -148,3 +170,16 @@ function _fBrowserVersion(version, padStart, padEnd) {
   return verArr[0].padStart(padStart) + verArr.join(".").substr(verArr[0].length).padEnd(padEnd)
 }
 
+function browsers(path) {
+  if (path === ".") {
+    global.outInfo(ANSI.reset + "Valid browser identifiers:");
+    global.outInfo(ANSI.green + listBrowsers().join(lf) + ANSI.reset);
+    global.outInfo(lf + "Valid statuses:");
+    global.outInfo(ANSI.green + getBrowserStatusList().join(", "));
+  }
+  else {
+    global.outInfo(listBrowser(path.toLowerCase()).join(lf));
+  }
+}
+
+module.exports = browsers;
