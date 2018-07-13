@@ -31,7 +31,11 @@ module.exports = {
       _res = res;
 
       // handle redirects
-      if (res.statusCode === 301 || res.statusCode === 302) {
+
+      if (!res || !res.statusCode) {
+        onError("Could not connect");
+      }
+      else if (res.statusCode === 301 || res.statusCode === 302) {
         return this.request(res.headers.location, onResp, onProgress, onData, onError);
       }
       else if (res.statusCode === 200 && onResp({headers: res.headers})) {
@@ -51,7 +55,7 @@ module.exports = {
     req.end();
 
     function _error(res, err) {
-      if (onError) onError({statusCode: res.statusCode, error: err});
+      if (onError) onError({statusCode: res && res.statusCode ? res.statusCode : -1, error: err});
       else log("Error", res, err);
     }
   },

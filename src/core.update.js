@@ -3,6 +3,8 @@
   (c) 2018 epistemex.com
  */
 
+const log = console.log.bind(console);
+
 const fs = require("fs");
 const path = require("path");
 const zlib = require("zlib");
@@ -11,16 +13,19 @@ const io = require("./io");
 const ANSI = require("./ansi");
 const rfc6902 = require("rfc6902");
 
-const log = console.log.bind(console);
 const urlPrefix = "https://raw.githubusercontent.com/epistemex/mdncomp-data/master/";
+const urlPrefixR = "https://gitlab.com/epistemex/mdncomp-data/raw/master/";
 const filePrefix = path.normalize(path.dirname(process["mainModule"].filename) + "/../data/");
 const clr = ANSI.clrToCursor + ANSI.cursorUp;
 const PWIDTH = 40;
 
+let wasRedundant = false;
+
 function clrLine() {
   log(clr + ("").padStart(72, " "));
 }
-function compareMD5(callback) {
+function compareMD5(callback, redundant) {
+  const _urlPrefix = redundant || wasRedundant ? urlPrefixR : urlPrefix;
   let local;
   try {
     local = fs.readFileSync(filePrefix + "data.md5", "utf-8");
@@ -28,10 +33,17 @@ function compareMD5(callback) {
   catch(err) {}
 
   // remote MD5
-  io.request(urlPrefix + "data.md5", null, null, (remote) => {
+  io.request(_urlPrefix + "data.md5", null, null, (remote) => {
     callback({local, remote})
   }, (err) => {
-    log("An error occurred:", err.statusCode, err.error)
+    wasRedundant = true;
+    if (redundant) {
+      log("An error occurred:", err.statusCode, err.error);
+    }
+    else {
+      log("Using redundancy...\n");
+      setImmediate(compareMD5, callback, true);
+    }
   })
 }
 function getPatch(md5, callback) {
@@ -42,9 +54,13 @@ function getPatch(md5, callback) {
       (err) => {callback(err)},
       true)
 }
-function getRemoteData(callback) {
-  let lastUpdate = 0, update, prog;
-  io.request(urlPrefix + "data.gz",
+function getRemoteData(callback, redundant) {
+  const _urlPrefix = redundant || wasRedundant ? urlPrefixR : urlPrefix;
+  let lastUpdate = 0;
+  let update;
+  let prog;
+
+  io.request(_urlPrefix + "data.gz",
     () => !clrLine(),
     (pct) => {
       prog = Math.ceil(PWIDTH * pct);
@@ -58,8 +74,16 @@ function getRemoteData(callback) {
       _progressBar();
       callback(null, zlib.gunzipSync(data))
     },
-    (err) => {callback(err)},
-    true); // as Buffer
+    (err) => {
+      wasRedundant = true;
+      if (redundant) callback(err);
+      else {
+        log("Using redundancy...\n");
+        setImmediate(getRemoteData, callback, true);
+      }
+    },
+    true
+  );
 
   function _progressBar() {
     log(clr + ANSI.white + "Downloading data " + ANSI.white + "[" + ANSI.blue + "#".repeat(prog) + " ".repeat(PWIDTH - prog) + ANSI.white + "]" + ANSI.reset);
@@ -75,16 +99,17 @@ function getCurrentData() {
 }
 
 module.exports = function(force, checkOnly) {
+  const noData = "No new data available.";
 
   compareMD5(md5 => {
     if (force) {
       _remote()
     }
     else if (md5.local === md5.remote) {
-      log("No new data available.")
+      log(noData)
     }
     else if (checkOnly) {
-      log("New data is available.")
+      log(noData)
     }
     else {
       getPatch(md5, (err, patchStr) => {
@@ -124,7 +149,7 @@ module.exports = function(force, checkOnly) {
         else if (entry.op === "remove") removes++;  //entries.push(entry);
         else if (entry.op === "replace") updates++;
       });
-      log(`Diff: ${adds} adds, ${updates} updates, ${removes} removes`); //, ${copies} copies, ${moves} moves.`)
+      log(`Diff: ${adds} adds, ${updates} updates, ${removes} removes\n`); //, ${copies} copies, ${moves} moves.`)
 //      entries.forEach(entry => {
 //        log(`Removed: ${entry.path.replace("__compat/", "")}`)
 //      });
