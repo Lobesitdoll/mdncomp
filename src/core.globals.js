@@ -15,7 +15,8 @@ let
   crypto,
   options,
   isoLang = "en-US",  // todo can be set by user in the future
-  shortPad = 1;
+  shortPad = 1,
+  sepChar = "|";
 
 /**
  * Flattens the object tree into array (each item = one line):

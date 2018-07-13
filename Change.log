@@ -1,6 +1,10 @@
 mdncomp
 =======
 
+1.23.0
+CHG: Table cell separator char to | (pipe) to allow markdown table output directly.
+ADD: Custom table cell separator char in .config file. (see incl. sample file)
+
 1.22.3
 CHG: Output "replacements" in patch diff changed to "updates"
 

@@ -3,9 +3,8 @@ mdncomp
 
 Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data) on the command line.
 
-![xterm color output](https://i.imgur.com/fnxjQ0v.png)<br>
+![xterm color output](https://i.imgur.com/BXgAPb1.png)<br>
 <sup>*cygwin/xterm snapshot*</sup>
-
 
 Features
 --------
@@ -43,6 +42,7 @@ Features
   - Force update to reinitialize/clean all data, or with data corruption
   
 - Define permanent/often used options in a config file (which can be suspended at will).
+- Output can now be used directly in markdown flavors that support inline tables.
 - Built-in help per option.
 - Documented with [wiki](https://gitlab.com/epistemex/mdncomp/wikis/home) pages
 - Cross-platform (where node and npm is available).
@@ -69,14 +69,14 @@ $ mdncomp html*toblob.
  https://developer.mozilla.org/docs/Web/API/HTMLCanvasElement/toBlob
 
  Chrome    | Edge      | Firefox   | IE        | Opera     | Safari
- ----------+-----------+-----------+-----------+-----------+-----------
+ ----------|-----------|-----------|-----------|-----------|-----------
      50    |     -     |     19    |    10°    |     37    |     Y¹
 
 °) 10: Prefix: ms
 ¹) See WebKit bug 71270.
 
  Chrome/A  | Edge/mob  | Firefox/A | Opera/A   |Safari/iOS | Webview/A
- ----------+-----------+-----------+-----------+-----------+-----------
+ ----------|-----------|-----------|-----------|-----------|-----------
      50    |     -     |     4     |     37    |     -     |     50
 
 Data from MDN - `npm i -g mdncomp` by epistemex

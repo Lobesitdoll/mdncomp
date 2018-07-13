@@ -287,32 +287,40 @@ function loadConfig() {
   const
     file = path.resolve(io.getConfigDataPath(), ".config.json");
 
-  if (fs.existsSync(file)) {
+  try {
     let cfg = require(file);
-    cfg = cfg.options || cfg || {};
+    let co = Object.assign({}, cfg.options);
+    let fmt = Object.assign({}, cfg.formatter);
 
-    if (isBool(cfg.fuzzy)) options.fuzzy = cfg.fuzzy;
-    if (isBool(cfg.colors)) options.colors = cfg.colors;
-    if (isBool(cfg.notes)) options.notes = cfg.notes;
-    if (isBool(cfg.noteEnd)) options.noteEnd = cfg.noteEnd;
-    if (isBool(cfg.shorthand)) options.shorthand = cfg.shorthand;
-    if (isBool(cfg.split)) options.split = cfg.split;
-    if (isBool(cfg.caseSensitive)) options.caseSensitive = cfg.caseSensitive;
-    if (isBool(cfg.desktop)) options.desktop = cfg.desktop;
-    if (isBool(cfg.mobile)) options.mobile = cfg.mobile;
-    if (isBool(cfg.overwrite)) options.overwrite = cfg.overwrite;
-    if (isBool(cfg.markdown)) options.markdown = cfg.markdown;
-    if (isNum(cfg.maxChars)) options.maxChars = Math.max(0, cfg.maxChars|0);
-    if (isBool(cfg.doc)) options.doc = cfg.doc;
-    if (isBool(cfg.docforce)) options.docforce = cfg.docforce;
-    if (isBool(cfg.ext)) options.ext = cfg.ext;
-    if (isBool(cfg.desc)) options.desc = cfg.desc;
-    if (isBool(cfg.specs)) options.specs = cfg.specs;
-    if (isBool(cfg.waitkey)) options.waitkey = cfg.waitkey;
-    if (isBool(cfg.workers)) options.workers = cfg.workers;
-    if (isBool(cfg.sab)) options.sab = cfg.sab;
+    if (isBool(co.fuzzy)) options.fuzzy = co.fuzzy;
+    if (isBool(co.colors)) options.colors = co.colors;
+    if (isBool(co.notes)) options.notes = co.notes;
+    if (isBool(co.noteEnd)) options.noteEnd = co.noteEnd;
+    if (isBool(co.shorthand)) options.shorthand = co.shorthand;
+    if (isBool(co.split)) options.split = co.split;
+    if (isBool(co.caseSensitive)) options.caseSensitive = co.caseSensitive;
+    if (isBool(co.desktop)) options.desktop = co.desktop;
+    if (isBool(co.mobile)) options.mobile = co.mobile;
+    if (isBool(co.overwrite)) options.overwrite = co.overwrite;
+    if (isBool(co.markdown)) options.markdown = co.markdown;
+    if (isNum(co.maxChars)) options.maxChars = Math.max(0, co.maxChars|0);
+    if (isBool(co.doc)) options.doc = co.doc;
+    if (isBool(co.docforce)) options.docforce = co.docforce;
+    if (isBool(co.ext)) options.ext = co.ext;
+    if (isBool(co.desc)) options.desc = co.desc;
+    if (isBool(co.specs)) options.specs = co.specs;
+    if (isBool(co.waitkey)) options.waitkey = co.waitkey;
+    if (isBool(co.workers)) options.workers = co.workers;
+    if (isBool(co.sab)) options.sab = co.sab;
 
-    function isBool(v) {return typeof v === "boolean"}
-    function isNum(v) {return typeof v === "number"}
+    if (fmt.long && fmt.long.sepChar && typeof fmt.long.sepChar === "string" && fmt.long.sepChar.length === 1 && isValid(fmt.long.sepChar)) {
+      sepChar = fmt.long.sepChar
+    }
+
   }
+  catch(err) {}
+
+  function isValid(c) {return " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_|+*{}[];:!\"#&/()=?\\.,".includes(c)}
+  function isBool(v) {return typeof v === "boolean"}
+  function isNum(v) {return typeof v === "number"}
 }

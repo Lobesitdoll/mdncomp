@@ -76,6 +76,40 @@ or if you prefer to output in shorthand format:
 }
 ```
 
+Other configurations:
+
+```text/json
+{"options": {},
+  "formatter": {
+    "long": {
+      "sepChar": "+"
+    }
+  }
+}
+```
+For now you can specify table cell separator character to do:
+
+```text
+----------+-----------+-----------+-----------+-----------+-----------
+----------|-----------|-----------|-----------|-----------|-----------
+```  
+etc.
+
+Only a single char in the ASCII range is considered valid with the exception
+of a few characters such as &lt; and &gt;, $, % and &amp;. It none is specified
+or an char is invalid, mdncomp defaults back to "|".
+
+This not allow you do use a preferred character but also to output tables
+that can be used in some markdown flavors that support inline tables,
+
+Example - if the markdown flavor support tables a HTML table should appear
+below instead of the normal ASCII representation:
+
+ Chrome    | Edge      | Firefox   | IE        | Opera     | Safari    
+ ----------|-----------|-----------|-----------|-----------|-----------
+     50    |     -     |     19    |    10°    |     37    |     Y¹    
+
+
 Then if you from time to time want to ignore the config file you could use the [`--no-config`](./Options.md#-no-config)
 option:
 

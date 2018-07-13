@@ -10,7 +10,7 @@ function compatToLong(mdnComp, noHeader) {
     mobileList = ["chrome_android", "edge_mobile", "firefox_android", "opera_android", "safari_ios", "webview_android"],
     extList = ["nodejs", "qq_android", "samsunginternet_android", "uc_android", "uc_chinese_android"],
     refs = ["°", "¹", "²", "³", "ª", "^", "`", "'", "\"", "'\"", "\"\"", "\"\"'", "º"],
-    line = " %0----------+-----------+-----------+-----------+-----------+-----------",
+    line = " %0----------+-----------+-----------+-----------+-----------+-----------".replace(/\+/g, sepChar),
     ref = 0,
     notes = [];
 

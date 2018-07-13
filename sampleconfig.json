@@ -1,4 +1,5 @@
-{"options": {
+{
+  "options": {
     "_help1_delete": "This file allow you to permanently set options you use frequently.",
     "_help2_delete": "You can suspend the settings in here using the option --no-config.",
 
@@ -30,5 +31,10 @@
     "waitkey"       : false,
     "workers"       : true,
     "sab"           : false
+  },
+  "formatter": {
+    "long": {
+      "sepChar": "+"
+    }
   }
 }
