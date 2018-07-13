@@ -1,15 +1,18 @@
 #!/usr/bin/env node
-//require("./../build/build.min.js")();
+
+const _base = "./../src/";
 
 global.lf = "\r\n";
 global.sepChar = "|";
-global.options = require("./../src/init.options.js");
+global.ANSI = require(_base + "core.ansi");
+global.options = require(_base + "init.options.js");
 
 // Anything to do?
 if (!global.options.args.length) {
   global.options.help();
   return
 }
+
 console.log("to be continued...", `
 ooooooooo&&&&&&&&&&&&&&&&8888&&&&&&&&&ooooo&&&&&&&&&8&8&&m&&&8888888888888888888888&o*====o
 oooooooooooooooooooo&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&8888#8&&&&&&&88888&&888888888888&o====oo

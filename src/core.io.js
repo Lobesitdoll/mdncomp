@@ -7,7 +7,7 @@
 const fs = require("fs");
 const path = require("path");
 const https = require("https");
-const ANSI = require("./core.ansi");
+const ANSI = global.ANSI;
 
 module.exports = {
 
