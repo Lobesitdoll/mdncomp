@@ -7,7 +7,7 @@ const DEBUG = true;
 /*-------------------------------------------------------*/
 
 const _base = `../${DEBUG ? "src" : "build"}/`;
-const _outBuffer = [];
+const utils = require(_base + "core.utils");
 
 /**
  * Available globally to all modules.
@@ -23,17 +23,14 @@ Object.assign(global, {
   shortPad: 1,
   lang    : "en-US",
   ANSI    : require(_base + "core.ansi"),
-  options : {},
-  loadMDN : loadMDN,
-  outInfo : outInfo,
-  outStore: outStore
+  options : {}
 });
 
 // Load options from command line and config file
 const options = global.options = require(_base + "init.options");
 
 // Use ANSI color?
-if (!options.colors || options.markdown || getExt(options.out) === ".txt") {
+if (!options.colors || options.markdown || utils.getExt(options.out) === ".txt") {
   Object
     .keys(global.ANSI)
     .filter(item => !item.includes("ursor"))
@@ -100,47 +97,3 @@ else if (options.args.length) {
 
 */
 else options.help();
-
-/*---------------------------------------------------------
-
-  HELPERS
-
-*/
-
-// todo move these to sep. module
-
-function loadMDN() {
-  let mdn;
-  try {
-    mdn = require("../data/data.json");
-  }
-  catch(err) {
-    log("Critical error: data file not found. Try running with option --fupdate to download latest snapshot.");
-    process.exit(1);
-  }
-
-  return mdn
-}
-
-function outInfo(txt) {
-  if (Array.isArray(txt)) {
-    txt = txt.join(lf);
-  }
-  console.log(txt + ANSI.reset);
-}
-
-function outStore(txt, noFile) {
-  if (Array.isArray(txt)) txt = txt.join(lf);
-  if (noFile || !options.out) {
-    console.log(txt);
-  }
-  else {
-    _outBuffer.push(txt);
-  }
-}
-
-function getExt(path) {
-  if (typeof path !== "string") return "";
-  let i = path.lastIndexOf(".");
-  return i < 0 ? "" : path.substr(++i)
-}

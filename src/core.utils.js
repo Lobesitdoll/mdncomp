@@ -4,11 +4,9 @@
   www.epistemex.com
 */
 
-// TODO This is not currently in operation
-
 "use strict";
 
-//const mdn = global.loadMDN();
+const _outBuffer = [];
 
 const utils = {
 
@@ -239,7 +237,38 @@ const utils = {
       .replace(/&amp;/gmi, "&")
       .replace(/&lt;/gmi, "<")
       .replace(/&gt;/gmi, ">");
+  },
+
+  loadMDN: function() {
+    let mdn;
+    try {
+      mdn = require("../data/data.json");
+    }
+    catch(err) {
+      log("Critical error: data file not found. Try running with option --fupdate to download latest snapshot.");
+      process.exit(1);
+    }
+
+    return mdn
+  },
+
+  outInfo: function (txt) {
+    if (Array.isArray(txt)) {
+      txt = txt.join(lf);
+    }
+    console.log(txt + ANSI.reset);
+  },
+
+  outStore: function (txt, noFile) {
+    if (Array.isArray(txt)) txt = txt.join(lf);
+    if (noFile || !options.out) {
+      console.log(txt);
+    }
+    else {
+      _outBuffer.push(txt);
+    }
   }
+
 };
 
 module.exports = utils;

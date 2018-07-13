@@ -4,8 +4,9 @@
   www.epistemex.com
  */
 
-const mdn = global.loadMDN();
-const outInfo = global.outInfo;
+const utils = require("./core.utils");
+const mdn = utils.loadMDN();
+const outInfo = utils.outInfo;
 
 /**
  * List available browser names

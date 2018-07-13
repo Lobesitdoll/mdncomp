@@ -4,9 +4,12 @@
   www.epistemex.com
  */
 
-const mdn = global.loadMDN();
+// TODO refactor
+
 const utils = require("./core.utils");
-const outInfo = global.outInfo;
+const mdn = utils.loadMDN();
+const outInfo = utils.outInfo;
+
 const ANSI = global.ANSI;
 const lf = global.lf;
 

@@ -3,7 +3,7 @@
   (c) 2018 epistemex.com
  */
 
-const log = console.log.bind(console);
+const log = console.log;
 
 const fs = require("fs");
 const path = require("path");
