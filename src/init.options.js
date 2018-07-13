@@ -24,7 +24,7 @@ module.exports = (() => {
     .usage("[options] <feature>")
     .description(`Get MDN Browser Compatibility Data, docs and specs.${lf}  Version: ${version + lf}  (c) 2018 epistemex.com`)
 
-    .option("-l, --list", "List paths starting with the given value or '.' for top-level")
+    .option("-l, --list <path>", "List paths starting with the given value or '.' for top-level")
     .option("-o, --out <path>", "Save information to file. Use extension for type (.txt or .ansi)")
     .option("-x, --overwrite", "Overwrites an existing file with --out option")
     .option("-d, --desktop", "Show desktop only")
@@ -35,7 +35,7 @@ module.exports = (() => {
     .option("-i, --index <index>", "Show this index from a multiple result list", -1)
     .option("-s, --shorthand", "Show compatibility as shorthand with multiple results")
     .option("-t, --split", "Split a shorthand line into two lines (use with -s)")
-    .option("-b, --browser", "Show information about this browser, or list if '.'")
+    .option("-b, --browser <id>", "Show information about this browser, or list if '.'")
     .option("-W, --no-workers", "Don't show worker support information.")
     .option("-N, --no-notes", "Don't show notes")
     .option("-e, --noteend", "Show notes at end instead of in sections (text)")

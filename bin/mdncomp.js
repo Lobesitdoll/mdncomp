@@ -23,13 +23,22 @@ Object.assign(global, {
   shortPad: 1,
   lang    : "en-US",
   ANSI    : require(_base + "core.ansi"),
-  options : require(_base + "init.options"),
+  options : {},
   loadMDN : loadMDN,
   outInfo : outInfo,
   outStore: outStore
 });
 
-const options = global.options;
+/*-------------------------------------------------------------------------------------------------
+
+  UPDATE
+
+-------------------------------------------------------------------------------------------------*/
+
+if (process.argv.length === 3 && /^--[fc]?update$/.test(process.argv[2])) {
+  require(_base + "core.update")();
+  process.exit();
+}
 
 /*-------------------------------------------------------------------------------------------------
 
@@ -37,8 +46,10 @@ const options = global.options;
 
 -------------------------------------------------------------------------------------------------*/
 
+const options = global.options = require(_base + "init.options");
+
 // Anything to do?
-if ( !options.args.length ) {
+if ( !options.args.length && !options.browser && !options.list) {
   options.help();
   return;
 }

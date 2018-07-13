@@ -8,7 +8,7 @@
 
 const log = console.log;
 const args = process.argv;
-const ANSI = require("./core.ansi");
+const ANSI = global.ANSI;
 
 function show() {
   if (args.length === 4) {
