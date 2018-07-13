@@ -13,8 +13,8 @@
     "email": "epistemex@users.noreply.github.com"
   },
   "scripts": {
-    "start": "node ./bin/mdncomp.js",
-    "update": "node ./bin/mdncomp.js --update"
+    "start": "node ./bin/mdncomp.min.js",
+    "update": "node ./bin/mdncomp.min.js --update"
   },
   "keywords": [
     "mdn",
@@ -33,14 +33,14 @@
   ],
   "license": "MIT",
   "bin": {
-    "mdncomp": "./bin/mdncomp.js"
+    "mdncomp": "./bin/mdncomp.min.js"
   },
   "repository": {
     "type": "git",
     "url": "https://gitlab.com/epistemex/mdncomp.git"
   },
   "files": [
-    "bin/",
+    "bin/mdncomp.min.js",
     "build/",
     "data/data.json",
     "data/data.md5",

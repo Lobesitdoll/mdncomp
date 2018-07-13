@@ -5,6 +5,7 @@
  */
 
 const mdn = global.loadMDN();
+const outInfo = global.outInfo;
 
 /**
  * List available browser names
@@ -172,13 +173,13 @@ function _fBrowserVersion(version, padStart, padEnd) {
 
 function browsers(path) {
   if (path === ".") {
-    global.outInfo(ANSI.reset + "Valid browser identifiers:");
-    global.outInfo(ANSI.green + listBrowsers().join(lf) + ANSI.reset);
-    global.outInfo(lf + "Valid statuses:");
-    global.outInfo(ANSI.green + getBrowserStatusList().join(", "));
+    outInfo(ANSI.reset + "Valid browser identifiers:");
+    outInfo(ANSI.green + listBrowsers().join(lf) + ANSI.reset);
+    outInfo(lf + "Valid statuses:");
+    outInfo(ANSI.green + getBrowserStatusList().join(", "));
   }
   else {
-    global.outInfo(listBrowser(path.toLowerCase()).join(lf));
+    outInfo(listBrowser(path.toLowerCase()).join(lf));
   }
 }
 

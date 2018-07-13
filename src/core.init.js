@@ -136,7 +136,7 @@ function go(path) {
       outInfo(listOnStatus(path));
     }
     else {
-      let _list = list(path, options.caseSensitive);
+      let _list = listAPI(path, options.caseSensitive);
       if (_list.length === 1 && isCompat(_list[0])) {
         options.list = undefined;
         go(_list[0]);

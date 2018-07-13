@@ -1,3 +1,15 @@
+/*!
+  List option module
+  Copyright (c) 2018 Epistemex
+  www.epistemex.com
+ */
+
+const mdn = global.loadMDN();
+const utils = require("./core.utils");
+const outInfo = global.outInfo;
+const ANSI = global.ANSI;
+const lf = global.lf;
+
 /**
  * List either top-level paths or sub-paths based on the given prefix.
  * To list methods on an object specify the complete path.
@@ -12,10 +24,10 @@
  * @param sensitive
  * @returns {Array}
  */
-function list(prefix, sensitive) {
+function listAPI(prefix, sensitive) {
   const
     _prefix = sensitive ? prefix : prefix.toLowerCase(),
-    tbl = buildTable(),
+    tbl = utils.buildTable(mdn),
     result = [],
     maxSegments = _prefix.split(".").length + 1;
 
@@ -42,7 +54,7 @@ function list(prefix, sensitive) {
 function listOnStatus(statTxt) {
   const
     result = [],
-    keys = listTopLevels();
+    keys = utils.listTopLevels(mdn);
 
   if (statTxt === "standard") statTxt = "standard_track";
 
@@ -79,3 +91,29 @@ function listOnStatus(statTxt) {
 
   return result.sort();
 }
+
+function list(path) {
+
+  // top-levels
+  if (typeof path !== "string" || !path.length || path === ".") {
+    outInfo(ANSI.reset + "Valid path roots:");
+    outInfo(ANSI.green + utils.listTopLevels(mdn).join(lf) + ANSI.reset);
+    outInfo(lf + "Valid statuses:");
+    outInfo(ANSI.green + "standard, experimental, deprecated" + ANSI.reset);
+  }
+  // list on status
+  else if (["deprecated", "experimental", "standard"].includes(path)) {
+    outInfo(listOnStatus(path));
+  }
+  else {
+    let _list = listAPI(path, options.caseSensitive);
+    if (_list.length === 1 && utils.isCompat(mdn, _list[0])) {
+      options.list = undefined;
+      listAPI(_list[0], options.caseSensitive);
+    }
+    else
+      outInfo(_list);
+  }
+}
+
+module.exports = list;

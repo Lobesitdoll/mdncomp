@@ -9,6 +9,7 @@ module.exports = function(grunt) {
           }
         },
         files: {
+          "bin/mdncomp.min.js"           : ["bin/mdncomp.js"],
           "build/init.options.js"        : ["src/init.options.js"],
           "build/init.config.js"         : ["src/init.config.js"],
           "build/init.help.js"           : ["src/init.help.js"],
@@ -18,6 +19,7 @@ module.exports = function(grunt) {
           "build/core.update.js"         : ["src/core.update.js"],
           "build/help.options.js"        : ["src/help.options.js"],
           "build/option.browser.js"      : ["src/option.browser.js"],
+          "build/option.list.js"         : ["src/option.list.js"],
           "build/option.doc.tagparser.js": ["src/option.doc.tagparser.js"]
 //          "build/build.min.js": [
 //            "src/core.js",

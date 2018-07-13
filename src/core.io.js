@@ -22,10 +22,10 @@ module.exports = {
    */
   request: function(url, onResp, onProgress, onData, onError, rawBuffer) {
     onResp = onResp || function() {return true};
+
     let _res;
 
     const req = https.get(url, res => {
-
       let buffer = [], current = 0;
       _res = res;
 

@@ -12,24 +12,17 @@
 
 const utils = {
 
-  nullANSI: () => {
-    Object
-      .keys(global.ANSI)
-      .filter(item => !item.includes("ursor"))
-      .forEach(color => ANSI[color] = "");
-  },
-
   /**
    * Flattens the object tree into array (each item = one line):
    * f.ex: mdn["api"]["Blob"]["slice"] => "api.Blob.slice"
    * @returns {Array}
    */
-  buildTable: data => {
+  buildTable: (mdn) => {
     const result = [];
 
     utils
-      .listTopLevels()
-      .forEach(key => {if (key !== "browsers") _iterateNode(data || mdn, key, key)});
+      .listTopLevels(mdn)
+      .forEach(key => {if (key !== "browsers") _iterateNode(mdn, key, key)});
 
     function _iterateNode(node, inKey, branch) {
       const subNode = node[inKey];
@@ -51,8 +44,8 @@ const utils = {
    * various branches of the tree.
    * @returns {string[]}
    */
-  listTopLevels: data => {
-    let keys = Object.keys(data || mdn), i = keys.indexOf("browsers");
+  listTopLevels: (mdn) => {
+    let keys = Object.keys(mdn), i = keys.indexOf("browsers");
     if (i >= 0) keys.splice(i, 1);
     return keys
   },
@@ -121,11 +114,12 @@ const utils = {
   /**
    * Converts a line path (api.Blob.slice) to the object,
    * in this case for slice.
+   * @param mdn
    * @param path
    * @param noChildren - remove child __compat objects
    * @returns {*}
    */
-  getPathAsObject: (path, noChildren) => {
+  getPathAsObject: (mdn, path, noChildren) => {
     let parts = path.split("."), obj = mdn;
     parts.forEach(part => {if (obj && obj[part]) obj = obj[part]});
 
@@ -138,18 +132,18 @@ const utils = {
     return obj
   },
 
-  nameFromPath: path => {
+  nameFromPath: (path) => {
     let last = utils.getExt(path);
     return last.length ? last : path
   },
 
-  getExt: path => {
+  getExt: (path) => {
     if (typeof path !== "string") return "";
     let i = path.lastIndexOf(".");
     return i < 0 ? "" : path.substr(++i)
   },
 
-  prePathFromPath: path => {
+  prePathFromPath: (path) => {
     let parts = path.split("."), o = mdn, res = "";
     parts.pop();
     parts.forEach(part => {
@@ -165,11 +159,12 @@ const utils = {
   /**
    * Check if path points to an object with compatibility
    * information or not.
+   * @param mdn
    * @param path
    * @returns {boolean}
    */
-  isCompat: path => {
-    let obj = utils.getPathAsObject(path);
+  isCompat: (mdn, path) => {
+    let obj = utils.getPathAsObject(mdn, path);
     return obj ? typeof obj.__compat === "object" : false
   },
 
@@ -245,8 +240,6 @@ const utils = {
       .replace(/&lt;/gmi, "<")
       .replace(/&gt;/gmi, ">");
   }
-
-
 };
 
 module.exports = utils;

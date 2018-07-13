@@ -6,7 +6,6 @@
 
 "use strict";
 
-const Path = require("path");
 const options = require("commander");
 const version = require("./../package.json").version;
 const lf = global.lf;
@@ -21,10 +20,10 @@ const lf = global.lf;
 module.exports = (() => {
   options
     .version(version, "-v, --version")
-    .usage("[options] <feature>")
+    .usage("[options] [*]")
     .description(`Get MDN Browser Compatibility Data, docs and specs.${lf}  Version: ${version + lf}  (c) 2018 epistemex.com`)
 
-    .option("-l, --list <path>", "List paths starting with the given value or '.' for top-level")
+    .option("-l, --list <api>", "List paths starting with the given value or '.' for top-level")
     .option("-o, --out <path>", "Save information to file. Use extension for type (.txt or .ansi)")
     .option("-x, --overwrite", "Overwrites an existing file with --out option")
     .option("-d, --desktop", "Show desktop only")
@@ -47,12 +46,14 @@ module.exports = (() => {
     .option("--doc", "Show documentation. Show cached or fetch")
     .option("--docforce", "Show documentation. Force fetch from MDN server")
     .option("--mdn", "Open entry's document URL in default browser")
-    .option("--waitkey", "Wait for ENTER key before continuing")
     .option("--random", "Show a random entry. (mdncomp --random . )")
-    .option("--update, --fupdate, --cupdate", "Update data from remote (--f*=force, --c*=check)")
+    .option("--update", "Update data from remote if available")
+    .option("--fupdate", "Force update data from remote")
+    .option("--cupdate", "Check if update is available")
     .option("--no-colors", "Don't use colors in output")
     .option("--max-chars <width>", "Max number of chars per line before wrap", 72)
     .option("--no-config", "Ignore config file (mdncomp.json) in config folder")
+    .option("--waitkey", "Wait for ENTER key before continuing")
     .option("--configpath", "Show path to where config file and cache is stored")
     .on("--help", () => {
       require("./init.help")();

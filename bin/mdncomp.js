@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-/*-----------------------------------------------------------------------------------*/
+/*-------------------------------------------------------*/
 
 const DEBUG = true;
 
-/*-----------------------------------------------------------------------------------*/
+/*-------------------------------------------------------*/
 
 const _base = `../${DEBUG ? "src" : "build"}/`;
 const _outBuffer = [];
@@ -29,32 +29,10 @@ Object.assign(global, {
   outStore: outStore
 });
 
-/*-------------------------------------------------------------------------------------------------
-
-  UPDATE
-
--------------------------------------------------------------------------------------------------*/
-
-if (process.argv.length === 3 && /^--[fc]?update$/.test(process.argv[2])) {
-  require(_base + "core.update")();
-  process.exit();
-}
-
-/*-------------------------------------------------------------------------------------------------
-
-  PREPS
-
--------------------------------------------------------------------------------------------------*/
-
+// Load options from command line and config file
 const options = global.options = require(_base + "init.options");
 
-// Anything to do?
-if ( !options.args.length && !options.browser && !options.list) {
-  options.help();
-  return;
-}
-
-// Use color ANSI?
+// Use ANSI color?
 if (!options.colors || options.markdown || getExt(options.out) === ".txt") {
   Object
     .keys(global.ANSI)
@@ -62,30 +40,74 @@ if (!options.colors || options.markdown || getExt(options.out) === ".txt") {
     .forEach(item => ANSI[item] = "");
 }
 
-/*-------------------------------------------------------------------------------------------------
+/*---------------------------------------------------------
 
-  COMMANDS
+    Check for update, update patch/full if exists or exit
 
--------------------------------------------------------------------------------------------------*/
-
-let arg = options.args[0];
-if (!arg || typeof arg !== "string") arg = ".";
-
-if (options.browser) {
-  require(_base + "option.browser")(arg);
+*/
+if (options.update) {
+  require(_base + "core.update")(false, false);
 }
+
+/*---------------------------------------------------------
+
+    Check if an update is available.
+
+*/
+else if (options.cupdate) {
+  require(_base + "core.update")(false, true);
+}
+
+/*---------------------------------------------------------
+
+    Force full update
+
+*/
+else if (options.fupdate) {
+  require(_base + "core.update")(true, false);
+}
+
+/*---------------------------------------------------------
+
+    List browser versions and status
+
+*/
+else if (options.browser) {
+  require(_base + "option.browser")(options.browser);
+}
+
+/*---------------------------------------------------------
+
+    List by API paths
+
+*/
 else if (options.list) {
-
-}
-else {
-
+  require(_base + "option.list")(options.list);
 }
 
-/*-------------------------------------------------------------------------------------------------
+/*---------------------------------------------------------
+
+    Search APIs for features
+
+*/
+else if (options.args.length) {
+  console.log("todo search:", options.args);
+}
+
+/*---------------------------------------------------------
+
+    Unknown or no option
+
+*/
+else options.help();
+
+/*---------------------------------------------------------
 
   HELPERS
 
--------------------------------------------------------------------------------------------------*/
+*/
+
+// todo move these to sep. module
 
 function loadMDN() {
   let mdn;
