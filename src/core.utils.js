@@ -20,21 +20,24 @@ const utils = {
 
     utils
       .listTopLevels(mdn)
-      .forEach(key => {if (key !== "browsers") _iterateNode(mdn, key, key)});
+      .filter(key => key !== "browsers")
+      .forEach(key => _iterateNode(mdn, key, key));
 
     function _iterateNode(node, inKey, branch) {
       const subNode = node[inKey];
+
       if (typeof subNode === "object") {
+
         Object.keys(subNode).forEach(key => {
           if (key !== "__compat" && key !== "worker_support" && key !== "SharedArrayBuffer_as_param") {
             result.push(branch + "." + key);
-            _iterateNode(subNode, key, branch + "." + key);
+            _iterateNode(subNode, key, branch + "." + key); // -> async if stack-overflow problems
           }
         });
       }
     }
 
-    return result; //.sort()
+    return result
   },
 
   /**
@@ -122,9 +125,12 @@ const utils = {
     parts.forEach(part => {if (obj && obj[part]) obj = obj[part]});
 
     if (noChildren) {
-      Object.keys(obj).forEach(key => {
-        if (obj && obj[key].__compat) delete obj[key];
-      })
+      Object
+        .keys(obj)
+        .forEach(key => {
+          // todo if interactive mode we'll need a different approach here (copy/reload)
+          if (obj && obj[key].__compat) delete obj[key];
+        })
     }
 
     return obj
@@ -163,7 +169,7 @@ const utils = {
    */
   isCompat: (mdn, path) => {
     let obj = utils.getPathAsObject(mdn, path);
-    return obj ? typeof obj.__compat === "object" : false
+    return obj && typeof obj.__compat === "object"
   },
 
   /**
@@ -184,22 +190,28 @@ const utils = {
   },
 
   breakAnsiLine: (s, max) => {
-    let
-      lines = [],
-      i = 0, len = 0, ch,
-      lineStart = 0, lastBreak = -1,
-      inAnsi = false,
-      _lf = "\n",
-      _max = Math.max(72, max>>>0);
+    const _max = Math.max(72, max>>>0);
+    const _lf = "\n";
+    let lines = [];
+    let len = 0;
+    let lineStart = 0;
+    let lastBreak = -1;
+    let inAnsi = false;
+    let i = 0;
+    let ch;
 
     while(ch = s[i]) {
       if (!inAnsi) {
-        if (ch === "\x1b") inAnsi = true;
+        if (ch === "\x1b") {
+          inAnsi = true
+        }
         else {
           if (ch === " " || ch === _lf) lastBreak = i;
+
           len++;
           if (len === _max || ch === _lf) {
             if (lastBreak < 0) lastBreak = i;
+
             lines.push(s.substring(lineStart, lastBreak).trim());
             lineStart = lastBreak;
             lastBreak = -1;
@@ -210,13 +222,17 @@ const utils = {
       else {
         if (ch === "m") inAnsi = false;
       }
+
       i++
     }
 
-    if (len) lines.push(s.substr(lineStart));
+    if (len) {
+      lines.push(s.substr(lineStart));
+    }
 
     // A little clean-up
-    lines.forEach((line, i) => {lines[i] = line.trim()});
+    //lines.forEach((line, i) => {lines[i] = line.trim()});
+    lines = lines.filter(line => line.trim());
 
     return lines.length ? lines.join(lf) : "";
   },
@@ -230,7 +246,7 @@ const utils = {
     return max
   },
 
-  entities: txt => {
+  entities: (txt) => {
     return txt
       .replace(/&nbsp;/gmi, " ")
       .replace(/&quot;/gmi, "\"")

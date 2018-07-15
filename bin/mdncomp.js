@@ -6,8 +6,36 @@ const DEBUG = true;
 
 /*-------------------------------------------------------*/
 
+const text = {
+  mdncomp: "mdncomp i -g mdncomp"
+};
+
+const errText = {
+  versionWarning: "WARNING: mdncomp is built for Node version 8 or newer. It may not work in older Node.js versions.",
+  missingModule: String.raw`Critical: A core module seem to be missing. Use '${text.mdncomp}' to reinstall.`,
+  unhandled    : `An unhandled error occurred!\nPlease consider reporting to help us solve it via GitLab:
+  https://gitlab.com/epistemex/mdncomp/issues\nTry reinstalling 'npm i -g mdncomp' (or update) if the issue persists.`
+};
+
+/*---------------------------------------------------------
+
+    System validations and error handling
+
+*/
+if (+process.versions.node.split(".")[0] < 8) {
+  console.log(errText.versionWarning);
+}
+
+const _errHandler = (err) => {
+  console.log(errText.unhandled, err);
+  process.exit(1)
+};
+
+process.on("error", _errHandler);
+process.on("uncaughtException", _errHandler);
+
 const _base = `../${DEBUG ? "src" : "build"}/`;
-const utils = require(_base + "core.utils");
+const utils = loadModule("core.utils");
 
 /**
  * Available globally to all modules.
@@ -16,18 +44,18 @@ const utils = require(_base + "core.utils");
  * properties came from the config file.
  */
 Object.assign(global, {
-  DEBUG   : DEBUG,
-  _base   : _base,
-  lf      : "\r\n",
-  sepChar : "|",
-  shortPad: 1,
-  lang    : "en-US",
-  ANSI    : require(_base + "core.ansi"),
-  options : {}
+  DEBUG    : DEBUG,
+  _base    : _base,
+  lf       : "\r\n",
+  sepChar  : "|",
+  shortPad : 1,
+  lang     : "en-US",
+  ANSI     : loadModule("core.ansi"),
+  options  : {}
 });
 
 // Load options from command line and config file
-const options = global.options = require(_base + "init.options");
+const options = global.options = loadModule("init.options");
 
 // Use ANSI color?
 if (!options.colors || options.markdown || utils.getExt(options.out) === ".txt") {
@@ -43,7 +71,7 @@ if (!options.colors || options.markdown || utils.getExt(options.out) === ".txt")
 
 */
 if (options.update) {
-  require(_base + "core.update")(false, false);
+  loadModule("core.update")(false, false);
 }
 
 /*---------------------------------------------------------
@@ -52,7 +80,7 @@ if (options.update) {
 
 */
 else if (options.cupdate) {
-  require(_base + "core.update")(false, true);
+  loadModule("core.update")(false, true);
 }
 
 /*---------------------------------------------------------
@@ -61,7 +89,7 @@ else if (options.cupdate) {
 
 */
 else if (options.fupdate) {
-  require(_base + "core.update")(true, false);
+  loadModule("core.update")(true, false);
 }
 
 /*---------------------------------------------------------
@@ -70,7 +98,7 @@ else if (options.fupdate) {
 
 */
 else if (options.browser) {
-  require(_base + "option.browser")(options.browser);
+  loadModule("option.browser")(options.browser);
 }
 
 /*---------------------------------------------------------
@@ -79,7 +107,7 @@ else if (options.browser) {
 
 */
 else if (options.list) {
-  require(_base + "option.list")(options.list);
+  loadModule("option.list")(options.list);
 }
 
 /*---------------------------------------------------------
@@ -88,7 +116,10 @@ else if (options.list) {
 
 */
 else if (options.args.length) {
-  require(_base + "option.search")(options.args[0]);
+  // todo - merge dt/mob options
+  // todo - check random option
+  // todo - support multiple args:
+  console.log(loadModule("option.search")(options.args[0]));
 }
 
 /*---------------------------------------------------------
@@ -96,4 +127,28 @@ else if (options.args.length) {
     If no option, default to help
 
 */
-else options.help();
+else {
+  options.help();
+}
+
+/**
+ * require() wrapper that incorporates error handling
+ * and allow for `const`s use in parent scope.
+ * @param {string} name - module name. Will be prefixed with rel. path.
+ * @returns {*}
+ */
+function loadModule(name) {
+  let module;
+  try {
+    module = require(_base + name);
+  }
+  catch(err) {
+    console.log(errText.missingModule);
+    if (DEBUG) {
+      console.log("ERROR OBJECT:", err);
+    }
+    // todo document difference between this meaning and node's own exit code 1 (uncaught/fatal)
+    process.exit(1);
+  }
+  return module
+}

@@ -1,164 +1,25 @@
-
 const fs = require("fs");
 const path = require("path");
 
-/**
- * Initialize options and actions, initialize main modules -or- invoke update process.
- */
-function init() {
-
-  // Check config path
-  if (args.length === 3 && args[2] === "--configpath") {
-    log(ANSI.white + require("./io").getConfigPath() + ANSI.reset);
-  }
-
-  // Update
-  else if (args.length >=3 && args.length <= 4 && (args[2] === "--update" || args[2] === "--fupdate" || args[2] === "--cupdate")) {
-    require("./update")(args[2] === "--fupdate", args[2] === "--cupdate");
-  }
-
-  // Regular options
-  else {
-    (options = require("commander"))
-      .version(version, "-v, --version")
-      .usage("[options] <feature>")
-      .description("Get MDN Browser Compatibility Data, docs and specs." + lf + "  Version: " + version + lf + "  (c) 2018 epistemex.com")
-      .option("-l, --list", "List paths starting with the given value or '.' for top-level")
-      .option("-o, --out <path>", "Save information to file. Use extension for type (.txt or .ansi)")
-      .option("-x, --overwrite", "Overwrites an existing file with --out option")
-      .option("-d, --desktop", "Show desktop only")
-      .option("-m, --mobile", "Show mobile devices only")
-      .option("-c, --case-sensitive", "Search in case-sensitive mode")
-      .option("-a, --all", "If search results in more than entry, show info for all")
-      .option("-z, --fuzzy", "Use path as a fuzzy search term")
-      .option("-i, --index <index>", "Show this index from a multiple result list", -1)
-      .option("-s, --shorthand", "Show compatibility as shorthand with multiple results")
-      .option("-h, --split", "Split a shorthand line into two lines (use with -s)")
-      .option("-b, --browser", "Show information about this browser, or list if '.'")
-      .option("-W, --no-workers", "Don't show worker support information.")
-      .option("-N, --no-notes", "Don't show notes")
-      .option("-e, --noteend", "Show notes at end instead of in sections (text)")
-      .option("-f, --markdown", "Format link as markdown and turns off colors")
-      .option("--ext", "Show extended table of browsers/servers")
-      .option("--desc", "Show Short description of the feature")
-      .option("--specs", "Show specification links")
-      .option("--sab", "Show support for SharedArrayBuffer as param.")
-      .option("--doc", "Show documentation. Show cached or fetch")
-      .option("--docforce", "Show documentation. Force fetch from MDN server")
-      .option("--mdn", "Open entry's document URL in default browser")
-      .option("--waitkey", "Wait for ENTER key before continuing")
-      .option("--random", "Show a random entry. (mdncomp --random . )")
-      .option("--update, --fupdate, --cupdate", "Update data from remote (--f*=force, --c*=check)")
-      .option("--no-colors", "Don't use colors in output")
-      .option("--max-chars <width>", "Max number of chars per line before wrap", 72)
-      .option("--no-config", "Ignore config file (mdncomp.json) in config folder")
-      .option("--configpath", "Show path to where config file and cache is stored")
-      // interactive mode?
-      .action(go)
-      .on("--help", () => {parseHelp(args)})
-      .parse(args);
-
-    if (!options.args.length) options.help();
-  }
-} // :init
-
-function outInfo(txt) {
-  if (Array.isArray(txt)) txt = txt.join(lf);
-  log(txt + ANSI.reset);
-}
-
-function outStore(txt, noFile) {
-  if (Array.isArray(txt)) txt = txt.join(lf);
-  if (noFile || !options.out) log(txt);
-  else {
-    saves.push(txt);
-  }
-}
-
-/*------------------------------------------------------------------------------------------------------------------*
-
-    PARSE KEY OPTIONS
-
-*------------------------------------------------------------------------------------------------------------------*/
+// todo some of these (mobil/dt, random options..)
 
 function go(path) {
 
   io = require("./io");
 
   // fixing non-valid args produced by f.ex "\*"
-  if (typeof path !== "string") path = ".";
-
-  // load data
-  try {
-    mdn = require("../data/data.json");
-  }
-  catch(err) {
-    log("Critical error: data file not found. Try running with option --fupdate to download latest snapshot.");
-    process.exit(2);
-  }
-
-  // load config file if any
-  try {
-    loadConfig()
-  } catch(err) {}
+  if ( typeof path !== "string" ) path = ".";
 
   // both dt and mob -> cancel out the not options
-  if (options.desktop && options.mobile)
+  if ( options.desktop && options.mobile )
     options.desktop = options.mobile = false;
-
-  // invoke boring mode
-  if (!options.colors || options.markdown || getExt(options.out || ".ansi") === "txt")
-    Object.keys(ANSI).forEach(color => {
-      if (!color.includes("ursor")) ANSI[color] = "";
-    });
 
   /*
       Random ?
    */
-  if (options.random) {
+  if ( options.random ) {
     path = randomCompat(path);
     options.index = 0;
-  }
-
-  /*
-      List tree data ?
-   */
-  if (options.list) {
-    // top-levels
-    if (path === ".") {
-      outInfo(ANSI.reset + "Valid path roots:");
-      outInfo(ANSI.green + listTopLevels().join(lf) + ANSI.reset);
-      outInfo(lf + "Valid statuses:");
-      outInfo(ANSI.green + "standard, experimental, deprecated" + ANSI.reset);
-    }
-    // list on status
-    else if (["deprecated", "experimental", "standard"].includes(path)) {
-      outInfo(listOnStatus(path));
-    }
-    else {
-      let _list = listAPI(path, options.caseSensitive);
-      if (_list.length === 1 && isCompat(_list[0])) {
-        options.list = undefined;
-        go(_list[0]);
-      }
-      else
-        outInfo(_list);
-    }
-  }
-
-  /*
-      List browser info ?
-   */
-  else if (options.browser) {
-    if (path === ".") {
-      outInfo(ANSI.reset + "Valid browser identifiers:");
-      outInfo(ANSI.green + listBrowsers().join(lf) + ANSI.reset);
-      outInfo(lf + "Valid statuses:");
-      outInfo(ANSI.green + getBrowserStatusList().join(", "));
-    }
-    else {
-      outInfo(listBrowser(path.toLowerCase()).join(lf));
-    }
   }
 
   /*------------------------------------------------------------------------------------------------------------------*
@@ -167,79 +28,81 @@ function go(path) {
 
   *------------------------------------------------------------------------------------------------------------------*/
 
+  let result = search(path, options.caseSensitive);  // done
+
+
+
+  if ( !result.length ) {
+    outInfo("Not found.");
+  }
   else {
-    let result = search(path, options.caseSensitive);
+    if ( result.length === 1 || (options.index >= 0 && options.index < result.length) || options.all ) {
 
-    if (!result.length) {
-      outInfo("Not found.");
-    }
-    else {
-      if (result.length === 1 || (options.index >= 0 && options.index < result.length) || options.all) {
+      if ( options.shorthand )
+        shortPad = getMaxLength(result);
 
-        if (options.shorthand)
-          shortPad = getMaxLength(result);
+      if ( options.index >= 0 && options.index < result.length )
+        result = result.splice(options.index, 1);
 
-        if (options.index >= 0 && options.index < result.length)
-          result = result.splice(options.index, 1);
+      result.forEach(entry => {
+        outResult(entry);
+      });
 
-        result.forEach(entry => {outResult(entry)});
+      if ( result.length === 1 ) {
+        let compat = new MDNComp(result[ 0 ]);
 
-        if (result.length === 1) {
-          let compat = new MDNComp(result[0]);
-
-          // check --doc link
-          if (options.doc || options.docforce) {
-            if (compat.url && compat.url.length) {
-              getDoc(compat.url, _commit)
-            }
-            else {
-              outInfo(ANSI.red + "Documentation URL is not defined for this feature." + ANSI.reset + lf);
-              _commit();
-            }
+        // check --doc link
+        if ( options.doc || options.docforce ) {
+          if ( compat.url && compat.url.length ) {
+            getDoc(compat.url, _commit);
           }
           else {
+            outInfo(ANSI.red + "Documentation URL is not defined for this feature." + ANSI.reset + lf);
             _commit();
           }
-
-          // check --mdn link
-          if (options.mdn) {
-            if (compat.url.length) {
-              io.run(compat.url);
-            }
-            else {
-              log("No URL is defined for this entry.");
-            }
-          }
-
         }
-      }
-      else {
-        let pad = (result.length + "").length;
-        result.forEach((item, i) => {
-          outInfo(ANSI.yellow + "[" + ANSI.green +(i + "").padStart(pad) + ANSI.yellow + "] " + ANSI.white + item + ANSI.reset);
-        });
+        else {
+          _commit();
+        }
+
+        // check --mdn link
+        if ( options.mdn ) {
+          if ( compat.url.length ) {
+            io.run(compat.url);
+          }
+          else {
+            log("No URL is defined for this entry.");
+          }
+        }
+
       }
     }
+    else {
+      let pad = (result.length + "").length;
+      result.forEach((item, i) => {
+        outInfo(ANSI.yellow + "[" + ANSI.green + (i + "").padStart(pad) + ANSI.yellow + "] " + ANSI.white + item + ANSI.reset);
+      });
+    }
+  }
 
-    function _commit() {
-      addFooter();
-      commit();
-      if (options.waitkey) {
-        console.log(ANSI.cursorUp + ANSI.cursorUp);
-        setTimeout(() => console.log("Waiting for ENTER key..." + ANSI.cursorUp), 3000);
-        process.stdin.on("data", () => process.exit());
-      }
+  function _commit() {
+    addFooter();
+    commit();
+    if ( options.waitkey ) {
+      console.log(ANSI.cursorUp + ANSI.cursorUp);
+      setTimeout(() => console.log("Waiting for ENTER key..." + ANSI.cursorUp), 3000);
+      process.stdin.on("data", () => process.exit());
     }
   }
 
   function addFooter() {
-    outStore(ANSI.magenta + "Data from MDN - `npm i -g mdncomp` by epistemex" + ANSI.white + lf + ANSI.reset)
+    outStore(ANSI.magenta + "Data from MDN - `npm i -g mdncomp` by epistemex" + ANSI.white + lf + ANSI.reset);
   }
 
   function outResult(entry) {
     let compat = new MDNComp(entry);
     outStore(options.shorthand
-             ? compatToShort(compat, shortPad)
+             ? compatToShort(compat, global.shortPad)
              : compatToLong(compat));
   }
 
@@ -247,17 +110,17 @@ function go(path) {
    * If --out is specified, commit all data (if any) to a single file.
    */
   function commit() {
-    if (options.out && saves.length) {
+    if ( options.out && saves.length ) {
       // race cond. in this scenario is theoretically possible..
-      if (fs.existsSync(options.out) && !options.overwrite) {
+      if ( fs.existsSync(options.out) && !options.overwrite ) {
         const readLine = require("readline"),
           rl = readLine.createInterface({
-            input: process.stdin,
+            input : process.stdin,
             output: process.stdout
           });
 
         rl.question(ANSI.yellow + "A file with this name already exists. Overwrite? (y(es), default: no)? " + ANSI.white, resp => {
-          if (resp.startsWith("y")) _save(() => {
+          if ( resp.startsWith("y") ) _save(() => {
             rl.close();
           });
           else {
@@ -273,54 +136,11 @@ function go(path) {
 
     function _save(callback) {
       fs.writeFile(options.out, saves.join("\n"), "utf8", function(err) {
-        if(err) return log("An error occurred:" + lf + err);
+        if ( err ) return log("An error occurred:" + lf + err);
         log(ANSI.green + `Saved output to file "${ANSI.cyan + options.out + ANSI.green}"!` + ANSI.reset);
-        if (callback) callback();
-      })
+        if ( callback ) callback();
+      });
     }
   }
 
 } // :go
-
-function loadConfig() {
-
-  const
-    file = path.resolve(io.getConfigDataPath(), ".config.json");
-
-  try {
-    let cfg = require(file);
-    let co = Object.assign({}, cfg.options);
-    let fmt = Object.assign({}, cfg.formatter);
-
-    if (isBool(co.fuzzy)) options.fuzzy = co.fuzzy;
-    if (isBool(co.colors)) options.colors = co.colors;
-    if (isBool(co.notes)) options.notes = co.notes;
-    if (isBool(co.noteEnd)) options.noteEnd = co.noteEnd;
-    if (isBool(co.shorthand)) options.shorthand = co.shorthand;
-    if (isBool(co.split)) options.split = co.split;
-    if (isBool(co.caseSensitive)) options.caseSensitive = co.caseSensitive;
-    if (isBool(co.desktop)) options.desktop = co.desktop;
-    if (isBool(co.mobile)) options.mobile = co.mobile;
-    if (isBool(co.overwrite)) options.overwrite = co.overwrite;
-    if (isBool(co.markdown)) options.markdown = co.markdown;
-    if (isNum(co.maxChars)) options.maxChars = Math.max(0, co.maxChars|0);
-    if (isBool(co.doc)) options.doc = co.doc;
-    if (isBool(co.docforce)) options.docforce = co.docforce;
-    if (isBool(co.ext)) options.ext = co.ext;
-    if (isBool(co.desc)) options.desc = co.desc;
-    if (isBool(co.specs)) options.specs = co.specs;
-    if (isBool(co.waitkey)) options.waitkey = co.waitkey;
-    if (isBool(co.workers)) options.workers = co.workers;
-    if (isBool(co.sab)) options.sab = co.sab;
-
-    if (fmt.long && fmt.long.sepChar && typeof fmt.long.sepChar === "string" && fmt.long.sepChar.length === 1 && isValid(fmt.long.sepChar)) {
-      sepChar = fmt.long.sepChar
-    }
-
-  }
-  catch(err) {}
-
-  function isValid(c) {return " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_|+*{}[];:!\"#&/()=?\\.,".includes(c)}
-  function isBool(v) {return typeof v === "boolean"}
-  function isNum(v) {return typeof v === "number"}
-}
