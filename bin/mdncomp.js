@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-/*-------------------------------------------------------*/
+/*----------------------------------------------------------------------------*/
 
 const DEBUG = true;
 
-/*-------------------------------------------------------*/
+/*----------------------------------------------------------------------------*/
 
 const text = {
   mdncomp: "mdncomp i -g mdncomp"
@@ -17,7 +17,7 @@ const errText = {
   https://gitlab.com/epistemex/mdncomp/issues\nTry reinstalling 'npm i -g mdncomp' (or update) if the issue persists.`
 };
 
-/*---------------------------------------------------------
+/*-----------------------------------------------------------------------------*
 
     System validations and error handling
 
@@ -65,7 +65,7 @@ if (!options.colors || options.markdown || utils.getExt(options.out) === ".txt")
     .forEach(item => ANSI[item] = "");
 }
 
-/*---------------------------------------------------------
+/*-----------------------------------------------------------------------------*
 
     Check for update, update patch/full if exists or exit
 
@@ -74,7 +74,7 @@ if (options.update) {
   loadModule("core.update")(false, false);
 }
 
-/*---------------------------------------------------------
+/*-----------------------------------------------------------------------------*
 
     Check if an update is available.
 
@@ -83,7 +83,7 @@ else if (options.cupdate) {
   loadModule("core.update")(false, true);
 }
 
-/*---------------------------------------------------------
+/*-----------------------------------------------------------------------------*
 
     Force full update
 
@@ -92,7 +92,7 @@ else if (options.fupdate) {
   loadModule("core.update")(true, false);
 }
 
-/*---------------------------------------------------------
+/*-----------------------------------------------------------------------------*
 
     List browser versions and status
 
@@ -101,7 +101,7 @@ else if (options.browser) {
   loadModule("option.browser")(options.browser);
 }
 
-/*---------------------------------------------------------
+/*-----------------------------------------------------------------------------*
 
     List by API paths
 
@@ -110,19 +110,21 @@ else if (options.list) {
   loadModule("option.list")(options.list);
 }
 
-/*---------------------------------------------------------
+/*-----------------------------------------------------------------------------*
 
     Search APIs for features
 
 */
 else if (options.args.length) {
-  // todo - merge dt/mob options
-  // todo - check random option
-  // todo - support multiple args:
-  console.log(loadModule("option.search")(options.args[0]));
+  // DISCUSS: multiple results can cause a very long list. Merge sep. keywords into a regex instead for convenience? or search-within-result approach?
+  const results = [];
+  options.args.forEach(arg => {
+    results.push(loadModule("option.search")(arg))
+  });
+  const preFormat = loadModule("formatter.common")(results);
 }
 
-/*---------------------------------------------------------
+/*-----------------------------------------------------------------------------*
 
     If no option, default to help
 

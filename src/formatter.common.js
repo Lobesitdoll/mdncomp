@@ -6,9 +6,15 @@
 
 "use strict";
 
-function format(result, children) {
+const options = global.options;
 
+// todo - merge dt/mob options
+// todo - check random option
+// todo - support multiple args:
 
+function format(result) {
+
+  console.log(result, options.children);
 
 }
 
