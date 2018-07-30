@@ -58,12 +58,12 @@ module.exports = (() => {
     .option("--read", "Mark notifications in the current update as read") // todo notifications
     .option("--configpath", "Show path to where config file and cache is stored")
     .on("--help", () => {
-      require("./init.help")();
+      global.loadModule("init.help")();
     })
     .parse(process.argv);
 
   // apply config file settings if any
-  require("./init.config")(options);
+  global.loadModule("init.config")(options);
 
   return options
 })();

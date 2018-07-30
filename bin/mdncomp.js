@@ -7,14 +7,16 @@ const DEBUG = true;
 /*----------------------------------------------------------------------------*/
 
 const text = {
-  mdncomp: "mdncomp i -g mdncomp"
+  mdncomp: "npm i -g mdncomp",
+  gitName: "GitLab",
+  gitUrl : "https://gitlab.com/epistemex/mdncomp/issues"
 };
 
 const errText = {
   versionWarning: "WARNING: mdncomp is built for Node version 8 or newer. It may not work in older Node.js versions.",
-  missingModule: String.raw`Critical: A core module seem to be missing. Use '${text.mdncomp}' to reinstall.`,
-  unhandled    : `An unhandled error occurred!\nPlease consider reporting to help us solve it via GitLab:
-  https://gitlab.com/epistemex/mdncomp/issues\nTry reinstalling 'npm i -g mdncomp' (or update) if the issue persists.`
+  missingModule : String.raw`Critical: A core module seem to be missing. Use '${text.mdncomp}' to reinstall.`,
+  unhandled     : String.raw`An unhandled error occurred!\nPlease consider reporting to help us solve it via ${text.gitName}:
+  ${text.gitUrl}\nTry reinstalling '${text.mdncomp}' (or --fupdate) if the issue persists.`
 };
 
 /*-----------------------------------------------------------------------------*
@@ -44,14 +46,15 @@ const utils = loadModule("core.utils");
  * properties came from the config file.
  */
 Object.assign(global, {
-  DEBUG    : DEBUG,
-  _base    : _base,
-  lf       : "\r\n",
-  sepChar  : "|",
-  shortPad : 1,
-  lang     : "en-US",
-  ANSI     : loadModule("core.ansi"),
-  options  : {}
+  DEBUG     : DEBUG,
+  _base     : _base,
+  lf        : "\r\n",
+  sepChar   : "|",
+  shortPad  : 1,
+  lang      : "en-US",
+  loadModule: loadModule,
+  ANSI      : loadModule("core.ansi"),
+  options   : {}
 });
 
 // Load options from command line and config file
@@ -67,7 +70,7 @@ if (!options.colors || options.markdown || utils.getExt(options.out) === ".txt")
 
 /*-----------------------------------------------------------------------------*
 
-    Check for update, update patch/full if exists or exit
+    Check for update, update patch/full if exists, or exit
 
 */
 if (options.update) {
@@ -117,11 +120,12 @@ else if (options.list) {
 */
 else if (options.args.length) {
   // DISCUSS: multiple results can cause a very long list. Merge sep. keywords into a regex instead for convenience? or search-within-result approach?
-  const results = [];
-  options.args.forEach(arg => {
-    results.push(loadModule("option.search")(arg))
-  });
-  const preFormat = loadModule("formatter.common")(results);
+  // For sake of progress: use a single argument for now.
+  const result = loadModule("option.search")(options.args[0]);
+//  options.args.forEach(arg => {
+//    results.push(loadModule("option.search")(arg))
+//  });
+  const preFormat = loadModule("formatter.common")(result);
 }
 
 /*-----------------------------------------------------------------------------*
