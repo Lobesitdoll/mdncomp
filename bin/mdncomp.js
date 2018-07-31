@@ -6,6 +6,8 @@ const DEBUG = true;
 
 /*----------------------------------------------------------------------------*/
 
+const LF = "\r\n";
+
 const text = {
   mdncomp: "npm i -g mdncomp",
   gitName: "GitLab",
@@ -15,7 +17,7 @@ const text = {
 const errText = {
   versionWarning: "WARNING: mdncomp is built for Node version 8 or newer. It may not work in older Node.js versions.",
   missingModule : String.raw`Critical: A core module seem to be missing. Use '${text.mdncomp}' to reinstall.`,
-  unhandled     : String.raw`An unhandled error occurred!\nPlease consider reporting to help us solve it via ${text.gitName}:
+  unhandled     : String.raw`An unhandled error occurred!${LF}Please consider reporting to help us solve it via ${text.gitName}:${LF}
   ${text.gitUrl}issues\nTry reinstalling '${text.mdncomp}' (or --fupdate) if the issue persists.`
 };
 
@@ -52,7 +54,7 @@ Object.assign(global, {
   errText,
   loadModule,
   lang      : "en-US",
-  lf        : "\r\n",
+  lf        : LF,
   sepChar   : "|",
   shortPad  : 1,
   ANSI      : loadModule("core.ansi"),
@@ -153,8 +155,19 @@ else if (options.args.length) {
   // show feature
   else {
     const preFormat = loadModule("formatter.common")(result.length === 1 ? result[0] : result[options.index]);
+    console.log(require("util").inspect(preFormat, {depth: 8}));
   }
 
+}
+
+/*-----------------------------------------------------------------------------*
+
+    Random
+
+*/
+else if (options.random) {
+  // todo random
+  console.log("Random scope: " + options.random);
 }
 
 /*-----------------------------------------------------------------------------*

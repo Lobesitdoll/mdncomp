@@ -1,11 +1,15 @@
 mdncomp
 =======
 2.00.0-alpha.0
+ADD: Basic notification system via the update mechanism (todo)
+ADD: "--history" option to list browser history, flags; not just last version
 IMP: Better search algorithm with a more targeted result.
 CHG: Major internal changes (from "fun project" to production).
 CHG: Option (short version) "-h, --split" renamed to "-t, --split".
 CHG: Migrating config file to JSON5 format.
-ADD: Basic notification system via the update mechanism (todo)
+CHG: Option "-d, --desktop" to NOT option: "-D, --no-desktop"
+CHG: Option "-m, --desktop" to NOT option: "-M, --no-desktop"
+REM: Option "-e, --noteend" removed (all notes always at end).
 
 1.23.0
 CHG: Table cell separator char to | (pipe) to allow markdown table output directly.

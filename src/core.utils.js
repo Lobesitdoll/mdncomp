@@ -146,7 +146,7 @@ const utils = {
     return i < 0 ? "" : path.substr(++i)
   },
 
-  prePathFromPath: (path) => {
+  prePathFromPath: (mdn, path) => {
     let parts = path.split("."), o = mdn, res = "";
     parts.pop();
     parts.forEach(part => {
@@ -169,6 +169,36 @@ const utils = {
   isCompat: (mdn, path) => {
     let obj = utils.getPathAsObject(mdn, path);
     return obj && typeof obj.__compat === "object"
+  },
+
+  getBrowserList: () => {
+    return  {
+      desktop: ["chrome", "edge", "firefox", "ie", "opera", "safari"],
+      mobile: ["chrome_android", "edge_mobile", "firefox_android", "opera_android", "safari_ios", "webview_android"],
+      ext: ["nodejs", "qq_android", "samsunginternet_android", "uc_android", "uc_chinese_android"]
+    }
+  },
+
+  getBrowserShortNames: () => {
+    return {
+      "chrome": "Chrome",
+      "edge": "Edge",
+      "firefox": "Firefox",
+      "ie": "IE",
+      "opera": "Opera",
+      "safari": "Safari",
+      "chrome_android": "Chrome/A",
+      "edge_mobile": "Edge/mob",
+      "firefox_android": "Firefox/A",
+      "opera_android": "Opera/A",
+      "safari_ios": "Safari/iOS",
+      "webview_android": "Webview/A",
+      "nodejs": "Node JS",
+      "qq_android": "QQ/A",
+      "samsunginternet_android": "Samsung/A",
+      "uc_android": "UC/A",
+      "uc_chinese_android": "UC-Ch/A"
+    }
   },
 
   /**
