@@ -102,7 +102,7 @@ function format(path, isRecursive) {
       if (options.history || (!options.history && !history.length)) {
         history.push({
           add    : entry.version_added,
-          removed: entry.version_removed,
+          removed: entry.version_removed || (entry.version_added === null ? null : false),
           prefix : entry.prefix || null,
           altName: entry.alternative_name || null,
           flags  : entry.flags || [],
