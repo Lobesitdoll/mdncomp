@@ -295,7 +295,7 @@ const utils = {
   versionAddRem: (add, rem) => {
     let v = "";
 
-    if (typeof add === "undefined") {
+    if (add === null || typeof add === "undefined") {
       v = ANSI.red + "-"
     }
     else if (typeof add === "boolean") {

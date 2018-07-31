@@ -95,11 +95,13 @@ function formatterLong(data) {
     if (options.children) {
       data.children.sort(sortChildren).forEach(child => {
         if ((options.workers && child.name === "worker_support") || child.name !== "worker_support") {
-          tbl.push(getLine(child.name, child.browsers[ device ], ANSI.yellow))
+          tbl.push(getLine("." + child.name, child.browsers[ device ], ANSI.yellow))
         }
       })
     }
-    out.add(lf, ANSI.gray, table(tbl, tblOptions), lf)
+
+    const result = table(tbl, tblOptions).replace(/\| /, "").replace(/\|\n/g, "\n");
+    out.add(lf, ANSI.gray, result.substr(0, result.length - 1), lf)
   }
 
   function hasFlags() {
@@ -245,7 +247,7 @@ function formatterLong(data) {
     }
   }
 
-  return out.toString()
+  return out.toString().replace(/\n\| /gm, "\n")
 
 //  // worker support ?
 //  if (options.workers && mdnComp.workers) {
