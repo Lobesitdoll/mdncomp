@@ -6,9 +6,13 @@
 
 "use strict";
 
-const io = require("./core.io");
+require("json5/lib/register");
+
+const ANSI = global.ANSI;
+const fs = require("fs");
 const path = require("path");
-const filePath = path.resolve(io.getConfigDataPath(), ".config.json");
+const filePath = path.resolve(require("./core.io").getConfigDataPath(), ".config.json");
+const filePath5 = filePath + "5";
 
 /**
  * The method tries to load a config file from the user area in the folder
@@ -19,8 +23,19 @@ const filePath = path.resolve(io.getConfigDataPath(), ".config.json");
  * @private
  */
 function loadConfig(options) {
+
   try {
-    let cfg = require(filePath);
+    if (fs.existsSync(filePath)) {
+      fs.renameSync(filePath, filePath5);
+      console.log(ANSI.green + "NOTE: renamed config-file from '.config.json' to '.config.json5'." + ANSI.reset);
+    }
+  }
+  catch(err) {
+    console.log(`${ANSI.red}Unable to rename ".config.json" to ".config.json5".${ANSI.reset}\n${err}`)
+  }
+
+  try {
+    let cfg = require(filePath5);
     let cfgOptions = Object.assign({}, cfg.options);
     let fmt = Object.assign({}, cfg.formatter);
 

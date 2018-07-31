@@ -9,14 +9,14 @@ const DEBUG = true;
 const text = {
   mdncomp: "npm i -g mdncomp",
   gitName: "GitLab",
-  gitUrl : "https://gitlab.com/epistemex/mdncomp/issues"
+  gitUrl : "https://gitlab.com/epistemex/mdncomp/"
 };
 
 const errText = {
   versionWarning: "WARNING: mdncomp is built for Node version 8 or newer. It may not work in older Node.js versions.",
   missingModule : String.raw`Critical: A core module seem to be missing. Use '${text.mdncomp}' to reinstall.`,
   unhandled     : String.raw`An unhandled error occurred!\nPlease consider reporting to help us solve it via ${text.gitName}:
-  ${text.gitUrl}\nTry reinstalling '${text.mdncomp}' (or --fupdate) if the issue persists.`
+  ${text.gitUrl}issues\nTry reinstalling '${text.mdncomp}' (or --fupdate) if the issue persists.`
 };
 
 /*-----------------------------------------------------------------------------*
@@ -46,13 +46,15 @@ const utils = loadModule("core.utils");
  * properties came from the config file.
  */
 Object.assign(global, {
-  DEBUG     : DEBUG,
-  _base     : _base,
+  DEBUG,
+  _base,
+  text,
+  errText,
+  loadModule,
+  lang      : "en-US",
   lf        : "\r\n",
   sepChar   : "|",
   shortPad  : 1,
-  lang      : "en-US",
-  loadModule: loadModule,
   ANSI      : loadModule("core.ansi"),
   options   : {}
 });
@@ -61,7 +63,7 @@ Object.assign(global, {
 const options = global.options = loadModule("init.options");
 
 // Use ANSI color?
-if (!options.colors || options.markdown || utils.getExt(options.out) === ".txt") {
+if (!options.colors || options.markdown || utils.getExt(options.out).toLowerCase() === ".txt") {
   Object
     .keys(global.ANSI)
     .filter(item => !item.includes("ursor"))
