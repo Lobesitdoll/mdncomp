@@ -9,12 +9,16 @@ const DEBUG = true;
 const LF = "\r\n";
 
 const text = {
-  mdncomp: "npm i -g mdncomp",
-  gitName: "GitLab",
-  gitUrl : "https://gitlab.com/epistemex/mdncomp/"
+  addOptionIndex : "Add option '-i <n>' to list a specific feature using the same search.",
+  tooLimitedScope: "Sorry, too limited scope.",
+  noResult       : "Sorry, no result",
+  mdncomp        : "npm i -g mdncomp",
+  gitName        : "GitLab",
+  gitUrl         : "https://gitlab.com/epistemex/mdncomp/"
 };
 
 const errText = {
+  indexOutOfRange: "Index out of range",
   versionWarning: "WARNING: mdncomp is built for Node version 8 or newer. It may not work in older Node.js versions.",
   missingModule : String.raw`Critical: A core module seem to be missing. Use '${text.mdncomp}' to reinstall.`,
   unhandled     : String.raw`An unhandled error occurred!${LF}Please consider reporting to help us solve it via ${text.gitName}:${LF}
@@ -136,7 +140,7 @@ else if (options.args.length) {
 
   // no result
   if (!result.length) {
-    console.log(`${ANSI.reset}Sorry, no result.`)
+    console.log(`${ANSI.reset}${text.noResult}.`)
   }
   // multiple results
   else if (result.length > 1 && options.index < 0) {
@@ -145,17 +149,16 @@ else if (options.args.length) {
     result.forEach((line, i) => {
       str += `${ANSI.yellow}[${ANSI.green}${("" + i).padStart(pad)}${ANSI.yellow}] ${ANSI.white}${line}\n`
     });
-    str += `${ANSI.reset}\n` + utils.breakAnsiLine("Use option '-i n' to list a specific feature using the same search.", options.maxLength);
+    str += `${ANSI.reset}\n` + utils.breakAnsiLine(text.addOptionIndex, options.maxLength);
     console.log(str);
   }
   // index out of range
   else if (result.length > 1 && options.index >= result.length) {
-    console.log(`${ANSI.red}Index out of range.${ANSI.reset}`);
+    console.log(`${ANSI.red}${errText.indexOutOfRange}.${ANSI.reset}`);
   }
   // show feature
   else {
-    const preFormat = loadModule("formatter.common")(result.length === 1 ? result[0] : result[options.index]);
-    console.log(require("util").inspect(preFormat, {depth: 8}));
+    showResults(result.length === 1 ? result[0] : result[options.index]);
   }
 
 }
@@ -166,8 +169,18 @@ else if (options.args.length) {
 
 */
 else if (options.random) {
-  // todo random
-  console.log("Random scope: " + options.random);
+  let list = utils.buildTable(utils.loadMDN());
+
+  if (typeof options.random === "string") {
+    let keyword = options.random;
+    list = list.filter(item => item.includes(keyword))
+  }
+
+  if (!list.length) console.log(text.tooLimitedScope);
+  else {
+    let path = list[(Math.random() * list.length)|0];
+    showResults(path)
+  }
 }
 
 /*-----------------------------------------------------------------------------*
@@ -177,6 +190,15 @@ else if (options.random) {
 */
 else {
   options.help();
+}
+
+/**
+ * Show main results
+ * @param path
+ */
+function showResults(path) {
+  const preFormat = loadModule("formatter.common")(path);
+  console.log(require("util").inspect(preFormat, {depth: 8}));
 }
 
 /**

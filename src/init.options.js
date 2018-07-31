@@ -60,7 +60,7 @@ module.exports = (() => {
     .option("--update", "Update data from remote if available")
     .option("--fupdate", "Force update data from remote")
     .option("--cupdate", "Check if update is available")
-    .option("--random <scope>", "Show a random entry within \"scope\" (use . for any)")
+    .option("--random [scope]", "Show a random entry within \"scope\" (use . for any)")
     .option("--no-colors", "Don't use colors in output")
     .option("--max-chars <width>", "Max number of chars per line before wrap", 72)
     .option("--no-config", "Ignore config file (mdncomp.json) in config folder")
