@@ -1,6 +1,7 @@
 mdncomp
 =======
 2.00.0-alpha.0
+IMP: Better search algorithm with a more targeted result.
 CHG: Major internal changes (from "fun project" to production).
 CHG: Option (short version) "-h, --split" renamed to "-t, --split".
 CHG: Migrating config file to JSON5 format.

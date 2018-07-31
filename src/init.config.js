@@ -11,7 +11,7 @@ require("json5/lib/register");
 const ANSI = global.ANSI;
 const fs = require("fs");
 const path = require("path");
-const filePath = path.resolve(require("./core.io").getConfigDataPath(), ".config.json");
+const filePath = path.resolve(global.loadModule("core.io").getConfigDataPath(), ".config.json");
 const filePath5 = filePath + "5";
 
 /**

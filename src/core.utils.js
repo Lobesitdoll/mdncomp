@@ -27,7 +27,6 @@ const utils = {
       const subNode = node[inKey];
 
       if (typeof subNode === "object") {
-
         Object.keys(subNode).forEach(key => {
           if (key !== "__compat" && key !== "worker_support" && key !== "SharedArrayBuffer_as_param") {
             result.push(branch + "." + key);
