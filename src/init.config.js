@@ -24,16 +24,18 @@ const filePath5 = filePath + "5";
  */
 function loadConfig(options) {
 
+  // Migrate old config file extension
   try {
     if (fs.existsSync(filePath)) {
       fs.renameSync(filePath, filePath5);
-      console.log(ANSI.green + "NOTE: renamed config-file from '.config.json' to '.config.json5'." + ANSI.reset);
+      console.log(`${ANSI.green}NOTE: renamed config-file from '.config.json' to '.config.json5'.${ANSI.reset}`);
     }
   }
   catch(err) {
     console.log(`${ANSI.red}Unable to rename ".config.json" to ".config.json5".${ANSI.reset}\n${err}`)
   }
 
+  // Apply settings (if any)
   try {
     let cfg = require(filePath5);
     let cfgOptions = Object.assign({}, cfg.options);
