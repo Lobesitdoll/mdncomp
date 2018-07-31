@@ -3,9 +3,9 @@
  * produces a final string.
  * @constructor
  */
-function Output(indent) {
+function Output(indent, lf) {
   this.string = "";
-  this.indent = "    ".substr(0, indent|0);
+  this.indent = "".padStart(indent|0);
   this.linefeed = lf;
 }
 
@@ -54,6 +54,23 @@ Output.prototype = {
   },
 
   toString: function() {
+    const codes = [
+      {code: "\\?r", ansi: ANSI.red},
+      {code: "\\?g", ansi: ANSI.green},
+      {code: "\\?y", ansi: ANSI.yellow},
+      {code: "\\?o", ansi: ANSI.orange},
+      {code: "\\?b", ansi: ANSI.blue},
+      {code: "\\?m", ansi: ANSI.magenta},
+      {code: "\\?c", ansi: ANSI.cyan},
+      {code: "\\?w", ansi: ANSI.white},
+      {code: "\\?G", ansi: ANSI.gray},
+      {code: "\\?R", ansi: ANSI.reset},
+      ];
+    codes.forEach(c => {
+      this.string = this.string.replace(new RegExp(c.code, "gm"), c.ansi)
+    });
     return this.string
   }
 };
+
+module.exports = Output;

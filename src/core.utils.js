@@ -275,6 +275,14 @@ const utils = {
     return max
   },
 
+  ansiLength: (str) => {
+    return utils.ansiFree(str).length
+  },
+
+  ansiFree: (str) => {
+    return str.replace(/\x1b[^m]*m/g, "")
+  },
+
   entities: (txt) => {
     return txt
       .replace(/&nbsp;/gmi, " ")
@@ -282,6 +290,24 @@ const utils = {
       .replace(/&amp;/gmi, "&")
       .replace(/&lt;/gmi, "<")
       .replace(/&gt;/gmi, ">");
+  },
+
+  versionAddRem: (add, rem) => {
+    let v = "";
+
+    if (typeof add === "undefined") {
+      v = ANSI.red + "-"
+    }
+    else if (typeof add === "boolean") {
+      if (add) v = ANSI.green + text.yes;
+      else v = ANSI.red + "-";
+    }
+    else if (typeof add === "string") {
+      v = (rem ? ANSI.red : ANSI.green) + add;
+      if (rem) v += typeof rem === "boolean" ? "-?" : "-" + rem;
+    }
+
+    return v
   },
 
   loadMDN: function() {

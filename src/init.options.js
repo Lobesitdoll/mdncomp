@@ -9,7 +9,6 @@
 const options = require("commander");
 const version = require("../package.json").version;
 const args = process.argv;
-const lf = global.lf;
 
 /**
  * Parse command line arguments.
@@ -36,9 +35,9 @@ module.exports = (() => {
     .option("-l, --list <api>", "List paths starting with the given value or '.' for top-level")
     .option("-b, --browser <id>", "Show information about this browser, or list if '.'")
     .option("-i, --index <index>", "Show this index from a multiple result list", -1)
-    .option("-R, --no-children", "Don't show object children in the table listing.")    // todo
     .option("-D, --no-desktop", "Don't show for desktop devices")
     .option("-M, --no-mobile", "Don't show for mobile devices")
+    .option("-R, --no-children", "Don't show object children in the table listing.")
     .option("-c, --case-sensitive", "Search in case-sensitive mode")
     .option("-a, --all", "If search results in more than entry, show info for all")
     .option("-z, --fuzzy", "Use path as a fuzzy search term")
@@ -46,7 +45,7 @@ module.exports = (() => {
     .option("-t, --split", "Split a shorthand line into two lines (use with -s)")
     .option("-W, --no-workers", "Don't show worker support information.")
     .option("-N, --no-notes", "Don't show notes")
-    .option("-f, --markdown", "Format link as markdown and turns off colors")
+    .option("-F, --no-flags", "Don't show flags")
     .option("--ext", "Show extended table of browsers/servers")
     .option("--desc", "Show Short description of the feature")
     .option("--history", "List version history per browser.")
@@ -62,7 +61,7 @@ module.exports = (() => {
     .option("--cupdate", "Check if update is available")
     .option("--random [scope]", "Show a random entry within \"scope\" (use . for any)")
     .option("--no-colors", "Don't use colors in output")
-    .option("--max-chars <width>", "Max number of chars per line before wrap", 72)
+    .option("--max-chars <width>", "Max number of chars per line before wrap", 80)
     .option("--no-config", "Ignore config file (mdncomp.json) in config folder")
     .option("--waitkey", "Wait for ENTER key before continuing")
     .option("--read", "Mark notifications in the current update as read") // todo notifications

@@ -1,179 +1,264 @@
-/**
- * Key formatter for ASCII output long format
- * @param {MDNComp} mdnComp
- * @param noHeader
- * @param sepChar
- * @returns {string}
- */
-function compatToLong(mdnComp, noHeader, sepChar = "|") {
-  let
-    out = new Output(0),
-    desktopList = ["chrome", "edge", "firefox", "ie", "opera", "safari"],
-    mobileList = ["chrome_android", "edge_mobile", "firefox_android", "opera_android", "safari_ios", "webview_android"],
-    extList = ["nodejs", "qq_android", "samsunginternet_android", "uc_android", "uc_chinese_android"],
-    refs = ["°", "¹", "²", "³", "ª", "^", "`", "'", "\"", "'\"", "\"\"", "\"\"'", "º"],
-    line = " %0----------+-----------+-----------+-----------+-----------+-----------".replace(/\+/g, sepChar),
-    ref = 0,
-    notes = [];
+/*
+  Formatter Long module
+  Copyright (c) 2018 Epistemex
+  www.epistemex.com
+*/
 
-  out.addLine(ANSI.reset);
+"use strict";
 
-  // url
-  if (!noHeader) {
-    if (options.markdown && mdnComp.url) {
-      out.addLine(" [`%0%1`](%2) %3", mdnComp.prePath, mdnComp.name, mdnComp.url, mdnComp.getStatus());
-    }
-    else {
-      out.addLine(" %0%1%2%3%4 %5", ANSI.cyan, mdnComp.prePath, ANSI.white, mdnComp.name, ANSI.white, mdnComp.getStatus());
-      out.addLine(" ", mdnComp.url ? ANSI.gray + mdnComp.url : "-");
-    }
+const utils = loadModule("core.utils");
+const refs = ["°", "¹", "²", "³", "ª", "^", "`", "'", "\"", "'\"", "\"\"", "\"\"'", "º"];
+const Output = loadModule("core.output");
+const out = new Output(0, lf);
+const table = require("markdown-table");
+const browserNames = utils.getBrowserShortNames();
 
-    // short title
-    if (mdnComp.short && mdnComp.short.length) {
-      let short = entities(ANSI.reset + " " + breakAnsiLine(cleanHTML(mdnComp.short), options.maxWidth));
-      out.addLine(short, lf)
-    }
-    else out.addLine();
+const tblOptions = {
+  align: ["l", "c", "c", "c", "c", "c", "c"],
+  delimiter: global.sepChar,
+  stringLength: utils.ansiLength,
+  pad: true
+};
 
-    // description
-    if (options.desc && mdnComp.description && mdnComp.description.length) {
-      let desc = entities(ANSI.reset + breakAnsiLine(cleanHTML(mdnComp.description), options.maxWidth));
-      out.addLine(desc, lf)
-    }
-  }
-  else {
-    // workers' status
-    let wStat = mdnComp.getStatus();
-    if (wStat.length) out.addLine(wStat.substring(1, wStat.length - 1) + lf);
+function formatterLong(data) {
+
+  // Header
+  out.addLine("\n %0%1%2%3", ANSI.cyan, data.prePath, ANSI.white, data.name, ANSI.reset);
+  out.addLine(" %0", getStatus());
+  if (data.url) out.addLine(" ", data.url ? ANSI.gray + data.url : "-", ANSI.reset);
+
+  // Short title
+  if (data.short && data.short.length) {
+    let short = utils.entities(ANSI.reset + " " + utils.breakAnsiLine(utils.cleanHTML(data.short), options.maxChars));
+    out.addLine(short, lf)
   }
 
-  // Show desktop info?
-  if (!options.mobile) {
-    //out.addLine(" %0DESKTOP:%1", ANSI.reset + ANSI.orange, ANSI.reset);
-    out.addLine(" %0Chrome    %1|%0 Edge      %1|%0 Firefox   %1|%0 IE        %1|%0 Opera     %1|%0 Safari%1", ANSI.white, ANSI.gray);
-    out.addLine(line, ANSI.gray);
-
-    versions(desktopList);
-    out.addLine(lf);
-
-    // insert notes
-    if (!options.noteend && options.notes && notes.length)
-      out.addLine(ANSI.yellow + notes.join(""));
-
-    // reset for next section
-    if (!options.noteend) {
-      notes = [];
-      ref = 0;
-    }
-  } // :desktop
-
-  // Show mobile info?
-  if (!options.desktop) {
-    //out.addLine(" %0MOBILE:%1", ANSI.reset + ANSI.orange, ANSI.reset);
-    out.addLine(" %0Chrome/A  %1|%0 Edge/mob  %1|%0 Firefox/A %1|%0 Opera/A   %1|%0Safari/iOS %1|%0 %0Webview/A%1", ANSI.white , ANSI.gray);
-    out.addLine(line, ANSI.gray);
-
-    versions(mobileList);
-    out.addLine(lf);
-
-    if (!options.noteend && options.notes && notes.length)
-      out.addLine(ANSI.yellow + notes.join(""));
-  } // :mobile
-
-  // Show extended info?
-  if (options.ext) {
-    //out.addLine(" %0OTHERS:%1", ANSI.reset + ANSI.orange, ANSI.reset);
-    out.addLine(" %0Node JS   %1|%0 QQ/A      %1|%0 Samsung/A %1|%0 UC/A      %1|%0 UC-Ch/A%1", ANSI.white , ANSI.gray);
-    out.addLine(line.substr(0, line.length - 12), ANSI.gray);
-
-    versions(extList);
-    out.addLine(lf);
-
-    if (options.notes && notes.length) out.addLine(ANSI.yellow + notes.join(""));
-  } // :ext
-
-  // worker support ?
-  if (options.workers && mdnComp.workers) {
-    out.addLine(ANSI.cyan + "WEB WORKER SUPPORT:");
-    out.add(compatToLong(mdnComp.workers, true) + lf)
+  // Description
+  if (options.desc && data.description) {
+    let desc = utils.entities(ANSI.reset + utils.breakAnsiLine(utils.cleanHTML(data.description), options.maxChars));
+    out.addLine(lf, desc.replace(/\n /gm, "\n"), lf)
   }
 
-  // SharedArrayBuffer as param support ?
-  if (options.sab && mdnComp.sharedAB) {
-    out.addLine(ANSI.cyan + "SHAREDARRAYBUFFER AS PARAM SUPPORT:");
-    out.add(compatToLong(mdnComp.sharedAB, true) + lf)
+  // Show table data
+  if (options.desktop) doDevice("desktop");
+  if (options.mobile) doDevice("mobile");
+  if (options.ext) doDevice("ext");
+
+  // Show flags
+  if (options.flags && hasFlags()) {
+    out.addLine(lf, "?c", text.hdrFlags);
+    if (options.desktop) out.add(getFlags("desktop"));
+    if (options.mobile) out.add(getFlags("mobile"));
+    if (options.ext) out.add(getFlags("ext"));
+  }
+
+  // Show history
+  if (options.history) {
+    //if (options.desktop) out.add(doHistory("desktop"), lf);
+  }
+
+  // Show notes
+  if (options.notes) {
+    // Notes
+    out.addLine(lf, "?c", text.hdrNotes);
+    data.notes.forEach(note => {
+      let res = ANSI.cyan + refs[note.index % refs.length] + ANSI.reset + ": " + ANSI.yellow + utils.cleanHTML(note.note, true);
+      res += (hasLink(note.note) ? ` See link:${note.index}.` : "") + ANSI.reset;
+      out.addLine(utils.breakAnsiLine(res, options.maxChars).replace(/\n /gm, "\n"))
+    });
+
+    // Links in notes
+    if (data.links.length) {
+      out.addLine(lf, ANSI.cyan, text.hdrLinks);
+      data.links.forEach(link => {
+        out.addLine("?c", link.index, "?R", ": ", "?y", link.url, "?R")
+      })
+    }
   }
 
   // Show specifications?
-  if (options.specs && mdnComp.specs && mdnComp.specs.length) {
-    out.addLine(ANSI.cyan + "SPECIFICATIONS:" + lf);
-    mdnComp.specs.forEach(spec => {
-      out.addLine(ANSI.white + `${entities(spec.name)}${lf}  ${getSpecStatus(spec.status)}  ${spec.url}`);
+  if (options.specs && data.specs.length) {
+    out.addLine(lf, "?c", text.hdrSpecs);
+    data.specs.forEach(spec => {
+      out.addLine("?w" + `${utils.entities(spec.name) + lf}  ${getSpecStatus(spec.status) + lf}  ${spec.url}`);
     });
     out.addLine();
   } // :specs
 
+  function doDevice(device) {
+    const dev = data.browsers[device];
+    const tbl = [];
+
+    tbl.push([ANSI.white + text.device[device] + ANSI.gray].concat(dev.map(o => ANSI.white + browserNames[o.browser].padEnd(10) + ANSI.gray)));
+    tbl.push(getLine(text.basicSupport, dev, ANSI.white));
+
+    if (options.children) {
+      data.children.sort(sortChildren).forEach(child => {
+        if ((options.workers && child.name === "worker_support") || child.name !== "worker_support") {
+          tbl.push(getLine(child.name, child.browsers[ device ], ANSI.yellow))
+        }
+      })
+    }
+    out.add(lf, ANSI.gray, table(tbl, tblOptions), lf)
+  }
+
+  function hasFlags() {
+    const devices = [];
+    if (options.desktop) devices.push("desktop");
+    if (options.mobile) devices.push("mobile");
+    if (options.ext) devices.push("ext");
+
+    for(let device of devices) {
+      for(let browser of data.browsers[device]) {
+        if (browser.history.length) {
+          let max = options.history ? browser.history.length : 1;
+          for(let i = 0; i < max; i++) {
+            if (browser.history[i].flags.length) return true
+          }
+        }
+      }
+    }
+    return false
+  }
+
+  function getFlags(device) {
+    const flags = [];
+
+    data.browsers[device].forEach(browser => {
+      const name = browserNames[browser.browser];
+
+      if (browser.history.length) {
+        let max = options.history ? browser.history.length : 1;
+        for(let i = 0; i < max; i++) {
+          let history = browser.history[i];
+          if (history.flags.length) {
+            let entry = ANSI.yellow + name + " " + utils.ansiFree(utils.versionAddRem(history.add, history.removed)) + ": " + ANSI.white;
+            history.flags.forEach(flag => {
+              switch(flag.type) {
+                case "preference":
+                  entry += `This feature is behind the ${flag.name} preference (needs to be set to ${flag.value_to_set}).`;
+                  break;
+                case "compiler":
+              }
+            });
+            flags.push(utils.breakAnsiLine(entry, options.maxChars).replace(/\n /gm, "\n") + lf)
+          }
+        }
+      }
+    });
+    return flags.join("")
+  }
+//  function doHistory(device) {
+//    const dev = data.browsers[device];
+//    const tbl = [];
+//    dev.forEach(browser => {
+//      const name = browserNames[browser.browser];
+//      if (browser.history.length) {
+//        let i = 0, max = options.history ;
+//        let history;
+//        while(history = browser.history[i++]) {
+//          console.log("H", history);
+//          let entry = "?y" + name + " " + utils.ansiFree(utils.versionAddRem(history.add, history.removed));
+//          entry += history.flags.length ? ": ?w" : ".";
+//          history.flags.forEach(flag => {
+//            switch(flag.type) {
+//              case "preference":
+//                entry += `This feature is behind the ${flag.name} preference (needs to be set to ${flag.value_to_set}).`;
+//                break;
+//              case "compiler":
+//            }
+//          });
+//          tbl.push(utils.breakAnsiLine(entry, options.maxChars).replace(/\n /gm, "\n"))
+//        }
+//      }
+//    });
+//    return tbl.join("\n")
+//  }
+
+  function sortChildren(a, b) {
+    return a.name < b.name ? -1 : (a.name >  b.name ? 1 : 0)
+  }
+
+  function hasLink(str) {
+    return str.includes("<a href")
+  }
+
+  function getStatus() {
+    let status = [];
+    if (data.standard) status.push(ANSI.green + text.standard + ANSI.reset);
+    if (data.experimental) status.push(ANSI.yellow + text.experimental + ANSI.reset);
+    if (data.deprecated) status.push(ANSI.red + text.deprecated + ANSI.reset);
+    return status.join(", ")
+  }
+
+  function getLine(name, status, color) {
+    const result = [color + name.replace("worker_support", text.workerSupport) + ANSI.gray + " "];
+
+    status.forEach(stat => {
+      const history = stat.history[0];
+      let v = utils.versionAddRem(history.add, history.removed);
+
+      if (stat.noteIndex.length) {
+        v += ANSI.cyan;
+        stat.noteIndex.forEach(ref => {
+          v += refs[ref % refs.length]
+        });
+      }
+
+      v += ANSI.gray;
+      result.push(v);
+    });
+
+    return result
+  }
+
   function getSpecStatus(status) {
     switch(status.toUpperCase()) {
       case "REC":
-        return ANSI.green + "Recommendation" + ANSI.reset + lf;
+        return "?gRecommendation?R";
       case "PR":
-        return ANSI.yellow + "Proposed Recommendation" + ANSI.reset + lf;
+        return "?yProposed Recommendation?R";
       case "CR":
-        return ANSI.cyan + "Candidate Recommendation" + ANSI.reset + lf;
+        return "?cCandidate Recommendation?R";
       case "RC":
-        return ANSI.cyan + "Release Candidate" + ANSI.reset + lf;
+        return "?cRelease Candidate?R";
       case "WD":
-        return ANSI.blue + "Working Draft" + ANSI.reset + lf;
+        return "?bWorking Draft?R";
       case "ED":
-        return ANSI.green + "Editor's Draft" + ANSI.reset + lf;
+        return "?gEditor's Draft?R";
       case "OLD-TRANSFORMS":
-        return ANSI.orange + "This has been merged in another draft." + ANSI.reset + lf;
+        return "?oThis has been merged in another draft?R";
       case "LIVING":
-        return ANSI.cyan + "Living Standard" + ANSI.reset + lf;
+        return "?cLiving Standard?R";
       case "RFC":
-        return ANSI.yellow + "IETF RFC" + ANSI.reset + lf;
+        return "?yIETF RFC?R";
       case "STANDARD":
-        return ANSI.green + "Standard" + ANSI.reset + lf;
+        return "?gStandard?R";
       case "DRAFT":
-        return ANSI.yellow + "Draft" + ANSI.reset + lf;
+        return "?yDraft?R";
       case "OBSOLETE":
-        return ANSI.red + "Obsolete" + ANSI.reset + lf;
+        return "?rObsolete?R";
       case "LC":
-        return ANSI.yellow + "Last Call Working Draft" + ANSI.reset + lf;
+        return "?yLast Call Working Draft?R";
       default:
-        return ANSI.yellow + status + ANSI.reset + lf
+        return "?y" + status + "?R"
     }
   }
 
-  function versions(list) {
-    list.forEach(browserId => {
-      let browser = mdnComp.getBrowser(browserId), status;
-
-      if (browser) {
-        status = browser.info[0].getVersion();
-
-        if (browser.hasNotes()) {
-          status += ANSI.yellow + (options.notes ? refs[ref] : "*");
-          notes.push(browser.getNotes(refs[ref]));
-          ref = ++ref % refs.length; // cuz, running out of super chars in UTF8 single bytes...
-        }
-
-        if (status === "?")
-          status = ANSI.yellow + "?";
-      }
-      else {
-        status = ANSI.red + no;
-      } // :if browser
-
-      out.add("%0" + status.centerAnsi(11) + ANSI.gray + "|", status.indexOf(no) >= 0 ? ANSI.red : ANSI.green);
-    }); // :list.feach
-
-    out.trimEnd(1);
-  }
-
-  // remove last LF
-  out.trimEnd(lf.length);
-
   return out.toString()
+
+//  // worker support ?
+//  if (options.workers && mdnComp.workers) {
+//    out.addLine(ANSI.cyan + "WEB WORKER SUPPORT:");
+//    out.add(compatToLong(mdnComp.workers, true) + lf)
+//  }
+//
+//  // SharedArrayBuffer as param support ?
+//  if (options.sab && mdnComp.sharedAB) {
+//    out.addLine(ANSI.cyan + "SHAREDARRAYBUFFER AS PARAM SUPPORT:");
+//    out.add(compatToLong(mdnComp.sharedAB, true) + lf)
+//  }
+
 }
+
+module.exports = formatterLong;

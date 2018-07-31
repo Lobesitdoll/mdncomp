@@ -22,7 +22,8 @@ module.exports = function(grunt) {
           "build/option.browser.js"      : ["src/option.browser.js"],
           "build/option.list.js"         : ["src/option.list.js"],
           "build/option.doc.tagparser.js": ["src/option.doc.tagparser.js"],
-          "build/formatter.common.js"    : ["src/formatter.common.js"]
+          "build/formatter.common.js"    : ["src/formatter.common.js"],
+          "build/formatter.long.js"      : ["src/formatter.long.js"]
 //          "build/build.min.js": [
 //            "src/core.js",
 //            "src/core.polyfills.js",

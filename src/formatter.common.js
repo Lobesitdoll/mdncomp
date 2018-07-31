@@ -1,4 +1,4 @@
-/*!
+/*
   Formatter Common module
   Copyright (c) 2018 Epistemex
   www.epistemex.com
@@ -6,11 +6,8 @@
 
 "use strict";
 
-const options = global.options;
-const ANSI = global.ANSI;
-const utils = global.loadModule("core.utils");
+const utils = loadModule("core.utils");
 const mdn = utils.loadMDN();
-const errText = global.errText;
 
 /**
  * This will flatten and normalize the __compat + support + status objects.
@@ -21,7 +18,7 @@ const errText = global.errText;
 function format(path, isRecursive) {
 
   if (!utils.isCompat(mdn, path)) {
-    console.log(`Error: path "${path}" not a "__compat" object.`);
+    console.error(`Error: path "${path}" not a "__compat" object.`);
     process.exit();
   }
 
@@ -60,6 +57,8 @@ function format(path, isRecursive) {
 
   // get children
   if (options.children && !isRecursive) {
+    const _history = options.history;
+    const _notes = options.notes;
     options.history = false;
     options.notes = false;
     Object.keys(pathObj).forEach(child => {
@@ -67,6 +66,8 @@ function format(path, isRecursive) {
         result.children.push(format(path + "." + child, true))
       }
     });
+    options.history = _history;
+    options.notes = _notes;
   }
 
   function mergeSupport(key, support) {
@@ -76,14 +77,24 @@ function format(path, isRecursive) {
     support = support[key] || {};
 
     // Support entries for this specific browser
-    const entries = Array.isArray(support) ? support : [support];
+    let entries = Array.isArray(support) ? support : [support];
+    if (!options.history) entries = [entries[0]];
 
     entries.forEach(entry => {
       const localNotesIndices = [];
 
       // all notes for this entry
-      if (options.notes && entry.notes) {
-        const notes = Array.isArray(entry.notes) ? entry.notes : [ entry.notes ];
+      if (options.notes && (entry.notes || entry.prefix || entry.alternative_name)) {
+        const notes = Array.isArray(entry.notes) ? entry.notes : (entry.notes ? [ entry.notes ] : []);
+
+        if (entry.prefix) {
+          notes.push("Version " + utils.ansiFree(utils.versionAddRem(entry.version_added, entry.version_removed)) + " prefixed with: " + entry.prefix);
+        }
+
+        if (entry.alternative_name) {
+          notes.push("Version " + utils.ansiFree(utils.versionAddRem(entry.version_added, entry.version_removed)) + " uses alternative name: " + entry.alternative_name);
+        }
+
         notes.forEach(note => {
           let index = getNoteIndex(note);
           if (index < 0) {
@@ -112,7 +123,7 @@ function format(path, isRecursive) {
       }
     });
 
-    return {[key]: history, noteIndex: noteIndices}
+    return {browser: key, history, noteIndex: noteIndices}
   }
 
   function getNoteIndex(note) {

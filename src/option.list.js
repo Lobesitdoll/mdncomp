@@ -10,9 +10,6 @@ const utils = require("./core.utils");
 const mdn = utils.loadMDN();
 const outInfo = utils.outInfo;
 
-const ANSI = global.ANSI;
-const lf = global.lf;
-
 /**
  * List either top-level paths or sub-paths based on the given prefix.
  * To list methods on an object specify the complete path.

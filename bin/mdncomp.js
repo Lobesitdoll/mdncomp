@@ -9,6 +9,20 @@ const DEBUG = true;
 const LF = "\r\n";
 
 const text = {
+  yes            : "Y",
+  no             : "N",
+  basicSupport   : "Basic Support",
+  device         : { "desktop": "Desktop", "mobile": "Mobile", "ext": "Extended" },
+  hdrNotes       : "NOTES:",
+  hdrLinks       : "LINKS:",
+  hdrFlags       : "FLAGS:",
+  hdrHistory     : "HISTORY:",
+  hdrSpecs       : "SPECS:",
+  hdrDocs        : "DOCS:",
+  workerSupport  : "In Workers:",
+  standard       : "On Standard Track",
+  experimental   : "Experimental",
+  deprecated     : "Deprecated",
   tooLimitedScope: "Sorry, too limited scope.",
   noResult       : "Sorry, no result",
   addOptionIndex : "Add option '-i <n>' to list a specific feature using the same search.",
@@ -169,18 +183,8 @@ else if (options.args.length) {
 
 */
 else if (options.random) {
-  let list = utils.buildTable(utils.loadMDN());
-
-  if (typeof options.random === "string") {
-    let keyword = options.random;
-    list = list.filter(item => item.includes(keyword))
-  }
-
-  if (!list.length) console.log(text.tooLimitedScope);
-  else {
-    let path = list[(Math.random() * list.length)|0];
-    showResults(path)
-  }
+  const path = loadModule("option.random")(options.random);
+  showResults(path)
 }
 
 /*-----------------------------------------------------------------------------*
@@ -198,7 +202,10 @@ else {
  */
 function showResults(path) {
   const preFormat = loadModule("formatter.common")(path);
-  console.log(require("util").inspect(preFormat, {depth: 8}));
+  // todo check format type
+  const results = loadModule("formatter.long")(preFormat);
+  // todo save?
+  console.log(results);
 }
 
 /**
@@ -213,10 +220,10 @@ function loadModule(name) {
     module = require(_base + name);
   }
   catch(err) {
-    console.log(errText.missingModule);
-    console.log(name);
+    console.error(errText.missingModule);
+    console.error(name);
     if (DEBUG) {
-      console.log("ERROR OBJECT:", err);
+      console.error("ERROR OBJECT:", err);
     }
     // todo document difference between this meaning and node's own exit code 1 (uncaught/fatal)
     process.exit(1);
