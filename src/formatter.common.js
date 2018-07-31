@@ -10,11 +10,18 @@ const options = global.options;
 const ANSI = global.ANSI;
 const utils = global.loadModule("core.utils");
 const mdn = utils.loadMDN();
+const errText = global.errText;
 
+/**
+ * This will flatten and normalize the __compat + support + status objects.
+ * @param {string} path
+ * @param {boolean} [isRecursive=false] - used when analysing sub-objects, children on the primary __compat object
+ * @returns {{path: string, prePath: string, name: string, description: string, url: string|null, specs: Array, experimental: boolean, standard: boolean, deprecated: boolean, browsers: {desktop: Array, mobile: Array, ext: Array}, notes: Array, links: Array, children: Array, sab: *, workers: *}}
+ */
 function format(path, isRecursive) {
 
   if (!utils.isCompat(mdn, path)) {
-    console.log(`Error: path "${path} not a __compat object.`);
+    console.log(`Error: path "${path}" not a "__compat" object.`);
     process.exit();
   }
 
@@ -25,14 +32,16 @@ function format(path, isRecursive) {
   const support = compat.support;
   const status = compat.status;
   const url = compat.mdn_url && compat.mdn_url.length ? ("https://developer.mozilla.org/docs/" + compat.mdn_url).replace(".org/docs/Mozilla/Add-ons/", ".org/Add-ons/") : null;
+  const specs = options.specs ? compat.specs || [] : [];
 
   const result = {
     path        : path,
     prePath     : utils.prePathFromPath(mdn, path),
     name        : utils.nameFromPath(path),
     description : compat.description || "",
+    short       : (compat.short || "").replace("→", "-&gt;"),
     url         : url,
-    specs       : compat.specs || [],
+    specs       : specs,
     experimental: status.experimental,
     standard    : status.standard_track,
     deprecated  : status.deprecated,
@@ -61,10 +70,10 @@ function format(path, isRecursive) {
   }
 
   function mergeSupport(key, support) {
-    support = support[key] || {};
-
     const history = [];
     const noteIndices = [];
+
+    support = support[key] || {};
 
     // Support entries for this specific browser
     const entries = Array.isArray(support) ? support : [support];
@@ -92,10 +101,13 @@ function format(path, isRecursive) {
 
       if (options.history || (!options.history && !history.length)) {
         history.push({
-          add: entry.version_added || "-",
-          removed: entry.version_removed || "-",
-          notes: localNotesIndices,
-          flags: entry.flags || []
+          add    : entry.version_added,
+          removed: entry.version_removed,
+          prefix : entry.prefix || null,
+          altName: entry.alternative_name || null,
+          flags  : entry.flags || [],
+          partial: entry.partial_implementation || false,
+          notes  : localNotesIndices
         })
       }
     });
