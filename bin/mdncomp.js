@@ -99,6 +99,15 @@ else if (options.fupdate) {
 
 /*-----------------------------------------------------------------------------*
 
+    Show config path
+
+*/
+else if (options.configpath) {
+  console.log(require("path").resolve(loadModule("core.io").getConfigDataPath()))
+}
+
+/*-----------------------------------------------------------------------------*
+
     List browser versions and status
 
 */
@@ -121,13 +130,31 @@ else if (options.list) {
 
 */
 else if (options.args.length) {
-  // DISCUSS: multiple results can cause a very long list. Merge sep. keywords into a regex instead for convenience? or search-within-result approach?
-  // For sake of progress: use a single argument for now.
   const result = loadModule("option.search")(options.args[0]);
-//  options.args.forEach(arg => {
-//    results.push(loadModule("option.search")(arg))
-//  });
-  const preFormat = loadModule("formatter.common")(result);
+
+  // no result
+  if (!result.length) {
+    console.log(`${ANSI.reset}Sorry, no result.`)
+  }
+  // multiple results
+  else if (result.length > 1 && options.index < 0) {
+    let pad = ("" + result.length).length;
+    let str = "";
+    result.forEach((line, i) => {
+      str += `${ANSI.yellow}[${ANSI.green}${("" + i).padStart(pad)}${ANSI.yellow}] ${ANSI.white}${line}\n`
+    });
+    str += `${ANSI.reset}\n` + utils.breakAnsiLine("Use option '-i n' to list a specific feature using the same search.", options.maxLength);
+    console.log(str);
+  }
+  // index out of range
+  else if (result.length > 1 && options.index >= result.length) {
+    console.log(`${ANSI.red}Index out of range.${ANSI.reset}`);
+  }
+  // show feature
+  else {
+    const preFormat = loadModule("formatter.common")(result.length === 1 ? result[0] : result[options.index]);
+  }
+
 }
 
 /*-----------------------------------------------------------------------------*

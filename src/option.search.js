@@ -17,9 +17,32 @@ const mdn = utils.loadMDN();
  */
 function search(keyword, sensitive) {
   const cmp = utils.getComparer(keyword, options.fuzzy, !sensitive);
-  return utils
-    .buildTable(mdn)
-    .filter(path => cmp.test(path) && utils.isCompat(mdn, path));
+  const result = [];
+
+  utils
+    .listTopLevels(mdn)
+    .filter(key => key !== "browsers")
+    .forEach(key => _iterateNode(mdn, key, key));
+
+  function _iterateNode(node, inKey, branch) {
+    const subNode = node[inKey];
+
+    if (typeof subNode === "object") {
+      Object.keys(subNode).forEach(key => {
+        if (key !== "__compat" && key !== "worker_support" && key !== "SharedArrayBuffer_as_param") {
+          let cBranch = branch + "." + key;
+          if (cmp.test(cBranch) && key !== inKey) {
+            result.push(cBranch);
+          }
+          else {
+            _iterateNode(subNode, key, branch + "." + key);
+          }
+        }
+      });
+    }
+  }
+
+  return result
 }
 
 module.exports = search;

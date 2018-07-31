@@ -7,15 +7,18 @@
 "use strict";
 
 const options = global.options;
+const ANSI = global.ANSI;
+const utils = global.loadModule("core.utils");
+const outInfo = utils.outInfo;
+const out = utils.outStore;
 
 // todo - merge dt/mob options
 // todo - check random option
 // todo - support multiple args:
 
-function format(result) {
+function format(path) {
 
-  console.log(result, options.children);
-
+  console.log("PATH: " + path);
 }
 
 
