@@ -11,7 +11,8 @@ const args = process.argv;
 const ANSI = global.ANSI;
 
 function show() {
-  if (args.length === 4) {
+
+  if (args.length >= 4) {
     let option = (args[2] === "-h" || args[2] === "--help") ? args[3] : args[2];
     let text = require("./help.options").help[option];
 

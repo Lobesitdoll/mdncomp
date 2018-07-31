@@ -7,7 +7,8 @@
 "use strict";
 
 const options = require("commander");
-const version = require("./../package.json").version;
+const version = require("../package.json").version;
+const args = process.argv;
 const lf = global.lf;
 
 /**
@@ -18,6 +19,15 @@ const lf = global.lf;
  * @returns {*} The options object with flags and arguments.
  */
 module.exports = (() => {
+
+  // override help combined with an option
+  if (args.length >= 4) {
+    for(let arg of args) {
+      if (arg === "-h" || arg === "--help") extendedHelp();
+    }
+  }
+
+  //
   options
     .version(version, "-v, --version")
     .usage("[options] [*]")
@@ -57,13 +67,15 @@ module.exports = (() => {
     .option("--waitkey", "Wait for ENTER key before continuing")
     .option("--read", "Mark notifications in the current update as read") // todo notifications
     .option("--configpath", "Show path to where config file and cache is stored")
-    .on("--help", () => {
-      global.loadModule("init.help")();
-    })
-    .parse(process.argv);
+    .on("--help", extendedHelp)
+    .parse(args);
 
   // apply config file settings if any
   global.loadModule("init.config")(options);
+
+  function extendedHelp() {
+    global.loadModule("init.help")();
+  }
 
   return options
 })();
