@@ -14,7 +14,6 @@
 
     "colors"        : true,     // if false, all ANSI color codes are removed
     "notes"         : true,     // show notes (if any)
-    "noteEnd"       : false,    // show notes (if any) at the end and not per section
     "shorthand"     : false,    // show a compressed output table
     "split"         : false,    // if shorthand, split desktop, mobile, extended at separate lines
     "caseSensitive" : false,    // use case-sensitive searches
@@ -22,15 +21,14 @@
     "mobile"        : true,     // show mobile browsers
     "ext"           : false,    // show extended status (nodejs, less common browsers)
     "overwrite"     : false,    // for --out, don't prompt but overwrite file if already exists
-    "markdown"      : false,    // format documentation URL in markdown
     "fuzzy"         : false,    // interprets keyword as fuzzy term
-    "maxChars"      : 72,       // line-break at this position (except URLs)
+    "maxChars"      : 84,       // line-break at this position (except URLs)
     "doc"           : false,    // fetch, cache and show documentation (if URL for it exist)
     "docforce"      : false,    // force re-download and cache doc (to update cache)
     "desc"          : false,    // show a short description for the feature
     "specs"         : false,    // show specification links for this feature
     "waitkey"       : false,    // wait for a key press to continue (exit)
-    "workers"       : true,     // show worker support information for a feature (if any)
+    "workers"       : false,    // show worker support information for a feature (if any)
     "sab"           : false     // show SharedArrayBuffer information for a feature (if any)
   },
   "formatter": {

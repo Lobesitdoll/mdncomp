@@ -213,12 +213,19 @@ const utils = {
    * @param str
    * @param convTags - convert entities for < and > to original form.
    * @param [resetColor=ANSI.reset] - ANSI def. to reset to, if not given "reset" will be used
+   * @param htmlColor
+   * @param linkColor
    * @returns {string}
    */
-  cleanHTML: (str, convTags, resetColor) => {
+  cleanHTML: (str, convTags, resetColor, htmlColor, linkColor) => {
+    htmlColor = htmlColor || ANSI.cyan;
+    resetColor = resetColor || ANSI.reset;
+    linkColor = linkColor || htmlColor;
     str = str
-      .replace(/<code>/gi, ANSI.cyan)
-      .replace(/<\/code>/gi, resetColor || ANSI.reset)
+      .replace(/<code>/gi, htmlColor)
+      .replace(/<\/code>/gi, resetColor)
+      .replace(/<a href/gi, linkColor + "<a href")
+      .replace(/<\/a>/gi, "</a>" + resetColor)
       .replace(/(<([^>]+)>)/ig, "");
     if (convTags) str = str.replace(/&lt;/gi, "<").replace(/&gt;/gi, ">");
     return str

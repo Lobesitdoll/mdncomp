@@ -16,6 +16,7 @@ const text = {
   hdrNotes       : "NOTES:",
   hdrLinks       : "LINKS:",
   hdrFlags       : "FLAGS:",
+  hdrFlagsHistory: "FLAGS AND HISTORY",
   hdrHistory     : "HISTORY:",
   hdrSpecs       : "SPECS:",
   hdrDocs        : "DOCS:",

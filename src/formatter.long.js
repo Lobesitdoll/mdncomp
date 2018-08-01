@@ -23,7 +23,6 @@ const tblOptions = {
 };
 
 function formatterLong(data) {
-
   let workerHint = false;
   let sabHint = false;
 
@@ -88,8 +87,8 @@ function formatterLong(data) {
   }
 
   // Show flags
-  if (options.flags && hasFlags()) {
-    out.addLine(lf, "?c", text.hdrFlags);
+  if ((options.flags || options.history) && hasFlags()) {
+    out.addLine(lf, "?c", text[options.history ? "hdrFlagsHistory" : "hdrFlags"]);
     if (options.desktop) getFlags("desktop");
     if (options.mobile) getFlags("mobile");
     if (options.ext) getFlags("ext");
@@ -136,6 +135,7 @@ function formatterLong(data) {
     for(let device of devices) {
       for(let browser of data.browsers[device]) {
         if (browser.history.length) {
+          if (options.history) return true;
           let max = options.history ? browser.history.length : 1;
           for(let i = 0; i < max; i++) {
             if (browser.history[i].flags.length) return true
@@ -156,8 +156,16 @@ function formatterLong(data) {
         let max = options.history ? browser.history.length : 1;
         for(let i = 0; i < max; i++) {
           let history = browser.history[i];
+          let version = utils.ansiFree(utils.versionAddRem(history.add, history.removed));
+
+          if (options.history) {
+            if (history.altName) flags.push(`?y${name} ${version}?w: Alternative name: ?c${history.altName}?w`);
+            if (history.prefix) flags.push(`?y${name} ${version}?w: Vendor prefixed: ?c${history.prefix}?w`);
+            if (history.partial) flags.push(`?y${name} ${version}?w: Partial support.?w`);
+            if (history.notes.length) flags.push(`?y${name} ${version}?w: See notes: ?c${history.notes.join(", ") + lf}?w`);
+          }
+
           if (history.flags.length) {
-            let version = utils.ansiFree(utils.versionAddRem(history.add, history.removed));
             if (isNaN(version)) version = "";
             else version = " " + version;
 
@@ -184,32 +192,6 @@ function formatterLong(data) {
 
     out.add(flags.join(""))
   }
-//  function doHistory(device) {
-//    const dev = data.browsers[device];
-//    const tbl = [];
-//    dev.forEach(browser => {
-//      const name = browserNames[browser.browser];
-//      if (browser.history.length) {
-//        let i = 0, max = options.history ;
-//        let history;
-//        while(history = browser.history[i++]) {
-//          console.log("H", history);
-//          let entry = "?y" + name + " " + utils.ansiFree(utils.versionAddRem(history.add, history.removed));
-//          entry += history.flags.length ? ": ?w" : ".";
-//          history.flags.forEach(flag => {
-//            switch(flag.type) {
-//              case "preference":
-//                entry += `This feature is behind the ${flag.name} preference (needs to be set to ${flag.value_to_set}).`;
-//                break;
-//              case "compiler":
-//            }
-//          });
-//          tbl.push(utils.breakAnsiLine(entry, options.maxChars).replace(/\n /gm, "\n"))
-//        }
-//      }
-//    });
-//    return tbl.join("\n")
-//  }
 
   function hasLink(str) {
     return str.includes("<a href")
