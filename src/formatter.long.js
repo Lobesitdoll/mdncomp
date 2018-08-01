@@ -49,7 +49,7 @@ function formatterLong(data) {
     // Description
     if (options.desc && data.description && data.description !== data.short) {
       let desc = utils.entities("?R" + utils.breakAnsiLine(utils.cleanHTML(data.description), options.maxChars));
-      out.addLine(lf, desc.replace(/\n /gm, "\n"), lf)
+      out.addLine(lf, desc, lf)
     }
   }
 
@@ -84,7 +84,7 @@ function formatterLong(data) {
       res += "?y" + utils.cleanHTML(note.note, true, "?y", "?c", "?o");
       res += (hasLink(note.note) ? ` Ref link ${note.index}.?R` : "?R");
 
-      out.addLine(utils.breakAnsiLine(res, options.maxChars).replace(/\n /gm, "\n"))
+      out.addLine(utils.breakAnsiLine(res, options.maxChars))
     });
 
     // Links in notes
@@ -239,7 +239,7 @@ function formatterLong(data) {
                   break;
               }
             });
-            flags.push(utils.breakAnsiLine(entry, options.maxChars).replace(/\n /gm, "\n") + lf)
+            flags.push(utils.breakAnsiLine(entry, options.maxChars) + lf)
           }
         }
       }

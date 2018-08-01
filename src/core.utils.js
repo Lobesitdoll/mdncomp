@@ -178,33 +178,33 @@ const utils = {
   },
 
   getBrowserList: () => {
-    return  {
-      desktop: ["chrome", "edge", "firefox", "ie", "opera", "safari"],
-      mobile: ["chrome_android", "edge_mobile", "firefox_android", "opera_android", "safari_ios", "webview_android"],
-      ext: ["nodejs", "qq_android", "samsunginternet_android", "uc_android", "uc_chinese_android"]
+    return {
+      desktop: [ "chrome", "edge", "firefox", "ie", "opera", "safari" ],
+      mobile : [ "chrome_android", "edge_mobile", "firefox_android", "opera_android", "safari_ios", "webview_android" ],
+      ext    : [ "nodejs", "qq_android", "samsunginternet_android", "uc_android", "uc_chinese_android" ]
     }
   },
 
   getBrowserShortNames: () => {
     return {
-      "chrome": "Chrome",
-      "edge": "Edge",
-      "firefox": "Firefox",
-      "ie": "IE",
-      "opera": "Opera",
-      "safari": "Safari",
-      "chrome_android": "Chrome/A",
-      "edge_mobile": "Edge/mob",
-      "firefox_android": "Firefox/A",
-      "opera_android": "Opera/A",
-      "safari_ios": "Safari/iOS",
-      "webview_android": "Webview/A",
-      "nodejs": "Node JS",
-      "qq_android": "QQ/A",
+      "chrome"                 : "Chrome",
+      "edge"                   : "Edge",
+      "firefox"                : "Firefox",
+      "ie"                     : "IE",
+      "opera"                  : "Opera",
+      "safari"                 : "Safari",
+      "chrome_android"         : "Chrome/A",
+      "edge_mobile"            : "Edge/mob",
+      "firefox_android"        : "Firefox/A",
+      "opera_android"          : "Opera/A",
+      "safari_ios"             : "Safari/iOS",
+      "webview_android"        : "Webview/A",
+      "nodejs"                 : "Node JS",
+      "qq_android"             : "QQ/A",
       "samsunginternet_android": "Samsung/A",
-      "uc_android": "UC/A",
-      "uc_chinese_android": "UC-Ch/A"
-    }
+      "uc_android"             : "UC/A",
+      "uc_chinese_android"     : "UC-Ch/A"
+    };
   },
 
   /**
@@ -221,12 +221,14 @@ const utils = {
     htmlColor = htmlColor || ANSI.cyan;
     resetColor = resetColor || ANSI.reset;
     linkColor = linkColor || htmlColor;
+
     str = str
       .replace(/<code>/gi, htmlColor)
       .replace(/<\/code>/gi, resetColor)
       .replace(/<a href/gi, linkColor + "<a href")
       .replace(/<\/a>/gi, "</a>" + resetColor)
       .replace(/(<([^>]+)>)/ig, "");
+
     if (convTags) str = str.replace(/&lt;/gi, "<").replace(/&gt;/gi, ">");
     return str
   },
@@ -277,8 +279,7 @@ const utils = {
     }
 
     // A little clean-up
-    //lines.forEach((line, i) => {lines[i] = line.trim()});
-    lines = lines.filter(line => line.trim());
+    lines = lines.map(line => line.trim());
 
     return lines.length ? lines.join(lf) : "";
   },
