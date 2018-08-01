@@ -19,18 +19,23 @@ well). This can help you navigate to a specific object in a branch.
 
 There are currently 3 "special" branches:
 
-"." (a single dot) will list the top-level branches, the roots if
-you will:
+If no argument or a single dot (.) a root list will be outputted:
 
-    mdncomp -l .
+    mdncomp -l
     ->
-    api
-    css
-    html
-    http
-    javascript
-    webdriver
-    webextensions
+    Valid path roots:                 
+    api                               
+    css                               
+    html                              
+    http                              
+    javascript                        
+    mathml                            
+    svg                               
+    webdriver                         
+    webextensions                     
+                                      
+    Valid statuses:                   
+    standard, experimental, deprecated
 
 From there you can list all branches on for example "css":
 
@@ -41,6 +46,20 @@ From there you can list all branches on for example "css":
     css.selectors
     css.types
 
+Then add to the path with a valid branch:
+
+    mdncomp -l css.types
+    ->
+    css.types
+    css.types.-moz-image-rect
+    css.types.angle
+    css.types.basic-shape
+    css.types.blend-mode
+    css.types.calc
+    css.types.flex
+    css.types.frequency
+    --X8--
+    
 and so on.
 
 "experimental" will list all APIs and objects that are marked 
@@ -49,9 +68,9 @@ experimental:
     mdncomp -l experimental
     ->
     api.AbortController
+    api.AbortPaymentEvent
     api.AbortSignal
-    api.Animation
-    api.AnimationEffectReadOnly
+    api.AmbientLightSensor
     --X8--
 
 "deprecated" will list all APIs and objects that are obsolete or
@@ -73,12 +92,12 @@ When outputting a file, using this option will override an existing
 file with the same name.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
-help["-d"] = help["--desktop"] = `
-Only show information about desktop browsers.`;
+help["-D"] = help["--no-desktop"] = `
+Don't show information for desktop browsers.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
-help["-m"] = help["--mobile"] = `
-Only show information about mobile device browsers.`;
+help["-M"] = help["--no-mobile"] = `
+Don't show information for mobile device browsers.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["-c"] = help["--case-sensitive"] = `
@@ -112,18 +131,16 @@ the result list. To list one particular result from that list, use this
 option:
 
     $ mdncomp blob
-    [0] api.Blob
-    [1] api.Blob.Blob
-    [2] api.Blob.size
-    [3] api.Blob.type
-    [4] api.Blob.slice
-    [5] api.BlobBuilder
-    [6] api.BlobEvent
+    [ 0] api.Blob
+    [ 1] api.BlobBuilder
+    [ 2] api.BlobEvent
+    [ 3] api.Body.blob
+    [ 4] api.HTMLCanvasElement.toBlob
     --X8--
 
-To list index 6, "api.BlobEvent" do:
+To list "api.BlobEvent" at index 2:
 
-    $ mdncomp blob -i 6`;
+    $ mdncomp blob -i 2`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["-s"] = help["--shorthand"] = `
@@ -136,11 +153,11 @@ For example:
  BlobBuilder: DT: C:8 E:Y F:?-18* IE:10 O:- S:- MOB: CA:? FA:?-18* EM:Y OA:- Si:- WA:-`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
-help["-h"] = help["--split"] = `
-Used with the "-s, --shorthand" option to split a line into two.
+help["-t"] = help["--split"] = `
+Used with the "-t, --shorthand" option to split a line into two.
 For example:
 
- mdncomp blob -ash
+ mdncomp blob -ath
  ->
  Blob:
    D: C:5 E:Y F:4 IE:10 O:11 S:5.1  M: CA:? FA:14 EM:Y OA:? Si:? WA:-
@@ -155,21 +172,27 @@ help["-b"] = help["--browser"] = `
 This will list release and status information for a *browser* based on
 the given ID.
 
-Using "." (a single dot) will list all the currently valid IDs:
+If no argument or a single dot (.) it list all the currently valid IDs:
 
     mdncomp --browser .
     ->
-    chrome
-    edge
-    edge_mobile
-    firefox
-    firefox_android
-    ie
-    nodejs
-    opera
-    safari
-    safari_ios
-    samsunginternet_android
+    chrome                                       
+    edge                                         
+    edge_mobile                                  
+    firefox                                      
+    firefox_android                              
+    ie                                           
+    nodejs                                       
+    opera                                        
+    qq_android                                   
+    safari                                       
+    safari_ios                                   
+    samsunginternet_android                      
+    uc_android                                   
+    uc_chinese_android                           
+                                                 
+    Valid statuses:                              
+    beta, current, esr, nightly, planned, retired
 
 Then pick an ID to obtain information about it:
 
@@ -185,24 +208,27 @@ Then pick an ID to obtain information about it:
 You can also get a list of browser bases on status. The following
 status keywords are supported:
 
-    current, retired, planned, beta, nightly, esr
+    beta, current, esr, nightly, planned, retired
 
 So to list for example the current active browsers:
 
     mdncomp --browser current
     ->
-    chrome           65   Rel: 2018-03-06
-    edge             16   Rel: 2017-09-26
-    edge_mobile      16   Rel: -
-    firefox          57   Rel: 2017-11-14
-    firefox_android  57   Rel: 2017-11-28
-    ie               11   Rel: 2013-10-17
-    nodejs            4   Rel: 2015-09-08
-    --X8--`;
+    STATUS: CURRENT                                                       
+    Chrome              68           2018-07-24  https://chromereleases.go...
+    Edge                17           2018-04-30  https://docs.microsoft.co...
+    Edge Mobile         17           2018-04-30                           
+    Firefox             61           2018-06-26  https://developer.mozilla...
+    Firefox Android     61           2018-06-26  https://developer.mozilla...
+    Internet Explorer   11           2013-10-17                           
+    Opera               53           2018-05-10  https://dev.opera.com/blo...
+    --X8--
+ 
+ To not list links combine the -N, --no-notes option.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
-help["-W"] = help["--no-workers"] = `
-Don't show information about support in Web Workers.`;
+help["-w"] = help["--workers"] = `
+Show detailed information about Worker support (if any).`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["-N"] = help["--no-notes"] = `
@@ -210,17 +236,6 @@ Don't list footnotes with the information. A browser will still be
 marked having footnotes but with a generic astrix symbol instead.
 
 For the --browser option the links will not be shown.`;
-
-/*----------------------------------------------------------------------------------------------------------------------------------*/
-help["-e"] = help["--noteend"] = `
-Footnotes are collected and shown at the end when information about
-both desktop and mobile are shown in the textual output.
-
-By default footnotes are shown separately for each section.`;
-
-/*----------------------------------------------------------------------------------------------------------------------------------*/
-help["-f"] = help["--markdown"] = `
-Formats the MDN link as markdown in the textual output.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["--ext"] = `
@@ -237,7 +252,7 @@ Show specification links and status, if available.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["--sab"] = `
-Show support for SharedArrayBuffer as param (usually with WebGL).`;
+Show detailed support for SharedArrayBuffer as param (usually with WebGL) (if any).`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["--no-colors"] = `
@@ -245,11 +260,11 @@ Turns off ANSI colors and codes in the terminal.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["--max-chars"] = `
-Set max number of characters on a (textual) line. Default is 72 but if
+Set max number of characters on a (textual) line. Default is 84 but if
 you prefer longer lines this can be set here. Using "-1" (negative one)
 as value means no line limit.
 
-Note that width is ignored for links.`;
+Note that width is ignored for URLs.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["--doc"] = `
@@ -280,13 +295,13 @@ a "popup" terminal so the terminal stays open until the ENTER key is hit before 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 help["--random"] = `
 Feel like exploring? Discover new features using this option. You can 
-specify either all by using a dot (.) or a keyword or search term 
-(which of course can be combined with fuzzy search).
+specify either all by omitting any argument, or a keyword or search term 
+(which can be combined with the --fuzzy option) to limit scope.
 
-    $ mdncomp --random .
+    $ mdncomp --random
     $ mdncomp --random audio
     $ mdncomp --random ht*blob
-    $ mdncomp --random --fuzzy hblb
+    $ mdncomp --random hblb --fuzzy
 
 It can be combined with documentation excerpts (if the URL for it is
 available) or short descriptions:
