@@ -13,7 +13,7 @@ const mdn = utils.loadMDN();
  * This will flatten and normalize the __compat + support + status objects.
  * @param {string} path
  * @param {boolean} [isRecursive=false] - used when analysing sub-objects, children on the primary __compat object
- * @returns {{path: string, prePath: string, name: string, description: string, url: string|null, specs: Array, experimental: boolean, standard: boolean, deprecated: boolean, browsers: {desktop: Array, mobile: Array, ext: Array}, notes: Array, links: Array, children: Array, sab: *, workers: *}}
+ * @returns {*}
  */
 function format(path, isRecursive) {
 
@@ -98,17 +98,17 @@ function format(path, isRecursive) {
         const notes = Array.isArray(entry.notes) ? entry.notes : (entry.notes ? [ entry.notes ] : []);
 
         if (entry.prefix) {
-          notes.push("Vendor prefix: " + entry.prefix)
+          notes.push(text.vendorPrefix + entry.prefix)
         }
 
         if (entry.alternative_name) {
           notes.push(
-            "Version " + utils.ansiFree(utils.versionAddRem(entry.version_added, entry.version_removed)) + " uses alternative name: " + entry.alternative_name
+            text.versionColumn + utils.ansiFree(utils.versionAddRem(entry.version_added, entry.version_removed)) + text.usesAltName + entry.alternative_name
           )
         }
 
         if (entry.partial_implementation) {
-          notes.push("Partial implementation.")
+          notes.push(text.partialImpl)
         }
 
         notes.forEach(note => {

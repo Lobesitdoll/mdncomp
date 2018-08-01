@@ -81,8 +81,8 @@ function formatterLong(data) {
     out.addLine(lf, "?c", text.hdrNotes);
     data.notes.forEach(note => {
       let res = "?c" + refs[note.index % refs.length] + "?R: ";
-      res += "?y" + utils.cleanHTML(note.note, true, "?y", "?c", "?o");
-      res += (hasLink(note.note) ? ` Ref link ${note.index}.?R` : "?R");
+      res += "?R" + utils.cleanHTML(note.note, true, "?R", "?c", "?y");
+      res += (hasLink(note.note) ? `?R Ref link ${note.index}.?R` : "?R");
 
       out.addLine(utils.breakAnsiLine(res, options.maxChars))
     });
@@ -142,7 +142,8 @@ function formatterLong(data) {
     name = name
       .replace("worker_support", text.workerSupport)
       .replace("sab_in_dataview", text.sabInDataView)
-      .replace("SharedArrayBuffer_as_param", text.sabSupport);
+      .replace("SharedArrayBuffer_as_param", text.sabSupport)
+      .replace(/_/g, " ");
 
     const result = [color + name + "?G "];
 
