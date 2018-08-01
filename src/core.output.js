@@ -1,3 +1,11 @@
+/*
+  Output object module
+  Copyright (c) 2018 Epistemex
+  www.epistemex.com
+*/
+
+const utils = loadModule("core.utils");
+
 /**
  * Output object collecting strings and
  * produces a final string.
@@ -54,22 +62,7 @@ Output.prototype = {
   },
 
   toString: function() {
-    const codes = [
-      {code: "\\?r", ansi: ANSI.red},
-      {code: "\\?g", ansi: ANSI.green},
-      {code: "\\?y", ansi: ANSI.yellow},
-      {code: "\\?o", ansi: ANSI.orange},
-      {code: "\\?b", ansi: ANSI.blue},
-      {code: "\\?m", ansi: ANSI.magenta},
-      {code: "\\?c", ansi: ANSI.cyan},
-      {code: "\\?w", ansi: ANSI.white},
-      {code: "\\?G", ansi: ANSI.gray},
-      {code: "\\?R", ansi: ANSI.reset},
-      ];
-    codes.forEach(c => {
-      this.string = this.string.replace(new RegExp(c.code, "gm"), c.ansi)
-    });
-    return this.string
+    return utils.parseColorCodes(this.string)
   }
 };
 

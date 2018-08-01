@@ -1,12 +1,10 @@
-/*!
+/*
   Utils module
   Copyright (c) 2018 Epistemex
   www.epistemex.com
 */
 
 "use strict";
-
-const _outBuffer = [];
 
 const utils = {
 
@@ -90,7 +88,7 @@ const utils = {
       regex = new RegExp(str, options);
     }
     catch(err) {
-      log("Invalid regular expression:", err.message);
+      error("Invalid regular expression:", err.message);
       process.exit(-1);
     }
 
@@ -284,14 +282,14 @@ const utils = {
     return lines.length ? lines.join(lf) : "";
   },
 
-  getMaxLength: list => {
-    let max = 0;
-    list.forEach(e => {
-      let len = (utils.prePathFromPath(e) + utils.nameFromPath(e)).length;
-      if (len > max) max = len;
-    });
-    return max
-  },
+//  getMaxLength: list => {
+//    let max = 0;
+//    list.forEach(e => {
+//      let len = (utils.prePathFromPath(e) + utils.nameFromPath(e)).length;
+//      if (len > max) max = len;
+//    });
+//    return max
+//  },
 
   ansiLength: (str) => {
     return utils.ansiFree(str).length
@@ -299,6 +297,27 @@ const utils = {
 
   ansiFree: (str) => {
     return str.replace(/\x1b[^m]*m/g, "").replace(/\?[rgyobmcwGR]/g, "")
+  },
+
+  parseColorCodes: (str) => {
+    const codes = [
+      {code: "\\?r", ansi: ANSI.red},
+      {code: "\\?g", ansi: ANSI.green},
+      {code: "\\?y", ansi: ANSI.yellow},
+      {code: "\\?o", ansi: ANSI.orange},
+      {code: "\\?b", ansi: ANSI.blue},
+      {code: "\\?m", ansi: ANSI.magenta},
+      {code: "\\?c", ansi: ANSI.cyan},
+      {code: "\\?w", ansi: ANSI.white},
+      {code: "\\?G", ansi: ANSI.gray},
+      {code: "\\?R", ansi: ANSI.reset},
+    ];
+
+    codes.forEach(c => {
+      str = str.replace(new RegExp(c.code, "gm"), c.ansi)
+    });
+
+    return str
   },
 
   entities: (txt) => {
@@ -337,30 +356,21 @@ const utils = {
       mdn = require("../data/data.json");
     }
     catch(err) {
-      log("Critical error: data file not found. Try running with option --fupdate to download latest snapshot.");
-      process.exit(1);
+      utils.err("?rCritical error: data file not found.\n?yTry running with option --fupdate to download latest snapshot.?R");
+      process.exit();
     }
 
     return mdn
   },
 
-  outInfo: function (txt) {
-    if (Array.isArray(txt)) {
-      txt = txt.join(lf);
-    }
-    console.log(txt + ANSI.reset);
+  log: function(...args) {
+    if (args.length === 1 && Array.isArray(args[0])) args[0] = args[0].join(lf);
+    console.log(utils.parseColorCodes(args.join(" ")))
   },
 
-  outStore: function (txt, noFile) {
-    if (Array.isArray(txt)) txt = txt.join(lf);
-    if (noFile || !options.out) {
-      console.log(txt);
-    }
-    else {
-      _outBuffer.push(txt);
-    }
+  err: function(...args) {
+    console.error(utils.parseColorCodes(args.join(" ")))
   }
-
 };
 
 module.exports = utils;
