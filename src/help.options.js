@@ -8,11 +8,11 @@ const help = {};
 
 // Use string literals and start on the -next- line to prepend a line-feed. Likewise DON'T allow linefeed at the end (is added by parser).
 
-/*----------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------*/
 help["-v"] = help["--version"] = `
 List version information for this release in semver format.`;
 
-/*----------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------*/
 help["-l"] = help["--list"] = `
 This will list *branches* and not objects (unless they are branches as
 well). This can help you navigate to a specific object in a branch.
@@ -76,28 +76,28 @@ experimental:
 "deprecated" will list all APIs and objects that are obsolete or
 deprecated from the standard.`;
 
-/*----------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------*/
 help["-D"] = help["--no-desktop"] = `
 Don't show information for desktop browsers.`;
 
-/*----------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------*/
 help["-M"] = help["--no-mobile"] = `
 Don't show information for mobile device browsers.`;
 
-/*----------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------*/
 help["-c"] = help["--case-sensitive"] = `
 When searching determine that the search should be
 conducted using case-sensitive comparison.
 Default is case-insensitive.`;
 
-/*----------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------*/
 help["-a"] = help["--all"] = `
 If there are multiple results for a search term, this will allow 
 showing information for all the results.
 
 Note: currently not supported with SVG output.`;
 
-/*----------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------*/
 help["-z"] = help["--fuzzy"] = `
 Search using a "fuzzy" search term. This simply mean expressing the
 search term as chosen letters from the target path:
@@ -109,7 +109,7 @@ will produce the result for "HTMLCanvasElement.toBlob".
 The option can be stored in the "config file" if you want to use it
 permanently.`;
 
-/*----------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------*/
 help["-i"] = help["--index"] = `
 When multiple results are listed they are assigned a index number in 
 the result list. To list one particular result from that list, use this
@@ -125,9 +125,14 @@ option:
 
 To list "api.BlobEvent" at index 2:
 
-    $ mdncomp blob -i 2`;
+    $ mdncomp blob -i 2
+    
+Tip: you can use a shorthand version of this option, simply omit the option name and
+type in the number directly as an argument:
 
-/*----------------------------------------------------------------------------------------------------------------------------------*/
+    $ mdncomp blob 2`;
+
+/*--------------------------------------------------------------------------------------------------*/
 help["-s"] = help["--shorthand"] = `
 List a textual shorthand version of API information.
 
@@ -137,7 +142,7 @@ For example:
  ->
  BlobBuilder: DT: C:8 E:Y F:?-18* IE:10 O:- S:- MOB: CA:? FA:?-18* EM:Y OA:- Si:- WA:-`;
 
-/*----------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------*/
 help["-t"] = help["--split"] = `
 Used with the "-t, --shorthand" option to split a line into two.
 For example:
@@ -152,7 +157,7 @@ For example:
    D: C:5 E:Y F:4 IE:10 O:11 S:5.1  M: CA:- FA:- EM:Y OA:- Si:- WA:-
  --X8--`;
 
-/*----------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------*/
 help["-b"] = help["--browser"] = `
 This will list release and status information for a *browser* based on
 the given ID.
@@ -211,39 +216,39 @@ So to list for example the current active browsers:
  
  To not list links combine the -N, --no-notes option.`;
 
-/*----------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------*/
 help["-w"] = help["--workers"] = `
 Show detailed information about Worker support (if any).`;
 
-/*----------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------*/
 help["-N"] = help["--no-notes"] = `
 Don't list footnotes with the information. A browser will still be
 marked having footnotes but with a generic astrix symbol instead.
 
 For the --browser option the links will not be shown.`;
 
-/*----------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------*/
 help["--ext"] = `
 Shows an additional table for less common browsers.`;
 
-/*----------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------*/
 help["--desc"] = `
 Will include a short description of the feature after the link in the
 default long output format, if available.`;
 
-/*----------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------*/
 help["--specs"] = `
 Show specification links and status, if available.`;
 
-/*----------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------*/
 help["--sab"] = `
 Show detailed support for SharedArrayBuffer as param (usually with WebGL) (if any).`;
 
-/*----------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------*/
 help["--no-colors"] = `
 Turns off ANSI colors and codes in the terminal.`;
 
-/*----------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------*/
 help["--max-chars"] = `
 Set max number of characters on a (textual) line. Default is 84 but if
 you prefer longer lines this can be set here. Using "-1" (negative one)
@@ -251,7 +256,7 @@ as value means no line limit.
 
 Note that width is ignored for URLs.`;
 
-/*----------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------*/
 help["--random"] = `
 Feel like exploring? Discover new features using this option. You can 
 specify either all by omitting any argument, or a keyword or search term 
@@ -274,13 +279,13 @@ available) etc.
 
 Note that some options are ignored using this option.`;
 
-/*----------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------*/
 help["--configpath"] = `
 Show the path to the root folder used to store the optional config file
 and the documentation excerpts cache.`;
 
-/*----------------------------------------------------------------------------------------------------------------------------------*/
-help["--no-config"] = `
+/*--------------------------------------------------------------------------------------------------*/
+help["-G"] = help["--no-config"] = `
 Ignores the config file if specified. As the config file will override
 options this option will allow bypassing those overrides.
 
@@ -288,7 +293,7 @@ Options that will be ignored regardless are:
 --no-config, --out, --all, --index, --browser, --list,
 --version, --update, --cupdate, --fupdate and --help.`;
 
-/*----------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------*/
 help["--update"] = help["--cupdate"] = help["--fupdate"] = `
 Update the precompiled Browser Compatibility Data object. If the data
 is considered to be the same (using MD5 hash against server file) no
@@ -319,11 +324,11 @@ loaded:
 
 These are saved locally to "[npm-install-folder]/mdncomp/data/".`;
 
-/*----------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------*/
 help["-y"] = help["--history"] = `
 Show detailed list of version history for each browser.`;
 
-/*----------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------*/
 help["-h"] = help["--help"] = `
 List options, or show more detailed help per option (no options will
 default to \`--help\`):
@@ -332,5 +337,5 @@ default to \`--help\`):
     mdncomp --help
     mdncomp -h -l      # shows help for the --list option`;
 
-/*----------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------*/
 module.exports.help = help;
