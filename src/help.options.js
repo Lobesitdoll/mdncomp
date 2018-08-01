@@ -268,11 +268,6 @@ Same as --doc but will force fetch the content, re-parse and update
 the cache.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
-help["--waitkey"] = `
-Wait for the ENTER key before continuing/exiting. This can be useful if mdncomp is used in
-a "popup" terminal so the terminal stays open until the ENTER key is hit before closing.`;
-
-/*----------------------------------------------------------------------------------------------------------------------------------*/
 help["--random"] = `
 Feel like exploring? Discover new features using this option. You can 
 specify either all by omitting any argument, or a keyword or search term 
