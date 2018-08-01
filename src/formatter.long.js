@@ -56,7 +56,7 @@ function formatterLong(data) {
     out.addLine(lf, utils.breakAnsiLine("?R*) Use option ?c--sab?R to see SharedArrayBuffer as a parameter details.", options.maxChars))
   }
 
-  // Show table data
+  // Show table data for workers/SharedArrayBuffer
   if (options.workers && data.workers) formatterLong(data.workers);
   if (options.sab && data.sab) formatterLong(data.sab);
 
@@ -87,8 +87,8 @@ function formatterLong(data) {
   }
 
   // Show flags
-  if ((options.flags || options.history) && hasFlags()) {
-    out.addLine(lf, "?c", text[options.history ? "hdrFlagsHistory" : "hdrFlags"]);
+  if ((options.flags && hasFlags()) || (options.history && hasHistory())) {
+    out.addLine(lf, "?c", text.hdrFlagsHistory);
     if (options.desktop) getFlags("desktop");
     if (options.mobile) getFlags("mobile");
     if (options.ext) getFlags("ext");
@@ -108,6 +108,7 @@ function formatterLong(data) {
   function doDevice(device) {
     const dev = data.browsers[device];
     const tbl = [];
+    let extra = "";
 
     tbl.push(
       ["?w" + text.device[device] + "?G"]
@@ -115,15 +116,16 @@ function formatterLong(data) {
     );
     tbl.push(getLine(data.name, dev, "?w"));
 
-    if (options.children) {
+    if (options.children && data.children.length) {
       data.children.forEach(child => {
         if (!options.workers && child.name === "worker_support") workerHint = true;
         if (!options.sab && child.name === "SharedArrayBuffer_as_param") sabHint = true;
         tbl.push(getLine(child.name, child.browsers[ device ], "?y"))
       })
     }
+    else extra = lf;
 
-    out.add(lf, "?G", table(tbl, tblOptions), lf)
+    out.add(lf, "?G", table(tbl, tblOptions), lf, extra)
   }
 
   function getLine(name, status, color) {
@@ -174,6 +176,20 @@ function formatterLong(data) {
     return false
   }
 
+  function hasHistory() {
+    const devices = [];
+    if (options.desktop) devices.push("desktop");
+    if (options.mobile) devices.push("mobile");
+    if (options.ext) devices.push("ext");
+
+    for(let device of devices) {
+      for(let browser of data.browsers[device]) {
+        if (browser.history.length) return true
+      }
+    }
+    return false
+  }
+
   function getFlags(device) {
     const flags = [];
 
@@ -187,13 +203,14 @@ function formatterLong(data) {
           let version = utils.ansiFree(utils.versionAddRem(history.add, history.removed));
 
           if (options.history) {
-            if (history.altName) flags.push(`?y${name} ${version}?w: Alternative name: ?c${history.altName}?w`);
-            if (history.prefix) flags.push(`?y${name} ${version}?w: Vendor prefixed: ?c${history.prefix}?w`);
-            if (history.partial) flags.push(`?y${name} ${version}?w: Partial support.?w`);
-            if (history.notes.length) flags.push(`?y${name} ${version}?w: See notes: ?c${history.notes.join(", ") + lf}?w`);
+            let _version = isNaN(version) ? "" : " " + version;
+            if (history.altName) flags.push(`?y${name}${_version}?w: Alternative name: ?c${history.altName}?w` + lf);
+            if (history.prefix) flags.push(`?y${name}${_version}?w: Vendor prefixed: ?c${history.prefix}?w` + lf);
+            if (history.partial) flags.push(`?y${name}${_version}?w: Partial support.?w` + lf);
+            if (history.notes.length) flags.push(`?y${name}${_version}?w: See note ?c${history.notes.map(i => refs[i % refs.length]).join(", ")}?w` + lf);
           }
 
-          if (history.flags.length) {
+          if (options.flags && history.flags.length) {
             if (isNaN(version)) version = "";
             else version = " " + version;
 
@@ -269,19 +286,6 @@ function formatterLong(data) {
   function sortRefs(a, b) {
     return a < b ? -1 : (a >  b ? 1 : 0)
   }
-
-
-  //  // worker support ?
-//  if (options.workers && mdnComp.workers) {
-//    out.addLine(ANSI.cyan + "WEB WORKER SUPPORT:");
-//    out.add(compatToLong(mdnComp.workers, true) + lf)
-//  }
-//
-//  // SharedArrayBuffer as param support ?
-//  if (options.sab && mdnComp.sharedAB) {
-//    out.addLine(ANSI.cyan + "SHAREDARRAYBUFFER AS PARAM SUPPORT:");
-//    out.add(compatToLong(mdnComp.sharedAB, true) + lf)
-//  }
 
   return out.toString()
 }
