@@ -172,7 +172,8 @@ function _fBrowserVersion(version, padStart, padEnd) {
   return verArr[0].padStart(padStart) + verArr.join(".").substr(verArr[0].length).padEnd(padEnd)
 }
 
-function browsers(path) {
+function browsers(_path) {
+   let path = typeof _path === "boolean" ? "." : _path;
   if (path === ".") {
     outInfo(ANSI.reset + "Valid browser identifiers:");
     outInfo(ANSI.green + listBrowsers().join(lf) + ANSI.reset);
