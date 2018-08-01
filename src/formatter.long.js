@@ -141,13 +141,7 @@ function formatterLong(data) {
   }
 
   function getLine(name, status, color) {
-    name = name
-      .replace("worker_support", text.workerSupport)
-      .replace("sab_in_dataview", text.sabInDataView)
-      .replace("SharedArrayBuffer_as_param", text.sabSupport)
-      .replace(/_/g, " ");
-
-    const result = [color + name + "?G "];
+    const result = [color + utils.getFeatureName(name) + "?G "];
 
     status
       .sort(sortRefs)
@@ -159,7 +153,7 @@ function formatterLong(data) {
           v += "?c";
           stat.noteIndex.forEach(ref => {
             v += refs[ref % refs.length]
-          });
+          })
         }
 
         v += "?G";
@@ -167,7 +161,7 @@ function formatterLong(data) {
       });
 
     return result
-  }
+  } // : getLine
 
   function hasFlags() {
     const devices = [];
@@ -187,7 +181,7 @@ function formatterLong(data) {
       }
     }
     return false
-  }
+  } // : hasFlags
 
   function hasHistory() {
     const devices = [];
@@ -201,7 +195,7 @@ function formatterLong(data) {
       }
     }
     return false
-  }
+  } // : hasHistory
 
   function getFlags(device) {
     const flags = [];
@@ -249,7 +243,7 @@ function formatterLong(data) {
     });
 
     out.add(flags.join(""))
-  }
+  } // : getFlags
 
   function hasLink(str) {
     return str.includes("<a href")
@@ -262,7 +256,7 @@ function formatterLong(data) {
     if (data.deprecated) status.push(`?r${text.deprecated}?R`);
     if (!status.length) status.push(`?r${text.nonStandard}?R`);
     return status.join(", ")
-  }
+  } // : getStatus
 
   function getSpecStatus(status) {
     switch(status.toUpperCase()) {
@@ -295,7 +289,7 @@ function formatterLong(data) {
       default:
         return "?y" + status + "?R"
     }
-  }
+  } // : getSpecStatus
 
   function sortRefs(a, b) {
     return a < b ? -1 : (a > b ? 1 : 0)

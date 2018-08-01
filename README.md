@@ -109,7 +109,7 @@ Or an fuzzy expression:
 
     $ mdncomp -z ahcb.
 
-**Show data in shorthand format using option `-s, --shorthand`:**
+**Show data in a compact shorthand format using option `-s, --shorthand`:**
 
     $ mdncomp html*toblob -s
     
