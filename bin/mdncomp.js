@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+/*!
+  mdncomp (c) epistemex
+ */
 
 /*----------------------------------------------------------------------------*/
 
@@ -27,6 +30,7 @@ const text = {
   standard       : "On Standard Track",
   experimental   : "Experimental",
   deprecated     : "Deprecated",
+  nonStandard    : "Non-Standard",
   usesAltName    : " uses alternative name: ",
   versionColumn  : "Version ",
   partialImpl    : "Partial implementation.",
@@ -34,6 +38,7 @@ const text = {
   tooLimitedScope: "Sorry, too limited scope.",
   noResult       : "Sorry, no result",
   addOptionIndex : "Add option '-i <n>' to list a specific feature using the same search.",
+  renamedConfig  : "NOTE: renamed config-file from \".config.json\" to \".config.json5\".",
   mdncomp        : "npm i -g mdncomp",
   gitName        : "GitLab",
   gitUrl         : "https://gitlab.com/epistemex/mdncomp/"
@@ -44,7 +49,8 @@ const errText = {
   versionWarning : "WARNING: mdncomp is built for Node version 8 or newer. It may not work in older Node.js versions.",
   missingModule  : String.raw`Critical: A core module seem to be missing. Use '${text.mdncomp}' to reinstall.`,
   unhandled      : String.raw`An unhandled error occurred!${LF}Please consider reporting to help us solve it via ${text.gitName}:${LF}
-  ${text.gitUrl}issues${LF+LF}Try update/reinstall '${text.mdncomp}' (or --fupdate) if the issue persists.${LF}`
+  ${text.gitUrl}issues${LF+LF}Try update/reinstall '${text.mdncomp}' (or --fupdate) if the issue persists.${LF}`,
+  unableCfgRename: "Unable to rename \".config.json\" to \".config.json5\"."
 };
 
 /*-----------------------------------------------------------------------------*
@@ -84,6 +90,8 @@ Object.assign(global, {
   sepChar   : "|",
   shortPad  : 1,
   ANSI      : loadModule("core.ansi"),
+  log       : utils.log,
+  err       : utils.err,
   options   : {}
 });
 
@@ -188,6 +196,16 @@ function search() {
   const keyword = options.args[0];
   const result = loadModule("option.search")(keyword);
 
+  // check for shorthand index number arg
+  if (options.index < 0) {
+    for(let arg of options.args) {
+      if (!isNaN(arg)) {
+        options.index = +arg;
+        break
+      }
+    }
+  }
+
   // no result
   if (!result.length) {
     if (!options.fuzzy && !keyword.includes("*") && !keyword.startsWith("/")) {
@@ -195,23 +213,26 @@ function search() {
       search();
     }
     else {
-      console.log(`${ANSI.reset}${text.noResult}.`)
+      log(`?R${text.noResult}.`)
     }
   }
+
   // multiple results
   else if (result.length > 1 && options.index < 0) {
     let pad = ("" + result.length).length;
     let str = "";
     result.forEach((line, i) => {
-      str += `${ANSI.yellow}[${ANSI.green}${("" + i).padStart(pad)}${ANSI.yellow}] ${ANSI.white}${line}\n`
+      str += `?y[?g${("" + i).padStart(pad)}?y] ?w${line}\n`
     });
-    str += `${ANSI.reset}\n` + utils.breakAnsiLine(text.addOptionIndex, options.maxLength);
-    console.log(str);
+    str += `?R\n` + utils.breakAnsiLine(text.addOptionIndex, options.maxLength);
+    log(str)
   }
+
   // index out of range
   else if (result.length > 1 && options.index >= result.length) {
-    console.log(`${ANSI.red}${errText.indexOutOfRange}.${ANSI.reset}`);
+    err(`?y${errText.indexOutOfRange}.?R`);
   }
+
   // show feature
   else {
     showResults(result.length === 1 ? result[0] : result[options.index]);
@@ -230,7 +251,7 @@ function showResults(path) {
   console.log(results);
 
   // Add footer
-  console.log(ANSI.magenta + "Data from MDN - `npm i -g mdncomp` by epistemex" + ANSI.white + ANSI.reset);
+  log("?mData from MDN - `npm i -g mdncomp` by epistemex?w?R");
 }
 
 /**
