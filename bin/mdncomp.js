@@ -19,6 +19,8 @@ const text = {
   hdrHistory     : "HISTORY:",
   hdrSpecs       : "SPECS:",
   hdrDocs        : "DOCS:",
+  hdrWorkers     : "WORKER SUPPORT:",
+  hdrSAB         : "SHAREDARRAYBUFFER AS PARAMETER SUPPORT:",
   workerSupport  : "In Worker:",
   sabSupport     : "SAB as param:",
   sabInDataView  : "SAB in DataView:",

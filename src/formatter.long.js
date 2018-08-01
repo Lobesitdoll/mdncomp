@@ -27,20 +27,30 @@ function formatterLong(data) {
   let sabHint = false;
 
   // Header
-  out.addLine("\n?c%0?w%1?R", data.prePath, data.name);
-  out.addLine("%0", getStatus());
-  if (data.url) out.addLine(data.url ? "?G" + data.url : "-", "?R");
-
-  // Short title
-  if (data.short && data.short.length) {
-    let short = utils.entities("?R" + utils.breakAnsiLine(utils.cleanHTML(data.short), options.maxChars));
-    out.addLine(short, lf)
+  if (data.name === "worker_support") {
+    out.addLine(lf, "?c", text.hdrWorkers, "?w");
+    out.addLine("%0", getStatus());
   }
+  else if (data.name === "SharedArrayBuffer_as_param") {
+    out.addLine(lf, "?c", text.hdrSAB, "?w");
+    out.addLine("%0", getStatus());
+  }
+  else {
+    out.addLine("\n?c%0?w%1?R", data.prePath, data.name);
+    out.addLine("%0", getStatus());
+    if (data.url) out.addLine(data.url ? "?G" + data.url : "-", "?R");
 
-  // Description
-  if (options.desc && data.description && data.description !== data.short) {
-    let desc = utils.entities("?R" + utils.breakAnsiLine(utils.cleanHTML(data.description), options.maxChars));
-    out.addLine(lf, desc.replace(/\n /gm, "\n"), lf)
+    // Short title
+    if (data.short && data.short.length) {
+      let short = utils.entities("?R" + utils.breakAnsiLine(utils.cleanHTML(data.short), options.maxChars));
+      out.addLine(short, lf)
+    }
+
+    // Description
+    if (options.desc && data.description && data.description !== data.short) {
+      let desc = utils.entities("?R" + utils.breakAnsiLine(utils.cleanHTML(data.description), options.maxChars));
+      out.addLine(lf, desc.replace(/\n /gm, "\n"), lf)
+    }
   }
 
   // Show table data
@@ -118,12 +128,12 @@ function formatterLong(data) {
 
     if (options.children && data.children.length) {
       data.children.forEach(child => {
-        if (!options.workers && child.name === "worker_support") workerHint = true;
-        if (!options.sab && child.name === "SharedArrayBuffer_as_param") sabHint = true;
+        if (!workerHint && !options.workers && child.name === "worker_support") workerHint = true;
+        if (!sabHint && !options.sab && child.name === "SharedArrayBuffer_as_param") sabHint = true;
         tbl.push(getLine(child.name, child.browsers[ device ], "?y"))
       })
     }
-    else extra = lf;
+    else if (!data.name.includes("_")) extra = lf;
 
     out.add(lf, "?G", table(tbl, tblOptions), lf, extra)
   }
@@ -284,7 +294,7 @@ function formatterLong(data) {
   }
 
   function sortRefs(a, b) {
-    return a < b ? -1 : (a >  b ? 1 : 0)
+    return a < b ? -1 : (a > b ? 1 : 0)
   }
 
   return out.toString()
