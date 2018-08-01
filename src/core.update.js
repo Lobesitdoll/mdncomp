@@ -3,37 +3,35 @@
   (c) 2018 epistemex.com
  */
 
-const log = console.log;
-
 const fs = require("fs");
 const path = require("path");
 const zlib = require("zlib");
 
-const ANSI = global.ANSI;
 const io = require("./core.io");
 const rfc6902 = require("rfc6902");
 
-const urlPrefix = "https://raw.githubusercontent.com/epistemex/mdncomp-data/master/";
-const urlPrefixR = "https://gitlab.com/epistemex/mdncomp-data/raw/master/";
-const filePrefix = path.normalize(path.dirname(process[ "mainModule" ].filename) + "/../data/");
+const urlPrefix = "https://raw.githubusercontent.com/epistemex/mdncomp-data/master/";               // Main server
+const urlPrefixR = "https://gitlab.com/epistemex/mdncomp-data/raw/master/";                         // Redundancy server
+const filePrefix = path.normalize(path.dirname(process[ "mainModule" ].filename) + "/../data/");    // Local data/ path
+
 const clr = ANSI.clrToCursor + ANSI.cursorUp;
 const PWIDTH = 40;
 
 let wasRedundant = false;
 
+// Clear line in terminal
 function clrLine() {
-  log(clr + ("").padStart(72, " "));
+  console.log(clr + ("").padStart(options.maxChars, " "));
 }
 
+// Compare MD5 to see if there is any change in data content
 function compareMD5(callback, redundant) {
   const _urlPrefix = redundant || wasRedundant ? urlPrefixR : urlPrefix;
   let local;
   try {
     local = fs.readFileSync(filePrefix + "data.md5", "utf-8");
   }
-  catch(err) {
-    log(err)
-  }
+  catch(err) {console.error(err)}
 
   // remote MD5
   io.request(_urlPrefix + "data.md5", null, null, (remote) => {
@@ -41,15 +39,16 @@ function compareMD5(callback, redundant) {
   }, (err) => {
     wasRedundant = true;
     if ( redundant ) {
-      log("An error occurred:", err.statusCode, err.error);
+      console.error("An error occurred:", err.statusCode, err.error);
     }
     else {
-      log("Using redundancy...\n");
+      console.warn("Using redundancy...\n");
       setImmediate(compareMD5, callback, true);
     }
   });
 }
 
+// Download patch file between current and update version
 function getPatch(md5, callback) {
   let rFile = urlPrefix + "patches/" + md5.remote + "_" + md5.local;
   io
@@ -57,12 +56,11 @@ function getPatch(md5, callback) {
       (patch) => {
         callback(null, zlib.gunzipSync(patch));
       },
-      (err) => {
-        callback(err);
-      },
+      (err) => callback(err),
       true);
 }
 
+// Download compressed data json
 function getRemoteData(callback, redundant) {
   const _urlPrefix = redundant || wasRedundant ? urlPrefixR : urlPrefix;
   let lastUpdate = 0;
@@ -87,7 +85,7 @@ function getRemoteData(callback, redundant) {
       wasRedundant = true;
       if ( redundant ) callback(err);
       else {
-        log("Using redundancy...\n");
+        console.warn("Using redundancy...\n");
         setImmediate(getRemoteData, callback, true);
       }
     },
@@ -95,20 +93,26 @@ function getRemoteData(callback, redundant) {
   );
 
   function _progressBar() {
-    log(clr + ANSI.white + "Downloading data " + ANSI.white + "[" + ANSI.blue + "#".repeat(prog) + " ".repeat(PWIDTH - prog) + ANSI.white + "]" + ANSI.reset);
+    console.log(clr + ANSI.white + "Downloading data " + ANSI.white + "[" + ANSI.blue + "#".repeat(prog) + " ".repeat(PWIDTH - prog) + ANSI.white + "]" + ANSI.reset);
   }
 }
 
+// Get current data json from disk
 function getCurrentData() {
   let data = {};
   try {
     data = JSON.parse(fs.readFileSync(filePrefix + "data.json", "utf-8"));
   }
-  catch(err) {
-  }
+  catch(err) {}
+
   return data;
 }
 
+/**
+ * Update data
+ * @param {boolean} [force=false] - ignore diff file (todo)
+ * @param {boolean} checkOnly - check if an update is available, but don't update
+ */
 function update(force, checkOnly) {
   const noData = "No new data available.";
 
@@ -117,33 +121,33 @@ function update(force, checkOnly) {
       _remote();
     }
     else if ( md5.local === md5.remote ) {
-      log(noData);
+      console.log(noData);
     }
     else if ( checkOnly ) {
-      log(noData);
+      console.log(noData);
     }
     else {
       getPatch(md5, (err, patchStr) => {
         if ( err ) {
-          log("No patch available - Loading full dataset...");
+          console.log("No patch available - Loading full dataset...");
           _remote();
         }
         else {
           let data = getCurrentData();
           let hasErrors = false;
 
-          log("Applying patch...\n");
+          console.log("Applying patch...\n");
 
           let patch = JSON.parse(patchStr);
           rfc6902.applyPatch(data, patch).forEach(err => {
             if ( err ) {
-              log(`Error with "${err.name}": ${err.message}`);
+              console.error(`Error with "${err.name}": ${err.message}`);
               hasErrors = true;
             }
           });
 
           if ( hasErrors ) {
-            log(`Error during patching ${md5.local} -> ${md5.remote}.\nDownloading full dataset...`);
+            console.error(`Error during patching ${md5.local} -> ${md5.remote}.\nDownloading full dataset...`);
             _remote();
           }
           else {
@@ -155,25 +159,21 @@ function update(force, checkOnly) {
     }
 
     function _diff(patch) {
-      let adds = 0, removes = 0, updates = 0; //, moves = 0, copies = 0, entries = [];
+      let adds = 0, removes = 0, updates = 0;
       patch.forEach(entry => {
         if ( entry.op === "add" ) adds++;
-        else if ( entry.op === "remove" ) removes++;  //entries.push(entry);
+        else if ( entry.op === "remove" ) removes++;
         else if ( entry.op === "replace" ) updates++;
       });
-      log(`Diff: ${adds} adds, ${updates} updates, ${removes} removes\n`); //, ${copies} copies, ${moves} moves.`)
-      //      entries.forEach(entry => {
-      //        log(`Removed: ${entry.path.replace("__compat/", "")}`)
-      //      });
-      //      log("\n")
+      console.log(`Diff: ${adds} adds, ${updates} updates, ${removes} removes\n`)
     }
 
     function _remote() {
       getRemoteData((err, data) => {
-        if ( err )
-          log(err);
-        else
+        if ( err ) console.error(err);
+        else {
           _save(data, md5.remote);
+        }
       });
     }
 
@@ -182,12 +182,10 @@ function update(force, checkOnly) {
         fs.writeFileSync(filePrefix + "data.json", data, "utf-8");
         fs.writeFileSync(filePrefix + "data.md5", remoteMD5, "utf-8");
       }
-      catch(err) {
-        log(err);
-      }
+      catch(err) {console.error(err)}
 
       clrLine();
-      log("Data updated!");
+      console.log("Data updated!")
     }
   });
 }
