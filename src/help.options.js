@@ -346,6 +346,10 @@ loaded:
 These are saved locally to "[npm-install-folder]/mdncomp/data/".`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
+help["-y"] = help["--history"] = `
+Show detailed list of version history for each browser.`;
+
+/*----------------------------------------------------------------------------------------------------------------------------------*/
 help["-h"] = help["--help"] = `
 List options, or show more detailed help per option (no options will
 default to \`--help\`):

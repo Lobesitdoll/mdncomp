@@ -5,6 +5,7 @@ ADD: Basic notification system via the update mechanism (todo)
 ADD: List children features of main feature (disable by new option "-R, --no-children")
 ADD: "--history" option to list browser history, flags; not just most recent
 ADD: Link list to links referenced in notes (bugs etc.)
+ADD: Auto-fuzzy: if option "--fuzzy" is not used and no wildcard and no result, an attempt using fuzzy will be made.
 IMP: Better search algorithm with a more targeted result.
 CHG: Major internal changes (from "fun project" to production).
 CHG: Option (short version) "-h, --split" renamed to "-t, --split".

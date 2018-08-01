@@ -32,7 +32,7 @@ module.exports = (() => {
     .usage("[options] [*]")
     .description(`Get MDN Browser Compatibility Data, docs and specs.${lf}  Version: ${version + lf}  (c) 2018 epistemex.com`)
 
-    .option("-l, --list <api>", "List paths starting with the given value or '.' for top-level")
+    .option("-l, --list [api]", "List paths starting with the given value or '.' for top-level")
     .option("-b, --browser <id>", "Show information about this browser, or list if '.'")
     .option("-i, --index <index>", "Show this index from a multiple result list", -1)
     .option("-D, --no-desktop", "Don't show for desktop devices")
@@ -47,7 +47,7 @@ module.exports = (() => {
     .option("-F, --no-flags", "Don't show flags")
     .option("--ext", "Show extended table of browsers/servers")
     .option("--desc", "Show Short description of the feature")
-    .option("--history", "List version history per browser.")
+    .option("-y, --history", "List version history per browser.")
     .option("--specs", "Show specification links")
     .option("--workers", "Show detailed workers information.")
     .option("--sab", "Show detailed SharedArrayBuffer as param information.")
