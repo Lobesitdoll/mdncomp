@@ -10,7 +10,6 @@ const LF = "\r\n";
 
 const text = {
   yes            : "Y",
-  no             : "N",
   basicSupport   : "Basic Support",
   device         : { "desktop": "Desktop", "mobile": "Mobile", "ext": "Extended" },
   hdrNotes       : "NOTES:",
@@ -22,6 +21,7 @@ const text = {
   hdrDocs        : "DOCS:",
   workerSupport  : "In Worker:",
   sabSupport     : "SAB as param:",
+  sabInDataView  : "SAB in DataView:",
   standard       : "On Standard Track",
   experimental   : "Experimental",
   deprecated     : "Deprecated",
@@ -81,8 +81,7 @@ Object.assign(global, {
   options   : {}
 });
 
-// Load options from command line and config file
-const options = global.options = loadModule("init.options");
+Object.assign(global.options, loadModule("init.options"));
 
 // Use ANSI color?
 if (!options.colors || options.markdown || utils.getExt(options.out).toLowerCase() === ".txt") {
@@ -152,31 +151,7 @@ else if (options.list) {
 
 */
 else if (options.args.length) {
-  const result = loadModule("option.search")(options.args[0]);
-
-  // no result
-  if (!result.length) {
-    console.log(`${ANSI.reset}${text.noResult}.`)
-  }
-  // multiple results
-  else if (result.length > 1 && options.index < 0) {
-    let pad = ("" + result.length).length;
-    let str = "";
-    result.forEach((line, i) => {
-      str += `${ANSI.yellow}[${ANSI.green}${("" + i).padStart(pad)}${ANSI.yellow}] ${ANSI.white}${line}\n`
-    });
-    str += `${ANSI.reset}\n` + utils.breakAnsiLine(text.addOptionIndex, options.maxLength);
-    console.log(str);
-  }
-  // index out of range
-  else if (result.length > 1 && options.index >= result.length) {
-    console.log(`${ANSI.red}${errText.indexOutOfRange}.${ANSI.reset}`);
-  }
-  // show feature
-  else {
-    showResults(result.length === 1 ? result[0] : result[options.index]);
-  }
-
+  search()
 }
 
 /*-----------------------------------------------------------------------------*
@@ -198,6 +173,39 @@ else {
   options.help();
 }
 
+function search() {
+  const keyword = options.args[0];
+  const result = loadModule("option.search")(keyword);
+
+  // no result
+  if (!result.length) {
+    if (!options.fuzzy && !keyword.includes("*") && !keyword.startsWith("/")) {
+      options.fuzzy = true;
+      search();
+    }
+    else {
+      console.log(`${ANSI.reset}${text.noResult}.`)
+    }
+  }
+  // multiple results
+  else if (result.length > 1 && options.index < 0) {
+    let pad = ("" + result.length).length;
+    let str = "";
+    result.forEach((line, i) => {
+      str += `${ANSI.yellow}[${ANSI.green}${("" + i).padStart(pad)}${ANSI.yellow}] ${ANSI.white}${line}\n`
+    });
+    str += `${ANSI.reset}\n` + utils.breakAnsiLine(text.addOptionIndex, options.maxLength);
+    console.log(str);
+  }
+  // index out of range
+  else if (result.length > 1 && options.index >= result.length) {
+    console.log(`${ANSI.red}${errText.indexOutOfRange}.${ANSI.reset}`);
+  }
+  // show feature
+  else {
+    showResults(result.length === 1 ? result[0] : result[options.index]);
+  }
+}
 /**
  * Show main results
  * @param path
