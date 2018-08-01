@@ -268,11 +268,6 @@ Same as --doc but will force fetch the content, re-parse and update
 the cache.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
-help["--mdn"] = `
-If a documentation link is defined for the feature this option will 
-attempt opening the link in the default browser.`;
-
-/*----------------------------------------------------------------------------------------------------------------------------------*/
 help["--waitkey"] = `
 Wait for the ENTER key before continuing/exiting. This can be useful if mdncomp is used in
 a "popup" terminal so the terminal stays open until the ENTER key is hit before closing.`;
