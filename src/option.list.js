@@ -1,14 +1,34 @@
-/*!
+/*
   List option module
   Copyright (c) 2018 Epistemex
   www.epistemex.com
  */
 
-// TODO refactor
-
-const utils = require("./core.utils");
+const utils = loadModule("core.utils");
 const mdn = utils.loadMDN();
-const outInfo = utils.outInfo;
+
+function list(path) {
+  // top-levels
+  if (typeof path !== "string" || !path.length || path === ".") {
+    log("?RValid path roots:");
+    log(`?g${utils.listTopLevels(mdn).join(lf)}?R`);
+    log(lf + "Valid statuses:");
+    log("?gstandard, experimental, deprecated?R");
+  }
+  // list on status
+  else if (["deprecated", "experimental", "standard"].includes(path)) {
+    log(listOnStatus(path));
+  }
+  else {
+    let _list = listAPI(path, options.caseSensitive);
+    if (_list.length === 1 && utils.isCompat(mdn, _list[0])) {
+      options.list = undefined;
+      listAPI(_list[0], options.caseSensitive);
+    }
+    else
+      log(_list);
+  }
+}
 
 /**
  * List either top-level paths or sub-paths based on the given prefix.
@@ -25,38 +45,31 @@ const outInfo = utils.outInfo;
  * @returns {Array}
  */
 function listAPI(prefix, sensitive) {
-  const
-    _prefix = sensitive ? prefix : prefix.toLowerCase(),
-    tbl = utils.buildTable(mdn),
-    result = [],
-    maxSegments = _prefix.split(".").length + 1;
+  const _prefix = sensitive ? prefix : prefix.toLowerCase();
+  const tbl = utils.buildTable(mdn);
+  const maxSegments = _prefix.split(".").length + 1;
 
-  let
-    last = "", _path;
+  const t = prefix.lastIndexOf(".") + 1;
+  let last = "";
 
-  tbl.forEach(path => {
-    _path = sensitive ? path : path.toLowerCase();
-    if (_path.startsWith(_prefix) && path.split(".").length <= maxSegments && path !== last) {
-      result.push(last = path);
-    }
-  });
-
-  // colorize
-  let t = prefix.lastIndexOf(".") + 1;
-  result.forEach((res, i) => {
-    let t2 = res.lastIndexOf(".") + 1;
-    result[i] = ANSI.reset + (t ? res.substr(0, t) + ANSI.cyan + (t2 > t ? res.substring(t, t2) + ANSI.white + res.substr(t2) : res.substr(t)) : res);
-  });
-
-  return result
+  return result = tbl
+    .filter(path => {
+      let _path = sensitive ? path : path.toLowerCase();
+      if (_path.startsWith(_prefix) && path.split(".").length <= maxSegments && path !== last) {
+        return last = path
+      }
+    })
+    .map(res => {
+      let t2 = res.lastIndexOf(".") + 1;
+      return "?R" + (t ? res.substr(0, t) + "?c" + (t2 > t ? res.substring(t, t2) + "?w" + res.substr(t2) : res.substr(t)) : res);
+    });
 }
 
 function listOnStatus(statTxt) {
-  const
-    result = [],
-    keys = utils.listTopLevels(mdn);
+  const result = [];
+  const keys = utils.listTopLevels(mdn);
 
-  if (statTxt === "standard") statTxt = "standard_track";
+  if (statTxt === "standard") statTxt += "_track";
 
   keys.forEach(key1 => {
     let o = mdn[key1];
@@ -81,39 +94,14 @@ function listOnStatus(statTxt) {
   }
 
   // colorize
-  let
-    color = statTxt === "deprecated" ? ANSI.red : (statTxt === "experimental" ? ANSI.yellow : ANSI.green);
+  const color = statTxt === "deprecated" ? "?r" : (statTxt === "experimental" ? "?y" : "?g");
 
-  result.forEach((res, i) => {
-    let t = res.lastIndexOf(".") + 1;
-    result[i] = ANSI.reset + res.substr(0, t) + color + res.substr(t)
-  });
-
-  return result.sort();
-}
-
-function list(path) {
-
-  // top-levels
-  if (typeof path !== "string" || !path.length || path === ".") {
-    outInfo(ANSI.reset + "Valid path roots:");
-    outInfo(ANSI.green + utils.listTopLevels(mdn).join(lf) + ANSI.reset);
-    outInfo(lf + "Valid statuses:");
-    outInfo(ANSI.green + "standard, experimental, deprecated" + ANSI.reset);
-  }
-  // list on status
-  else if (["deprecated", "experimental", "standard"].includes(path)) {
-    outInfo(listOnStatus(path));
-  }
-  else {
-    let _list = listAPI(path, options.caseSensitive);
-    if (_list.length === 1 && utils.isCompat(mdn, _list[0])) {
-      options.list = undefined;
-      listAPI(_list[0], options.caseSensitive);
-    }
-    else
-      outInfo(_list);
-  }
+  return result
+    .sort()
+    .map(res => {
+      const t = res.lastIndexOf(".") + 1;
+      return "?R" + res.substr(0, t) + color + res.substr(t)
+    })
 }
 
 module.exports = list;
