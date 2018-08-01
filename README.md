@@ -3,8 +3,8 @@ mdncomp v2
 
 Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data) on the command line.
 
-![xterm color output](https://i.imgur.com/Vf8Vdet.png)<br>
-<sup>*cygwin/xterm snapshot*</sup>
+![xterm color output](https://i.imgur.com/hsvEpWo.png)<br>
+<sup>*cmder snapshot*</sup>
 
 Features
 --------
@@ -80,12 +80,12 @@ https://developer.mozilla.org/docs/Web/API/HTMLCanvasElement/toBlob
 Desktop       |Chrome    |Edge      |Firefox   |IE        |Opera     |Safari
 :-------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
 toBlob        |    50    |     -    |    19    |    10°   |    37    |    Y¹
-Image_quality |    50    |     -    |    25    |     -    |     Y    |     -
+Image quality |    50    |     -    |    25    |     -    |     Y    |     -
 
 Mobile        |Chrome/A  |Edge/mob  |Firefox/A |Opera/A   |Safari/iOS|Webview/A 
 :-------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
 toBlob        |    50    |     -    |     4    |    37    |     -    |    50
-Image_quality |     -    |     -    |    25    |     -    |     ?    |    50
+Image quality |     -    |     -    |    25    |     -    |     ?    |    50
 
 NOTES:
 °: Vendor prefix: ms
@@ -182,14 +182,16 @@ Edge  18  -           nightly
 
     mdncomp  sharedarraybuffer --desc --specs
     
-![Description and specifications summary example](https://i.imgur.com/vooku2v.png)
+![Description and specifications summary example](https://i.imgur.com/uNnCGG6.png)<br>
+<sup>*cygwin snapshot*</sup>
 
-**Or minimal turning off extra information (here with options `-NRF`)**
+**Or as minimal, turning off extra information (here with options `-NRF`)**
 
     # -R = no-children, -N = no-notes, -F = no-flags (also see --help, -h)
     mdncomp sharedarraybuffer -RNF
     
-![Minimal example](https://i.imgur.com/JKaoi9S.png)
+![Minimalistic example](https://i.imgur.com/8HhBeOZ.png)<br>
+<sup>*cygwin snapshot*</sup>
 
 **The tables are also markdown enabled**
 
@@ -211,20 +213,26 @@ toDataURL         |     4    |    12    |    3.6   |     9    |     9    |     4
 
 Exploration
 -----------
-Feel like exploring? Try combining the `--random` option with `--desc`:
+Feel like exploring? try:
+
+    $ mdncomp --random
+
+Or try combining the `--random` option with `--desc`:
 
     $ mdncomp --random --desc
 
 You can also create a limited scope by providing a keyword or search term:
 
     $ mdncomp --random audio
-    $ mdncomp --random abc --fuzzy
+    $ mdncomp --random abc --fuzzy --desc
 
-Option file
------------
+Optional Config file
+--------------------
 Often used options can be permanently stored in a config file in user's home
-directory in JSON format. A sample config file is included. Use the option
-`--configpath` to get location to the config folder.
+directory in JSON format.
+
+A sample config file is included. Use the option`--configpath` to get
+location to the config folder.
 
 Wiki
 ----
