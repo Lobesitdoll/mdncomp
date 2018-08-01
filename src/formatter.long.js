@@ -17,7 +17,9 @@ const tblOptions = {
   align: ["l", "c", "c", "c", "c", "c", "c"],
   delimiter: global.sepChar,
   stringLength: utils.ansiLength,
-  pad: true
+  pad: true,
+  start: "",
+  end: ""
 };
 
 function formatterLong(data) {
@@ -37,7 +39,7 @@ function formatterLong(data) {
   }
 
   // Description
-  if (options.desc && data.description) {
+  if (options.desc && data.description && data.description !== data.short) {
     let desc = utils.entities(ANSI.reset + utils.breakAnsiLine(utils.cleanHTML(data.description), options.maxChars));
     out.addLine(lf, desc.replace(/\n /gm, "\n"), lf)
   }
@@ -69,8 +71,10 @@ function formatterLong(data) {
     // Notes
     out.addLine(lf, "?c", text.hdrNotes);
     data.notes.forEach(note => {
-      let res = ANSI.cyan + refs[note.index % refs.length] + ANSI.reset + ": " + ANSI.yellow + utils.cleanHTML(note.note, true);
+      let res = ANSI.cyan + refs[note.index % refs.length] + ANSI.reset + ": ";
+      res += ANSI.yellow + utils.cleanHTML(note.note, true, ANSI.yellow, ANSI.cyan, ANSI.orange);
       res += (hasLink(note.note) ? ` Ref link ${note.index}.` : "") + ANSI.reset;
+
       out.addLine(utils.breakAnsiLine(res, options.maxChars).replace(/\n /gm, "\n"))
     });
 
@@ -95,7 +99,9 @@ function formatterLong(data) {
   if (options.specs && data.specs.length) {
     out.addLine(lf, "?c", text.hdrSpecs);
     data.specs.forEach(spec => {
-      out.addLine("?w" + `${utils.entities(spec.name) + lf}  ${getSpecStatus(spec.status) + lf}  ${spec.url}`);
+      out.addLine(
+        "?w" + `${utils.entities(spec.name) + lf}  ${getSpecStatus(spec.status) + lf}  ${spec.url}`
+      );
     });
     out.addLine();
   } // :specs
@@ -104,7 +110,10 @@ function formatterLong(data) {
     const dev = data.browsers[device];
     const tbl = [];
 
-    tbl.push([ANSI.white + text.device[device] + ANSI.gray].concat(dev.map(o => ANSI.white + browserNames[o.browser].padEnd(10) + ANSI.gray)));
+    tbl.push(
+      [ANSI.white + text.device[device] + ANSI.gray]
+        .concat(dev.map(o => ANSI.white + browserNames[o.browser].padEnd(10) + ANSI.gray))
+    );
     tbl.push(getLine(data.name, dev, ANSI.white));
 
     if (options.children) {
@@ -115,10 +124,7 @@ function formatterLong(data) {
       })
     }
 
-    // there's no option in to toggle off end-pipes it seem...
-    const result = table(tbl, tblOptions).replace(/\n\| /gm, "\n").replace(/\|\n/g, "\n");
-
-    out.add(lf, ANSI.gray, result.substring(2, result.length - 1), lf)
+    out.add(lf, ANSI.gray, table(tbl, tblOptions), lf)
   }
 
   function hasFlags() {
