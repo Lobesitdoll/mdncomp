@@ -20,16 +20,16 @@
     "desktop"       : true,     // show desktop browsers
     "mobile"        : true,     // show mobile browsers
     "ext"           : false,    // show extended status (nodejs, less common browsers)
-    "overwrite"     : false,    // for --out, don't prompt but overwrite file if already exists
     "fuzzy"         : false,    // interprets keyword as fuzzy term
     "maxChars"      : 84,       // line-break at this position (except URLs)
     "doc"           : false,    // fetch, cache and show documentation (if URL for it exist)
     "docforce"      : false,    // force re-download and cache doc (to update cache)
     "desc"          : false,    // show a short description for the feature
     "specs"         : false,    // show specification links for this feature
-    "waitkey"       : false,    // wait for a key press to continue (exit)
     "workers"       : false,    // show worker support information for a feature (if any)
-    "sab"           : false     // show SharedArrayBuffer information for a feature (if any)
+    "sab"           : false,    // show SharedArrayBuffer information for a feature (if any)
+    "flags"         : true,     // show flags details (if any)
+    "history"       : false     // show detailed history list (if any)
   },
   "formatter": {
     "long": {
