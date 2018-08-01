@@ -27,19 +27,19 @@ function formatterLong(data) {
   let sabHint = false;
 
   // Header
-  out.addLine("\n%0%1%2%3", ANSI.cyan, data.prePath, ANSI.white, data.name, ANSI.reset);
+  out.addLine("\n?c%0?w%1?R", data.prePath, data.name);
   out.addLine("%0", getStatus());
-  if (data.url) out.addLine(data.url ? ANSI.gray + data.url : "-", ANSI.reset);
+  if (data.url) out.addLine(data.url ? "?G" + data.url : "-", "?R");
 
   // Short title
   if (data.short && data.short.length) {
-    let short = utils.entities(ANSI.reset + utils.breakAnsiLine(utils.cleanHTML(data.short), options.maxChars));
+    let short = utils.entities("?R" + utils.breakAnsiLine(utils.cleanHTML(data.short), options.maxChars));
     out.addLine(short, lf)
   }
 
   // Description
   if (options.desc && data.description && data.description !== data.short) {
-    let desc = utils.entities(ANSI.reset + utils.breakAnsiLine(utils.cleanHTML(data.description), options.maxChars));
+    let desc = utils.entities("?R" + utils.breakAnsiLine(utils.cleanHTML(data.description), options.maxChars));
     out.addLine(lf, desc.replace(/\n /gm, "\n"), lf)
   }
 
@@ -70,16 +70,16 @@ function formatterLong(data) {
     // Notes
     out.addLine(lf, "?c", text.hdrNotes);
     data.notes.forEach(note => {
-      let res = ANSI.cyan + refs[note.index % refs.length] + ANSI.reset + ": ";
-      res += ANSI.yellow + utils.cleanHTML(note.note, true, ANSI.yellow, ANSI.cyan, ANSI.orange);
-      res += (hasLink(note.note) ? ` Ref link ${note.index}.` : "") + ANSI.reset;
+      let res = "?c" + refs[note.index % refs.length] + "?R: ";
+      res += "?y" + utils.cleanHTML(note.note, true, "?y", "?c", "?o");
+      res += (hasLink(note.note) ? ` Ref link ${note.index}.?R` : "?R");
 
       out.addLine(utils.breakAnsiLine(res, options.maxChars).replace(/\n /gm, "\n"))
     });
 
     // Links in notes
     if (options.notes && data.links.length) {
-      out.addLine(lf, ANSI.cyan, text.hdrLinks);
+      out.addLine(lf, "?c", text.hdrLinks);
       data.links.forEach(link => {
         out.addLine("?c", link.index, "?R", ": ", "?y", link.url, "?R")
       })
@@ -110,20 +110,48 @@ function formatterLong(data) {
     const tbl = [];
 
     tbl.push(
-      [ANSI.white + text.device[device] + ANSI.gray]
-        .concat(dev.map(o => ANSI.white + browserNames[o.browser].padEnd(10) + ANSI.gray))
+      ["?w" + text.device[device] + "?G"]
+        .concat(dev.map(o => "?w" + browserNames[o.browser].padEnd(10) + "?G"))
     );
-    tbl.push(getLine(data.name, dev, ANSI.white));
+    tbl.push(getLine(data.name, dev, "?w"));
 
     if (options.children) {
       data.children.forEach(child => {
         if (!options.workers && child.name === "worker_support") workerHint = true;
         if (!options.sab && child.name === "SharedArrayBuffer_as_param") sabHint = true;
-        tbl.push(getLine(child.name, child.browsers[ device ], ANSI.yellow))
+        tbl.push(getLine(child.name, child.browsers[ device ], "?y"))
       })
     }
 
-    out.add(lf, ANSI.gray, table(tbl, tblOptions), lf)
+    out.add(lf, "?G", table(tbl, tblOptions), lf)
+  }
+
+  function getLine(name, status, color) {
+    name = name
+      .replace("worker_support", text.workerSupport)
+      .replace("sab_in_dataview", text.sabInDataView)
+      .replace("SharedArrayBuffer_as_param", text.sabSupport);
+
+    const result = [color + name + "?G "];
+
+    status
+      .sort(sortRefs)
+      .forEach(stat => {
+        const history = stat.history[0];
+        let v = utils.versionAddRem(history.add, history.removed);
+
+        if (stat.noteIndex.length) {
+          v += "?c";
+          stat.noteIndex.forEach(ref => {
+            v += refs[ref % refs.length]
+          });
+        }
+
+        v += "?G";
+        result.push(v);
+      });
+
+    return result
   }
 
   function hasFlags() {
@@ -169,7 +197,7 @@ function formatterLong(data) {
             if (isNaN(version)) version = "";
             else version = " " + version;
 
-            let entry = ANSI.yellow + name + version + ": " + ANSI.white;
+            let entry = "?y" + name + version + ":?w ";
             history.flags.forEach(flag => {
               switch(flag.type) {
                 case "preference":
@@ -199,37 +227,10 @@ function formatterLong(data) {
 
   function getStatus() {
     let status = [];
-    if (data.standard) status.push(ANSI.green + text.standard + ANSI.reset);
-    if (data.experimental) status.push(ANSI.yellow + text.experimental + ANSI.reset);
-    if (data.deprecated) status.push(ANSI.red + text.deprecated + ANSI.reset);
+    if (data.standard) status.push("?g" + text.standard + "?R");
+    if (data.experimental) status.push("?y" + text.experimental + "?R");
+    if (data.deprecated) status.push("?r" + text.deprecated + "?R");
     return status.join(", ")
-  }
-
-  function getLine(name, status, color) {
-    name = name
-      .replace("worker_support", text.workerSupport)
-      .replace("SharedArrayBuffer_as_param", text.sabSupport);
-
-    const result = [color + name + ANSI.gray + " "];
-
-    status
-      .sort(sortRefs)
-      .forEach(stat => {
-        const history = stat.history[0];
-        let v = utils.versionAddRem(history.add, history.removed);
-
-        if (stat.noteIndex.length) {
-          v += ANSI.cyan;
-          stat.noteIndex.forEach(ref => {
-            v += refs[ref % refs.length]
-          });
-        }
-
-        v += ANSI.gray;
-        result.push(v);
-      });
-
-    return result
   }
 
   function getSpecStatus(status) {

@@ -239,13 +239,17 @@ const utils = {
     let lineStart = 0;
     let lastBreak = -1;
     let inAnsi = false;
+    let isShort = false;
     let i = 0;
     let ch;
 
     while(ch = s[i]) {
+      if (inAnsi && isShort && !"rgyobmcwGR".includes(ch)) inAnsi = false;
+
       if (!inAnsi) {
-        if (ch === "\x1b") {
-          inAnsi = true
+        if (ch === "\x1b" || ch === "?") {
+          inAnsi = true;
+          isShort = ch === "?"
         }
         else {
           if (ch === " " || ch === _lf) lastBreak = i;
@@ -262,7 +266,7 @@ const utils = {
         }
       }
       else {
-        if (ch === "m") inAnsi = false;
+        if (ch === "m" || isShort) inAnsi = false;
       }
 
       i++
@@ -293,7 +297,7 @@ const utils = {
   },
 
   ansiFree: (str) => {
-    return str.replace(/\x1b[^m]*m/g, "")
+    return str.replace(/\x1b[^m]*m/g, "").replace(/\?[rgyobmcwGR]/g, "")
   },
 
   entities: (txt) => {
@@ -308,15 +312,18 @@ const utils = {
   versionAddRem: (add, rem) => {
     let v = "";
 
-    if (add === null || typeof add === "undefined") {
-      v = ANSI.red + "-"
+    if (add === null && rem === null) {
+      v = "?r?"
+    }
+    else if (add === null || typeof add === "undefined") {
+      v = "?r-"
     }
     else if (typeof add === "boolean") {
-      if (add) v = ANSI.green + text.yes;
-      else v = ANSI.red + "-";
+      if (add) v = "?g" + text.yes;
+      else v = "?r-";
     }
     else if (typeof add === "string") {
-      v = (rem ? ANSI.red : ANSI.green) + add;
+      v = (rem ? "?r" : "?g") + add;
       if (rem) v += typeof rem === "boolean" ? "-?" : "-" + rem;
     }
 
