@@ -31,7 +31,7 @@ function search(keyword, sensitive) {
       Object.keys(subNode).forEach(key => {
         if (key !== "__compat" && key !== "worker_support" && key !== "sharedarraybuffer_support" && key !== "SharedArrayBuffer_as_param") {
           let cBranch = branch + "." + key;
-          if (cmp.test(cBranch) && key !== inKey) {
+          if (cmp.test(cBranch) && ((key !== inKey && result.length) || !result.length)) {
             result.push(cBranch);
           }
           else {
