@@ -24,6 +24,7 @@ const text = {
   hdrDocs        : "DOCS:",
   hdrWorkers     : "WORKER SUPPORT:",
   hdrSAB         : "SHAREDARRAYBUFFER AS PARAMETER SUPPORT:",
+  hdrBrowsers    : "Browsers:",
   workerSupport  : "In Worker:",
   sabSupport     : "SAB as param:",
   sabInDataView  : "SAB in DataView:",
@@ -245,9 +246,7 @@ function search() {
  */
 function showResults(path) {
   const preFormat = loadModule("formatter.common")(path);
-  // todo check format type
-  const results = loadModule("formatter.long")(preFormat);
-  // todo save?
+  const results = loadModule(options.shorthand ? "formatter.short" : "formatter.long")(preFormat);
   console.log(results);
 
   // Add footer

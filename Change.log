@@ -1,6 +1,11 @@
 mdncomp
 =======
 
+2.00.0-alpha.1
+IMP: Improved short formatter
+REM: Option "--split" (no longer needed)
+REM: Option "--all" (replaced by the inverse "--no-children")
+
 2.00.0-alpha.0
 ADD: Basic notification system via the update mechanism (todo)
 ADD: List children features of main feature (disable by new option "-R, --no-children")

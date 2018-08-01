@@ -19,7 +19,6 @@
     "caseSensitive" : false,    // use case-sensitive searches
     "fuzzy"         : false,    // interprets keyword as fuzzy term
     "shorthand"     : false,    // show a compressed output table
-    "split"         : false,    // if shorthand, split desktop, mobile, extended at separate lines
     "notes"         : true,     // show notes (if any)
     "flags"         : true,     // show flags details (if any)
     "history"       : false,     // show detailed history list (if any)

@@ -91,13 +91,6 @@ conducted using case-sensitive comparison.
 Default is case-insensitive.`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["-a"] = help["--all"] = `
-If there are multiple results for a search term, this will allow 
-showing information for all the results.
-
-Note: currently not supported with SVG output.`;
-
-/*--------------------------------------------------------------------------------------------------*/
 help["-z"] = help["--fuzzy"] = `
 Search using a "fuzzy" search term. This simply mean expressing the
 search term as chosen letters from the target path:
@@ -141,21 +134,6 @@ For example:
  $ mdncomp blobbuilder -s
  ->
  BlobBuilder: DT: C:8 E:Y F:?-18* IE:10 O:- S:- MOB: CA:? FA:?-18* EM:Y OA:- Si:- WA:-`;
-
-/*--------------------------------------------------------------------------------------------------*/
-help["-t"] = help["--split"] = `
-Used with the "-t, --shorthand" option to split a line into two.
-For example:
-
- mdncomp blob -ath
- ->
- Blob:
-   D: C:5 E:Y F:4 IE:10 O:11 S:5.1  M: CA:? FA:14 EM:Y OA:? Si:? WA:-
- Blob.Blob:
-   D: C:20 E:? F:13* IE:10 O:12 S:8  M: CA:? FA:14* EM:? OA:? Si:? WA:-
- Blob.size:
-   D: C:5 E:Y F:4 IE:10 O:11 S:5.1  M: CA:- FA:- EM:Y OA:- Si:- WA:-
- --X8--`;
 
 /*--------------------------------------------------------------------------------------------------*/
 help["-b"] = help["--browser"] = `

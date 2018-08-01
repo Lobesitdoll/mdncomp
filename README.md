@@ -109,27 +109,20 @@ Or an fuzzy expression:
 
     $ mdncomp -z ahcb.
 
-Show data in shorthand format:
+**Show data in shorthand format using option `-s, --shorthand`:**
 
-```text
-$ mdncomp html*toblob. -s
-->
-HTMLCanvasElement.toBlob:  DT: C:50 E:- F:19 IE:10* O:37 S:Y*  MOB: CA:50 FA:4 EM:- OA:37 Si:- WA:-
-```
+    $ mdncomp html*toblob -s
+    
+![Shorthand format](https://i.imgur.com/B1C4fBA.png)<br>
+<sup>*cmder snapshot*</sup>
 
-Combined with the `-a` option to list all results with shorthand information:
-```text
-$ mdncomp blob -sa
-->
-Blob       :  D: C:5 E:Y F:4 IE:10 O:11 S:5.1   M: CA:? FA:14 EM:Y OA:? Si:? WA:-
-Blob.Blob  :  D: C:20 E:? F:13* IE:10 O:12 S:8   M: CA:? FA:14* EM:? OA:? Si:? WA:-
-Blob.size  :  D: C:5 E:12 F:4 IE:10 O:11 S:5.1   M: CA:- FA:- EM:Y OA:- Si:- WA:-
-Blob.type  :  D: C:5 E:12 F:4 IE:10 O:11 S:5.1   M: CA:- FA:- EM:Y OA:- Si:- WA:-
-Blob.slice :  D: C:21* E:12 F:13* IE:10 O:12 S:5.1*   M: CA:? FA:14 EM:Y OA:? Si:? WA:-
-BlobBuilder:  D: C:8* E:Y F:Y-18* IE:10* O:- S:-   M: CA:? FA:Y-18* EM:Y OA:- Si:- WA:-
-BlobEvent  :  D: C:49 E:? F:22 IE:- O:36 S:-   M: CA:49 FA:22 EM:? OA:36 Si:- WA:-
---8X--
-```
+Rendered in markdown as well (live preview for viewers supporting tables
+in markdown):
+
+Browsers:    |C  |E  |F  |IE |O  |S  |ca |em |fa |oa |si |wa
+:------------|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:
+toBlob       | 50| - | 19|10*| 37| Y*| 50| - | 4 | 37| - | 50
+Image quality| 50| - | 25| - | Y | - | - | - | 25| - | ? | 50
 
 **List branches and status**
 

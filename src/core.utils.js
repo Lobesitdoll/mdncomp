@@ -183,7 +183,7 @@ const utils = {
     }
   },
 
-  getBrowserShortNames: () => {
+  getBrowserLongNames: () => {
     return {
       "chrome"                 : "Chrome",
       "edge"                   : "Edge",
@@ -202,6 +202,28 @@ const utils = {
       "samsunginternet_android": "Samsung/A",
       "uc_android"             : "UC/A",
       "uc_chinese_android"     : "UC-Ch/A"
+    };
+  },
+
+  getBrowserShortNames: () => {
+    return {
+      "chrome"                 : "C",
+      "edge"                   : "E",
+      "firefox"                : "F",
+      "ie"                     : "IE",
+      "opera"                  : "O",
+      "safari"                 : "S",
+      "chrome_android"         : "ca",
+      "edge_mobile"            : "em",
+      "firefox_android"        : "fa",
+      "opera_android"          : "oa",
+      "safari_ios"             : "si",
+      "webview_android"        : "wa",
+      "nodejs"                 : "ND",
+      "qq_android"             : "QQ",
+      "samsunginternet_android": "SM",
+      "uc_android"             : "UC",
+      "uc_chinese_android"     : "UCC"
     };
   },
 

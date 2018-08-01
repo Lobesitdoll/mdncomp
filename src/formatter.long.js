@@ -11,7 +11,7 @@ const refs = ["°", "¹", "²", "³", "ª", "^", "`", "'", "\"", "'\"", "\"\"", 
 const Output = loadModule("core.output");
 const out = new Output(0, lf);
 const table = require("markdown-table");
-const browserNames = utils.getBrowserShortNames();
+const browserNames = utils.getBrowserLongNames();
 
 const tblOptions = {
   align: ["l", "c", "c", "c", "c", "c", "c"],

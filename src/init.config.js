@@ -45,16 +45,17 @@ function loadConfig(options) {
     const isNum = (v) => typeof v === "number";
 
     const keys = [
-      "desktop", "mobile", "ext", "children", "caseSensitive", "fuzzy", "shorthand", "split", "notes",
-      "flags", "history", "desc", "specs", "workers", "sab", "obsoletes", "colors", "maxChars"];
+      "desktop", "mobile", "ext", "children", "caseSensitive", "fuzzy", "shorthand", "notes", "flags",
+      "history", "desc", "specs", "workers", "sab", "obsoletes", "colors", "maxChars"
+    ];
 
     const types = [
       isBool, isBool, isBool, isBool, isBool, isBool, isBool, isBool, isBool,
-      isBool, isBool, isBool, isBool, isBool, isBool, isBool, isBool, isNum,
+      isBool, isBool, isBool, isBool, isBool, isBool, isBool, isNum,
     ];
 
     const validate = [
-      nop, nop, nop, nop, nop, nop, nop, nop, nop, nop, nop, nop, nop, nop, nop, nop, nop, mx
+      nop, nop, nop, nop, nop, nop, nop, nop, nop, nop, nop, nop, nop, nop, nop, nop, mx
     ];
 
     let fmt = Object.assign({}, cfg.formatter);

@@ -39,10 +39,8 @@ module.exports = (() => {
     .option("--ext", "Show extended table of browsers/servers")
     .option("-R, --no-children", "Don't show object children in the table listing.")
     .option("-c, --case-sensitive", "Search in case-sensitive mode")
-    .option("-a, --all", "If search results in more than entry, show info for all")
     .option("-z, --fuzzy", "Use path as a fuzzy search term")
     .option("-s, --shorthand", "Show compatibility as shorthand with multiple results")
-    .option("-t, --split", "Split a shorthand line into two lines (use with -s)")
     .option("-N, --no-notes", "Don't show notes")
     .option("-F, --no-flags", "Don't show flags")
     .option("-y, --history", "List version history entries per browser.")
@@ -64,10 +62,10 @@ module.exports = (() => {
     .parse(args);
 
   // apply config file settings if any
-  global.loadModule("init.config")(options);
+  loadModule("init.config")(options);
 
   function extendedHelp() {
-    global.loadModule("init.help")();
+    loadModule("init.help")();
   }
 
   return options
