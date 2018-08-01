@@ -130,7 +130,9 @@ function formatterLong(data) {
       data.children.forEach(child => {
         if (!workerHint && !options.workers && child.name === "worker_support") workerHint = true;
         if (!sabHint && !options.sab && child.name === "SharedArrayBuffer_as_param") sabHint = true;
-        tbl.push(getLine(child.name, child.browsers[ device ], "?y"))
+        let name = child.name;
+        if (child.name === data.name) name += "()";
+        tbl.push(getLine(name, child.browsers[ device ], "?R"))
       })
     }
     else if (!data.name.includes("_")) extra = lf;
@@ -255,9 +257,10 @@ function formatterLong(data) {
 
   function getStatus() {
     let status = [];
-    if (data.standard) status.push("?g" + text.standard + "?R");
-    if (data.experimental) status.push("?y" + text.experimental + "?R");
-    if (data.deprecated) status.push("?r" + text.deprecated + "?R");
+    if (data.standard) status.push(`?g${text.standard}?R`);
+    if (data.experimental) status.push(`?y${text.experimental}?R`);
+    if (data.deprecated) status.push(`?r${text.deprecated}?R`);
+    if (!status.length) status.push(`?r${text.nonStandard}?R`);
     return status.join(", ")
   }
 
