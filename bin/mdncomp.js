@@ -81,7 +81,7 @@ Object.assign(global, {
   options   : {}
 });
 
-Object.assign(global.options, loadModule("init.options"));
+const options = global.options = loadModule("init.options");
 
 // Use ANSI color?
 if (!options.colors || options.markdown || utils.getExt(options.out).toLowerCase() === ".txt") {
@@ -211,6 +211,7 @@ function search() {
     showResults(result.length === 1 ? result[0] : result[options.index]);
   }
 }
+
 /**
  * Show main results
  * @param path
@@ -221,6 +222,9 @@ function showResults(path) {
   const results = loadModule("formatter.long")(preFormat);
   // todo save?
   console.log(results);
+
+  // Add footer
+  console.log(ANSI.magenta + "Data from MDN - `npm i -g mdncomp` by epistemex" + ANSI.white + ANSI.reset);
 }
 
 /**
