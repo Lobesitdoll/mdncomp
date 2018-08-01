@@ -59,15 +59,6 @@ module.exports = {
     }
   },
 
-  /**
-   * Open default program on the system based on the argument (cmd).
-   * @param {string} cmd - an URL or path
-   * @returns {*}
-   */
-  run: function(cmd) {
-    return require("opn")(cmd);
-  },
-
   getConfigRootPath: function() {
     let app = process.platform === "win32" ? path.resolve(process.env.APPDATA, "../../") : process.env.HOME;
     return (process.platform === "darwin")
