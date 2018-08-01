@@ -19,14 +19,16 @@ function list(path) {
   else if (["deprecated", "experimental", "standard"].includes(path)) {
     log(listOnStatus(path));
   }
+  // List API
   else {
-    let _list = listAPI(path, options.caseSensitive);
-    if (_list.length === 1 && utils.isCompat(mdn, _list[0])) {
+    let list = listAPI(path, options.caseSensitive);
+
+    if (list.length === 1 && utils.isCompat(mdn, list[0])) {
       options.list = undefined;
-      listAPI(_list[0], options.caseSensitive);
+      listAPI(list[0], options.caseSensitive);
     }
     else
-      log(_list);
+      log(list);
   }
 }
 
@@ -48,21 +50,22 @@ function listAPI(prefix, sensitive) {
   const _prefix = sensitive ? prefix : prefix.toLowerCase();
   const tbl = utils.buildTable(mdn);
   const maxSegments = _prefix.split(".").length + 1;
-
   const t = prefix.lastIndexOf(".") + 1;
+
   let last = "";
 
-  return result = tbl
+  return tbl
     .filter(path => {
       let _path = sensitive ? path : path.toLowerCase();
       if (_path.startsWith(_prefix) && path.split(".").length <= maxSegments && path !== last) {
         return last = path
       }
     })
+    .sort()
     .map(res => {
       let t2 = res.lastIndexOf(".") + 1;
       return "?R" + (t ? res.substr(0, t) + "?c" + (t2 > t ? res.substring(t, t2) + "?w" + res.substr(t2) : res.substr(t)) : res);
-    });
+    })
 }
 
 function listOnStatus(statTxt) {
@@ -79,17 +82,13 @@ function listOnStatus(statTxt) {
       if (o.__compat && _check(o)) result.push(key1 + "." + key2);
       Object.keys(mdn[key1][key2]).forEach(key3 => {
         let o = mdn[key1][key2][key3];
-        if (key3.__compat && _check(o)) result.push(key1 + "." + key2 + "." + key3);
-//        Object.keys(mdn[key1][key2][key3]).forEach(key4 => {
-//          let o = mdn[key1][key2][key3][key4];
-//          if (key4.__compat && _check(o)) result.push(key1 + "." + key2 + "." + key3 + "." + key4);
-//        });
-      });
-    });
+        if (key3.__compat && _check(o)) result.push(key1 + "." + key2 + "." + key3)
+      })
+    })
   });
 
   function _check(compat) {
-    let status = compat.__compat.status || {};
+    const status = compat.__compat.status || {};
     return !!status[statTxt]
   }
 
