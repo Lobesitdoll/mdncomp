@@ -50,8 +50,6 @@ module.exports = (() => {
     .option("--specs", "Show specification links")
     .option("-w, --workers", "Show detailed workers information.")
     .option("--sab", "Show detailed SharedArrayBuffer as param information.")
-    .option("--doc", "Show documentation. Show cached or fetch")
-    .option("--docforce", "Show documentation. Force fetch from MDN server")
     .option("--update", "Update data from remote if available")
     .option("--fupdate", "Force update data from remote")
     .option("--cupdate", "Check if update is available")

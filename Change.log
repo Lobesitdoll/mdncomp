@@ -1,5 +1,6 @@
 mdncomp
 =======
+
 2.00.0-alpha.0
 ADD: Basic notification system via the update mechanism (todo)
 ADD: List children features of main feature (disable by new option "-R, --no-children")
@@ -13,13 +14,16 @@ CHG: Migrating config file to JSON5 format.
 CHG: More consistent when outputting info or errors (ie. stdout, errout)
 CHG: Option "-d, --desktop" to NOT option: "-D, --no-desktop"
 CHG: Option "-m, --desktop" to NOT option: "-M, --no-desktop"
-CHG: "--maxWidth" default now 84 chars.
+CHG: "--maxChars" default now 84 chars.
 CHG: Option "--no-workers" to opt-in "--workers"
 REM: Option "-e, --noteend" removed (all notes always at end).
 REM: Option "--markdown"
 REM: Option "--out" and "-x". Use pipe-to-file to save output (mdncomp ... > out.txt).
 REM: Option "--mdn" removed.
 REM: Option "--waitkey" removed. Was for scripting; use script equivalent instead.
+REM: Options "--doc" and "--docforce".
+
+1.23.0: FROZEN
 
 1.23.0
 CHG: Table cell separator char to | (pipe) to allow markdown table output directly.

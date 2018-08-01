@@ -252,22 +252,6 @@ as value means no line limit.
 Note that width is ignored for URLs.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
-help["--doc"] = `
-Show an excerpt from the official documentation for this feature.
-
-The documentation is loaded from MDN server and parsed into text in the
-terminal. The HTML excerpt is cached to the 
-"[installation folder]/cached" with a MD5 as filename based on the URL.
-
-To update cache either delete the folder, an entry or use the
---docforce option`;
-
-/*----------------------------------------------------------------------------------------------------------------------------------*/
-help["--docforce"] = `
-Same as --doc but will force fetch the content, re-parse and update 
-the cache.`;
-
-/*----------------------------------------------------------------------------------------------------------------------------------*/
 help["--random"] = `
 Feel like exploring? Discover new features using this option. You can 
 specify either all by omitting any argument, or a keyword or search term 

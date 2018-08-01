@@ -102,34 +102,5 @@ module.exports = {
     }
 
     return root
-  },
-
-  getCachedFilename: function(str) {
-    return path.resolve(this.getConfigDataPath("cache"), this.calcMD5(str))
-  },
-
-  getCachedData: function(str) {
-    let data = null;
-    try {
-      data = fs.readFileSync(this.getCachedFilename(str)).toString();
-    }
-    catch(err) {}
-
-    return data
-  },
-
-  setCachedData: function(str, data) {
-    let filename = this.getCachedFilename(str);
-    try {
-      fs.writeFileSync(filename, data);
-    }
-    catch(err) {
-      log(ANSI.red + "Could not save file: " + filename + ANSI.reset + lf + err)
-    }
-  },
-
-  calcMD5: function(data) {
-    return require("crypto").createHash("md5").update(data).digest("hex") + ""
   }
-
 };
