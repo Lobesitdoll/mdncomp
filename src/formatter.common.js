@@ -18,7 +18,7 @@ const mdn = utils.loadMDN();
 function format(path, isRecursive) {
 
   if (!utils.isCompat(mdn, path)) {
-    console.error(`Error: path "${path}" not a "__compat" object.`);
+    console.error("Not a feature object. Also see option \"--list\".");
     process.exit();
   }
 
@@ -27,7 +27,7 @@ function format(path, isRecursive) {
   const pathObj = utils.getPathAsObject(mdn, path);
   const compat = pathObj.__compat;
   const support = compat.support;
-  const status = compat.status;
+  const status = compat.status || {};
   const url = compat.mdn_url && compat.mdn_url.length ? ("https://developer.mozilla.org/docs/" + compat.mdn_url).replace(".org/docs/Mozilla/Add-ons/", ".org/Add-ons/") : null;
   const specs = options.specs ? compat.specs || [] : [];
 
