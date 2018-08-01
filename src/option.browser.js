@@ -1,4 +1,4 @@
-/*!
+/*
   Browser option module
   Copyright (c) 2018 Epistemex
   www.epistemex.com
@@ -6,7 +6,6 @@
 
 const utils = require("./core.utils");
 const mdn = utils.loadMDN();
-const outInfo = utils.outInfo;
 
 /**
  * List available browser names

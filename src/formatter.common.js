@@ -72,7 +72,10 @@ function format(path, isRecursive) {
     options.notes = false;
     Object.keys(pathObj).forEach(child => {
       if (pathObj[child].__compat) {
-        result.children.push(format(path + "." + child, true))
+        const status = pathObj[child].__compat.status;
+        if (options.obsoletes || ((status.experimental || status.standard_track || status.deprecated) && !status.deprecated)) {
+          result.children.push(format(path + "." + child, true))
+        }
       }
     });
     //Object.assign(options, _tmp)

@@ -12,24 +12,24 @@
       Remember to rename the file to .config.json and place it in user root / .mdncomp folder (see option --configpath)
     */
 
-    "colors"        : true,     // if false, all ANSI color codes are removed
-    "notes"         : true,     // show notes (if any)
-    "shorthand"     : false,    // show a compressed output table
-    "split"         : false,    // if shorthand, split desktop, mobile, extended at separate lines
-    "caseSensitive" : false,    // use case-sensitive searches
     "desktop"       : true,     // show desktop browsers
     "mobile"        : true,     // show mobile browsers
     "ext"           : false,    // show extended status (nodejs, less common browsers)
+    "children"      : true,     // show child features
+    "caseSensitive" : false,    // use case-sensitive searches
     "fuzzy"         : false,    // interprets keyword as fuzzy term
-    "maxChars"      : 84,       // line-break at this position (except URLs)
-    "doc"           : false,    // fetch, cache and show documentation (if URL for it exist)
-    "docforce"      : false,    // force re-download and cache doc (to update cache)
+    "shorthand"     : false,    // show a compressed output table
+    "split"         : false,    // if shorthand, split desktop, mobile, extended at separate lines
+    "notes"         : true,     // show notes (if any)
+    "flags"         : true,     // show flags details (if any)
+    "history"       : false,     // show detailed history list (if any)
     "desc"          : false,    // show a short description for the feature
     "specs"         : false,    // show specification links for this feature
     "workers"       : false,    // show worker support information for a feature (if any)
     "sab"           : false,    // show SharedArrayBuffer information for a feature (if any)
-    "flags"         : true,     // show flags details (if any)
-    "history"       : false     // show detailed history list (if any)
+    "obsoletes"     : false,    // show obsolete, non-standard and deprecated child features
+    "colors"        : true,     // if false, all ANSI color codes are removed
+    "maxChars"      : 84        // line-break at this position (except URLs)
   },
   "formatter": {
     "long": {
