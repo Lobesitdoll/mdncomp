@@ -77,21 +77,6 @@ experimental:
 deprecated from the standard.`;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
-help["-o"] = help["--out"] = `
-Outputs the results to a file. The extension of the file can currently be
-"txt" or "ansi", and will determine output type. Any other extension will be
-considered ansi.
-
-If a file with the same name already exists you will be prompted if you
-want to override or not. This unless the -x, --overwrite option is used
-(see below).`;
-
-/*----------------------------------------------------------------------------------------------------------------------------------*/
-help["-x"] = help["--overwrite"] = `
-When outputting a file, using this option will override an existing
-file with the same name.`;
-
-/*----------------------------------------------------------------------------------------------------------------------------------*/
 help["-D"] = help["--no-desktop"] = `
 Don't show information for desktop browsers.`;
 

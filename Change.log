@@ -16,6 +16,7 @@ CHG: "--maxWidth" default now 84 chars.
 CHG: Option "--no-workers" to opt-in "--workers"
 REM: Option "-e, --noteend" removed (all notes always at end).
 REM: Option "--markdown"
+REM: Option "--out" and "-x". Use pipe-to-file to save output (mdncomp ... > out.txt).
 
 1.23.0
 CHG: Table cell separator char to | (pipe) to allow markdown table output directly.

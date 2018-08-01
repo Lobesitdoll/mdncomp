@@ -50,8 +50,6 @@ module.exports = (() => {
     .option("--specs", "Show specification links")
     .option("-w, --workers", "Show detailed workers information.")
     .option("--sab", "Show detailed SharedArrayBuffer as param information.")
-    .option("-o, --out <path>", "Save information to file. Use extension for type (.txt or .ansi)")
-    .option("-x, --overwrite", "Overwrites an existing file with --out option")
     .option("--doc", "Show documentation. Show cached or fetch")
     .option("--docforce", "Show documentation. Force fetch from MDN server")
     .option("--mdn", "Open entry's document URL in default browser")
