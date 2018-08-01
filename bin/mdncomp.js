@@ -19,7 +19,8 @@ const text = {
   hdrHistory     : "HISTORY:",
   hdrSpecs       : "SPECS:",
   hdrDocs        : "DOCS:",
-  workerSupport  : "In Workers:",
+  workerSupport  : "In Worker:",
+  sabSupport     : "SAB as param:",
   standard       : "On Standard Track",
   experimental   : "Experimental",
   deprecated     : "Deprecated",
@@ -36,7 +37,7 @@ const errText = {
   versionWarning : "WARNING: mdncomp is built for Node version 8 or newer. It may not work in older Node.js versions.",
   missingModule  : String.raw`Critical: A core module seem to be missing. Use '${text.mdncomp}' to reinstall.`,
   unhandled      : String.raw`An unhandled error occurred!${LF}Please consider reporting to help us solve it via ${text.gitName}:${LF}
-  ${text.gitUrl}issues\nTry reinstalling '${text.mdncomp}' (or --fupdate) if the issue persists.`
+  ${text.gitUrl}issues${LF+LF}Try update/reinstall '${text.mdncomp}' (or --fupdate) if the issue persists.${LF}`
 };
 
 /*-----------------------------------------------------------------------------*

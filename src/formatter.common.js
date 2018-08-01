@@ -65,8 +65,9 @@ function format(path, isRecursive) {
 
   // get children
   if (options.children && !isRecursive) {
-    const _history = options.history;
-    const _notes = options.notes;
+//    const _history = options.history;
+//    const _notes = options.notes;
+    const _tmp = Object.assign({}, options);
     options.history = false;
     options.notes = false;
     Object.keys(pathObj).forEach(child => {
@@ -74,8 +75,9 @@ function format(path, isRecursive) {
         result.children.push(format(path + "." + child, true))
       }
     });
-    options.history = _history;
-    options.notes = _notes;
+    Object.assign(options, _tmp)
+//    options.history = _history;
+//    options.notes = _notes;
   }
 
   function mergeSupport(key, support) {
@@ -97,7 +99,6 @@ function format(path, isRecursive) {
 
         if (entry.prefix) {
           notes.push(
-            //"Version " + utils.ansiFree(utils.versionAddRem(entry.version_added, entry.version_removed)) + " prefixed with: " + entry.prefix
             "Vendor prefix: " + entry.prefix
           )
         }

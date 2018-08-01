@@ -22,14 +22,17 @@ const tblOptions = {
 
 function formatterLong(data) {
 
+  let workerHint = false;
+  let sabHint = false;
+
   // Header
-  out.addLine("\n %0%1%2%3", ANSI.cyan, data.prePath, ANSI.white, data.name, ANSI.reset);
-  out.addLine(" %0", getStatus());
-  if (data.url) out.addLine(" ", data.url ? ANSI.gray + data.url : "-", ANSI.reset);
+  out.addLine("\n%0%1%2%3", ANSI.cyan, data.prePath, ANSI.white, data.name, ANSI.reset);
+  out.addLine("%0", getStatus());
+  if (data.url) out.addLine(data.url ? ANSI.gray + data.url : "-", ANSI.reset);
 
   // Short title
   if (data.short && data.short.length) {
-    let short = utils.entities(ANSI.reset + " " + utils.breakAnsiLine(utils.cleanHTML(data.short), options.maxChars));
+    let short = utils.entities(ANSI.reset + utils.breakAnsiLine(utils.cleanHTML(data.short), options.maxChars));
     out.addLine(short, lf)
   }
 
@@ -43,6 +46,18 @@ function formatterLong(data) {
   if (options.desktop) doDevice("desktop");
   if (options.mobile) doDevice("mobile");
   if (options.ext) doDevice("ext");
+
+  if (workerHint) {
+    out.addLine(lf, utils.breakAnsiLine("?R*) Use option ?c--workers?R to see Worker support details.", options.maxChars))
+  }
+
+  if (sabHint) {
+    out.addLine(lf, utils.breakAnsiLine("?R*) Use option ?c--sab?R to see SharedArrayBuffer as a parameter details.", options.maxChars))
+  }
+
+  // Show table data
+  if (options.workers && data.workers) formatterLong(data.workers);
+  if (options.sab && data.sab) formatterLong(data.sab);
 
   // Show history
   if (options.history) {
@@ -90,13 +105,13 @@ function formatterLong(data) {
     const tbl = [];
 
     tbl.push([ANSI.white + text.device[device] + ANSI.gray].concat(dev.map(o => ANSI.white + browserNames[o.browser].padEnd(10) + ANSI.gray)));
-    tbl.push(getLine(text.basicSupport, dev, ANSI.white));
+    tbl.push(getLine(data.name, dev, ANSI.white));
 
     if (options.children) {
       data.children.forEach(child => {
-        if ((options.workers && child.name === "worker_support") || child.name !== "worker_support") {
-          tbl.push(getLine(child.name, child.browsers[ device ], ANSI.yellow))
-        }
+        if (!options.workers && child.name === "worker_support") workerHint = true;
+        if (!options.sab && child.name === "SharedArrayBuffer_as_param") sabHint = true;
+        tbl.push(getLine(child.name, child.browsers[ device ], ANSI.yellow))
       })
     }
 
@@ -203,22 +218,28 @@ function formatterLong(data) {
   }
 
   function getLine(name, status, color) {
-    const result = [color + name.replace("worker_support", text.workerSupport) + ANSI.gray + " "];
+    name = name
+      .replace("worker_support", text.workerSupport)
+      .replace("SharedArrayBuffer_as_param", text.sabSupport);
 
-    status.sort(sortRefs).forEach(stat => {
-      const history = stat.history[0];
-      let v = utils.versionAddRem(history.add, history.removed);
+    const result = [color + name + ANSI.gray + " "];
 
-      if (stat.noteIndex.length) {
-        v += ANSI.cyan;
-        stat.noteIndex.forEach(ref => {
-          v += refs[ref % refs.length]
-        });
-      }
+    status
+      .sort(sortRefs)
+      .forEach(stat => {
+        const history = stat.history[0];
+        let v = utils.versionAddRem(history.add, history.removed);
 
-      v += ANSI.gray;
-      result.push(v);
-    });
+        if (stat.noteIndex.length) {
+          v += ANSI.cyan;
+          stat.noteIndex.forEach(ref => {
+            v += refs[ref % refs.length]
+          });
+        }
+
+        v += ANSI.gray;
+        result.push(v);
+      });
 
     return result
   }

@@ -156,6 +156,12 @@ const utils = {
       }
     });
 
+    if (res.length < 2) {
+      parts = path.split(".");
+      parts.pop();
+      res = parts.join(".") + "."
+    }
+
     return res.length > 1 ? res : ""
   },
 
