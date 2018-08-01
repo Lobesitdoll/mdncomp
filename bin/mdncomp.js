@@ -161,7 +161,12 @@ else if (options.args.length) {
 */
 else if (options.random) {
   const path = loadModule("option.random")(options.random);
-  showResults(path)
+  if (path.length) {
+    showResults(path)
+  }
+  else {
+    console.error("Sorry, the keyword doesn't produce a scope. Try add --fuzzy.");
+  }
 }
 
 /*-----------------------------------------------------------------------------*

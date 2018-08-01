@@ -18,6 +18,8 @@ function getRandom(path) {
     tbl = tbl.filter(item => cmp.test(item));
   }
 
+  if (!tbl.length) return "";
+
   while(!state) {
     i = (Math.random() * tbl.length)|0;
     state = utils.isCompat(mdn, tbl[i]);
