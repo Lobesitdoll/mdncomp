@@ -26,7 +26,6 @@ module.exports = (() => {
     }
   }
 
-  //
   options
     .version(version, "-v, --version")
     .usage("[options] [*]")
