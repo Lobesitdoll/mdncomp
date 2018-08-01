@@ -49,7 +49,7 @@ module.exports = (() => {
     .option("--desc", "Show Short description of the feature")
     .option("-y, --history", "List version history per browser.")
     .option("--specs", "Show specification links")
-    .option("--workers", "Show detailed workers information.")
+    .option("-w, --workers", "Show detailed workers information.")
     .option("--sab", "Show detailed SharedArrayBuffer as param information.")
     .option("-o, --out <path>", "Save information to file. Use extension for type (.txt or .ansi)")
     .option("-x, --overwrite", "Overwrites an existing file with --out option")
