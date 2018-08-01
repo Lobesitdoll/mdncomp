@@ -11,6 +11,7 @@ CHG: Option (short version) "-h, --split" renamed to "-t, --split".
 CHG: Migrating config file to JSON5 format.
 CHG: Option "-d, --desktop" to NOT option: "-D, --no-desktop"
 CHG: Option "-m, --desktop" to NOT option: "-M, --no-desktop"
+CHG: "--maxWidth" default now 84 chars.
 REM: Option "-e, --noteend" removed (all notes always at end).
 REM: Option "--markdown"
 

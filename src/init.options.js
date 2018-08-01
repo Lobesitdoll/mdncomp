@@ -61,7 +61,7 @@ module.exports = (() => {
     .option("--cupdate", "Check if update is available")
     .option("--random [scope]", "Show a random entry within \"scope\" (use . for any)")
     .option("--no-colors", "Don't use colors in output")
-    .option("--max-chars <width>", "Max number of chars per line before wrap", 80)
+    .option("--max-chars <width>", "Max number of chars per line before wrap", 84)
     .option("--no-config", "Ignore config file (mdncomp.json) in config folder")
     .option("--waitkey", "Wait for ENTER key before continuing")
     .option("--read", "Mark notifications in the current update as read") // todo notifications

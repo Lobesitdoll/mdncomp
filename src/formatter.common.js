@@ -51,9 +51,17 @@ function format(path, isRecursive) {
   };
 
   // extract browser information (forces a slot to contain value or undefined)
-  browserList.desktop.forEach(key => {result.browsers.desktop.push( mergeSupport(key, support) )});
-  browserList.mobile.forEach(key => {result.browsers.mobile.push( mergeSupport(key, support) )});
-  browserList.ext.forEach(key => {result.browsers.ext.push( mergeSupport(key, support) )});
+  if (options.desktop) browserList.desktop.forEach(key => {
+    result.browsers.desktop.push( mergeSupport(key, support) )
+  });
+
+  if (options.mobile) browserList.mobile.forEach(key => {
+    result.browsers.mobile.push( mergeSupport(key, support) )
+  });
+
+  if (options.ext) browserList.ext.forEach(key => {
+    result.browsers.ext.push( mergeSupport(key, support) )
+  });
 
   // get children
   if (options.children && !isRecursive) {
@@ -84,15 +92,24 @@ function format(path, isRecursive) {
       const localNotesIndices = [];
 
       // all notes for this entry
-      if (options.notes && (entry.notes || entry.prefix || entry.alternative_name)) {
+      if (options.notes && (entry.notes || entry.prefix || entry.alternative_name || entry.partial_implementation)) {
         const notes = Array.isArray(entry.notes) ? entry.notes : (entry.notes ? [ entry.notes ] : []);
 
         if (entry.prefix) {
-          notes.push("Version " + utils.ansiFree(utils.versionAddRem(entry.version_added, entry.version_removed)) + " prefixed with: " + entry.prefix);
+          notes.push(
+            //"Version " + utils.ansiFree(utils.versionAddRem(entry.version_added, entry.version_removed)) + " prefixed with: " + entry.prefix
+            "Vendor prefix: " + entry.prefix
+          )
         }
 
         if (entry.alternative_name) {
-          notes.push("Version " + utils.ansiFree(utils.versionAddRem(entry.version_added, entry.version_removed)) + " uses alternative name: " + entry.alternative_name);
+          notes.push(
+            "Version " + utils.ansiFree(utils.versionAddRem(entry.version_added, entry.version_removed)) + " uses alternative name: " + entry.alternative_name
+          )
+        }
+
+        if (entry.partial_implementation) {
+          notes.push("Partial implementation.")
         }
 
         notes.forEach(note => {
@@ -106,7 +123,7 @@ function format(path, isRecursive) {
             if (link) result.links.push({index: index, url: link[link.length - 1]});
           }
           noteIndices.push(index);
-          localNotesIndices.push(index);
+          localNotesIndices.push(index)
         });
       }
 
@@ -123,7 +140,7 @@ function format(path, isRecursive) {
       }
     });
 
-    return {browser: key, history, noteIndex: noteIndices}
+    return {browser: key, history, noteIndex: noteIndices.sort()}
   }
 
   function getNoteIndex(note) {

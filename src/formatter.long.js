@@ -44,36 +44,36 @@ function formatterLong(data) {
   if (options.mobile) doDevice("mobile");
   if (options.ext) doDevice("ext");
 
-  // Show flags
-  if (options.flags && hasFlags()) {
-    out.addLine(lf, "?c", text.hdrFlags);
-    if (options.desktop) out.add(getFlags("desktop"));
-    if (options.mobile) out.add(getFlags("mobile"));
-    if (options.ext) out.add(getFlags("ext"));
-  }
-
   // Show history
   if (options.history) {
     //if (options.desktop) out.add(doHistory("desktop"), lf);
   }
 
   // Show notes
-  if (options.notes) {
+  if (options.notes && data.notes.length) {
     // Notes
     out.addLine(lf, "?c", text.hdrNotes);
     data.notes.forEach(note => {
       let res = ANSI.cyan + refs[note.index % refs.length] + ANSI.reset + ": " + ANSI.yellow + utils.cleanHTML(note.note, true);
-      res += (hasLink(note.note) ? ` See link:${note.index}.` : "") + ANSI.reset;
+      res += (hasLink(note.note) ? ` Ref link ${note.index}.` : "") + ANSI.reset;
       out.addLine(utils.breakAnsiLine(res, options.maxChars).replace(/\n /gm, "\n"))
     });
 
     // Links in notes
-    if (data.links.length) {
+    if (options.notes && data.links.length) {
       out.addLine(lf, ANSI.cyan, text.hdrLinks);
       data.links.forEach(link => {
         out.addLine("?c", link.index, "?R", ": ", "?y", link.url, "?R")
       })
     }
+  }
+
+  // Show flags
+  if (options.flags && hasFlags()) {
+    out.addLine(lf, "?c", text.hdrFlags);
+    if (options.desktop) getFlags("desktop");
+    if (options.mobile) getFlags("mobile");
+    if (options.ext) getFlags("ext");
   }
 
   // Show specifications?
@@ -93,15 +93,17 @@ function formatterLong(data) {
     tbl.push(getLine(text.basicSupport, dev, ANSI.white));
 
     if (options.children) {
-      data.children.sort(sortChildren).forEach(child => {
+      data.children.forEach(child => {
         if ((options.workers && child.name === "worker_support") || child.name !== "worker_support") {
-          tbl.push(getLine("." + child.name, child.browsers[ device ], ANSI.yellow))
+          tbl.push(getLine(child.name, child.browsers[ device ], ANSI.yellow))
         }
       })
     }
 
-    const result = table(tbl, tblOptions).replace(/\| /, "").replace(/\|\n/g, "\n");
-    out.add(lf, ANSI.gray, result.substr(0, result.length - 1), lf)
+    // there's no option in to toggle off end-pipes it seem...
+    const result = table(tbl, tblOptions).replace(/\n\| /gm, "\n").replace(/\|\n/g, "\n");
+
+    out.add(lf, ANSI.gray, result.substring(2, result.length - 1), lf)
   }
 
   function hasFlags() {
@@ -134,13 +136,23 @@ function formatterLong(data) {
         for(let i = 0; i < max; i++) {
           let history = browser.history[i];
           if (history.flags.length) {
-            let entry = ANSI.yellow + name + " " + utils.ansiFree(utils.versionAddRem(history.add, history.removed)) + ": " + ANSI.white;
+            let version = utils.ansiFree(utils.versionAddRem(history.add, history.removed));
+            if (isNaN(version)) version = "";
+            else version = " " + version;
+
+            let entry = ANSI.yellow + name + version + ": " + ANSI.white;
             history.flags.forEach(flag => {
               switch(flag.type) {
                 case "preference":
-                  entry += `This feature is behind the ${flag.name} preference (needs to be set to ${flag.value_to_set}).`;
+                  entry += `This feature is behind the ?c${flag.name}?w preference.`;
+                  if (flag.value_to_set) entry += ` (needs to be set to ?c${flag.value_to_set}?w).`;
                   break;
-                case "compiler":
+                case "compile_flag":
+                  entry += `Compile with ?c${flag.name}?w set to ?c${flag.value_to_set}?w.`;
+                  break;
+                case "runtime_flag":
+                  entry += `Start with ?c${flag.name}?w. `;
+                  break;
               }
             });
             flags.push(utils.breakAnsiLine(entry, options.maxChars).replace(/\n /gm, "\n") + lf)
@@ -148,7 +160,8 @@ function formatterLong(data) {
         }
       }
     });
-    return flags.join("")
+
+    out.add(flags.join(""))
   }
 //  function doHistory(device) {
 //    const dev = data.browsers[device];
@@ -177,10 +190,6 @@ function formatterLong(data) {
 //    return tbl.join("\n")
 //  }
 
-  function sortChildren(a, b) {
-    return a.name < b.name ? -1 : (a.name >  b.name ? 1 : 0)
-  }
-
   function hasLink(str) {
     return str.includes("<a href")
   }
@@ -196,7 +205,7 @@ function formatterLong(data) {
   function getLine(name, status, color) {
     const result = [color + name.replace("worker_support", text.workerSupport) + ANSI.gray + " "];
 
-    status.forEach(stat => {
+    status.sort(sortRefs).forEach(stat => {
       const history = stat.history[0];
       let v = utils.versionAddRem(history.add, history.removed);
 
@@ -247,9 +256,12 @@ function formatterLong(data) {
     }
   }
 
-  return out.toString().replace(/\n\| /gm, "\n")
+  function sortRefs(a, b) {
+    return a < b ? -1 : (a >  b ? 1 : 0)
+  }
 
-//  // worker support ?
+
+  //  // worker support ?
 //  if (options.workers && mdnComp.workers) {
 //    out.addLine(ANSI.cyan + "WEB WORKER SUPPORT:");
 //    out.add(compatToLong(mdnComp.workers, true) + lf)
@@ -261,6 +273,7 @@ function formatterLong(data) {
 //    out.add(compatToLong(mdnComp.sharedAB, true) + lf)
 //  }
 
+  return out.toString()
 }
 
 module.exports = formatterLong;
