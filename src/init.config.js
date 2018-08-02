@@ -26,7 +26,6 @@ function loadConfig(options) {
 
     const nop = (v) => v;
     const mx = (v) => Math.max(0, v | 0);
-    const isValid = (c) => " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_|+*{}[];:!\"#&/()=?\\.,".includes(c);
     const isBool = (v) => typeof v === "boolean";
     const isNum = (v) => typeof v === "number";
 
@@ -51,10 +50,11 @@ function loadConfig(options) {
       if (types[i](cfgOptions[key])) options[key] = validate[i](cfgOptions[key])
     });
 
-    // validate sepChar
-    if ( fmt.long && fmt.long.sepChar && typeof fmt.long.sepChar === "string" && fmt.long.sepChar.length === 1 && isValid(fmt.long.sepChar) ) {
+    // sepChar
+    if ( fmt.long && typeof fmt.long.sepChar === "string") {
       global.sepChar = fmt.long.sepChar;
     }
+
   }
   catch(err) {
     /* No config was found/loadable; we'll ignore */
