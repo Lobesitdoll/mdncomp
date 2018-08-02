@@ -46,29 +46,33 @@ function formatterShort(data) {
         let name = child.name;
         if (child.name === data.name) name += "()";
         if (!(child.standard || child.experimental || child.deprecated)) name = "?G-" + name + "?R";
-        line.push(getLine(name, child.browsers));
+        line.push(getLine(name, child.browsers, "?R", true));
       })
     }
     return line
   } // : doLines
 
-  function getLine(name, browsers, color = "?R") {
+  function getLine(name, browsers, color = "?R", isChild = false) {
     const result = [color + utils.getFeatureName(name)];
-    if (options.desktop) result.push(...getBrowser(browsers["desktop"]));
-    if (options.mobile) result.push(...getBrowser(browsers["mobile"]));
-    if (options.ext) result.push(...getBrowser(browsers["ext"]));
+    if (options.desktop) result.push(...getBrowser(browsers["desktop"], isChild));
+    if (options.mobile) result.push(...getBrowser(browsers["mobile"], isChild));
+    if (options.ext) result.push(...getBrowser(browsers["ext"], isChild));
     return result
   } // : getLine
 
-  function getBrowser(browser) {
+  function getBrowser(browser, isChild = false) {
     const result = [];
 
     browser
       .forEach((stat, i) => {
         const history = stat.history[0];
         let v = utils.versionAddRem(history.add, history.removed);
+
         if (stat.noteIndex.length) v += "?c*";
         v += (i === browser.length - 1 ? "?w" : "?G");
+
+        if (history.flags && history.flags.length) v += isChild ? "?mF" : "?bF";
+
         result.push(v);
       });
 

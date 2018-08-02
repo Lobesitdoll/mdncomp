@@ -125,10 +125,10 @@ function formatterLong(data) {
     );
 
     // Main feature name
-    tbl.push(getLine(data.isCompat ? dataName : "P " + dataName, dev, data.isCompat ? "?w" : "?g"/*, 2*/));
+    tbl.push(getLine(data.isCompat ? dataName : "P " + dataName, dev, data.isCompat ? "?w" : "?g", false /*, 2*/));
 
     if (options.children && data.children.length) {
-      data.children.forEach((child/*, i*/) => {
+      data.children.forEach((child /*, i*/) => {
         let name = child.name;
 
         if (!workerHint && !options.workers && name === "worker_support") workerHint = true;
@@ -137,7 +137,7 @@ function formatterLong(data) {
         if (name === dataName) name += "()";
         if (!(child.standard || child.experimental || child.deprecated)) name = "?G-" + name;
 
-        tbl.push(getLine(name, child.browsers[ device ], "?R"/*, i+2*/))
+        tbl.push(getLine(name, child.browsers[ device ], "?R", true/*, i+2*/))
       })
     }
     else if (!dataName.includes("_")) extra = lf;
@@ -145,7 +145,7 @@ function formatterLong(data) {
     out.add(lf, "?G", table(tbl, tblOptions), lf, extra)
   }
 
-  function getLine(name, status, color/*, bgToggle*/) {
+  function getLine(name, status, color, isChild /*, bgToggle*/) {
     //const bg = bgToggle % 4 === 0 ? ANSI.bg2 : ANSI.bg1;
 
     // feature/child name as first entry
@@ -159,9 +159,16 @@ function formatterLong(data) {
 
         if (stat.noteIndex.length) {
           v += "?c";
-          stat.noteIndex.forEach(ref => {
-            v += refs[ref % refs.length]
-          })
+          if (isChild && options.shorthand) v+= "*";
+          else {
+            stat.noteIndex.forEach(ref => {
+              v += refs[ref % refs.length]
+            })
+          }
+        }
+
+        if (history.flags && history.flags.length) {
+          v += isChild ? "?mF" : "?bF"
         }
 
         v += "?G";
@@ -171,6 +178,7 @@ function formatterLong(data) {
     return result
   } // : getLine
 
+  // todo move to utils
   function hasFlags() {
     const devices = [];
     if (options.desktop) devices.push("desktop");
@@ -191,6 +199,7 @@ function formatterLong(data) {
     return false
   } // : hasFlags
 
+  // todo move to utils + improve
   function hasHistory() {
     const devices = [];
     if (options.desktop) devices.push("desktop");

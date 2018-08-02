@@ -71,12 +71,12 @@ function format(path, isRecursive) {
     const _notes = options.notes;
     //const _tmp = Object.assign({}, options);
     options.history = false;
-    options.notes = false;
+    //options.notes = false;
     Object.keys(pathObj).forEach(child => {
       const compat = pathObj[child].__compat;
       if (compat) {
         const status = compat.status || {};
-        if (options.obsoletes || path.startsWith("webextensions") || ((status.experimental || status.standard_track || status.deprecated) && !status.deprecated)) {
+        if (options.obsolete || path.startsWith("webextensions") || ((status.experimental || status.standard_track || status.deprecated) && !status.deprecated)) {
           result.children.push(format(path + "." + child, true))
         }
       }
