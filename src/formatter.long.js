@@ -14,8 +14,8 @@ const table = loadModule("core.table");
 const browserNames = utils.getBrowserLongNames();
 
 const tblOptions = {
-  align: ["l"],
-  delimiter: global.sepChar,
+  align       : [ "l" ],
+  delimiter   : global.sepChar,
   stringLength: utils.ansiLength
 };
 
@@ -56,11 +56,11 @@ function formatterLong(data) {
   if (options.ext) doDevice("ext");
 
   if (workerHint) {
-    out.addLine(lf, utils.breakAnsiLine("?R*) Use option ?c--workers?R to see Worker support details.", options.maxChars))
+    out.addLine(lf, utils.breakAnsiLine(text.workerHint, options.maxChars))
   }
 
   if (sabHint) {
-    out.addLine(lf, utils.breakAnsiLine("?R*) Use option ?c--sab?R to see SharedArrayBuffer as a parameter details.", options.maxChars))
+    out.addLine(lf, utils.breakAnsiLine(sabHint, options.maxChars))
   }
 
   // Show table data for workers/SharedArrayBuffer
@@ -79,7 +79,7 @@ function formatterLong(data) {
     data.notes.forEach(note => {
       let res = "?c" + refs[note.index % refs.length] + "?R: ";
       res += "?R" + utils.cleanHTML(note.note, true, "?R", "?c", "?y");
-      res += (hasLink(note.note) ? `?R Ref link ${note.index}.?R` : "?R");
+      res += (hasLink(note.note) ? `?R ${text.refLink} ${note.index}.?R` : "?R");
 
       out.addLine(utils.breakAnsiLine(res, options.maxChars))
     });
@@ -138,6 +138,7 @@ function formatterLong(data) {
   }
 
   function getLine(name, status, color) {
+    // feature/child name as first entry
     const result = [color + utils.getFeatureName(name) + "?G "];
 
     status
@@ -208,10 +209,10 @@ function formatterLong(data) {
 
           if (options.history) {
             let _version = isNaN(version) ? "" : " " + version;
-            if (history.altName) flags.push(`?y${name}${_version}?w: Alternative name: ?c${history.altName}?w` + lf);
-            if (history.prefix) flags.push(`?y${name}${_version}?w: Vendor prefixed: ?c${history.prefix}?w` + lf);
-            if (history.partial) flags.push(`?y${name}${_version}?w: Partial support.?w` + lf);
-            if (history.notes.length) flags.push(`?y${name}${_version}?w: See note ?c${history.notes.map(i => refs[i % refs.length]).join(", ")}?w` + lf);
+            if (history.altName) flags.push(`?y${name}${_version}?w: ${text.altName}: ?c${history.altName}?w` + lf);
+            if (history.prefix) flags.push(`?y${name}${_version}?w: ${text.vendorPrefix}: ?c${history.prefix}?w` + lf);
+            if (history.partial) flags.push(`?y${name}${_version}?w: ${text.partialImpl}.?w` + lf);
+            if (history.notes.length) flags.push(`?y${name}${_version}?w: ${text.seeNote} ?c${history.notes.map(i => refs[i % refs.length]).join(", ")}?w` + lf);
           }
 
           if (options.flags && history.flags.length) {
@@ -222,14 +223,14 @@ function formatterLong(data) {
             history.flags.forEach(flag => {
               switch(flag.type) {
                 case "preference":
-                  entry += `This feature is behind the ?c${flag.name}?w preference.`;
-                  if (flag.value_to_set) entry += ` (needs to be set to ?c${flag.value_to_set}?w).`;
+                  entry += `${text.thisFeatBehind} ?c${flag.name}?w ${text.preference}.`;
+                  if (flag.value_to_set) entry += ` (${text.setTo} ?c${flag.value_to_set}?w).`;
                   break;
                 case "compile_flag":
-                  entry += `Compile with ?c${flag.name}?w set to ?c${flag.value_to_set}?w.`;
+                  entry += `${text.compileWith} ?c${flag.name}?w ${text.setTo} ?c${flag.value_to_set}?w.`;
                   break;
                 case "runtime_flag":
-                  entry += `Start with ?c${flag.name}?w. `;
+                  entry += `${text.startWith} ?c${flag.name}?w. `;
                   break;
               }
             });
@@ -258,33 +259,33 @@ function formatterLong(data) {
   function getSpecStatus(status) {
     switch(status.toUpperCase()) {
       case "REC":
-        return "?gRecommendation?R";
+        return `?g${text.specRecommendation}?R`;
       case "PR":
-        return "?yProposed Recommendation?R";
+        return `?y${text.specProposed} ${text.specRecommendation}?R`;
       case "CR":
-        return "?cCandidate Recommendation?R";
+        return `?c${text.candidate} ${text.specRecommendation}?R`;
       case "RC":
-        return "?cRelease Candidate?R";
+        return `?c${text.specRelease} ${text.specCandidate}?R`;
       case "WD":
-        return "?bWorking Draft?R";
+        return `?b${text.specWorking} ${text.specDraft}?R`;
       case "ED":
-        return "?gEditor's Draft?R";
+        return `?g${text.specEditors} ${text.specDraft}?R`;
       case "OLD-TRANSFORMS":
-        return "?oThis has been merged in another draft?R";
+        return `?o${text.hasMergedAnother} ${text.specDraft.toLowerCase()}?R`;
       case "LIVING":
-        return "?cLiving Standard?R";
+        return `?c${text.specLiving} ${text.specStandard}?R`;
       case "RFC":
-        return "?yIETF RFC?R";
+        return `?yIETF RFC?R`;
       case "STANDARD":
-        return "?gStandard?R";
+        return `?g${text.specStandard}?R`;
       case "DRAFT":
-        return "?yDraft?R";
+        return `?y${text.specDraft}?R`;
       case "OBSOLETE":
-        return "?rObsolete?R";
+        return `?r${text.obsolete}?R`;
       case "LC":
-        return "?yLast Call Working Draft?R";
+        return `?y${text.lastCallWorking} ${text.specDraft}?R`;
       default:
-        return "?y" + status + "?R"
+        return `?y${text.status}?R`
     }
   } // : getSpecStatus
 

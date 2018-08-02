@@ -28,7 +28,7 @@ function listBrowser(browserId) {
   if (!browser) {
     return getBrowserStatusList().includes(browserId)
       ? listBrowserOnStatus(browserId)
-      : ["Unknown browser-id: '" + browserId + "' - Use '.' to list all valid IDs."];
+      : [`${text.unknownBrowser}: "${browserId}" - ${text.noArgListsId}.`];
   }
 
   // Get padding width
@@ -110,7 +110,7 @@ function listBrowserOnStatus(status) {
   });
 
   // output
-  result.push(ANSI.reset + "STATUS: " + ANSI.reset + ANSI.white + col + status.toUpperCase() + ANSI.reset);
+  result.push(ANSI.reset + `${text.status.toUpperCase()}: ` + ANSI.reset + ANSI.white + col + status.toUpperCase() + ANSI.reset);
   temp.forEach(o => {
     result.push(
       ANSI.white + o.browser.padEnd(bPad) + ANSI.white +
@@ -174,13 +174,13 @@ function _fBrowserVersion(version, padStart, padEnd) {
 function browsers(_path) {
    let path = typeof _path === "boolean" ? "." : _path;
   if (path === ".") {
-    outInfo(ANSI.reset + "Valid browser identifiers:");
-    outInfo(ANSI.green + listBrowsers().join(lf) + ANSI.reset);
-    outInfo(lf + "Valid statuses:");
-    outInfo(ANSI.green + getBrowserStatusList().join(", "));
+    log(ANSI.reset + `${text.valid} ${text.browserIds}:`);
+    log(ANSI.green + listBrowsers().join(lf) + ANSI.reset);
+    log(lf + `${text.valid} ${text.statuses}:`);
+    log(ANSI.green + getBrowserStatusList().join(", "));
   }
   else {
-    outInfo(listBrowser(path.toLowerCase()).join(lf));
+    log(listBrowser(path.toLowerCase()).join(lf));
   }
 }
 

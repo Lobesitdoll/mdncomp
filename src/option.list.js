@@ -10,9 +10,9 @@ const mdn = utils.loadMDN();
 function list(path) {
   // top-levels
   if (typeof path !== "string" || !path.length || path === ".") {
-    log("?RValid path roots:");
+    log(`?R${text.valid} ${text.pathRoots}:`);
     log(`?g${utils.listTopLevels(mdn).join(lf)}?R`);
-    log(lf + "Valid statuses:");
+    log(lf + `${text.valid} ${text.statuses}:`);
     log("?gstandard, experimental, deprecated?R");
   }
   // list on status

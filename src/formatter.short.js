@@ -10,9 +10,9 @@ const out = new Output(0, lf);
 const table = loadModule("core.table");
 const browserNames = utils.getBrowserShortNames();
 const tblOptions = {
-  delimiter: global.sepChar,
-  stringLength: utils.ansiLength,
-  align: ["l"]
+  align       : [ "l" ],
+  delimiter   : global.sepChar,
+  stringLength: utils.ansiLength
 };
 
 function formatterShort(data) {
