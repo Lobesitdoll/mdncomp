@@ -74,4 +74,4 @@ translate               | Y |12 | Y | Y | Y | Y | Y | Y | Y | Y | Y | Y | - | - 
 
 Terminal snapshot (cygwin):
 
-![cygwin](https://i.imgur.com/6FNT8Ja.png)
+![cygwin](https://i.imgur.com/4kJ0F2A.png)

@@ -278,7 +278,7 @@ function showResults(path) {
   log(results);
 
   // Add footer
-  log("?mData from MDN - `npm i -g mdncomp` by epistemex?w?R");
+  log("?pData from MDN - `npm i -g mdncomp` by epistemex?w?R");
 }
 
 /**

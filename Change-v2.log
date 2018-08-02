@@ -2,8 +2,9 @@ mdncomp 2
 =========
 
 (2.00.0-alpha.2)
-ADD: Basic notification system via the update mechanism (todo)
-ADD: Locale support
+TDO: Basic notification system via the update mechanism
+TDO: Locale support
+TDO: Local filter (-f) in multi-line result (incl. --list)
 
 2.00.0-alpha.1
 CHG: Option "--obsoletes" changed to "--obsolete" (singular)

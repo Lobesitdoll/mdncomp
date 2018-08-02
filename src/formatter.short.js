@@ -71,7 +71,7 @@ function formatterShort(data) {
         if ( stat.noteIndex.length ) v += "?c*";
         v += (i === browser.length - 1 ? "?w" : "?G");
 
-        if ( history.flags && history.flags.length ) v += isChild ? "?mF" : "?bF";
+        if ( history.flags && history.flags.length ) v += isChild ? "?mF?G" : "?bF?G";
 
         result.push(v);
       });

@@ -292,7 +292,7 @@ const utils = {
     let ch;
 
     while(ch = s[i]) {
-      if (inAnsi && isShort && !"rgyobmcwGR".includes(ch)) inAnsi = false;
+      if (inAnsi && isShort && !"rgyobmpcwGR".includes(ch)) inAnsi = false;
 
       if (!inAnsi) {
         if (ch === "\x1b" || ch === "?") {
@@ -344,7 +344,7 @@ const utils = {
   },
 
   ansiFree: (str) => {
-    return str.replace(/\x1b[^m]*m/g, "").replace(/\?[rgyobmcwGR]/g, "")
+    return str.replace(/\x1b[^m]*m/g, "").replace(/\?[rgyobmpcwGR]/g, "")
   },
 
   parseColorCodes: (str) => {
@@ -355,6 +355,7 @@ const utils = {
       {code: "\\?o", ansi: ANSI.orange},
       {code: "\\?b", ansi: ANSI.blue},
       {code: "\\?m", ansi: ANSI.magenta},
+      {code: "\\?p", ansi: ANSI.purple},
       {code: "\\?c", ansi: ANSI.cyan},
       {code: "\\?w", ansi: ANSI.white},
       {code: "\\?G", ansi: ANSI.gray},
