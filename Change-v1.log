@@ -1,41 +1,6 @@
 mdncomp
 =======
 
-2.00.0-alpha.1
-IMP: Can now list children on parent even if parent is not itself a feature
-IMP: Color coding for "--list" (green for parent with children features, cyan for feature)
-CHG: Option "-x" has re-designated as shortcut for "--ext" (was "--overwrite")
-ADD: Built-in table module
-IMP: Improved short formatter
-REM: Option "--split" (no longer needed)
-REM: Option "--all" (replaced by the inverse "--no-children")
-IMP: Allow children with compat even if parent doesn't have one (f.ex webextensions.manifest)
-FIX: core.utils name feature invocation.
-
-2.00.0-alpha.0
-ADD: Basic notification system via the update mechanism (todo)
-ADD: List children features of main feature (disable by new option "-R, --no-children")
-ADD: "--history" option to list browser history, flags; not just most recent
-ADD: Link list to links referenced in notes (bugs etc.)
-ADD: Auto-fuzzy: if option "--fuzzy" is not used and no wildcard and no result, an attempt using fuzzy will be made.
-ADD: "-G" alias for option "--no-config"
-ADD: Shorthand for index, just supply a number: "mdncomp blob 7" = "mdncomp blob -i 7"
-IMP: Better search algorithm with a more targeted result.
-CHG: Major internal changes (from "fun project" to production).
-CHG: Option (short version) "-h, --split" renamed to "-t, --split".
-CHG: Migrating config file to JSON5 format.
-CHG: More consistent when outputting info or errors (ie. stdout, errout)
-CHG: Option "-d, --desktop" to NOT option: "-D, --no-desktop"
-CHG: Option "-m, --desktop" to NOT option: "-M, --no-desktop"
-CHG: "--maxChars" default now 84 chars.
-CHG: Option "--no-workers" to opt-in "--workers"
-REM: Option "-e, --noteend" removed (all notes always at end).
-REM: Option "--markdown"
-REM: Option "--out" and "-x". Use pipe-to-file to save output (mdncomp ... > out.txt).
-REM: Option "--mdn" removed.
-REM: Option "--waitkey" removed. Was for scripting; use script equivalent instead.
-REM: Options "--doc" and "--docforce".
-
 1.23.0: FROZEN
 
 1.23.0

@@ -47,7 +47,7 @@
     "package.json",
     "README.md",
     "LICENSE-MIT.txt",
-    "Change.log",
+    "Change-v2.log",
     "sampleconfig.json"
   ],
   "dependencies": {

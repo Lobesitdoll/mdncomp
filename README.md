@@ -50,7 +50,7 @@ to the compatibility data.
 
 **Note to users of older version 1.x.x**: some options has been removed (and some 
 added) to make the tool more focused and lightweight for what it is intended to do.
-Please see the [Change.log](./Change.log) for details.
+Please see the [Change-v2.log](./Change-v2.log) for details.
 
 Install
 -------
