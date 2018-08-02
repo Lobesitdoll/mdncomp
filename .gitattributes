@@ -2,5 +2,3 @@ docs/* linguist-vendored
 /*.md linguist-vendored
 /*.log linguist-vendored
 /*.txt linguist-vendored
-data/data.json merge=ours
-data/data.md5 merge=ours
