@@ -24,10 +24,12 @@ function table(tbl, options) {
     stringLength  : s => s.length
   }, options);
 
+  const minWidth = options.header ? 3 : 1;
+
   // get cell sizes
   tbl.forEach(line => {
     line.forEach((cell, i) => {
-      let size = Math.max(options.stringLength(cell), options.width, 3);
+      let size = Math.max(options.stringLength(cell), options.width, minWidth);
       if ( !cellWidths[ i ] || cellWidths[ i ] < size ) cellWidths[ i ] = size;
     });
   });
