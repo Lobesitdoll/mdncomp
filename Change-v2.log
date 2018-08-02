@@ -1,9 +1,12 @@
-mdncomp
-=======
+mdncomp 2
+=========
+
+(2.00.0-alpha.2)
+ADD: Basic notification system via the update mechanism (todo)
+ADD: Locale support
 
 2.00.0-alpha.1
 CHG: Option "--obsoletes" changed to "--obsolete" (singular)
-ADD: Basic notification system via the update mechanism (todo)
 ADD: Inline flag indicator (main + children) for long and shorthand formats.
 ADD: Notes indicator for children feature in long and shorthand formats.
 IMP: Can now list children on parent even if parent is not itself a feature

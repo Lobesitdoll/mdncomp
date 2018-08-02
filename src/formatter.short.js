@@ -6,8 +6,9 @@
 
 const utils = loadModule("core.utils");
 const Output = loadModule("core.output");
-const out = new Output(0, lf);
 const table = loadModule("core.table");
+
+const out = new Output(0, lf);
 const browserNames = utils.getBrowserShortNames();
 const tblOptions = {
   align       : [ "l" ],
@@ -20,44 +21,43 @@ function formatterShort(data) {
   const tbl = [];
 
   // headers
-  const header = [text.hdrBrowsers];
-  if (options.desktop) header.push(...getNames("desktop", "?w"));
-  if (options.mobile) header.push(...getNames("mobile", "?c"));
-  if (options.ext) header.push(...getNames("ext", "?y"));
-  header[header.length - 1] += "?G";
+  const header = [ text.hdrBrowsers ];
+  if ( options.desktop ) header.push(...getNames("desktop", "?w"));
+  if ( options.mobile ) header.push(...getNames("mobile", "?c"));
+  if ( options.ext ) header.push(...getNames("ext", "?y"));
+  header[ header.length - 1 ] += "?G";
   tbl.push(header);
 
   // table data
   tbl.push(...doLines());
   out.add(lf, table(tbl, tblOptions), lf);
 
-
   function getNames(device, color = "?w") {
-    const dev = data.browsers[device];
-    return dev.map((o, i) => color + browserNames[o.browser].padEnd(3) + (i === dev.length - 1 ? "?w" : "?G"))
+    const dev = data.browsers[ device ];
+    return dev.map((o, i) => color + browserNames[ o.browser ].padEnd(3) + (i === dev.length - 1 ? "?w" : "?G"));
   } // : getNames
 
   function doLines() {
     const line = [];
     line.push(getLine(data.name, data.browsers, "?w"));
 
-    if (options.children && data.children.length) {
+    if ( options.children && data.children.length ) {
       data.children.forEach(child => {
         let name = child.name;
-        if (child.name === data.name) name += "()";
-        if (!(child.standard || child.experimental || child.deprecated)) name = "?G-" + name + "?R";
+        if ( child.name === data.name ) name += "()";
+        if ( !(child.standard || child.experimental || child.deprecated) ) name = "?G-" + name + "?R";
         line.push(getLine(name, child.browsers, "?R", true));
-      })
+      });
     }
-    return line
+    return line;
   } // : doLines
 
   function getLine(name, browsers, color = "?R", isChild = false) {
-    const result = [color + utils.getFeatureName(name)];
-    if (options.desktop) result.push(...getBrowser(browsers["desktop"], isChild));
-    if (options.mobile) result.push(...getBrowser(browsers["mobile"], isChild));
-    if (options.ext) result.push(...getBrowser(browsers["ext"], isChild));
-    return result
+    const result = [ color + utils.getFeatureName(name) ];
+    if ( options.desktop ) result.push(...getBrowser(browsers[ "desktop" ], isChild));
+    if ( options.mobile ) result.push(...getBrowser(browsers[ "mobile" ], isChild));
+    if ( options.ext ) result.push(...getBrowser(browsers[ "ext" ], isChild));
+    return result;
   } // : getLine
 
   function getBrowser(browser, isChild = false) {
@@ -65,21 +65,21 @@ function formatterShort(data) {
 
     browser
       .forEach((stat, i) => {
-        const history = stat.history[0];
+        const history = stat.history[ 0 ];
         let v = utils.versionAddRem(history.add, history.removed);
 
-        if (stat.noteIndex.length) v += "?c*";
+        if ( stat.noteIndex.length ) v += "?c*";
         v += (i === browser.length - 1 ? "?w" : "?G");
 
-        if (history.flags && history.flags.length) v += isChild ? "?mF" : "?bF";
+        if ( history.flags && history.flags.length ) v += isChild ? "?mF" : "?bF";
 
         result.push(v);
       });
 
-    return result
+    return result;
   } // :getBrowser
 
-  return out.toString()
+  return out.toString();
 }
 
 module.exports = formatterShort;

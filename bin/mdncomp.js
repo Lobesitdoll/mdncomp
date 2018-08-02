@@ -1,7 +1,5 @@
 #!/usr/bin/env node
-/*!
-  mdncomp (c) epistemex
- */
+/*! mdncomp (c) epistemex */
 
 /*----------------------------------------------------------------------------*/
 
@@ -20,7 +18,7 @@ const text = {
   hdrNotes          : "NOTES:",
   hdrLinks          : "LINKS:",
   hdrFlags          : "FLAGS:",
-  hdrFlagsHistory   : "FLAGS AND HISTORY",
+  hdrFlagsHistory   : "FLAGS AND HISTORY:",
   hdrHistory        : "HISTORY:",
   hdrSpecs          : "SPECS:",
   hdrDocs           : "DOCS:",
@@ -76,12 +74,12 @@ const text = {
 };
 
 const errText = {
-  indexOutOfRange: "Index out of range",
+  indexOutOfRange : "Index out of range",
   notFeatureObject: "Not a feature object or parent to feature(s). Also see the \"--list\" option.",
-  versionWarning : "WARNING: mdncomp is built for Node version 8 or newer. It may not work in older Node.js versions.",
-  missingModule  : String.raw`Critical: A core module seem to be missing. Use '${text.mdncomp}' to reinstall.`,
-  unhandled      : String.raw`An unhandled error occurred!${LF}Please consider reporting to help us solve it via ${text.gitName}:${LF}
-  ${text.gitUrl}issues${LF+LF}Try update/reinstall '${text.mdncomp}' (or --fupdate) if the issue persists.${LF}`
+  versionWarning  : "WARNING: mdncomp is built for Node version 8 or newer. It may not work in older Node.js versions.",
+  missingModule   : String.raw`Critical: A core module seem to be missing. Use '${text.mdncomp}' to reinstall.`,
+  unhandled       : String.raw`An unhandled error occurred!${LF}Please consider reporting to help us solve it via ${text.gitName}:${LF}
+  ${text.gitUrl}issues${LF + LF}Try update/reinstall '${text.mdncomp}' (or --fupdate) if the issue persists.${LF}`
 };
 
 /*-----------------------------------------------------------------------------*
@@ -89,13 +87,13 @@ const errText = {
     System validations and error handling
 
 */
-if (+process.versions.node.split(".")[0] < 8) {
+if ( +process.versions.node.split(".")[ 0 ] < 8 ) {
   console.log(errText.versionWarning);
 }
 
 const _errHandler = (err) => {
   console.log(errText.unhandled, err);
-  process.exit(1)
+  process.exit(1);
 };
 
 process.on("error", _errHandler);
@@ -116,24 +114,24 @@ Object.assign(global, {
   text,
   errText,
   loadModule,
-  lang      : "en-US",
-  lf        : LF,
-  sepChar   : "|",
-  shortPad  : 1,
-  ANSI      : loadModule("core.ansi"),
-  log       : utils.log,
-  err       : utils.err,
-  options   : {}
+  lang    : "en-US",
+  lf      : LF,
+  sepChar : "|",
+  shortPad: 1,
+  ANSI    : loadModule("core.ansi"),
+  log     : utils.log,
+  err     : utils.err,
+  options : {}
 });
 
 const options = global.options = loadModule("init.options");
 
 // Use ANSI color?
-if (!options.colors || options.markdown || utils.getExt(options.out).toLowerCase() === ".txt") {
+if ( !options.colors || options.markdown || utils.getExt(options.out).toLowerCase() === ".txt" ) {
   Object
     .keys(global.ANSI)
     .filter(item => !item.includes("ursor"))
-    .forEach(item => ANSI[item] = "");
+    .forEach(item => ANSI[ item ] = "");
 }
 
 /*-----------------------------------------------------------------------------*
@@ -141,7 +139,7 @@ if (!options.colors || options.markdown || utils.getExt(options.out).toLowerCase
     Check for update, update patch/full if exists, or exit
 
 */
-if (options.update) {
+if ( options.update ) {
   loadModule("core.update")(false, false);
 }
 
@@ -150,7 +148,7 @@ if (options.update) {
     Check if an update is available.
 
 */
-else if (options.cupdate) {
+else if ( options.cupdate ) {
   loadModule("core.update")(false, true);
 }
 
@@ -159,7 +157,7 @@ else if (options.cupdate) {
     Force full update
 
 */
-else if (options.fupdate) {
+else if ( options.fupdate ) {
   loadModule("core.update")(true, false);
 }
 
@@ -168,8 +166,8 @@ else if (options.fupdate) {
     Show config path
 
 */
-else if (options.configpath) {
-  console.log(require("path").resolve(loadModule("core.io").getConfigDataPath()))
+else if ( options.configpath ) {
+  console.log(require("path").resolve(loadModule("core.io").getConfigDataPath()));
 }
 
 /*-----------------------------------------------------------------------------*
@@ -177,7 +175,7 @@ else if (options.configpath) {
     List browser versions and status
 
 */
-else if (options.browser) {
+else if ( options.browser ) {
   loadModule("option.browser")(options.browser);
 }
 
@@ -186,7 +184,7 @@ else if (options.browser) {
     List by API paths
 
 */
-else if (options.list) {
+else if ( options.list ) {
   loadModule("option.list")(options.list);
 }
 
@@ -195,8 +193,8 @@ else if (options.list) {
     Search APIs for features
 
 */
-else if (options.args.length) {
-  search()
+else if ( options.args.length ) {
+  search();
 }
 
 /*-----------------------------------------------------------------------------*
@@ -204,10 +202,10 @@ else if (options.args.length) {
     Random
 
 */
-else if (options.random) {
+else if ( options.random ) {
   const path = loadModule("option.random")(options.random);
-  if (path.length) {
-    showResults(path)
+  if ( path.length ) {
+    showResults(path);
   }
   else {
     console.error("Sorry, the keyword doesn't produce a scope. Try add --fuzzy.");
@@ -224,49 +222,49 @@ else {
 }
 
 function search() {
-  const keyword = options.args[0];
+  const keyword = options.args[ 0 ];
   const result = loadModule("option.search")(keyword);
 
   // check for shorthand index number arg
-  if (options.index < 0) {
+  if ( options.index < 0 ) {
     for(let arg of options.args) {
-      if (!isNaN(arg)) {
+      if ( !isNaN(arg) ) {
         options.index = +arg;
-        break
+        break;
       }
     }
   }
 
   // no result
-  if (!result.length) {
-    if (!options.fuzzy && !keyword.includes("*") && !keyword.startsWith("/")) {
+  if ( !result.length ) {
+    if ( !options.fuzzy && !keyword.includes("*") && !keyword.startsWith("/") ) {
       options.fuzzy = true;
       search();
     }
     else {
-      log(`?R${text.noResult}.`)
+      log(`?R${text.noResult}.`);
     }
   }
 
   // multiple results
-  else if (result.length > 1 && options.index < 0) {
+  else if ( result.length > 1 && options.index < 0 ) {
     let pad = ("" + result.length).length;
     let str = "";
     result.forEach((line, i) => {
-      str += `?y[?g${("" + i).padStart(pad)}?y] ?w${line}\n`
+      str += `?y[?g${("" + i).padStart(pad)}?y] ?w${line}\n`;
     });
     str += `?R\n` + utils.breakAnsiLine(text.addOptionIndex, options.maxLength);
-    log(str)
+    log(str);
   }
 
   // index out of range
-  else if (result.length > 1 && options.index >= result.length) {
+  else if ( result.length > 1 && options.index >= result.length ) {
     err(`?y${errText.indexOutOfRange}.?R`);
   }
 
   // show feature
   else {
-    showResults(result.length === 1 ? result[0] : result[options.index]);
+    showResults(result.length === 1 ? result[ 0 ] : result[ options.index ]);
   }
 }
 
@@ -277,7 +275,7 @@ function search() {
 function showResults(path) {
   const preFormat = loadModule("formatter.common")(path);
   const results = loadModule(options.shorthand ? "formatter.short" : "formatter.long")(preFormat);
-  console.log(results);
+  log(results);
 
   // Add footer
   log("?mData from MDN - `npm i -g mdncomp` by epistemex?w?R");
@@ -297,11 +295,11 @@ function loadModule(name) {
   catch(err) {
     console.error(errText.missingModule);
     console.error(name);
-    if (DEBUG) {
+    if ( DEBUG ) {
       console.error("ERROR OBJECT:", err);
     }
     // todo document difference between this meaning and node's own exit code 1 (uncaught/fatal)
     process.exit(1);
   }
-  return module
+  return module;
 }
