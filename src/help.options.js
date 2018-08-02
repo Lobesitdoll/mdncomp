@@ -219,8 +219,8 @@ help["--specs"] = `
 Show specification links and status, if available.`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["--obsoletes"] = `
-Include obsolete and deprecated features in child listings.
+help["--obsolete"] = `
+Show obsolete, non-standard and deprecated child features, prefixed with "-".
 
 If ANSI colors are enabled it will show as darker gray in the output.`;
 

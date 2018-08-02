@@ -48,7 +48,7 @@ module.exports = (() => {
     .option("--specs", "Show specification links")
     .option("-w, --workers", "Show detailed workers information.")
     .option("--sab", "Show detailed SharedArrayBuffer as param information.")
-    .option("--obsoletes", "Show obsolete, non-standard and deprecated child features.")
+    .option("--obsolete", "Show obsolete, non-standard and deprecated child features.")
     .option("--update", "Update data from remote if available")
     .option("--fupdate", "Force update data from remote")
     .option("--cupdate", "Check if update is available")
