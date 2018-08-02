@@ -235,12 +235,14 @@ const utils = {
    * @returns {string}
    */
   getFeatureName: (name) => {
-    const special = {
-      "worker_support"            : text.workerSupport,
-      "sab_in_dataview"           : text.sabInDataView,
-      "SharedArrayBuffer_as_param": text.sabSupport
-    };
-    return (special[name] || name).replace(/_/g, " ")
+    if (name === "worker_support")
+      name = text.workerSupport;
+    else if (name === "sab_in_dataview")
+      name = text.sabInDataView;
+    else if (name === "SharedArrayBuffer_as_param")
+      name = text.sabSupport;
+
+    return name.replace(/_/g, " ")
   },
 
   /**
