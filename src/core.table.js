@@ -6,76 +6,72 @@
 
 "use strict";
 
-const utils = loadModule("core.utils");
-
 function table(tbl, options) {
-  const sizes = [];
+  const cellWidths = [];
 
   options = Object.assign({
-    align       : [],
-    alignDefault: "c",
-    start       : "",
-    end         : "",
-    delimiter   : "|",
-    headerLine  : true,
-    padding     : 3,
-    header      : true,
-    stringLength: utils.ansiLength
+    align         : [],
+    alignDefault  : "c",
+    start         : "",
+    end           : "",
+    delimiter     : "|",
+    headerLine    : true,
+    headerLineChar: "-",
+    headerLineSep : "|",
+    width         : 3,
+    header        : true,
+    lineEnding    : "\r\n",
+    stringLength  : s => s.length
   }, options);
 
-  // get sizes
+  // get cell sizes
   tbl.forEach(line => {
     line.forEach((cell, i) => {
-      let size = options.stringLength(cell);
-      if (!sizes[i] || sizes[i] < size) sizes[i] = Math.max(options.padding, size, 3);
-    })
+      let size = Math.max(options.stringLength(cell), options.width, 3);
+      if ( !cellWidths[ i ] || cellWidths[ i ] < size ) cellWidths[ i ] = size;
+    });
   });
 
-  // result
+  // render table
   let result = "";
-  tbl.forEach((line, i) => {result += buildLine(line, i === 0 && options.header)});
+  tbl.forEach((line, i) => {
+    result += buildLine(line, !i && options.header)
+  });
 
   function buildLine(cells, isHeader) {
+    const hdrChar = options.headerLineChar.substr(0, 1);
     let line = options.start;
     let hdr = isHeader ? options.start : "";
 
     cells.forEach((cell, i) => {
-      const align = options.align[i] || options.alignDefault;
-      const len = options.stringLength(cell);
-      const cellLen = sizes[i];
-      const padding = cellLen - len;
+      const align = options.align[ i ] || options.alignDefault;
+      const strLen = options.stringLength(cell);
+      const cellLen = cellWidths[ i ];
+      const padding = cellLen - strLen;
 
-      switch(align) {
-        case "l":
-          line += cell + " ".repeat(padding);
-          if (isHeader) hdr += ":" + "-".repeat(cellLen - 1);
-          break;
-
-        case "c":
-          let diff = padding>>1;
-          let start = Math.max(0, diff);
-          let end = Math.max(0, padding - start);
-          line += " ".repeat(start) + cell.padStart(options.padding) + " ".repeat(end);
-          if (isHeader) hdr += ":" + "-".repeat(cellLen - 2) + ":";
-          break;
-
-        case "r":
-          line += cell.padStart(options.padding);
-          if (isHeader) hdr += "-".repeat(cellLen - 1) + ":";
-          break;
-
-        default:
-          line += cell + " ".repeat(padding);
-          if (isHeader) hdr += "-".repeat(cellLen);
+      if ( align === "c" ) {
+        const diff = padding >> 1;
+        const start = Math.max(0, diff);
+        const end = Math.max(0, padding - start);
+        line += " ".repeat(start) + cell + " ".repeat(end);
+        if ( isHeader ) hdr += ":" + hdrChar.repeat(cellLen - 2) + ":";
+      }
+      else if ( align === "r" ) {
+        line += cell.padStart(cell.length + padding);
+        if ( isHeader ) hdr += hdrChar.repeat(cellLen - 1) + ":";
+      }
+      else {
+        line += cell.padEnd(cell.length + padding);
+        if ( isHeader ) hdr += (align === "l") ? hdr += ":" + hdrChar.repeat(cellLen - 1) : hdrChar.repeat(cellLen);
       }
 
-      if (i < cells.length - 1) {
+      if ( i < cells.length - 1 ) {
         line += options.delimiter;
-        if (isHeader) hdr += options.delimiter;
+        if ( isHeader ) hdr += options.headerLineSep;
       }
     });
 
-    return line + options.end + lf + (isHeader ? hdr + options.end + lf : "");
+    return line + options.end + options.lineEnding + (isHeader ? hdr + options.end + options.lineEnding : "")
   }
 
   return result
