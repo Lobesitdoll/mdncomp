@@ -20,7 +20,6 @@ module.exports = (grunt) => {
           "build/formatter.long.js"      : ["src/formatter.long.js"],
           "build/formatter.short.js"     : ["src/formatter.short.js"],
           "build/help.options.js"        : ["src/help.options.js"],
-          "build/help.parse.js"          : ["src/help.parse.js"],
           "build/init.config.js"         : ["src/init.config.js"],
           "build/init.help.js"           : ["src/init.help.js"],
           "build/init.options.js"        : ["src/init.options.js"],
