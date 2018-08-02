@@ -7,11 +7,11 @@
 "use strict";
 
 const utils = loadModule("core.utils");
-const refs = ["°", "¹", "²", "³", "ª", "^", "`", "'", "\"", "'\"", "\"\"", "\"\"'", "º"];
 const Output = loadModule("core.output");
 const out = new Output(0, lf);
 const table = loadModule("core.table");
 const browserNames = utils.getBrowserLongNames();
+const refs = ["°", "¹", "²", "³", "ª", "^", "`", "'", "\"", "'\"", "\"\"", "\"\"'", "º"];
 
 const tblOptions = {
   align       : [ "l" ],
