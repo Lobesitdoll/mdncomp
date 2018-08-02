@@ -115,27 +115,32 @@ function formatterLong(data) {
 
   function doDevice(device) {
     const dev = data.browsers[device];
+    const dataName = data.name;
     const tbl = [];
     let extra = "";
 
+    // Device name
     tbl.push(
-      ["?w" + text[device] + "?G"].concat(dev.map(o => "?w" + browserNames[o.browser].padEnd(10) + "?G"))
+      ["?w" + text[device] + "?G"].concat(dev.map(o => `?w${browserNames[o.browser].padEnd(10)}?G`))
     );
 
-    tbl.push(getLine(data.name, dev, "?w"/*, 2*/));
+    // Main feature name
+    tbl.push(getLine(data.isCompat ? dataName : "P " + dataName, dev, data.isCompat ? "?w" : "?g"/*, 2*/));
 
     if (options.children && data.children.length) {
       data.children.forEach((child/*, i*/) => {
-        if (!workerHint && !options.workers && child.name === "worker_support") workerHint = true;
-        if (!sabHint && !options.sab && child.name === "SharedArrayBuffer_as_param") sabHint = true;
         let name = child.name;
-        if (child.name === data.name) name += "()";
+
+        if (!workerHint && !options.workers && name === "worker_support") workerHint = true;
+        if (!sabHint && !options.sab && name === "SharedArrayBuffer_as_param") sabHint = true;
+
+        if (name === dataName) name += "()";
         if (!(child.standard || child.experimental || child.deprecated)) name = "?G-" + name;
 
         tbl.push(getLine(name, child.browsers[ device ], "?R"/*, i+2*/))
       })
     }
-    else if (!data.name.includes("_")) extra = lf;
+    else if (!dataName.includes("_")) extra = lf;
 
     out.add(lf, "?G", table(tbl, tblOptions), lf, extra)
   }

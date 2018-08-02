@@ -2,6 +2,8 @@ mdncomp
 =======
 
 2.00.0-alpha.1
+IMP: Can now list children on parent even if parent is not itself a feature
+IMP: Color coding for "--list" (green for parent with children features, cyan for feature)
 CHG: Option "-x" has re-designated as shortcut for "--ext" (was "--overwrite")
 ADD: Built-in table module
 IMP: Improved short formatter

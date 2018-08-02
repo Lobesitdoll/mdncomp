@@ -33,6 +33,7 @@ function format(path, isRecursive) {
   const specs = options.specs ? compat.specs || [] : [];
 
   const result = {
+    isCompat    : typeof pathObj.__compat === "object",
     path        : path,
     prePath     : utils.prePathFromPath(mdn, path),
     name        : utils.nameFromPath(path),
