@@ -3,6 +3,9 @@ mdncomp
 
 Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data) on the command line.
 
+***Announcement: Next generation mdncomp (v2) is currently being built - 
+[]have your say](https://github.com/epistemex/mdncomp/issues/8) about features you would like to see.***
+ 
 ![xterm color output](https://i.imgur.com/BXgAPb1.png)<br>
 <sup>*cygwin/xterm snapshot*</sup>
 
