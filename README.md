@@ -175,7 +175,7 @@ Edge  18  -           nightly
 
     mdncomp  sharedarraybuffer --desc --specs
     
-![Description and specifications summary example](https://i.imgur.com/uNnCGG6.png)<br>
+![Description and specifications summary example](https://i.imgur.com/4BzlwRR.png)<br>
 <sup>*cygwin snapshot*</sup>
 
 **Or as minimal, turning off extra information (here with options `-NRF`)**
@@ -183,7 +183,7 @@ Edge  18  -           nightly
     # -R = no-children, -N = no-notes, -F = no-flags (also see --help, -h)
     mdncomp sharedarraybuffer -RNF
     
-![Minimalistic example](https://i.imgur.com/8HhBeOZ.png)<br>
+![Minimalistic example](https://i.imgur.com/nbP5vRU.png)<br>
 <sup>*cygwin snapshot*</sup>
 
 **The tables are also markdown enabled**

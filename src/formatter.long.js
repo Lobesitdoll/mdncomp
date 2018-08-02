@@ -18,6 +18,7 @@ const tblOptions = {
   align       : [ "l" ],
   delimiter   : global.sepChar,
   stringLength: utils.ansiLength,
+  start       : "?G",
   end         : "?R"
 };
 
@@ -93,7 +94,7 @@ function formatterLong(data) {
     }
   }
 
-  // Show flags
+  // Show flags and history
   if ( (options.flags && hasFlags()) || (options.history && hasHistory()) ) {
     addHeader(text.hdrFlagsHistory);
     if ( options.desktop ) getFlags("desktop");
@@ -115,7 +116,6 @@ function formatterLong(data) {
     const dev = data.browsers[ device ];
     const dataName = data.name;
     const tbl = [];
-    let extra = "";
 
     // Device name
     tbl.push(
@@ -138,9 +138,8 @@ function formatterLong(data) {
         tbl.push(getLine(name, child.browsers[ device ], "?R", true/*, i+2*/));
       });
     }
-    else if ( !dataName.includes("_") ) extra = lf;
 
-    out.add(lf, "?G", table(tbl, tblOptions), lf, extra);
+    out.add(lf, "?G", table(tbl, tblOptions));
   }
 
   function getLine(name, status, color, isChild /*, bgToggle*/) {
@@ -253,13 +252,13 @@ function formatterLong(data) {
                   break;
               }
             });
-            flags.push(utils.breakAnsiLine(entry, options.maxChars));
+            flags.push(utils.breakAnsiLine(entry, options.maxChars) + lf);
           }
         }
       }
     });
 
-    out.add(flags.join(lf));
+    out.add(flags.join(""));
   } // : getFlags
 
   function hasLink(str) {
