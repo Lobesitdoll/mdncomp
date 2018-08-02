@@ -99,6 +99,7 @@ function formatterLong(data) {
     if ( options.desktop ) getFlags("desktop");
     if ( options.mobile ) getFlags("mobile");
     if ( options.ext ) getFlags("ext");
+    out.addLine()
   }
 
   // Show specifications?
@@ -275,36 +276,21 @@ function formatterLong(data) {
   } // : getStatus
 
   function getSpecStatus(status) {
-    switch( status.toUpperCase() ) {
-      case "REC":
-        return `?g${text.specRecommendation}?R`;
-      case "PR":
-        return `?y${text.specProposed} ${text.specRecommendation}?R`;
-      case "CR":
-        return `?c${text.candidate} ${text.specRecommendation}?R`;
-      case "RC":
-        return `?c${text.specRelease} ${text.specCandidate}?R`;
-      case "WD":
-        return `?b${text.specWorking} ${text.specDraft}?R`;
-      case "ED":
-        return `?g${text.specEditors} ${text.specDraft}?R`;
-      case "OLD-TRANSFORMS":
-        return `?o${text.hasMergedAnother} ${text.specDraft.toLowerCase()}?R`;
-      case "LIVING":
-        return `?c${text.specLiving} ${text.specStandard}?R`;
-      case "RFC":
-        return `?yIETF RFC?R`;
-      case "STANDARD":
-        return `?g${text.specStandard}?R`;
-      case "DRAFT":
-        return `?y${text.specDraft}?R`;
-      case "OBSOLETE":
-        return `?r${text.obsolete}?R`;
-      case "LC":
-        return `?y${text.lastCallWorking} ${text.specDraft}?R`;
-      default:
-        return `?y${text.status}?R`;
-    }
+    return "?" + ({
+      "RFC"      : "yIETF RFC",
+      "STANDARD" : `g${text.specStandard}`,
+      "REC"      : `g${text.specRec}`,
+      "CR"       : `c${text.candidate} ${text.specRec}`,
+      "LIVING"   : `c${text.specLiving} ${text.specStandard}`,
+      "DRAFT"    : `y${text.specDraft}`,
+      "PR"       : `y${text.specProposed} ${text.specRec}`,
+      "RC"       : `c${text.specRelease} ${text.specCandidate}`,
+      "WD"       : `b${text.specWorking} ${text.specDraft}`,
+      "ED"       : `g${text.specEditors} ${text.specDraft}`,
+      "OBSOLETE" : `r${text.obsolete}`,
+      "LC"       : `y${text.lastCallWorking} ${text.specDraft}`,
+      "OLD-TRANSFORMS": `o${text.hasMergedAnother} ${text.specDraft.toLowerCase()}`
+    }[ status.toUpperCase() ] || `y${text.status}`) + "?R"
   } // : getSpecStatus
 
   function addHeader(txt) {
