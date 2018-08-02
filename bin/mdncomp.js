@@ -39,7 +39,6 @@ const text = {
   tooLimitedScope: "Sorry, too limited scope.",
   noResult       : "Sorry, no result",
   addOptionIndex : "Add option '-i <n>' to list a specific feature using the same search.",
-  renamedConfig  : "NOTE: renamed config-file from \".config.json\" to \".config.json5\".",
   mdncomp        : "npm i -g mdncomp",
   gitName        : "GitLab",
   gitUrl         : "https://gitlab.com/epistemex/mdncomp/"
@@ -50,8 +49,7 @@ const errText = {
   versionWarning : "WARNING: mdncomp is built for Node version 8 or newer. It may not work in older Node.js versions.",
   missingModule  : String.raw`Critical: A core module seem to be missing. Use '${text.mdncomp}' to reinstall.`,
   unhandled      : String.raw`An unhandled error occurred!${LF}Please consider reporting to help us solve it via ${text.gitName}:${LF}
-  ${text.gitUrl}issues${LF+LF}Try update/reinstall '${text.mdncomp}' (or --fupdate) if the issue persists.${LF}`,
-  unableCfgRename: "Unable to rename \".config.json\" to \".config.json5\"."
+  ${text.gitUrl}issues${LF+LF}Try update/reinstall '${text.mdncomp}' (or --fupdate) if the issue persists.${LF}`
 };
 
 /*-----------------------------------------------------------------------------*

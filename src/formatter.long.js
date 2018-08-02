@@ -10,16 +10,13 @@ const utils = loadModule("core.utils");
 const refs = ["°", "¹", "²", "³", "ª", "^", "`", "'", "\"", "'\"", "\"\"", "\"\"'", "º"];
 const Output = loadModule("core.output");
 const out = new Output(0, lf);
-const table = require("markdown-table");
+const table = loadModule("core.table");
 const browserNames = utils.getBrowserLongNames();
 
 const tblOptions = {
-  align: ["l", "c", "c", "c", "c", "c", "c"],
+  align: ["l"],
   delimiter: global.sepChar,
-  stringLength: utils.ansiLength,
-  pad: true,
-  start: "",
-  end: ""
+  stringLength: utils.ansiLength
 };
 
 function formatterLong(data) {

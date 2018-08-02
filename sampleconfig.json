@@ -1,6 +1,8 @@
 {
   "options": {
     /*
+      --- NOTE: Comments are not allowed in regular JSON which needs to removed in the actual config file. ---
+
       This file allow you to permanently set options you use frequently.
       You can suspend the settings in here using the option --no-config.
 

@@ -48,12 +48,10 @@
     "README.md",
     "LICENSE-MIT.txt",
     "Change.log",
-    "sampleconfig.json5"
+    "sampleconfig.json"
   ],
   "dependencies": {
     "commander": "^2.15.1",
-    "json5": "^1.0.1",
-    "markdown-table": "^1.1.2",
     "rfc6902": "^2.4.0"
   },
   "devDependencies": {

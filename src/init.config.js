@@ -6,12 +6,8 @@
 
 "use strict";
 
-require("json5/lib/register");
-
-const fs = require("fs");
 const path = require("path");
 const filePath = path.resolve(global.loadModule("core.io").getConfigDataPath(), ".config.json");
-const filePath5 = filePath + "5";
 
 /**
  * The method tries to load a config file from the user area in the folder
@@ -22,20 +18,10 @@ const filePath5 = filePath + "5";
  * @private
  */
 function loadConfig(options) {
-  // Migrate old config file extension
-  try {
-    if (fs.existsSync(filePath)) {
-      fs.renameSync(filePath, filePath5);
-      log(`?g${text.renamedConfig}?R`);
-    }
-  }
-  catch(err) {
-    err(`?y${errText.unableCfgRename}?R\n${err}`)
-  }
 
   // Apply settings (if any)
   try {
-    const cfg = require(filePath5);
+    const cfg = require(filePath);
     const cfgOptions = Object.assign({}, cfg.options);
 
     const nop = (v) => v;
@@ -70,7 +56,10 @@ function loadConfig(options) {
       global.sepChar = fmt.long.sepChar;
     }
   }
-  catch(err) {/* No config was found/loadable; we'll ignore */}
+  catch(err) {
+    /* No config was found/loadable; we'll ignore */
+    if (DEBUG) console.error(err);
+  }
 }
 
 module.exports = loadConfig;

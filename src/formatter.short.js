@@ -7,15 +7,12 @@
 const utils = loadModule("core.utils");
 const Output = loadModule("core.output");
 const out = new Output(0, lf);
-const table = require("markdown-table");
+const table = loadModule("core.table");
 const browserNames = utils.getBrowserShortNames();
 const tblOptions = {
   delimiter: global.sepChar,
   stringLength: utils.ansiLength,
-  align: ["l", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c"],
-  pad: true,
-  start: "",
-  end: ""
+  align: ["l"]
 };
 
 function formatterShort(data) {

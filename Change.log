@@ -5,6 +5,7 @@ mdncomp
 IMP: Improved short formatter
 REM: Option "--split" (no longer needed)
 REM: Option "--all" (replaced by the inverse "--no-children")
+ADD: Built-in table module
 
 2.00.0-alpha.0
 ADD: Basic notification system via the update mechanism (todo)
