@@ -142,7 +142,7 @@ the given ID.
 
 If no argument or a single dot (.) it list all the currently valid IDs:
 
-    mdncomp --browser .
+    mdncomp --browser
     ->
     chrome                                       
     edge                                         
@@ -219,6 +219,12 @@ help["--specs"] = `
 Show specification links and status, if available.`;
 
 /*--------------------------------------------------------------------------------------------------*/
+help["--obsoletes"] = `
+Include obsolete and deprecated features in child listings.
+
+If ANSI colors are enabled it will show as darker gray in the output.`;
+
+/*--------------------------------------------------------------------------------------------------*/
 help["--sab"] = `
 Show detailed support for SharedArrayBuffer as param (usually with WebGL) (if any).`;
 
@@ -287,12 +293,10 @@ No other options are allowed with the update options:
     mdncomp --update
     mdncomp --fupdate
 
-**NOTE:** Data is checked (MD5) and downloaded from the following 
-GitHub repository:
+mdncomp first checks if there is a patch file available and will use
+that, otherwise a full update of the data file will be invoked.
 
-    https://github.com/epistemex/data-for-mdncomp
-
-which must be allowed through your firewall.
+mdncomp has built-in redundancy in case main data server is down.
 
 Two files in the root directory (this may change in the future) are
 loaded:
@@ -300,7 +304,8 @@ loaded:
     data.json
     data.md5
 
-These are saved locally to "[npm-install-folder]/mdncomp/data/".`;
+These are saved locally to "[npm-install-folder]/mdncomp/data/".
+Always run a --update when (re)installing mdncomp from NPM.`;
 
 /*--------------------------------------------------------------------------------------------------*/
 help["-y"] = help["--history"] = `

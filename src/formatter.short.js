@@ -45,6 +45,7 @@ function formatterShort(data) {
       data.children.forEach(child => {
         let name = child.name;
         if (child.name === data.name) name += "()";
+        if (!(child.standard || child.experimental || child.deprecated)) name = "?G-" + name + "?R";
         line.push(getLine(name, child.browsers));
       })
     }

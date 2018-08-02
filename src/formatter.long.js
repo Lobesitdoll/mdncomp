@@ -129,6 +129,7 @@ function formatterLong(data) {
         if (!sabHint && !options.sab && child.name === "SharedArrayBuffer_as_param") sabHint = true;
         let name = child.name;
         if (child.name === data.name) name += "()";
+        if (!(child.standard || child.experimental || child.deprecated)) name = "?G-" + name;
         tbl.push(getLine(name, child.browsers[ device ], "?R"))
       })
     }
