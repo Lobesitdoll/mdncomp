@@ -8,6 +8,7 @@ const utils = loadModule("core.utils");
 const mdn = utils.loadMDN();
 
 function list(path) {
+
   // top-levels
   if ( typeof path !== "string" || !path.length || path === "." ) {
     log(`?R${text.valid} ${text.pathRoots}:`);
@@ -15,10 +16,12 @@ function list(path) {
     log(lf + `${text.valid} ${text.statuses}:`);
     log("?gstandard, experimental, deprecated?R");
   }
+
   // list on status
   else if ( [ "deprecated", "experimental", "standard" ].includes(path) ) {
     log(listOnStatus(path));
   }
+
   // List API
   else {
     let list = listAPI(path);
@@ -49,7 +52,6 @@ function listAPI(prefix) {
   const _prefix = options.caseSensitive ? prefix : prefix.toLowerCase();
   const tbl = utils.buildTable(mdn);
   const maxSegments = _prefix.split(".").length + 1;
-  const t = prefix.lastIndexOf(".") + 1;
 
   let last = "";
 
@@ -61,9 +63,27 @@ function listAPI(prefix) {
       }
     })
     .sort()
-    .map(res => {
-      const t2 = res.lastIndexOf(".") + 1;
-      return "?R" + (t ? res.substr(0, t) + "?c" + (t2 > t ? res.substring(t, t2) + "?w" + res.substr(t2) : res.substr(t)) : res);
+    .map(path => {
+      const obj = utils.getPathAsObject(mdn, path);
+      let color = "";
+      let prefix = "?GB?R";
+
+      if (obj.__compat) {
+        color = "?c";
+        prefix = "F"
+      }
+      else if (utils.hasChildren(obj)) {
+        color = "?g";
+        prefix = "P"
+      }
+
+      if (color.length) {
+        const parts = path.split(".");
+        parts[parts.length - 1] = color + parts[parts.length - 1] + "?R";
+        return `${color}${prefix}?R ${parts.join(".")}`
+      }
+
+      return `${prefix} ${path}`
     });
 }
 
@@ -92,7 +112,7 @@ function listOnStatus(statTxt) {
   }
 
   // colorize
-  const color = statTxt === "deprecated" ? "?r" : (statTxt === "experimental" ? "?y" : "?g");
+  const color = statTxt === "deprecated" ? "?o" : (statTxt === "experimental" ? "?y" : "?g");
 
   return result
     .sort()
