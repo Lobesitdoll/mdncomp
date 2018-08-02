@@ -68,10 +68,8 @@ function format(path, isRecursive) {
   // get children
   if (options.children && !isRecursive) {
     const _history = options.history;
-    const _notes = options.notes;
-    //const _tmp = Object.assign({}, options);
     options.history = false;
-    //options.notes = false;
+
     Object.keys(pathObj).forEach(child => {
       const compat = pathObj[child].__compat;
       if (compat) {
@@ -81,9 +79,8 @@ function format(path, isRecursive) {
         }
       }
     });
-    //Object.assign(options, _tmp)
+
     options.history = _history;
-    options.notes = _notes;
   }
 
   function mergeSupport(key, support) {
