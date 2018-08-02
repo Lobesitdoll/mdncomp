@@ -8,7 +8,7 @@ module.exports = {
   bright: "\x1b[1m",
   dim   : "\x1b[2m",
 
-  clrToCursor: "\x1b[1K",
+  clrToCursor: "\x1b[2K",
   cursorUp   : "\x1b[1A",
 
   black  : "\x1b[30m",
@@ -21,5 +21,8 @@ module.exports = {
   cyan   : "\x1b[36;1m",
   white  : "\x1b[37;1m",
   gray   : "\x1b[30;1m",
-  reset  : "\x1b[0m"
+  reset  : "\x1b[0m"/*,
+
+  bg1    : "\x1b[49m",
+  bg2    : "\x1b[44m"*/
 };

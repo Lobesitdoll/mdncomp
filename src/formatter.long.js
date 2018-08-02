@@ -16,7 +16,8 @@ const browserNames = utils.getBrowserLongNames();
 const tblOptions = {
   align       : [ "l" ],
   delimiter   : global.sepChar,
-  stringLength: utils.ansiLength
+  stringLength: utils.ansiLength,
+  end         : "?R"
 };
 
 function formatterLong(data) {
@@ -121,16 +122,17 @@ function formatterLong(data) {
       ["?w" + text[device] + "?G"].concat(dev.map(o => "?w" + browserNames[o.browser].padEnd(10) + "?G"))
     );
 
-    tbl.push(getLine(data.name, dev, "?w"));
+    tbl.push(getLine(data.name, dev, "?w"/*, 2*/));
 
     if (options.children && data.children.length) {
-      data.children.forEach(child => {
+      data.children.forEach((child/*, i*/) => {
         if (!workerHint && !options.workers && child.name === "worker_support") workerHint = true;
         if (!sabHint && !options.sab && child.name === "SharedArrayBuffer_as_param") sabHint = true;
         let name = child.name;
         if (child.name === data.name) name += "()";
         if (!(child.standard || child.experimental || child.deprecated)) name = "?G-" + name;
-        tbl.push(getLine(name, child.browsers[ device ], "?R"))
+
+        tbl.push(getLine(name, child.browsers[ device ], "?R"/*, i+2*/))
       })
     }
     else if (!data.name.includes("_")) extra = lf;
@@ -138,9 +140,11 @@ function formatterLong(data) {
     out.add(lf, "?G", table(tbl, tblOptions), lf, extra)
   }
 
-  function getLine(name, status, color) {
+  function getLine(name, status, color/*, bgToggle*/) {
+    //const bg = bgToggle % 4 === 0 ? ANSI.bg2 : ANSI.bg1;
+
     // feature/child name as first entry
-    const result = [color + utils.getFeatureName(name) + "?G "];
+    const result = [color /* + bg*/ + utils.getFeatureName(name) + "?G "];
 
     status
       .sort(sortRefs)
@@ -156,7 +160,7 @@ function formatterLong(data) {
         }
 
         v += "?G";
-        result.push(v);
+        result.push(/*bg + */ v);
       });
 
     return result
