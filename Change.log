@@ -2,10 +2,13 @@ mdncomp
 =======
 
 2.00.0-alpha.1
+CHG: Option "-x" has re-designated as shortcut for "--ext" (was "--overwrite")
 ADD: Built-in table module
 IMP: Improved short formatter
 REM: Option "--split" (no longer needed)
 REM: Option "--all" (replaced by the inverse "--no-children")
+IMP: Allow children with compat even if parent doesn't have one (f.ex webextensions.manifest)
+FIX: core.utils name feature invocation.
 
 2.00.0-alpha.0
 ADD: Basic notification system via the update mechanism (todo)

@@ -77,6 +77,7 @@ const text = {
 
 const errText = {
   indexOutOfRange: "Index out of range",
+  notFeatureObject: "Not a feature object or parent to feature(s). Also see the \"--list\" option.",
   versionWarning : "WARNING: mdncomp is built for Node version 8 or newer. It may not work in older Node.js versions.",
   missingModule  : String.raw`Critical: A core module seem to be missing. Use '${text.mdncomp}' to reinstall.`,
   unhandled      : String.raw`An unhandled error occurred!${LF}Please consider reporting to help us solve it via ${text.gitName}:${LF}

@@ -206,7 +206,7 @@ marked having footnotes but with a generic astrix symbol instead.
 For the --browser option the links will not be shown.`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["--ext"] = `
+help["--ext"] = help["-x"] = `
 Shows an additional table for less common browsers.`;
 
 /*--------------------------------------------------------------------------------------------------*/

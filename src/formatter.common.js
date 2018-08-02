@@ -17,16 +17,17 @@ const mdn = utils.loadMDN();
  */
 function format(path, isRecursive) {
 
-  if (!utils.isCompat(mdn, path)) {
-    console.error("Not a feature object. Also see option \"--list\".");
+  const pathObj = utils.getPathAsObject(mdn, path);
+
+  if (!pathObj.__compat && !utils.hasChildren(pathObj)) {
+    err(utils.breakAnsiLine(`?y${errText.notFeatureObject}?R`, options.maxChars));
     process.exit();
   }
 
   const rxAhref = /<a\s+(?:[^>]*?\s+)?href=(["'])(.*?)\1/;
   const browserList = utils.getBrowserList();
-  const pathObj = utils.getPathAsObject(mdn, path);
-  const compat = pathObj.__compat;
-  const support = compat.support;
+  const compat = pathObj.__compat || {};
+  const support = compat.support || {};
   const status = compat.status || {};
   const url = compat.mdn_url && compat.mdn_url.length ? ("https://developer.mozilla.org/docs/" + compat.mdn_url).replace(".org/docs/Mozilla/Add-ons/", ".org/Add-ons/") : null;
   const specs = options.specs ? compat.specs || [] : [];
@@ -40,7 +41,7 @@ function format(path, isRecursive) {
     url         : url,
     specs       : specs,
     experimental: status.experimental,
-    standard    : status.standard_track,
+    standard    : status.standard_track || (isRecursive && path.startsWith("webextensions")),
     deprecated  : status.deprecated,
     browsers    : { desktop: [], mobile: [], ext: [] },
     notes       : [],
@@ -71,9 +72,10 @@ function format(path, isRecursive) {
     options.history = false;
     options.notes = false;
     Object.keys(pathObj).forEach(child => {
-      if (pathObj[child].__compat) {
-        const status = pathObj[child].__compat.status;
-        if (options.obsoletes || ((status.experimental || status.standard_track || status.deprecated) && !status.deprecated)) {
+      const compat = pathObj[child].__compat;
+      if (compat) {
+        const status = compat.status || {};
+        if (options.obsoletes || path.startsWith("webextensions") || ((status.experimental || status.standard_track || status.deprecated) && !status.deprecated)) {
           result.children.push(format(path + "." + child, true))
         }
       }

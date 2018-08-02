@@ -36,7 +36,7 @@ module.exports = (() => {
     .option("-i, --index <index>", "Show this index from a multiple result list", -1)
     .option("-D, --no-desktop", "Don't show for desktop devices")
     .option("-M, --no-mobile", "Don't show for mobile devices")
-    .option("--ext", "Show extended table of browsers/servers")
+    .option("-x, --ext", "Show extended table of browsers/servers")
     .option("-R, --no-children", "Don't show object children in the table listing.")
     .option("-c, --case-sensitive", "Search in case-sensitive mode")
     .option("-z, --fuzzy", "Use path as a fuzzy search term")

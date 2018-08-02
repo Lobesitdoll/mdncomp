@@ -175,6 +175,14 @@ const utils = {
     return obj && typeof obj.__compat === "object"
   },
 
+  hasChildren: (pathObj) => {
+    const keys = Object.keys(pathObj);
+    for(let key of keys) {
+      if (pathObj[key].__compat) return true
+    }
+    return false
+  },
+
   getBrowserList: () => {
     return {
       desktop: [ "chrome", "edge", "firefox", "ie", "opera", "safari" ],
@@ -242,7 +250,7 @@ const utils = {
     else if (name === "SharedArrayBuffer_as_param")
       name = text.sabSupport;
 
-    return name.replace(/_/g, " ")
+    return name //.replace(/_/g, " ")
   },
 
   /**
