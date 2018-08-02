@@ -36,7 +36,7 @@ function loadConfig(options) {
 
     const types = [
       isBool, isBool, isBool, isBool, isBool, isBool, isBool, isBool, isBool,
-      isBool, isBool, isBool, isBool, isBool, isBool, isBool, isNum,
+      isBool, isBool, isBool, isBool, isBool, isBool, isBool, isNum
     ];
 
     const validate = [
@@ -47,18 +47,18 @@ function loadConfig(options) {
 
     // apply valid settings from config file
     keys.forEach((key, i) => {
-      if (types[i](cfgOptions[key])) options[key] = validate[i](cfgOptions[key])
+      if ( types[ i ](cfgOptions[ key ]) ) options[ key ] = validate[ i ](cfgOptions[ key ]);
     });
 
     // sepChar
-    if ( fmt.long && typeof fmt.long.sepChar === "string") {
+    if ( fmt.long && typeof fmt.long.sepChar === "string" ) {
       global.sepChar = fmt.long.sepChar;
     }
 
   }
   catch(err) {
     /* No config was found/loadable; we'll ignore */
-    if (DEBUG) console.error(err);
+    if ( DEBUG ) console.error(err);
   }
 }
 

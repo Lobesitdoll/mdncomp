@@ -118,9 +118,9 @@ function formatterLong(data) {
     let extra = "";
 
     tbl.push(
-      ["?w" + text.device[device] + "?G"]
-        .concat(dev.map(o => "?w" + browserNames[o.browser].padEnd(10) + "?G"))
+      ["?w" + text[device] + "?G"].concat(dev.map(o => "?w" + browserNames[o.browser].padEnd(10) + "?G"))
     );
+
     tbl.push(getLine(data.name, dev, "?w"));
 
     if (options.children && data.children.length) {
