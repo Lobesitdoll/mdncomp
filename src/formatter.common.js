@@ -13,9 +13,11 @@ const mdn = utils.loadMDN();
  * This will flatten and normalize the __compat + support + status objects.
  * @param {string} path
  * @param {boolean} [isRecursive=false] - used when analysing sub-objects, children on the primary __compat object
+ * @param subNotes
+ * @param subLinks
  * @returns {*}
  */
-function format(path, isRecursive) {
+function format(path, isRecursive = false, subNotes, subLinks) {
 
   const pathObj = utils.getPathAsObject(mdn, path);
 
@@ -76,7 +78,7 @@ function format(path, isRecursive) {
       if (compat) {
         const status = compat.status || {};
         if (options.obsolete || isWebExt || ((status.experimental || status.standard_track || status.deprecated) && !status.deprecated)) {
-          result.children.push(format(path + "." + child, true))
+          result.children.push(format(path + "." + child, true, result.notes, result.links))
         }
       }
     });
@@ -93,6 +95,9 @@ function format(path, isRecursive) {
     // Support entries for this specific browser
     let entries = Array.isArray(support) ? support : [support];
     if (!options.history) entries = [entries[0]];
+
+    const _notes = (subNotes || result.notes);
+    const _links = (subLinks || result.links);
 
     entries.forEach(entry => {
       const localNotesIndices = [];
@@ -116,14 +121,14 @@ function format(path, isRecursive) {
         }
 
         notes.forEach(note => {
-          let index = getNoteIndex(note);
+          let index = getNoteIndex(note, _notes);
           if (index < 0) {
-            index = result.notes.length;
-            result.notes.push({index, note});
+            index = _notes.length;
+            _notes.push({index, note});
 
             // extract any links
             let link = note.match(rxAhref);
-            if (link) result.links.push({index: index, url: link[link.length - 1]});
+            if (link) _links.push({index: index, url: link[link.length - 1]});
           }
           noteIndices.push(index);
           localNotesIndices.push(index)
@@ -146,9 +151,9 @@ function format(path, isRecursive) {
     return {browser: key, history, noteIndex: noteIndices.sort()}
   }
 
-  function getNoteIndex(note) {
-    for(let i = 0; i < result.notes.length; i++) {
-      if (result.notes[i].note === note) return result.notes[i].index
+  function getNoteIndex(note, notes) {
+    for(let i = 0; i < notes.length; i++) {
+      if (notes[i].note === note) return notes[i].index
     }
     return -1
   }

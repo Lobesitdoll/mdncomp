@@ -9,12 +9,13 @@ TDO: Locale support
 TDO: Local filter (-f) in multi-line result (incl. --list)
 
 2.00.0-alpha.1
+ADD: Notes collected for all entries in lists with feature+children
 ADD: Shorthand for --index (=just a number) now global (ie, --list, search. Was just for search).
 ADD: Allow --index with --list (both for api and status)
 CHG: Option "--obsoletes" changed to "--obsolete" (singular)
 ADD: Inline flag indicator (main + children) for long and shorthand formats.
 ADD: Notes indicator for children feature in long and shorthand formats.
-IMP: Can now list children on parent even if parent is not itself a feature
+IMP: Can now list children on parent even if parent isn't itself a feature
 IMP: Color coding for "--list" (green for parent with children features, cyan for feature)
 CHG: Option "-x" has re-designated as shortcut for "--ext" (was "--overwrite")
 ADD: Built-in table module

@@ -12,7 +12,7 @@ const table = loadModule("core.table");
 
 const out = new Output(0, lf);
 const browserNames = utils.getBrowserLongNames();
-const refs = [ "°", "¹", "²", "³", "ª", "^", "`", "'", "\"", "'\"", "\"\"", "\"\"'", "º" ];
+const refs = [ "°", "¹", "²", "³", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "^", "ª", "º", "'", "\"", "`" ];
 
 const tblOptions = {
   align       : [ "l" ],
@@ -164,7 +164,7 @@ function formatterLong(data) {
           }
         }
 
-        if ( history.flags && history.flags.length ) {
+        if ( options.flags && history.flags && history.flags.length ) {
           v += isChild ? "?mF" : "?bF";
         }
 
