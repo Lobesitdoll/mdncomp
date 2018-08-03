@@ -358,12 +358,6 @@ const utils = {
       "R": ANSI.reset
     };
 
-//    Modify code table c -> ?c
-//    const rx = new RegExp("\\?[" + Object.keys(code).map(code => code.substr(1)).join("") + "]", "mg");
-//    let result = str.replace(rx, (m) => {
-//      return code[m] || m
-//    });
-
     let result = "";
     let i = 0;
     let last = 0;
@@ -388,12 +382,16 @@ const utils = {
   },
 
   entities: (txt) => {
-    return txt
-      .replace(/&nbsp;/gmi, " ")
-      .replace(/&quot;/gmi, "\"")
-      .replace(/&amp;/gmi, "&")
-      .replace(/&lt;/gmi, "<")
-      .replace(/&gt;/gmi, ">");
+    const ent = {
+      "&nbsp;": " ",
+      "&quot;": "\"",
+      "&amp;": "&",
+      "&lt;": "<",
+      "&gt;": ">",
+    };
+
+    const rx = new RegExp(Object.keys(ent).join("|"), "gmi");
+    return txt.replace(rx, m => ent[m])
   },
 
   versionAddRem: (add, rem) => {

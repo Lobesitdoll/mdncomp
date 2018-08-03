@@ -107,9 +107,8 @@ function formatterLong(data) {
   if ( options.specs && data.specs.length ) {
     addHeader(text.hdrSpecs);
     data.specs.forEach(spec => {
-      out.addLine("?w" + `${utils.entities(spec.name) + lf}  ${getSpecStatus(spec.status) + lf}  ${spec.url}`);
+      out.addLine("?w" + `${utils.entities(spec.name)} ?R[${getSpecStatus(spec.status)}?R]${lf}${spec.url}`);
     });
-    out.addLine();
   } // :specs
 
   function doDevice(device) {
