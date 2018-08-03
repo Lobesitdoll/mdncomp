@@ -33,6 +33,8 @@ function format(path, isRecursive = false, subNotes, subLinks) {
   const status = compat.status || {};
   const url = compat.mdn_url && compat.mdn_url.length ? ("https://developer.mozilla.org/docs/" + compat.mdn_url).replace(".org/docs/Mozilla/Add-ons/", ".org/Add-ons/") : null;
   const specs = options.specs ? compat.specs || [] : [];
+  const sab = pathObj.SharedArrayBuffer_as_param && options.sab && !isRecursive ? format(path + ".SharedArrayBuffer_as_param", true) : null;
+  const workers = pathObj.worker_support && options.workers && !isRecursive ? format(path + ".worker_support", true) : null;
   const isWebExt = path.startsWith("webextensions");
 
   const result = {
@@ -51,8 +53,8 @@ function format(path, isRecursive = false, subNotes, subLinks) {
     notes       : [],
     links       : [],
     children    : [],
-    sab         : pathObj.SharedArrayBuffer_as_param && !isRecursive ? format(path + ".SharedArrayBuffer_as_param", true) : null,
-    workers     : pathObj.worker_support && !isRecursive ? format(path + ".worker_support", true) : null
+    sab         : sab,
+    workers     : workers
   };
 
   // extract browser information (forces a slot to contain value or undefined)

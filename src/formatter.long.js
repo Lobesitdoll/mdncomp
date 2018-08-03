@@ -22,11 +22,16 @@ const tblOptions = {
   end         : "?R"
 };
 
-function formatterLong(data) {
+function formatterLong(data, recursive = false) {
+  const isWebExt = data.path.startsWith("webextensions");
   let workerHint = false;
   let sabHint = false;
+  let expHint = false;
+  let depHint = false;
+  let nonStdHint = false;
 
-  // Header
+  /* Header ------------------------------------------------------------------*/
+
   if ( data.name === "worker_support" ) {
     out
       .addLine(lf, "?c", text.hdrWorkers, "?w")
@@ -38,9 +43,10 @@ function formatterLong(data) {
       .addLine("%0", getStatus());
   }
   else {
-    out
-      .addLine("\n?c%0?w%1?R", data.prePath, data.name)
-      .addLine("%0", getStatus());
+    out.addLine("\n?c%0?w%1?R", data.prePath, data.name);
+    if (!isWebExt) {
+      out.addLine("%0", getStatus());
+    }
     if ( data.url ) out.addLine(data.url ? "?G" + data.url : "-", "?R");
 
     // Short title
@@ -56,25 +62,38 @@ function formatterLong(data) {
     }
   }
 
-  // Show table data
+  /* Show table data ---------------------------------------------------------*/
+
   if ( options.desktop ) doDevice("desktop");
   if ( options.mobile ) doDevice("mobile");
   if ( options.ext ) doDevice("ext");
 
-  // Show hints if any
+  /* Show hints if any -------------------------------------------------------*/
+
+  if ((depHint || nonStdHint || expHint) &&
+    (((options.workers && recursive) || (!options.workers && !recursive)) || ((options.sab && recursive) || (!options.sab && !recursive)))) {
+    let hint = [];
+    if (expHint) hint.push(`?o!?R = ${text.experimental}`);
+    if (depHint) hint.push(`?r-?R = ${text.deprecated}`);
+    if (nonStdHint) hint.push(`?rX?R = ${text.nonStandard}`);
+    out.addLine(lf, "?R", hint.join(", "));
+  }
+
   if ( workerHint ) {
     out.addLine(lf, utils.breakAnsiLine(text.workerHint, options.maxChars));
   }
 
   if ( sabHint ) {
-    out.addLine(lf, utils.breakAnsiLine(sabHint, options.maxChars));
+    out.addLine(lf, utils.breakAnsiLine(text.sabHint, options.maxChars));
   }
 
-  // Show table data for workers/SharedArrayBuffer
-  if ( options.workers && data.workers ) formatterLong(data.workers);
-  if ( options.sab && data.sab ) formatterLong(data.sab);
+  /* Show table data for workers/SharedArrayBuffer ---------------------------*/
 
-  // Show notes
+  if ( options.workers && data.workers ) formatterLong(data.workers, true);
+  if ( options.sab && data.sab ) formatterLong(data.sab, true);
+
+  /* Show notes --------------------------------------------------------------*/
+
   if ( options.notes && data.notes.length ) {
     addHeader(text.hdrNotes);
     data.notes.forEach(note => {
@@ -94,7 +113,8 @@ function formatterLong(data) {
     }
   }
 
-  // Show flags and history
+  /* Show flags and history --------------------------------------------------*/
+
   if ( (options.flags && hasFlags()) || (options.history && hasHistory()) ) {
     addHeader(text.hdrFlagsHistory);
     if ( options.desktop ) getFlags("desktop");
@@ -103,13 +123,17 @@ function formatterLong(data) {
     out.addLine()
   }
 
-  // Show specifications?
+  /* Show specifications -----------------------------------------------------*/
+
   if ( options.specs && data.specs.length ) {
     addHeader(text.hdrSpecs);
     data.specs.forEach(spec => {
       out.addLine("?w" + `${utils.entities(spec.name)} ?R[${getSpecStatus(spec.status)}?R]${lf}${spec.url}`);
     });
   } // :specs
+
+
+  /* Helpers -----------------------------------------------------------------*/
 
   function doDevice(device) {
     const dev = data.browsers[ device ];
@@ -122,7 +146,7 @@ function formatterLong(data) {
     tbl.push(tableName.concat(colNames));
 
     // Main feature name
-    tbl.push(getLine(data.isCompat ? dataName : "P " + dataName, dev, data.isCompat ? "?w" : "?g", false /*, 2*/));
+    tbl.push(getLine(data.isCompat ? dataName : "P " + dataName, dev, data, false /*, 2*/));
 
     if ( options.children && data.children.length ) {
       data.children.forEach((child /*, i*/) => {
@@ -132,20 +156,38 @@ function formatterLong(data) {
         if ( !sabHint && !options.sab && name === "SharedArrayBuffer_as_param" ) sabHint = true;
 
         if ( name === dataName ) name += "()";
-        if ( !(child.standard || child.experimental || child.deprecated) ) name = "?G-" + name;
 
-        tbl.push(getLine(name, child.browsers[ device ], "?R", true/*, i+2*/));
+        tbl.push(getLine(name, child.browsers[ device ], child, true/*, i+2*/));
       });
     }
 
     out.add(lf, "?G", table(tbl, tblOptions));
   }
 
-  function getLine(name, status, color, isChild /*, bgToggle*/) {
-    //const bg = bgToggle % 4 === 0 ? ANSI.bg2 : ANSI.bg1;
+  function getLine(name, status, data, isChild /*, bgToggle*/) {
+    const color = isChild ? "?R" : (data.isCompat ? "?w" : "?g");
+      //const bg = bgToggle % 4 === 0 ? ANSI.bg2 : ANSI.bg1;
+
+    // Status
+    let stat = " ";
+    if (!isWebExt) {
+      if (!(data.standard || data.experimental)) {
+        stat += "?rX";
+        nonStdHint = true
+      }
+      if (data.experimental) {
+        stat += "?o!";
+        expHint = true
+      }
+      if (data.deprecated) {
+        stat += "?r-";
+        depHint = true
+      }
+    }
+    stat = stat.trimRight();
 
     // feature/child name as first entry
-    const result = [ color /* + bg*/ + utils.getFeatureName(name) + "?G " ];
+    const result = [ color /* + bg*/ + utils.getFeatureName(name) + stat + "?G" ];
 
     status
       .sort(sortRefs)
@@ -292,7 +334,7 @@ function formatterLong(data) {
   } // : getSpecStatus
 
   function addHeader(txt) {
-    out.addLine(`${lf}?c${txt}`);
+    out.addLine(`${lf}?c${ANSI.underline}${txt}`);
   }
 
   function sortRefs(a, b) {

@@ -241,8 +241,8 @@ const utils = {
   getFeatureName: (name) => {
     if ( name === "worker_support" )
       name = text.workerSupport;
-    else if ( name === "sab_in_dataview" )
-      name = text.sabInDataView;
+//    else if ( name === "sab_in_dataview" )
+//      name = text.sabInDataView;
     else if ( name === "SharedArrayBuffer_as_param" )
       name = text.sabSupport;
 
@@ -368,7 +368,7 @@ const utils = {
         result += str.substring(last, i);
         let ch = str[ i + 1 ];
         let color = code[ ch ];
-        if ( color ) {
+        if ( typeof color === "string" ) {
           result += color;
           i++;
         }

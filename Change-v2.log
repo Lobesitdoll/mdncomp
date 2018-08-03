@@ -9,6 +9,7 @@ TDO: Locale support
 TDO: Local filter (-f) in multi-line result (incl. --list)
 
 2.00.0-alpha.1
+ADD: Status symbols in long-format output, more hints, special treat of webextensions
 ADD: Notes collected for all entries in lists with feature+children
 ADD: Shorthand for --index (=just a number) now global (ie, --list, search. Was just for search).
 ADD: Allow --index with --list (both for api and status)

@@ -45,6 +45,9 @@ function loadConfig(options) {
 
     let fmt = Object.assign({}, cfg.formatter);
 
+    // todo build object based on default values for booleans. To be used as NOT object for config file.
+    // options[]->defaultValue, bool?
+
     // apply valid settings from config file
     keys.forEach((key, i) => {
       if ( types[ i ](cfgOptions[ key ]) ) options[ key ] = validate[ i ](cfgOptions[ key ]);

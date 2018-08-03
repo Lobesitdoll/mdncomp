@@ -82,6 +82,7 @@ function formatterShort(data) {
   } // :getBrowser
 
   function getStatus() {
+    if (data.path.startsWith("webextensions")) return "";
     let status = [];
     if ( data.standard ) status.push(`?g${text.standardShort}?R`);
     if ( data.experimental ) status.push(`?y${text.experimentalShort}?R`);
