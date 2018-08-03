@@ -10,6 +10,7 @@ module.exports = {
 
   clrToCursor: "\x1b[2K",
   cursorUp   : "\x1b[1A",
+  underline  : "\x1b[4m",
 
   black  : "\x1b[0;30m",
   red    : "\x1b[0;1;31m",
