@@ -342,20 +342,6 @@ const utils = {
   },
 
   parseColorCodes: (str) => {
-    const codes = [
-      {code: "\\?r", ansi: ANSI.red},
-      {code: "\\?g", ansi: ANSI.green},
-      {code: "\\?y", ansi: ANSI.yellow},
-      {code: "\\?o", ansi: ANSI.orange},
-      {code: "\\?b", ansi: ANSI.blue},
-      {code: "\\?m", ansi: ANSI.magenta},
-      {code: "\\?p", ansi: ANSI.purple},
-      {code: "\\?c", ansi: ANSI.cyan},
-      {code: "\\?w", ansi: ANSI.white},
-      {code: "\\?G", ansi: ANSI.gray},
-      {code: "\\?R", ansi: ANSI.reset},
-    ];
-
     const code = {
       "r": ANSI.red,
       "g": ANSI.green,
@@ -370,44 +356,27 @@ const utils = {
       "R": ANSI.reset
     };
 
-    // todo check if forward parsing is faster than searching n times..
-
-    const { performance } = require("perf_hooks");
-    let result = str;
-    performance.mark("A");
-    codes.forEach(c => {
-      result = result.replace(new RegExp(c.code, "gm"), c.ansi)
-    });
-    performance.mark("B");
-    performance.measure("A to B", "A", "B");
-    console.log("regex", performance.getEntriesByName("A to B")[0].duration);
-
-    performance.mark("C");
-
-    result = "";
+    let result = "";
     let i = 0;
     let last = 0;
-    while(i >= 0) {
+
+    do {
       i = str.indexOf("?", i);
-      if (i >= 0 && i < str.length - 1) {
-        let color = code[str[i + 1]];
+      if (i >= 0) {
+        result += str.substring(last, i);
+        let ch = str[i + 1];
+        let color = code[ch];
         if (color) {
-          result += str.substring(last, i) + color;
-          i += 1;
+          result += color;
+          i++
         }
-        else {
-          result += str.substring(last, i);
-        }
+        else result += str[i];
         last = ++i;
       }
-      else result += str.substr(last)
-    }
-    str = result;
-    performance.mark("D");
-    performance.measure("C to D", "C", "D");
-    console.log("parse", performance.getEntriesByName("C to D")[0].duration);
+      else result += str.substr(last);
+    } while (i > 0);
 
-    return str
+    return result
   },
 
   entities: (txt) => {
