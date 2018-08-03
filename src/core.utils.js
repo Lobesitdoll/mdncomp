@@ -22,11 +22,11 @@ const utils = {
       .forEach(key => _iterateNode(mdn, key, key));
 
     function _iterateNode(node, inKey, branch) {
-      const subNode = node[inKey];
+      const subNode = node[ inKey ];
 
-      if (typeof subNode === "object") {
+      if ( typeof subNode === "object" ) {
         Object.keys(subNode).forEach(key => {
-          if (key !== "__compat" && key !== "worker_support" && key !== "SharedArrayBuffer_as_param") {
+          if ( key !== "__compat" && key !== "worker_support" && key !== "SharedArrayBuffer_as_param" ) {
             result.push(branch + "." + key);
             _iterateNode(subNode, key, branch + "." + key); // -> async if stack-overflow problems
           }
@@ -34,7 +34,7 @@ const utils = {
       }
     }
 
-    return result
+    return result;
   },
 
   /**
@@ -44,8 +44,8 @@ const utils = {
    */
   listTopLevels: (mdn) => {
     let keys = Object.keys(mdn), i = keys.indexOf("browsers");
-    if (i >= 0) keys.splice(i, 1);
-    return keys
+    if ( i >= 0 ) keys.splice(i, 1);
+    return keys;
   },
 
   /**
@@ -64,29 +64,29 @@ const utils = {
     let regex;
     let parts;
 
-    if (str.startsWith("/")) {
+    if ( str.startsWith("/") ) {
       str = str.substr(1);
       parts = str.split("/");
-      str = parts[0];
-      options = parts[1] || "";
+      str = parts[ 0 ];
+      options = parts[ 1 ] || "";
     }
     else {
-      if (fuzzy) {
+      if ( fuzzy ) {
         str = getFuzzy(str.toLowerCase());
       }
       else {
-        if (str.endsWith(".")) {
+        if ( str.endsWith(".") ) {
           str = str.substr(0, str.length - 1);
-          endLine = "$"
+          endLine = "$";
         }
-        if (!str.startsWith("*")) str = "*" + str;
-        if (!str.endsWith("*") && !endLine.length) str += "*";
+        if ( !str.startsWith("*") ) str = "*" + str;
+        if ( !str.endsWith("*") && !endLine.length ) str += "*";
         str = str.split("*").join(".*") + endLine;
       }
     }
 
     // insensitive search
-    if (insensitive && !options.includes("i")) options += "i";
+    if ( insensitive && !options.includes("i") ) options += "i";
 
     try {
       regex = new RegExp(str, options);
@@ -101,7 +101,7 @@ const utils = {
       const chars = [];
       let endLine = "";
 
-      if (q.endsWith(".")) {
+      if ( q.endsWith(".") ) {
         endLine = "$";
         q = q.substr(0, q.length - 1);
       }
@@ -109,10 +109,10 @@ const utils = {
       // push and prepend special chars
       for(let ch of q) chars.push(spec.includes(ch) ? "\\" + ch : ch);
 
-      return chars.join(".*?") + endLine
+      return chars.join(".*?") + endLine;
     }
 
-    return regex
+    return regex;
   },
 
   /**
@@ -124,37 +124,39 @@ const utils = {
    */
   getPathAsObject: (mdn, path) => {
     let obj = mdn;
-    path.split(".").forEach(part => {if (obj && obj[part]) obj = obj[part]});
-    return obj
+    path.split(".").forEach(part => {
+      if ( obj && obj[ part ] ) obj = obj[ part ];
+    });
+    return obj;
   },
 
   nameFromPath: (path) => {
     let last = utils.getExt(path);
-    return last.length ? last : path
+    return last.length ? last : path;
   },
 
   getExt: (path) => {
     let i = path.lastIndexOf(".") + 1;
-    return i ? path.substr(i) : ""
+    return i ? path.substr(i) : "";
   },
 
   prePathFromPath: (mdn, path) => {
     let parts = path.split("."), o = mdn, res = "";
     parts.pop();
     parts.forEach(part => {
-      if (o) {
-        if (o[part].__compat) res += part + ".";
-        o = o[part];
+      if ( o ) {
+        if ( o[ part ].__compat ) res += part + ".";
+        o = o[ part ];
       }
     });
 
-    if (res.length < 2) {
+    if ( res.length < 2 ) {
       parts = path.split(".");
       parts.pop();
-      res = parts.join(".") + "."
+      res = parts.join(".") + ".";
     }
 
-    return res.length > 1 ? res : ""
+    return res.length > 1 ? res : "";
   },
 
   /**
@@ -166,15 +168,15 @@ const utils = {
    */
   isCompat: (mdn, path) => {
     let obj = utils.getPathAsObject(mdn, path);
-    return obj && typeof obj.__compat === "object"
+    return obj && typeof obj.__compat === "object";
   },
 
   hasChildren: (pathObj) => {
     const keys = Object.keys(pathObj);
     for(let key of keys) {
-      if (pathObj[key].__compat) return true
+      if ( pathObj[ key ].__compat ) return true;
     }
-    return false
+    return false;
   },
 
   getBrowserList: () => {
@@ -182,7 +184,7 @@ const utils = {
       desktop: [ "chrome", "edge", "firefox", "ie", "opera", "safari" ],
       mobile : [ "chrome_android", "edge_mobile", "firefox_android", "opera_android", "safari_ios", "webview_android" ],
       ext    : [ "nodejs", "qq_android", "samsunginternet_android", "uc_android", "uc_chinese_android" ]
-    }
+    };
   },
 
   getBrowserLongNames: () => {
@@ -237,14 +239,14 @@ const utils = {
    * @returns {string}
    */
   getFeatureName: (name) => {
-    if (name === "worker_support")
+    if ( name === "worker_support" )
       name = text.workerSupport;
-    else if (name === "sab_in_dataview")
+    else if ( name === "sab_in_dataview" )
       name = text.sabInDataView;
-    else if (name === "SharedArrayBuffer_as_param")
+    else if ( name === "SharedArrayBuffer_as_param" )
       name = text.sabSupport;
 
-    return name //.replace(/_/g, " ")
+    return name; //.replace(/_/g, " ")
   },
 
   /**
@@ -269,12 +271,12 @@ const utils = {
       .replace(/<\/a>/gi, "</a>" + resetColor)
       .replace(/(<([^>]+)>)/ig, "");
 
-    if (convTags) str = str.replace(/&lt;/gi, "<").replace(/&gt;/gi, ">");
-    return str
+    if ( convTags ) str = str.replace(/&lt;/gi, "<").replace(/&gt;/gi, ">");
+    return str;
   },
 
   breakAnsiLine: (s, max) => {
-    const _max = Math.max(72, max>>>0);
+    const _max = Math.max(72, max >>> 0);
     const _lf = "\n";
     let lines = [];
     let len = 0;
@@ -285,20 +287,20 @@ const utils = {
     let i = 0;
     let ch;
 
-    while(ch = s[i]) {
-      if (inAnsi && isShort && !"rgyobmpcwGR".includes(ch)) inAnsi = false;
+    while( ch = s[ i ] ) {
+      if ( inAnsi && isShort && !"rgyobmpcwGR".includes(ch) ) inAnsi = false;
 
-      if (!inAnsi) {
-        if (ch === "\x1b" || ch === "?") {
+      if ( !inAnsi ) {
+        if ( ch === "\x1b" || ch === "?" ) {
           inAnsi = true;
-          isShort = ch === "?"
+          isShort = ch === "?";
         }
         else {
-          if (ch === " " || ch === _lf) lastBreak = i;
+          if ( ch === " " || ch === _lf ) lastBreak = i;
 
           len++;
-          if (len === _max || ch === _lf) {
-            if (lastBreak < 0) lastBreak = i;
+          if ( len === _max || ch === _lf ) {
+            if ( lastBreak < 0 ) lastBreak = i;
 
             lines.push(s.substring(lineStart, lastBreak).trim());
             lineStart = lastBreak;
@@ -308,13 +310,13 @@ const utils = {
         }
       }
       else {
-        if (ch === "m" || isShort) inAnsi = false;
+        if ( ch === "m" || isShort ) inAnsi = false;
       }
 
-      i++
+      i++;
     }
 
-    if (len) {
+    if ( len ) {
       lines.push(s.substr(lineStart));
     }
 
@@ -324,21 +326,21 @@ const utils = {
     return lines.length ? lines.join(lf) : "";
   },
 
-//  getMaxLength: list => {
-//    let max = 0;
-//    list.forEach(e => {
-//      let len = (utils.prePathFromPath(e) + utils.nameFromPath(e)).length;
-//      if (len > max) max = len;
-//    });
-//    return max
-//  },
+  //  getMaxLength: list => {
+  //    let max = 0;
+  //    list.forEach(e => {
+  //      let len = (utils.prePathFromPath(e) + utils.nameFromPath(e)).length;
+  //      if (len > max) max = len;
+  //    });
+  //    return max
+  //  },
 
   ansiLength: (str) => {
-    return utils.ansiFree(str).length
+    return utils.ansiFree(str).length;
   },
 
   ansiFree: (str) => {
-    return str.replace(/\x1b[^m]*m/g, "").replace(/\?[rgyobmpcwGR]/g, "")
+    return str.replace(/\x1b[^m]*m/g, "").replace(/\?[rgyobmpcwGR]/g, "");
   },
 
   parseColorCodes: (str) => {
@@ -362,21 +364,21 @@ const utils = {
 
     do {
       i = str.indexOf("?", i);
-      if (i >= 0) {
+      if ( i >= 0 ) {
         result += str.substring(last, i);
-        let ch = str[i + 1];
-        let color = code[ch];
-        if (color) {
+        let ch = str[ i + 1 ];
+        let color = code[ ch ];
+        if ( color ) {
           result += color;
-          i++
+          i++;
         }
-        else result += str[i];
+        else result += str[ i ];
         last = ++i;
       }
       else result += str.substr(last);
-    } while (i > 0);
+    } while( i >= 0 );
 
-    return result
+    return result;
   },
 
   entities: (txt) => {
@@ -391,22 +393,22 @@ const utils = {
   versionAddRem: (add, rem) => {
     let v = "";
 
-    if (add === null && rem === null) {
-      v = "?r?"
+    if ( add === null && rem === null ) {
+      v = "?r?";
     }
-    else if (add === null || typeof add === "undefined") {
-      v = "?r-"
+    else if ( add === null || typeof add === "undefined" ) {
+      v = "?r-";
     }
-    else if (typeof add === "boolean") {
-      if (add) v = "?g" + text.yes;
+    else if ( typeof add === "boolean" ) {
+      if ( add ) v = "?g" + text.yes;
       else v = "?r-";
     }
-    else if (typeof add === "string") {
+    else if ( typeof add === "string" ) {
       v = (rem ? "?r" : "?g") + add;
-      if (rem) v += typeof rem === "boolean" ? "-?" : "-" + rem;
+      if ( rem ) v += typeof rem === "boolean" ? "-?" : "-" + rem;
     }
 
-    return v
+    return v;
   },
 
   loadMDN: function() {
@@ -419,16 +421,16 @@ const utils = {
       process.exit();
     }
 
-    return mdn
+    return mdn;
   },
 
   log: function(...args) {
-    if (args.length === 1 && Array.isArray(args[0])) args[0] = args[0].join(lf);
-    console.log(utils.parseColorCodes(args.join(" ")))
+    if ( args.length === 1 && Array.isArray(args[ 0 ]) ) args[ 0 ] = args[ 0 ].join(lf);
+    console.log(utils.parseColorCodes(args.join(" ")));
   },
 
   err: function(...args) {
-    console.error(utils.parseColorCodes(args.join(" ")))
+    console.error(utils.parseColorCodes(args.join(" ")));
   }
 };
 
