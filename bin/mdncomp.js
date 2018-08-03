@@ -271,10 +271,9 @@ function search() {
 function showResults(path) {
   const preFormat = loadModule("formatter.common")(path);
   const results = loadModule(options.shorthand ? "formatter.short" : "formatter.long")(preFormat);
-  log(results);
 
   // Add footer
-  log("?pData from MDN - `npm i -g mdncomp` by epistemex?w?R");
+  log(results, lf + "?pData from MDN - `npm i -g mdncomp` by epistemex?w?R");
 }
 
 /**

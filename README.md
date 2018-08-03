@@ -173,7 +173,7 @@ Edge  18  -           nightly
 
 **Rich output, here additionally using the --desc and --specs options:**
 
-    mdncomp  sharedarraybuffer --desc --specs
+    mdncomp sharedarraybuffer --desc --specs
     
 ![Description and specifications summary example](https://i.imgur.com/4BzlwRR.png)<br>
 <sup>*cygwin snapshot*</sup>

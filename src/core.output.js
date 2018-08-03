@@ -60,13 +60,12 @@ Output.prototype = {
   },
 
   replace: function(keyword, newText) {
-    let regEx = new RegExp(keyword, "g");
+    let regEx = new RegExp(keyword, "gm");
     this.string = this.string.replace(regEx, newText);
     return this
   },
 
   toString: function() {
-    //return utils.parseColorCodes(this.string)
     return this.string;
   }
 };

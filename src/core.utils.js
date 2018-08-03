@@ -344,7 +344,33 @@ const utils = {
   },
 
   parseColorCodes: (str) => {
-    const code = {
+    let code = {
+      "?r": ANSI.red,
+      "?g": ANSI.green,
+      "?y": ANSI.yellow,
+      "?o": ANSI.orange,
+      "?b": ANSI.blue,
+      "?m": ANSI.magenta,
+      "?p": ANSI.purple,
+      "?c": ANSI.cyan,
+      "?w": ANSI.white,
+      "?G": ANSI.gray,
+      "?R": ANSI.reset
+    };
+
+    const tmp = str + "";
+
+    const { performance } = require('perf_hooks');
+
+    performance.mark('A');
+    const rx = new RegExp("\\?[" + Object.keys(code).map(code => code.substr(1)).join("") + "]", "mg");
+    let result = str.replace(rx, (m) => {
+      return code[m] || m
+    });
+    performance.mark('B');
+
+    str = tmp;
+    code = Object.assign(code, {
       "r": ANSI.red,
       "g": ANSI.green,
       "y": ANSI.yellow,
@@ -356,9 +382,10 @@ const utils = {
       "w": ANSI.white,
       "G": ANSI.gray,
       "R": ANSI.reset
-    };
+    });
 
-    let result = "";
+    performance.mark('C');
+    result = "";
     let i = 0;
     let last = 0;
 
@@ -377,6 +404,12 @@ const utils = {
       }
       else result += str.substr(last);
     } while( i >= 0 );
+    performance.mark('D');
+
+    performance.measure('regex', 'A', 'B');
+    performance.measure('parse', 'C', 'D');
+    console.log("regex", performance.getEntriesByName('regex')[0].duration);
+    console.log("parse", performance.getEntriesByName('parse')[0].duration);
 
     return result;
   },
