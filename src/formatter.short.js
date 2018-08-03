@@ -17,11 +17,13 @@ const tblOptions = {
 };
 
 function formatterShort(data) {
-  //out.addLine(`?w${data.prePath}?w${data.path}`);
   const tbl = [];
 
+  out.addLine(`${lf}?c${data.prePath}?w${data.name}  ${getStatus()}?R`);
+  if (data.url) out.addLine(data.url);
+
   // headers
-  const header = [ text.hdrBrowsers ];
+  const header = [ "?y" + text.hdrBrowsers ];
   if ( options.desktop ) header.push(...getNames("desktop", "?w"));
   if ( options.mobile ) header.push(...getNames("mobile", "?c"));
   if ( options.ext ) header.push(...getNames("ext", "?y"));
@@ -78,6 +80,15 @@ function formatterShort(data) {
 
     return result;
   } // :getBrowser
+
+  function getStatus() {
+    let status = [];
+    if ( data.standard ) status.push(`?g${text.standardShort}?R`);
+    if ( data.experimental ) status.push(`?y${text.experimentalShort}?R`);
+    if ( data.deprecated ) status.push(`?r${text.deprecatedShort}?R`);
+    if ( !status.length ) status.push(`?r${text.nonStandardShort}?R`);
+    return status.length ? "?G[" + status.join(", ") + "?G]?R" : "?R";
+  } // : getStatus
 
   return out.toString();
 }
