@@ -7,7 +7,7 @@
 const utils = loadModule("core.utils");
 const mdn = utils.loadMDN();
 
-function list(path) {
+function list(path, recursive = false) {
 
   // top-levels
   if ( typeof path !== "string" || !path.length || path === "." ) {
@@ -19,19 +19,42 @@ function list(path) {
 
   // list on status
   else if ( [ "deprecated", "experimental", "standard" ].includes(path) ) {
-    log(listOnStatus(path));
+    const result = listOnStatus(path, recursive);
+    if (result.length > 1) {
+      checkIndex(result)
+    }
+    else log(result);
   }
 
   // List API
   else {
-    let list = listAPI(path);
+    let result = listAPI(path, recursive);
 
-    if ( list.length === 1 && utils.isCompat(mdn, list[ 0 ]) ) {
+    if ( result.length === 1 && utils.isCompat(mdn, result[ 0 ]) ) {
       options.list = undefined;
-      listAPI(list[ 0 ]);
+      listAPI(result[ 0 ]);
     }
-    else
-      log(list);
+    else if (result.length > 1) {
+      checkIndex(result)
+    }
+  }
+
+  function checkIndex(result) {
+    if (options.index > -1) {
+      if (options.index < 0 || options.index >= result.length) {
+        err(errText.indexOutOfRange);
+        return;
+      }
+
+      let parts = result[options.index].split(" ");
+      let line = parts[parts.length - 1].replace(/\?./g, "");
+      options.index = -1;
+
+      list(line, true);
+    }
+    else {
+      log(result);
+    }
   }
 }
 
@@ -46,9 +69,10 @@ function list(path) {
  * mdncomp -l deprecated
  *
  * @param prefix
+ * @param recursive
  * @returns {Array}
  */
-function listAPI(prefix) {
+function listAPI(prefix, recursive = false) {
   const _prefix = options.caseSensitive ? prefix : prefix.toLowerCase();
   const tbl = utils.buildTable(mdn);
   const maxSegments = _prefix.split(".").length + 1;
@@ -63,7 +87,7 @@ function listAPI(prefix) {
       }
     })
     .sort()
-    .map(path => {
+    .map((path, i, arr) => {
       const obj = utils.getPathAsObject(mdn, path);
       let color = "";
       let prefix = "?GB?R";
@@ -77,17 +101,19 @@ function listAPI(prefix) {
         prefix = "P"
       }
 
+      const index = recursive ? "" : "?y[?g" + (i + "").padStart((arr.length + "").length) + "?y]?R ";
+
       if (color.length) {
         const parts = path.split(".");
         parts[parts.length - 1] = color + parts[parts.length - 1] + "?R";
-        return `${color}${prefix}?R ${parts.join(".")}`
+        return `${index}${color}${prefix}?R ${parts.join(".")}`
       }
 
-      return `${prefix} ${path}`
+      return `${index}${prefix} ${path}`
     });
 }
 
-function listOnStatus(statTxt) {
+function listOnStatus(statTxt, recursive = false) {
   const result = [];
   const keys = utils.listTopLevels(mdn);
 
@@ -116,9 +142,10 @@ function listOnStatus(statTxt) {
 
   return result
     .sort()
-    .map(res => {
+    .map((res, i, arr) => {
+      const index = recursive ? "" : "?y[?g" + (i + "").padStart((arr.length + "").length) + "?y]?R ";
       const t = res.lastIndexOf(".") + 1;
-      return "?R" + res.substr(0, t) + color + res.substr(t);
+      return `?R${index}${res.substr(0, t) + color + res.substr(t)}`;
     });
 }
 

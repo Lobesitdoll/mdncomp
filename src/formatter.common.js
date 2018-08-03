@@ -31,6 +31,7 @@ function format(path, isRecursive) {
   const status = compat.status || {};
   const url = compat.mdn_url && compat.mdn_url.length ? ("https://developer.mozilla.org/docs/" + compat.mdn_url).replace(".org/docs/Mozilla/Add-ons/", ".org/Add-ons/") : null;
   const specs = options.specs ? compat.specs || [] : [];
+  const isWebExt = path.startsWith("webextensions");
 
   const result = {
     isCompat    : typeof pathObj.__compat === "object",
@@ -42,7 +43,7 @@ function format(path, isRecursive) {
     url         : url,
     specs       : specs,
     experimental: status.experimental,
-    standard    : status.standard_track || (isRecursive && path.startsWith("webextensions")),
+    standard    : status.standard_track || (isRecursive && isWebExt),
     deprecated  : status.deprecated,
     browsers    : { desktop: [], mobile: [], ext: [] },
     notes       : [],
@@ -74,7 +75,7 @@ function format(path, isRecursive) {
       const compat = pathObj[child].__compat;
       if (compat) {
         const status = compat.status || {};
-        if (options.obsolete || path.startsWith("webextensions") || ((status.experimental || status.standard_track || status.deprecated) && !status.deprecated)) {
+        if (options.obsolete || isWebExt || ((status.experimental || status.standard_track || status.deprecated) && !status.deprecated)) {
           result.children.push(format(path + "." + child, true))
         }
       }

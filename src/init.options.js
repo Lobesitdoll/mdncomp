@@ -68,5 +68,17 @@ module.exports = (() => {
     loadModule("init.help")();
   }
 
+  // check for shorthand index number arg
+  if ( options.index < 0 ) {
+    for(let i = 0, arg; arg = options.args[i]; i++) {
+      //noinspection JSCheckFunctionSignatures
+      if ( !isNaN(arg) ) {
+        options.args.splice(i, 1);
+        options.index = +arg;
+        break;
+      }
+    }
+  }
+
   return options
 })();

@@ -39,30 +39,27 @@ If no argument or a single dot (.) a root list will be outputted:
 
 From there you can list all branches on for example "css":
 
-    mdncomp -l css
+    mdncomp -l webextensions
     ->
-    css.at-rules
-    css.properties
-    css.selectors
-    css.types
+    [0] B webextensions.api
+    [1] P webextensions.manifest
+    [2] F webextensions.match_patterns
 
-Then add to the path with a valid branch:
+The list shows index number for each entry, type (B = Branch, P = non-feature parent
+but with feature children, and F which is a feature itself).
 
-    mdncomp -l css.types
-    ->
-    css.types
-    css.types.-moz-image-rect
-    css.types.angle
-    css.types.basic-shape
-    css.types.blend-mode
-    css.types.calc
-    css.types.flex
-    css.types.frequency
-    --X8--
+You can extent the search term using the name as typed fully or partly, or combine
+the --index option, or simple add a number (from the list) as argument (these do
+the same):
+
+    mdncomp -l webextensions.manifest
+    mdncomp -l webextensions --index 1
+    mdncomp -l webextensions -i 1
+    mdncomp -l webextensions 1
     
-and so on.
+and so on. Note: using the index will list the resulting list without indices.
 
-"experimental" will list all APIs and objects that are marked 
+Using status "experimental" will list all APIs and objects that are marked 
 experimental:
 
     mdncomp -l experimental

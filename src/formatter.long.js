@@ -117,10 +117,10 @@ function formatterLong(data) {
     const dataName = data.name;
     const tbl = [];
 
-    // Device name
-    tbl.push(
-      [ "?w" + text[ device ] + "?G" ].concat(dev.map(o => `?w${browserNames[ o.browser ].padEnd(10)}?G`))
-    );
+    // Header line
+    const tableName = [ "?y" + text[ device ].toUpperCase() + "?G" ];
+    const colNames = dev.map(o => `?w${browserNames[ o.browser ].padEnd(10)}?G`);
+    tbl.push(tableName.concat(colNames));
 
     // Main feature name
     tbl.push(getLine(data.isCompat ? dataName : "P " + dataName, dev, data.isCompat ? "?w" : "?g", false /*, 2*/));

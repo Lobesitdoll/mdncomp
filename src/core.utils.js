@@ -59,12 +59,16 @@ const utils = {
    * @returns {RegExp}
    */
   getComparer: (str, fuzzy, insensitive) => {
-    let regex, parts, options = "", endLine = "";
+    let options = "";
+    let endLine = "";
+    let regex;
+    let parts;
+
     if (str.startsWith("/")) {
       str = str.substr(1);
       parts = str.split("/");
       str = parts[0];
-      options = parts[1]
+      options = parts[1] || "";
     }
     else {
       if (fuzzy) {
@@ -88,19 +92,21 @@ const utils = {
       regex = new RegExp(str, options);
     }
     catch(err) {
-      error("Invalid regular expression:", err.message);
-      process.exit(-1);
+      utils.err(errText.invalidRegex);
+      process.exit();
     }
 
     function getFuzzy(q) {
       const spec = "\\^$.*+?()[]{}|";
-      let chars = [], endLine = "";
+      const chars = [];
+      let endLine = "";
 
       if (q.endsWith(".")) {
         endLine = "$";
         q = q.substr(0, q.length - 1);
       }
 
+      // push and prepend special chars
       for(let ch of q) chars.push(spec.includes(ch) ? "\\" + ch : ch);
 
       return chars.join(".*?") + endLine
@@ -114,22 +120,11 @@ const utils = {
    * in this case for slice.
    * @param mdn
    * @param path
-   * @param noChildren - remove child __compat objects
    * @returns {*}
    */
-  getPathAsObject: (mdn, path, noChildren) => {
-    let parts = path.split("."), obj = mdn;
-    parts.forEach(part => {if (obj && obj[part]) obj = obj[part]});
-
-    if (noChildren) {
-      Object
-        .keys(obj)
-        .forEach(key => {
-          // todo if interactive mode we'll need a different approach here (copy/reload)
-          if (obj && obj[key].__compat) delete obj[key];
-        })
-    }
-
+  getPathAsObject: (mdn, path) => {
+    let obj = mdn;
+    path.split(".").forEach(part => {if (obj && obj[part]) obj = obj[part]});
     return obj
   },
 
@@ -139,9 +134,8 @@ const utils = {
   },
 
   getExt: (path) => {
-    if (typeof path !== "string") return "";
-    let i = path.lastIndexOf(".");
-    return i < 0 ? "" : path.substr(++i)
+    let i = path.lastIndexOf(".") + 1;
+    return i ? path.substr(i) : ""
   },
 
   prePathFromPath: (mdn, path) => {
@@ -405,7 +399,7 @@ const utils = {
       mdn = require("../data/data.json");
     }
     catch(err) {
-      utils.err("?rCritical error: data file not found.\n?yTry running with option --fupdate to download latest snapshot.?R");
+      utils.err(`?r${errText.criticalDataFile}?R`);
       process.exit();
     }
 
