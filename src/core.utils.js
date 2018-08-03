@@ -356,9 +356,56 @@ const utils = {
       {code: "\\?R", ansi: ANSI.reset},
     ];
 
+    const code = {
+      "r": ANSI.red,
+      "g": ANSI.green,
+      "y": ANSI.yellow,
+      "o": ANSI.orange,
+      "b": ANSI.blue,
+      "m": ANSI.magenta,
+      "p": ANSI.purple,
+      "c": ANSI.cyan,
+      "w": ANSI.white,
+      "G": ANSI.gray,
+      "R": ANSI.reset
+    };
+
+    // todo check if forward parsing is faster than searching n times..
+
+    const { performance } = require("perf_hooks");
+    let result = str;
+    performance.mark("A");
     codes.forEach(c => {
-      str = str.replace(new RegExp(c.code, "gm"), c.ansi)
+      result = result.replace(new RegExp(c.code, "gm"), c.ansi)
     });
+    performance.mark("B");
+    performance.measure("A to B", "A", "B");
+    console.log("regex", performance.getEntriesByName("A to B")[0].duration);
+
+    performance.mark("C");
+
+    result = "";
+    let i = 0;
+    let last = 0;
+    while(i >= 0) {
+      i = str.indexOf("?", i);
+      if (i >= 0 && i < str.length - 1) {
+        let color = code[str[i + 1]];
+        if (color) {
+          result += str.substring(last, i) + color;
+          i += 1;
+        }
+        else {
+          result += str.substring(last, i);
+        }
+        last = ++i;
+      }
+      else result += str.substr(last)
+    }
+    str = result;
+    performance.mark("D");
+    performance.measure("C to D", "C", "D");
+    console.log("parse", performance.getEntriesByName("C to D")[0].duration);
 
     return str
   },
