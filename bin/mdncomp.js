@@ -233,7 +233,7 @@ else {
 
 */
 function search() {
-  const keyword = options.args.shift();
+  const keyword = options.args.shift(); // Note: secondary+ arg(s) is extracted in formatter.common module
   const result = loadModule("option.search")(keyword);
 
   // no result
@@ -258,7 +258,7 @@ function search() {
     log(str);
   }
 
-  // index out of range
+  // index out of range?
   else if ( result.length > 1 && options.index >= result.length ) {
     err(`?y${errText.indexOutOfRange}.?R`);
   }

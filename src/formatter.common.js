@@ -72,8 +72,9 @@ function format(path, isRecursive = false, subNotes, subLinks) {
 
   // get children
   if (options.children && !isRecursive) {
-    const fArg = options.args[0];
-    const filter = (fArg) ? utils.getComparer(fArg, !(fArg.includes("*") || fArg.startsWith("/")), true) : null;
+    const filters = options.args.length
+                    ? options.args.map(flt => utils.getComparer(flt, !(flt.includes("*") || flt.startsWith("/")), true))
+                    : null;
 
     const _history = options.history;
     options.history = false;
@@ -84,7 +85,7 @@ function format(path, isRecursive = false, subNotes, subLinks) {
         const status = compat.status || {};
         if (options.obsolete || isWebExt || ((status.experimental || status.standard_track || status.deprecated) && !status.deprecated)) {
           const childPath = path + "." + child;
-          if (!filter || filter.test(child)) {
+          if (!filters || testFilter(child, filters)) {
             result.children.push(format(childPath, true, result.notes, result.links))
           }
         }
@@ -92,6 +93,10 @@ function format(path, isRecursive = false, subNotes, subLinks) {
     });
 
     options.history = _history;
+  }
+
+  function testFilter(key, filters) {
+    for(let f of filters) if (f.test(key)) return true;
   }
 
   function mergeSupport(key, support) {

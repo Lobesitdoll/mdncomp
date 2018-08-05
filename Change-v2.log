@@ -8,7 +8,7 @@ TDO: Custom column definitions
 TDO: Locale support
 
 2.00.0-alpha.1
-ADD: Local result filter in multi-line result (simply provide a second search term)
+ADD: Local result filter in multi-line result (simply providing (multiple) additional args)
 ADD: Status symbols in long-format output, more hints, special treat of webextensions
 ADD: Notes collected for all entries in lists with feature+children
 ADD: Shorthand for --index (=just a number) now global (ie, --list, search. Was just for search).
