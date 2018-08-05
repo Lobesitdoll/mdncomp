@@ -4,8 +4,9 @@ mdncomp 2
 (2.00.0-alpha.2)
 TDO: User input evaluation (https://github.com/epistemex/mdncomp/issues/8)
 TDO: Basic notification system via the update mechanism
-TDO: Custom column definitions
-TDO: Locale support
+TDO: Custom browser column definitions
+TDO: Locale support (msg + descriptions in sep. files)
+TDO: --no-hints / --expert option (?)
 
 2.00.0-alpha.1
 ADD: Local result filter in multi-line result (simply providing (multiple) additional args)
@@ -15,7 +16,7 @@ ADD: Shorthand for --index (=just a number) now global (ie, --list, search. Was 
 ADD: Allow --index with --list (both for api and status)
 CHG: Option "--obsoletes" changed to "--obsolete" (singular)
 ADD: Inline flag indicator (main + children) for long and shorthand formats.
-ADD: Notes indicator for children feature in long and shorthand formats.
+ADD: Notes indicator for children features in long and shorthand formats.
 IMP: Can now list children on parent even if parent isn't itself a feature
 IMP: Color coding for "--list" (green for parent with children features, cyan for feature)
 CHG: Option "-x" has re-designated as shortcut for "--ext" (was "--overwrite")
