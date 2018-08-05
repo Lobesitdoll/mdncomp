@@ -227,8 +227,13 @@ else {
   options.help();
 }
 
+/*-----------------------------------------------------------------------------*
+
+    SEARCH
+
+*/
 function search() {
-  const keyword = options.args[ 0 ];
+  const keyword = options.args.shift();
   const result = loadModule("option.search")(keyword);
 
   // no result
@@ -275,6 +280,12 @@ function showResults(path) {
   // Add footer
   log(results, lf + "?pData from MDN - `npm i -g mdncomp` by epistemex?w?R");
 }
+
+/*-----------------------------------------------------------------------------*
+
+    SYSTEM
+
+*/
 
 /**
  * require() wrapper that incorporates error handling

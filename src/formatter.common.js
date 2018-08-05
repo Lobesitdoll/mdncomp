@@ -72,6 +72,9 @@ function format(path, isRecursive = false, subNotes, subLinks) {
 
   // get children
   if (options.children && !isRecursive) {
+    const fArg = options.args[0];
+    const filter = (fArg) ? utils.getComparer(fArg, !(fArg.includes("*") || fArg.startsWith("/")), true) : null;
+
     const _history = options.history;
     options.history = false;
 
@@ -80,7 +83,10 @@ function format(path, isRecursive = false, subNotes, subLinks) {
       if (compat) {
         const status = compat.status || {};
         if (options.obsolete || isWebExt || ((status.experimental || status.standard_track || status.deprecated) && !status.deprecated)) {
-          result.children.push(format(path + "." + child, true, result.notes, result.links))
+          const childPath = path + "." + child;
+          if (!filter || filter.test(child)) {
+            result.children.push(format(childPath, true, result.notes, result.links))
+          }
         }
       }
     });
