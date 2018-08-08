@@ -9,6 +9,7 @@ TDO: Locale support (msg + descriptions in sep. files)
 TDO: --no-hints / --expert option (?)
 
 2.00.0-alpha.1
+CHG: Only show Node.js data if a JavaScript path.
 ADD: Local result filter in multi-line result (simply providing (multiple) additional args)
 ADD: Status symbols in long-format output, more hints, special treat of webextensions
 ADD: Notes collected for all entries in lists with feature+children

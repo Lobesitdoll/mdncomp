@@ -36,6 +36,7 @@ function format(path, isRecursive = false, subNotes, subLinks) {
   const sab = pathObj.SharedArrayBuffer_as_param && options.sab && !isRecursive ? format(path + ".SharedArrayBuffer_as_param", true) : null;
   const workers = pathObj.worker_support && options.workers && !isRecursive ? format(path + ".worker_support", true) : null;
   const isWebExt = path.startsWith("webextensions");
+  const showNode = path.startsWith("javascript.");
 
   const result = {
     isCompat    : typeof pathObj.__compat === "object",
@@ -66,7 +67,7 @@ function format(path, isRecursive = false, subNotes, subLinks) {
     result.browsers.mobile.push( mergeSupport(key, support) )
   });
 
-  if (options.ext) browserList.ext.forEach(key => {
+  if (options.ext) browserList.ext.filter(key => showNode ? true : key !== "nodejs").forEach(key => {
     result.browsers.ext.push( mergeSupport(key, support) );
   });
 
