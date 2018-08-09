@@ -42,7 +42,7 @@ function list(path, recursive = false) {
   function checkIndex(result) {
     if (options.index > -1) {
       if (options.index < 0 || options.index >= result.length) {
-        err(errText.indexOutOfRange);
+        err(text.indexOutOfRange);
         return;
       }
 

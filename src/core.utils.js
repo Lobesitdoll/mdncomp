@@ -92,7 +92,7 @@ const utils = {
       regex = new RegExp(str, options);
     }
     catch(err) {
-      utils.err(errText.invalidRegex);
+      utils.err(text.invalidRegex);
       process.exit();
     }
 
@@ -421,7 +421,7 @@ const utils = {
       mdn = require("../data/data.json");
     }
     catch(err) {
-      utils.err(`?r${errText.criticalDataFile}?R`);
+      utils.err(`?r${text.criticalDataFile}?R`);
       process.exit();
     }
 

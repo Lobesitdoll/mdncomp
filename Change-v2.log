@@ -1,7 +1,7 @@
 mdncomp 2
 =========
 
-(2.00.0-alpha.3)
+2.00.0-alpha.3
 TDO: User input evaluation (https://github.com/epistemex/mdncomp/issues/8)
 TDO: Basic notification system via the update mechanism
 TDO: Custom browser column definitions

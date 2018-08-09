@@ -72,20 +72,19 @@ const text = {
   statuses         : "statuses",
   pathRoots        : "path roots",
   addOptionIndex   : "Add option '-i <n>' to list a specific feature using the same search.",
-  mdncomp          : "npm i -g mdncomp",
-  gitName          : "GitLab",
-  gitUrl           : "https://gitlab.com/epistemex/mdncomp/"
-};
 
-const errText = {
   indexOutOfRange : "Index out of range",
   invalidRegex    : "Invalid regular expression.",
   notFeatureObject: "Not a feature object or parent to feature(s). Also see the \"--list\" option.",
   versionWarning  : "WARNING: mdncomp is built for Node version 8 or newer. It may not work in older Node.js versions.",
   criticalDataFile: "Critical error: data file not found.\n?yTry running with option --fupdate to download latest snapshot.",
-  missingModule   : String.raw`Critical: A core module seem to be missing. Use '${text.mdncomp}' to reinstall.`,
-  unhandled       : String.raw`An unhandled error occurred!${lf}Please consider reporting to help us solve it via ${text.gitName}:${lf}
-  ${text.gitUrl}issues${lf + lf}Try update/reinstall '${text.mdncomp}' (or --fupdate) if the issue persists.${lf}`
+  missingModule   : "Critical: A core module seem to be missing. Use 'npm i -g mdncomp' to reinstall.",
+  unhandled       : `An unhandled error occurred!
+  Please consider reporting to help us solve it via GitLab:
+  https://gitlab.com/epistemex/mdncomp/issues
+  
+  Try update/reinstall 'npm i -g mdncomp' (or --fupdate) if the issue persists.
+  `
 };
 
 /*-----------------------------------------------------------------------------*
@@ -94,11 +93,11 @@ const errText = {
 
 */
 if ( +process.versions.node.split(".")[ 0 ] < 8 ) {
-  console.log(errText.versionWarning);
+  console.log(text.versionWarning);
 }
 
 const _errHandler = (err) => {
-  console.log(errText.unhandled, err);
+  console.log(text.unhandled, err);
   process.exit(1);
 };
 
@@ -119,7 +118,6 @@ Object.assign(global, {
   DEBUG,
   _base,
   text,
-  errText,
   loadModule,
   shortPad: 1,
   sepChar : "|",
@@ -260,7 +258,7 @@ function search() {
 
   // index out of range?
   else if ( result.length > 1 && options.index >= result.length ) {
-    err(`?y${errText.indexOutOfRange}.?R`);
+    err(`?y${text.indexOutOfRange}.?R`);
   }
 
   // show feature
@@ -299,7 +297,7 @@ function loadModule(name) {
     module = require(_base + name);
   }
   catch(err) {
-    console.error(errText.missingModule);
+    console.error(text.missingModule);
     console.error(name);
     if ( DEBUG ) {
       console.error("ERROR OBJECT:", err);

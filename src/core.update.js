@@ -21,7 +21,7 @@ let wasRedundant = false;
 
 // Clear line in terminal
 function clrLine() {
-  console.log(clr + ("").padStart(options.maxChars, " "));
+  log(clr + ("").padStart(options.maxChars, " "));
 }
 
 // Compare MD5 to see if there is any change in data content
@@ -31,7 +31,7 @@ function compareMD5(callback, redundant) {
   try {
     local = fs.readFileSync(filePrefix + "data.md5", "utf-8");
   }
-  catch(err) {console.error(err)}
+  catch(err) {err(err)}
 
   // remote MD5
   io.request(_urlPrefix + "data.md5", null, null, (remote) => {
@@ -39,10 +39,10 @@ function compareMD5(callback, redundant) {
   }, (err) => {
     wasRedundant = true;
     if ( redundant ) {
-      console.error("An error occurred:", err.statusCode, err.error);
+      err("?rAn error occurred:?R", err.statusCode, err.error);
     }
     else {
-      console.warn("Using redundancy...\n");
+      log("?yUsing redundancy...?R\n");
       setImmediate(compareMD5, callback, true);
     }
   });
@@ -85,7 +85,7 @@ function getRemoteData(callback, redundant) {
       wasRedundant = true;
       if ( redundant ) callback(err);
       else {
-        console.warn("Using redundancy...\n");
+        log("?yUsing redundancy...?R\n");
         setImmediate(getRemoteData, callback, true);
       }
     },
@@ -93,7 +93,7 @@ function getRemoteData(callback, redundant) {
   );
 
   function _progressBar() {
-    console.log(clr + ANSI.white + "Downloading data " + ANSI.white + "[" + ANSI.blue + "#".repeat(prog) + " ".repeat(PWIDTH - prog) + ANSI.white + "]" + ANSI.reset);
+    log(clr + "?wDownloading data [?b" + "#".repeat(prog) + " ".repeat(PWIDTH - prog) + "?w]?R");
   }
 }
 
@@ -114,40 +114,40 @@ function getCurrentData() {
  * @param {boolean} checkOnly - check if an update is available, but don't update
  */
 function update(force, checkOnly) {
-  const noData = "No new data available.";
+  const noData = "?gNo new data available.?R";
 
   compareMD5(md5 => {
     if ( force ) {
       _remote();
     }
     else if ( md5.local === md5.remote ) {
-      console.log(noData);
+      log(noData);
     }
     else if ( checkOnly ) {
-      console.log(noData);
+      log(noData);
     }
     else {
       getPatch(md5, (err, patchStr) => {
         if ( err ) {
-          console.log("No patch available - Loading full dataset...");
+          log("?yNo patch available - Loading full dataset...?R");
           _remote();
         }
         else {
           let data = getCurrentData();
           let hasErrors = false;
 
-          console.log("Applying patch...\n");
+          log("Applying patch...\n");
 
           let patch = JSON.parse(patchStr);
           rfc6902.applyPatch(data, patch).forEach(err => {
             if ( err ) {
-              console.error(`Error with "${err.name}": ${err.message}`);
+              err(`?rError with "${err.name}": ${err.message}?R`);
               hasErrors = true;
             }
           });
 
           if ( hasErrors ) {
-            console.error(`Error during patching ${md5.local} -> ${md5.remote}.\nDownloading full dataset...`);
+            err(`?rError during patching ${md5.local} -> ${md5.remote}.?y${lf}Downloading full dataset...?R`);
             _remote();
           }
           else {
@@ -165,12 +165,12 @@ function update(force, checkOnly) {
         else if ( entry.op === "remove" ) removes++;
         else if ( entry.op === "replace" ) updates++;
       });
-      console.log(`Diff: ${adds} adds, ${updates} updates, ${removes} removes\n`)
+      log(`?RDiff: ${adds} adds, ${updates} updates, ${removes} removes\n`)
     }
 
     function _remote() {
       getRemoteData((err, data) => {
-        if ( err ) console.error(err);
+        if ( err ) err(err);
         else {
           _save(data, md5.remote);
         }
@@ -182,10 +182,10 @@ function update(force, checkOnly) {
         fs.writeFileSync(filePrefix + "data.json", data, "utf-8");
         fs.writeFileSync(filePrefix + "data.md5", remoteMD5, "utf-8");
       }
-      catch(err) {console.error(err)}
+      catch(err) {err(err)}
 
       clrLine();
-      console.log("Data updated!")
+      log("?gData updated!?R")
     }
   });
 }

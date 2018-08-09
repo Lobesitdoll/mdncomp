@@ -9,6 +9,8 @@ Announcement
 
 Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data) on the command line.
 
+    $ mdncomp html*toblob
+
 ![xterm color output](https://i.imgur.com/rF3fITW.png)<br>
 <sup>*cygwin/xterm snapshot*</sup>
 
@@ -322,10 +324,23 @@ directory in JSON format.
 A sample config file is included. Use the option`--configpath` to get
 location to the config folder.
 
+You can of course, as an alternative, define aliases in some terminals. In cmder you could do
+(editing the "installfolder/config/user-aliases.cmd" file):
+
+    bcd=mdncomp -s $1
+
+which will always show shorthand format when running as "bcd".
+
+In a xterm terminal you can open and edit the file "/home/username/.bashrc":
+
+    alias bcd="mdncomp -s"
+
+to do the same. It's now simply a matter of adding different aliases for different purposes.
+
 Wiki
 ----
 
-(**NOTE: TODO** Not yet updated for version 2.x.x, but see included config file sample).
+(**NOTE: TODO** Not yet updated for version 2.x.x).
 
 See the [wiki pages](https://gitlab.com/epistemex/mdncomp/wikis/home) for more details on each options,
 how to create a config file and for usage examples.

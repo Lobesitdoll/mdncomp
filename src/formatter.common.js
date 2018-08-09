@@ -22,7 +22,7 @@ function format(path, isRecursive = false, subNotes, subLinks) {
   const pathObj = utils.getPathAsObject(mdn, path);
 
   if (!pathObj.__compat && !utils.hasChildren(pathObj)) {
-    err(utils.breakAnsiLine(`?y${errText.notFeatureObject}?R`, options.maxChars));
+    err(utils.breakAnsiLine(`?y${text.notFeatureObject}?R`, options.maxChars));
     process.exit();
   }
 
