@@ -50,7 +50,7 @@ module.exports = (() => {
     .option("--sab", "Show detailed SharedArrayBuffer as param information.")
     .option("--obsolete", "Show obsolete, non-standard and deprecated child features.")
     .option("--update", "Update data from remote if available")
-    .option("--fupdate", "Force update data from remote")
+    .option("--fupdate", "Force update full data-set from remote")
     .option("--cupdate", "Check if update is available")
     .option("--random [scope]", "Show a random entry within \"scope\" (use . for any)")
     .option("--no-colors", "Don't use colors in output")

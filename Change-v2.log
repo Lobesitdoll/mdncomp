@@ -1,12 +1,15 @@
 mdncomp 2
 =========
 
-(2.00.0-alpha.2)
+(2.00.0-alpha.3)
 TDO: User input evaluation (https://github.com/epistemex/mdncomp/issues/8)
 TDO: Basic notification system via the update mechanism
 TDO: Custom browser column definitions
 TDO: Locale support (msg + descriptions in sep. files)
 TDO: --no-hints / --expert option (?)
+
+2.00.0-alpha.2
+HOT: Path for marking first-run message read, in [--help]
 
 2.00.0-alpha.1
 CHG: Only show Node.js data if a JavaScript path.

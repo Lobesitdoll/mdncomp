@@ -7,6 +7,7 @@
 "use strict";
 
 const fs = require("fs");
+const Path = require("path");
 const args = process.argv;
 
 function show() {
@@ -30,14 +31,15 @@ function show() {
   }
 
   // Welcome message and reminder to update data
-  if (!fs.existsSync("./data/.firstrun")) {
+  const frPath = Path.join(__dirname, "..", "./data/.firstrun");
+  if (!fs.existsSync(frPath)) {
     log("?g" + "-".repeat(76));
     log("  ?gWELCOME! This seem to be the first run. To get the latest data file run:\n");
     log("  ?wmdncomp --update\n");
     log("  ?gHope mdncomp will be useful! This message is only shown at the first run.");
     log("-".repeat(76), "?R");
     try {
-      if (!DEBUG) fs.writeFileSync("./data/.firstrun", "OK", "utf-8")
+      if (!DEBUG) fs.writeFileSync(frPath, "OK", "utf-8")
     }
     catch(err) {if (DEBUG) console.error(err)}
   }
