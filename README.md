@@ -1,30 +1,34 @@
-mdncomp
-=======
+mdncomp v2
+=========
+
+***Announcement: Next Generation mdncomp (v2) is currently being built - 
+[have your say](https://github.com/epistemex/mdncomp/issues/8) about features you would like to see.***
 
 Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data) on the command line.
 
-***Announcement: Next generation mdncomp (v2) is currently being built - 
-[have your say](https://github.com/epistemex/mdncomp/issues/8) about features you would like to see.***
- 
-![xterm color output](https://i.imgur.com/BXgAPb1.png)<br>
-<sup>*cygwin/xterm snapshot*</sup>
+![xterm color output](https://i.imgur.com/hsvEpWo.png)<br>
+<sup>*cmder snapshot*</sup>
 
 Features
 --------
 
+Rebuilt core with improved search algorithm to get you faster and more flexible
+to the compatibility data.
+
 - Browser Compatibility Data (BCD)
-  - Shows data on command line as a table or as a shorthand list
   - Search in APIs, CSS, HTML, HTTP, JavaScript, MathML, SVG, WebDriver and WebExtensions.
+  - Shows data on command line as a table or as a shorthand list
+  - Shows children features in same table (optional)
   - Get status for standard, experimental and deprecated features.
-  - Show notes, prefix use, security issues, flags and more.
-  - Show Web Worker support
-  - Show SharedArrayBuffer as param support (WebGL)
+  - Show notes, vendor prefix, security issues, flags, history and more.
+  - Show detailed Web Worker support for a feature
+  - Show detailed SharedArrayBuffer as param support for a feature
   - Find features using paths, wildcards, fuzzy terms or regular expressions
   - Navigate by path and branches
   - Search case (in)sensitive
   - Show desktop and/or mobile information for the most common browsers.
-  - Option to also show extended set of browsers and Node.js.
-  - Works offline (only --doc(force) requires internet connection)
+  - Option to show extended set of browsers including Node.js.
+  - Works offline (only --*update requires internet connection)
 
 - Browser status
   - List current browser versions
@@ -36,28 +40,32 @@ Features
   - Show a summary description for each feature (included in the dataset).
   - Provides the URL to the feature's documentation page on [MDN](https://developer.mozilla.org/).
   - Specification references and status (W3C, WHATWG, KHRONOS, ECMA, IETF etc.)
-  - Downloads and show documentation excerpt on the command line (with built-in data cache).
-  - Open documentation link in the default browser from the command line.
 
 - Integrated update mechanism (--update)
-  - (NEW) Compressed data transfers (v.1.22)
-  - (NEW) Patch/diff (RFC-6902) support for several versions back (v.1.22)
+  - Compressed data transfers
+  - Patch/diff (RFC-6902) support for several versions back
   - Force update to reinitialize/clean all data, or with data corruption
   
 - Define permanent/often used options in a config file (which can be suspended at will).
-- Output can now be used directly in markdown flavors that support inline tables.
 - Built-in help per option.
 - Documented with [wiki](https://gitlab.com/epistemex/mdncomp/wikis/home) pages
 - Cross-platform (where node and npm is available).
 
+**Note to users of older version 1.x.x**: some options has been removed (and some 
+added) to make the tool more focused and lightweight for what it is intended to do.
+Please see the [Change-v2.log](./Change-v2.log) for details.
 
 Install
 -------
 Make sure to have [Node.js](https://nodejs.org/en/) and `npm` installed (included with node), then install `mdncomp` using:
 
     $ npm i -g mdncomp
+    
+If you prefer to stay with version 1 you can specify a tag:
 
-This includes a precompiled dataset which can be updated at any time (see [options](https://gitlab.com/epistemex/mdncomp/wikis/Options.md#-update-fupdate-cupdate)).
+    $ npm i -g mdncomp@1.23.0
+
+This includes a precompiled dataset which can be updated at any time.
 
 
 Examples
@@ -66,26 +74,31 @@ Examples
 Using wildcard:
 
 ```text
-$ mdncomp html*toblob.
+$ mdncomp html*toblob
 
- HTMLCanvasElement.toBlob (On Standard Track)
- https://developer.mozilla.org/docs/Web/API/HTMLCanvasElement/toBlob
+HTMLCanvasElement.toBlob
+On Standard Track
+https://developer.mozilla.org/docs/Web/API/HTMLCanvasElement/toBlob
 
- Chrome    | Edge      | Firefox   | IE        | Opera     | Safari
- ----------|-----------|-----------|-----------|-----------|-----------
-     50    |     -     |     19    |    10°    |     37    |     Y¹
+Desktop       |Chrome    |Edge      |Firefox   |IE        |Opera     |Safari
+:-------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
+toBlob        |    50    |     -    |    19    |    10°   |    37    |    Y¹
+Image quality |    50    |     -    |    25    |     -    |     Y    |     -
 
-°) 10: Prefix: ms
-¹) See WebKit bug 71270.
+Mobile        |Chrome/A  |Edge/mob  |Firefox/A |Opera/A   |Safari/iOS|Webview/A 
+:-------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
+toBlob        |    50    |     -    |     4    |    37    |     -    |    50
+Image quality |     -    |     -    |    25    |     -    |     ?    |    50
 
- Chrome/A  | Edge/mob  | Firefox/A | Opera/A   |Safari/iOS | Webview/A
- ----------|-----------|-----------|-----------|-----------|-----------
-     50    |     -     |     4     |     37    |     -     |     50
+NOTES:
+°: Vendor prefix: ms
+¹: See WebKit bug 71270. Ref link 1.
+
+LINKS:
+1: https://bugs.webkit.org/show_bug.cgi?id=71270
 
 Data from MDN - `npm i -g mdncomp` by epistemex
 ```
-
-(the dot at the end indicates you want to stop at this object and not consider its children objects).
 
 Or using the absolute path:
 
@@ -97,29 +110,22 @@ Or an regular expression:
 
 Or an fuzzy expression:
 
-    $ mdncomp -z hcb.
+    $ mdncomp -z ahcb.
 
-Show data in shorthand format:
+**Show data in a compact shorthand format using option `-s, --shorthand`:**
 
-```text
-$ mdncomp html*toblob. -s
-->
-HTMLCanvasElement.toBlob:  DT: C:50 E:- F:19 IE:10* O:37 S:Y*  MOB: CA:50 FA:4 EM:- OA:37 Si:- WA:-
-```
+    $ mdncomp html*toblob -s
+    
+![Shorthand format](https://i.imgur.com/B1C4fBA.png)<br>
+<sup>*cmder snapshot*</sup>
 
-Combined with the `-a` option to list all results with shorthand information:
-```text
-$ mdncomp blob -sa
-->
-Blob       :  D: C:5 E:Y F:4 IE:10 O:11 S:5.1   M: CA:? FA:14 EM:Y OA:? Si:? WA:-
-Blob.Blob  :  D: C:20 E:? F:13* IE:10 O:12 S:8   M: CA:? FA:14* EM:? OA:? Si:? WA:-
-Blob.size  :  D: C:5 E:12 F:4 IE:10 O:11 S:5.1   M: CA:- FA:- EM:Y OA:- Si:- WA:-
-Blob.type  :  D: C:5 E:12 F:4 IE:10 O:11 S:5.1   M: CA:- FA:- EM:Y OA:- Si:- WA:-
-Blob.slice :  D: C:21* E:12 F:13* IE:10 O:12 S:5.1*   M: CA:? FA:14 EM:Y OA:? Si:? WA:-
-BlobBuilder:  D: C:8* E:Y F:Y-18* IE:10* O:- S:-   M: CA:? FA:Y-18* EM:Y OA:- Si:- WA:-
-BlobEvent  :  D: C:49 E:? F:22 IE:- O:36 S:-   M: CA:49 FA:22 EM:? OA:36 Si:- WA:-
---8X--
-```
+Rendered in markdown as well (live preview for viewers supporting tables
+in markdown):
+
+Browsers:    |C  |E  |F  |IE |O  |S  |ca |em |fa |oa |si |wa
+:------------|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:
+toBlob       | 50| - | 19|10*| 37| Y*| 50| - | 4 | 37| - | 50
+Image quality| 50| - | 25| - | Y | - | - | - | 25| - | ? | 50
 
 **List branches and status**
 
@@ -130,9 +136,9 @@ for example: list all features with "experimental" status:
 mdncomp -l experimental
 ->
 api.AbortController
+api.AbortPaymentEvent
 api.AbortSignal
-api.Animation
-api.AnimationEffectReadOnly
+api.AmbientLightSensor
 --8X--
 ```
 
@@ -141,104 +147,141 @@ api.AnimationEffectReadOnly
 ```text
 mdncomp --browser current
 ->
-Chrome             67  2018-05-29  https://chromereleases.googleblog.com/2018/05/stable-channel-update-for-desktop_58.html
-Edge               17  2018-04-30  https://docs.microsoft.com/en-us/microsoft-edge/dev-guide
+Chrome             67  2018-05-29  https://chromereleases.googleblog....
+Edge               17  2018-04-30  https://docs.microsoft.com/en-us/m...
 Edge Mobile        17  2018-04-30
-Firefox            61  2018-06-26  https://developer.mozilla.org/Firefox/Releases/61
-Firefox Android    61  2018-06-26  https://developer.mozilla.org/Firefox/Releases/61
+Firefox            61  2018-06-26  https://developer.mozilla.org/Fire...
+Firefox Android    61  2018-06-26  https://developer.mozilla.org/Fire...
 Internet Explorer  11  2013-10-17
-Node.js             6  2016-04-26  https://nodejs.org/en/blog/release/v6.0.0/
+Opera              53  2018-05-10  https://dev.opera.com/blog/opera-5...
+STATUS: CURRENT
 --8X--
 ```
 
-List release history for a single browser:
+Tip: You can combine the option with `--no-notes, -N` to not show the 
+links at the end.
 
+List release history for a single browser:
 ```text
-mdncomp -b edge
+mdncomp -Nb edge
 ->
-Edge  12  2015-07-28  retired  https://docs.microsoft.com/en-us/microsoft-edge/dev-guide/whats-new/edgehtml-12
-Edge  13  2015-11-12  retired  https://docs.microsoft.com/en-us/microsoft-edge/dev-guide/whats-new/edgehtml-13
-Edge  14  2016-08-02  retired  https://docs.microsoft.com/en-us/microsoft-edge/dev-guide/whats-new/edgehtml-14
-Edge  15  2017-04-05  retired  https://docs.microsoft.com/en-us/microsoft-edge/dev-guide/whats-new/edgehtml-15
-Edge  16  2017-10-17  current  https://docs.microsoft.com/en-us/microsoft-edge/dev-guide/whats-new/edgehtml-16
-Edge  17  2018-04-30  current  https://docs.microsoft.com/en-us/microsoft-edge/dev-guide
+Edge  12  2015-07-28  retired
+Edge  13  2015-11-12  retired
+Edge  14  2016-08-02  retired
+Edge  15  2017-04-05  retired
+Edge  16  2017-10-17  retired
+Edge  17  2018-04-30  current
 Edge  18  -           nightly
 ```
 
-And if release notes are available (as shown above) they are listed (you can use
-[`--no-notes, -N`](https://gitlab.com/epistemex/mdncomp/wikis/Options.md#-n-no-notes) to ignore these).
+**Rich output, here additionally using the --desc and --specs options:**
 
-**Get feature description summary:**
+    mdncomp sharedarraybuffer --desc --specs
+    
+![Description and specifications summary example](https://i.imgur.com/4BzlwRR.png)<br>
+<sup>*cygwin snapshot*</sup>
 
-![Description summary example](https://i.imgur.com/9l3kyeB.png)
+**Or as minimal, turning off extra information (here with options `-NRF`)**
 
-**Get documentation excerpts:**
+    # -R = no-children, -N = no-notes, -F = no-flags (also see --help, -h)
+    mdncomp sharedarraybuffer -RNF
+    
+![Minimalistic example](https://i.imgur.com/nbP5vRU.png)<br>
+<sup>*cygwin snapshot*</sup>
 
-![documentation excerpts](https://i.imgur.com/EK8I6TA.png)
+**The tables are also markdown enabled**
 
-Documentation excerpts are loaded from the MDN site and cached locally.
+In other words: they can be pasted directly into a markdown document and will show
+as rendered table in markdown flavors which support tables -  **live preview:**
 
-**Get specification links:**
-
-![Specification option](https://i.imgur.com/Ix3G07g.png)
-
+Desktop           |Chrome    |Edge      |Firefox   |IE        |Opera     |Safari
+:-----------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
+HTMLCanvasElement |     4    |     Y    |    3.6   |     9    |    9°    |    3.1
+height            |     4    |    12    |    3.6   |     9    |     9    |    3.1
+mozOpaque         |     -    |     -    |    3.5   |     -    |     -    |     -
+width             |     4    |    12    |    3.6   |     9    |     9    |    3.1
+captureStream     |    51    |     ?    |    43    |     -    |    36    |     ?
+getContext        |     Y    |    12    |    3.6   |     9    |     9    |    3.1
+mozFetchAsStream  |     -    |     -    |   13-43  |     -    |     -    |     -
+mozGetAsFile      |     -    |     -    |     4    |     -    |     -    |     -
+toBlob            |    50    |     -    |    19    |    10    |    37    |     Y
+toDataURL         |     4    |    12    |    3.6   |     9    |     9    |     4
 
 Exploration
 -----------
-Feel like exploring? Try combining the `--random` option with `--desc`:
+Feel like exploring? try:
 
-    $ mdncomp --random --desc .
+    $ mdncomp --random
 
-Or maybe you prefer more details? Then try `--doc` instead which will download
-and cache details about syntax, properties, methods etc.:
+Or try combining the `--random` option with `--desc`:
 
-    $ mdncomp --random --doc .
+    $ mdncomp --random --desc
 
-You can also limit it to certain keywords:
+You can also create a limited scope by providing a keyword or search term:
 
-    $ mdncomp --random --desc audio
+    $ mdncomp --random audio
+    $ mdncomp --random abc --fuzzy --desc
 
-Open the documentation link in the default browser (in terminals such as xterm
-you can also try <kbd>CTRL</kbd>-click the displayed link):
-
-    $ mdncomp html*toblob. --mdn
-
-Option file
------------
+Optional Config file
+--------------------
 Often used options can be permanently stored in a config file in user's home
 directory in JSON format.
+
+A sample config file is included. Use the option`--configpath` to get
+location to the config folder.
 
 Wiki
 ----
 See the [wiki pages](https://gitlab.com/epistemex/mdncomp/wikis/home) for more details on each options, how to create
 a config file and for usage examples.
 
-Also included as markdown files in the included [wiki folder](./wiki/Home.md).
+The wiki is also included as markdown files in the included [wiki folder](./wiki/Home.md).
 
-How to Help the MDN Team
-------------------------
+Want to help the MDN Team?
+--------------------------
 The MDN team is working hard to convert all the Browser Compatibility Data to 
 their new format as used by this and other tools. For this reason some APIs and 
-objects are WIP and may not be available quite yet.
+objects are WIP and may still not be available quite yet.
 
 [How you can help them out](https://developer.mozilla.org/en-US/docs/MDN/Contribute/Structures/Compatibility_tables).
 
+Requirements
+------------
+- Node v8 or newer (for older Node version you can try out version 1.x.x).
+- NPM to install `mdncomp i -g mdncomp`
+- Internet connection when updating (via the `--update` option)
+
 Additional information
 ----------------------
-Disclaimer: This tool is a independent tool not affiliated with any third-parties.
+Development IDE: JetBrains' [WebStorm](https://www.jetbrains.com/webstorm/).
 
-Build environment: [Node 8](https://nodejs.org/) and JetBrains' [WebStorm](https://www.jetbrains.com/webstorm/) on Windows.
-
-There is no guarantee it will work with earlier versions of Node.js v8 but a simple polyfill is added to 
-iron out some issues with earlier versions.
+Test environments: Windows 8.1+, Linux (Ubuntu) 
 
 The software is provided AS-IS.
 
 License
 -------
 
-[MIT](https://choosealicense.com/licenses/mit/).
+[MIT License](https://choosealicense.com/licenses/mit/)
 
-*&copy; Epistemex 2018*
+Copyright (c) 2018 Epistemex
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 ![Epistemex](https://i.imgur.com/GP6Q3v8.png)

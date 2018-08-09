@@ -1,40 +1,40 @@
 {
   "options": {
-    "_help1_delete": "This file allow you to permanently set options you use frequently.",
-    "_help2_delete": "You can suspend the settings in here using the option --no-config.",
+    /*
+      --- NOTE: Comments are not allowed in regular JSON which needs to removed in the actual config file. ---
 
-    "_help3_delete": "Only define options you use frequently. Any other options below should be deleted to",
-    "_help4_delete": "allow them being used from the command line (these help entries should be deleted as well)",
+      This file allow you to permanently set options you use frequently.
+      You can suspend the settings in here using the option --no-config.
 
-    "_help5_delete": "The options below are the same as in the usage except the --no-* options which  are only * (use inverted boolean),",
-    "_help6_delete": "and in camel-type instead of dash (ie. '--no-colors' becomes 'colors', '--case-sensitive' becomes 'caseSensitive' etc.)",
+      Only define options you use frequently. Any other options below should be deleted to
+      allow them being used from the command line (these help entries should be deleted as well)
 
-    "_help7_delete": "Remember to rename the file to .config.json and place it in user root / .mdncomp folder (see option --configpath)",
+      The options below are the same as in the usage except the --no-* options which  are only * (use inverted boolean),
+      and in camel-type instead of dash (ie. '--no-colors' becomes 'colors', '--case-sensitive' becomes 'caseSensitive' etc.)
+      Remember to rename the file to .config.json and place it in user root / .mdncomp folder (see option --configpath)
+    */
 
-    "colors"        : true,
-    "notes"         : true,
-    "noteEnd"       : false,
-    "shorthand"     : false,
-    "split"         : false,
-    "caseSensitive" : false,
-    "desktop"       : true,
-    "mobile"        : true,
-    "overwrite"     : false,
-    "markdown"      : false,
-    "fuzzy"         : false,
-    "maxChars"      : 72,
-    "doc"           : false,
-    "docforce"      : false,
-    "ext"           : false,
-    "desc"          : false,
-    "specs"         : false,
-    "waitkey"       : false,
-    "workers"       : true,
-    "sab"           : false
+    "desktop"       : true,     // show desktop browsers
+    "mobile"        : true,     // show mobile browsers
+    "ext"           : false,    // show extended status (nodejs, less common browsers)
+    "children"      : true,     // show child features
+    "caseSensitive" : false,    // use case-sensitive searches
+    "fuzzy"         : false,    // interprets keyword as fuzzy term
+    "shorthand"     : false,    // show a compressed output table
+    "notes"         : true,     // show notes (if any)
+    "flags"         : true,     // show flags details (if any)
+    "history"       : false,     // show detailed history list (if any)
+    "desc"          : false,    // show a short description for the feature
+    "specs"         : false,    // show specification links for this feature
+    "workers"       : false,    // show worker support information for a feature (if any)
+    "sab"           : false,    // show SharedArrayBuffer information for a feature (if any)
+    "obsoletes"     : false,    // show obsolete, non-standard and deprecated child features
+    "colors"        : true,     // if false, all ANSI color codes are removed
+    "maxChars"      : 84        // line-break at this position (except URLs)
   },
   "formatter": {
     "long": {
-      "sepChar": "+"
+      "sepChar": "|"            // table cell separation char in ANSI long format output
     }
   }
 }

@@ -4,11 +4,9 @@
   www.epistemex.com
 */
 
-const
-  ANSI = require("./ansi"),
-  https = require("https"),
-  fs = require("fs"),
-  path = require("path");
+const fs = require("fs");
+const path = require("path");
+const https = require("https");
 
 module.exports = {
 
@@ -60,15 +58,6 @@ module.exports = {
     }
   },
 
-  /**
-   * Open default program on the system based on the argument (cmd).
-   * @param {string} cmd - an URL or path
-   * @returns {*}
-   */
-  run: function(cmd) {
-    return require("opn")(cmd);
-  },
-
   getConfigRootPath: function() {
     let app = process.platform === "win32" ? path.resolve(process.env.APPDATA, "../../") : process.env.HOME;
     return (process.platform === "darwin")
@@ -113,34 +102,5 @@ module.exports = {
     }
 
     return root
-  },
-
-  getCachedFilename: function(str) {
-    return path.resolve(this.getConfigDataPath("cache"), this.calcMD5(str))
-  },
-
-  getCachedData: function(str) {
-    let data = null;
-    try {
-      data = fs.readFileSync(this.getCachedFilename(str)).toString();
-    }
-    catch(err) {}
-
-    return data
-  },
-
-  setCachedData: function(str, data) {
-    let filename = this.getCachedFilename(str);
-    try {
-      fs.writeFileSync(filename, data);
-    }
-    catch(err) {
-      log(ANSI.red + "Could not save file: " + filename + ANSI.reset + lf + err)
-    }
-  },
-
-  calcMD5: function(data) {
-    return require("crypto").createHash("md5").update(data).digest("hex") + ""
   }
-
 };

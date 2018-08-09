@@ -1,4 +1,4 @@
-module.exports = function(grunt) {
+module.exports = (grunt) => {
 
   grunt.initConfig({
     uglify: {
@@ -9,30 +9,24 @@ module.exports = function(grunt) {
           }
         },
         files: {
-          "build/ansi.js": ["src/core.ansi.js"],
-          "build/help.js": ["src/help.options.js"],
-          "build/io.js": ["src/core.io.js"],
-          "build/update.js": ["src/core.update.js"],
-          "build/tagparser.js": ["src/option.doc.tagparser.js"],
-          "build/utils.js": ["src/core.utils.js"],
-          "build/build.min.js": [
-            "src/core.js",
-            "src/core.polyfills.js",
-            "src/core.globals.js",
-            "src/help.parse.js",
-            "src/core.init.js",
-            "src/option.search.js",
-            "src/option.list.js",
-            "src/option.browser.js",
-            "src/option.doc.js",
-            "src/option.random.js",
-            "src/formatter.long.js",
-            "src/formatter.short.js",
-            "src/compat.mdncomp.js",
-            "src/compat.info.js",
-            "src/compat.browser.js",
-            "src/core.output.js"
-          ]
+          "bin/mdncomp.min.js"           : ["bin/mdncomp.js"],
+          "build/core.ansi.js"           : ["src/core.ansi.js"],
+          "build/core.io.js"             : ["src/core.io.js"],
+          "build/core.output.js"         : ["src/core.output.js"],
+          "build/core.table.js"          : ["src/core.table.js"],
+          "build/core.utils.js"          : ["src/core.utils.js"],
+          "build/core.update.js"         : ["src/core.update.js"],
+          "build/formatter.common.js"    : ["src/formatter.common.js"],
+          "build/formatter.long.js"      : ["src/formatter.long.js"],
+          "build/formatter.short.js"     : ["src/formatter.short.js"],
+          "build/help.options.js"        : ["src/help.options.js"],
+          "build/init.config.js"         : ["src/init.config.js"],
+          "build/init.help.js"           : ["src/init.help.js"],
+          "build/init.options.js"        : ["src/init.options.js"],
+          "build/option.browser.js"      : ["src/option.browser.js"],
+          "build/option.list.js"         : ["src/option.list.js"],
+          "build/option.search.js"       : ["src/option.search.js"],
+          "build/option.random.js"       : ["src/option.random.js"],
         }
       }
     }

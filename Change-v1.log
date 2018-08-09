@@ -1,6 +1,8 @@
 mdncomp
 =======
 
+1.23.0: FROZEN
+
 1.23.0
 CHG: Table cell separator char to | (pipe) to allow markdown table output directly.
 ADD: Custom table cell separator char in .config file. (see incl. sample file)
