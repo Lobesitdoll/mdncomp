@@ -36,7 +36,7 @@ function format(path, isRecursive = false, subNotes, subLinks) {
   const sab = pathObj.SharedArrayBuffer_as_param && options.sab && !isRecursive ? format(path + ".SharedArrayBuffer_as_param", true) : null;
   const workers = pathObj.worker_support && options.workers && !isRecursive ? format(path + ".worker_support", true) : null;
   const isWebExt = path.startsWith("webextensions");
-  const showNode = path.startsWith("javascript.");
+  const showNode = path.startsWith("javascript");
 
   const result = {
     isCompat    : typeof pathObj.__compat === "object",
@@ -153,10 +153,10 @@ function format(path, isRecursive = false, subNotes, subLinks) {
         history.push({
           add    : entry.version_added,
           removed: entry.version_removed || (entry.version_added === null ? null : false),
-          prefix : entry.prefix || null,
-          altName: entry.alternative_name || null,
+          prefix : entry.prefix,
+          altName: entry.alternative_name,
           flags  : entry.flags || [],
-          partial: entry.partial_implementation || false,
+          partial: entry.partial_implementation,
           notes  : localNotesIndices
         })
       }
