@@ -23,7 +23,7 @@ function getRandom(path) {
   while(!state) {
     i = (Math.random() * tbl.length)|0;
     state = utils.isCompat(mdn, tbl[i]);
-    if (state && (options.doc || options.docforce || options.desc)) {
+    if (state && options.desc) {
       let o = utils.getPathAsObject(mdn, tbl[i]).__compat;
       if (!(o.mdn_url && o.mdn_url.length)) state = false;
     }
