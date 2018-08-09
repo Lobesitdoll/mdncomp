@@ -1,6 +1,9 @@
 mdncomp v2
 =========
 
+***Announcement: Next Generation mdncomp (v2) is currently being built - 
+[have your say](https://github.com/epistemex/mdncomp/issues/8) about features you would like to see.***
+
 Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data) on the command line.
 
 ![xterm color output](https://i.imgur.com/hsvEpWo.png)<br>
