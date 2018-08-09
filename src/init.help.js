@@ -31,7 +31,7 @@ function show() {
   }
 
   // Welcome message and reminder to update data
-  const frPath = Path.join(__dirname, "..", "./data/.firstrun");
+  const frPath = Path.join(__dirname, "../data/.firstrun");
   if (!fs.existsSync(frPath)) {
     log("?g" + "-".repeat(76));
     log("  ?gWELCOME! This seem to be the first run. To get the latest data file run:\n");
