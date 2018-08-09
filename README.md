@@ -1,52 +1,58 @@
 mdncomp v2
 =========
 
-***Announcement: Next Generation mdncomp (v2) is currently being built - 
-[have your say](https://github.com/epistemex/mdncomp/issues/8) about features you would like to see.***
+Announcement 
+===
+***Next Generation mdncomp (v2) is currently being built - 
+[have your say](https://github.com/epistemex/mdncomp/issues/8) about features you would like to see.***  
+<hr>
 
 Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data) on the command line.
 
-![xterm color output](https://i.imgur.com/hsvEpWo.png)<br>
-<sup>*cmder snapshot*</sup>
+![xterm color output](https://i.imgur.com/rF3fITW.png)<br>
+<sup>*cygwin/xterm snapshot*</sup>
 
 Features
 --------
 
-Rebuilt core with improved search algorithm to get you faster and more flexible
+New main core with improved search algorithm to get you faster and more flexible
 to the compatibility data.
 
 - Browser Compatibility Data (BCD)
-  - Search in APIs, CSS, HTML, HTTP, JavaScript, MathML, SVG, WebDriver and WebExtensions.
-  - Shows data on command line as a table or as a shorthand list
-  - Shows children features in same table (optional)
-  - Get status for standard, experimental and deprecated features.
-  - Show notes, vendor prefix, security issues, flags, history and more.
-  - Show detailed Web Worker support for a feature
-  - Show detailed SharedArrayBuffer as param support for a feature
-  - Find features using paths, wildcards, fuzzy terms or regular expressions
+  - Search **API, CSS, HTML, HTTP, JavaScript, MathML, SVG, WebDriver and WebExtensions**.
+  - Search and list features using paths, wildcards, fuzzy terms or regular expressions
   - Navigate by path and branches
+  - Shows data on the command line as a ANSI colored ASCII formatted table
+  - Lists children features
+  - Get feature status (standard, experimental or deprecated).
+  - Show notes, flags, vendor prefix, history and security issues.
+  - Show additional links for information in notes
+  - Show optional detailed Web Worker support for a feature
+  - Show optional detailed SharedArrayBuffer support for a feature
   - Search case (in)sensitive
-  - Show desktop and/or mobile information for the most common browsers.
-  - Option to show extended set of browsers including Node.js.
-  - Works offline (only --*update requires internet connection)
+  - Show information for desktop, mobile and many other browsers.
+  - Show information for Node.js.
+  - Once installed it works entirely offline (only --*update require a internet connection)
 
 - Browser status
-  - List current browser versions
-  - List beta and nightly versions per browser
-  - List status and release dates per browser
-  - List browsers per status
+  - List **current** browser versions
+  - List current, esr, beta, nightly, planned and retired versions *per browser*.
+  - List current, esr, beta, nightly, planned and retired versions *per status*.
+  - List status and release dates per browser, including release notes (if available).
 
 - Additional documentation:
-  - Show a summary description for each feature (included in the dataset).
-  - Provides the URL to the feature's documentation page on [MDN](https://developer.mozilla.org/).
-  - Specification references and status (W3C, WHATWG, KHRONOS, ECMA, IETF etc.)
+  - Show title text per feature.
+  - Show a summary **description** per feature (included in the dataset for mdncomp only).
+  - Provides a verified URL to the feature's documentation page on [MDN](https://developer.mozilla.org/).
+  - Show standards/specification references, status and links (W3C, WHATWG, KHRONOS, ECMA, IETF etc.) (included in the dataset for mdncomp only).
 
-- Integrated update mechanism (--update)
+- Integrated update mechanism
+  - Lighting fast update process
+  - Updates with patch files (RFC 6902/6901) with support for several versions back, providing a shorthand summary.
+  - Optional force update to reinitialize/clean all data, or if data corruption
   - Compressed data transfers
-  - Patch/diff (RFC-6902) support for several versions back
-  - Force update to reinitialize/clean all data, or with data corruption
   
-- Define permanent/often used options in a config file (which can be suspended at will).
+- Define permanent/often used options in a config file (which can be suspended via option).
 - Built-in help per option.
 - Documented with [wiki](https://gitlab.com/epistemex/mdncomp/wikis/home) pages
 - Cross-platform (where node and npm is available).
@@ -57,15 +63,21 @@ Please see the [Change-v2.log](./Change-v2.log) for details.
 
 Install
 -------
-Make sure to have [Node.js](https://nodejs.org/en/) and `npm` installed (included with node), then install `mdncomp` using:
+NOTE: There is currently release version (1.x.x) and this new alpha version:
 
-    $ npm i -g mdncomp
-    
-If you prefer to stay with version 1 you can specify a tag:
+Make sure to have [Node.js](https://nodejs.org/en/) and `npm` installed (included with node).
+
+If you want the **latest stable version**, install `mdncomp` using:
 
     $ npm i -g mdncomp@1.23.0
+    
+To install **current development** version:
 
-This includes a precompiled dataset which can be updated at any time.
+    $ npm i -g mdncomp
+
+These installs include a recent precompiled dataset. However, make sure to run mdncomp
+with the option `--update` the first time to get the latest data. You should also run
+this command weekly (data is usually updated every Thursday night US time).
 
 
 Examples
@@ -80,15 +92,15 @@ HTMLCanvasElement.toBlob
 On Standard Track
 https://developer.mozilla.org/docs/Web/API/HTMLCanvasElement/toBlob
 
-Desktop       |Chrome    |Edge      |Firefox   |IE        |Opera     |Safari
-:-------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
-toBlob        |    50    |     -    |    19    |    10°   |    37    |    Y¹
-Image quality |    50    |     -    |    25    |     -    |     Y    |     -
+DESKTOP      |Chrome    |Edge      |Firefox   |IE        |Opera     |Safari
+:------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
+toBlob       |    50    |    -     |    19    |   10°    |    37    |    Y¹
+Image_quality|    50    |    -     |    25    |    -     |    Y     |    -
 
-Mobile        |Chrome/A  |Edge/mob  |Firefox/A |Opera/A   |Safari/iOS|Webview/A 
-:-------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
-toBlob        |    50    |     -    |     4    |    37    |     -    |    50
-Image quality |     -    |     -    |    25    |     -    |     ?    |    50
+MOBILE       |Chrome/A  |Edge/mob  |Firefox/A |Opera/A   |Safari/iOS|Webview/A
+:------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
+toBlob       |    50    |    -     |    4     |    37    |    -     |    50
+Image_quality|    -     |    -     |    25    |    -     |    ?     |    50
 
 NOTES:
 °: Vendor prefix: ms
@@ -96,19 +108,17 @@ NOTES:
 
 LINKS:
 1: https://bugs.webkit.org/show_bug.cgi?id=71270
-
-Data from MDN - `npm i -g mdncomp` by epistemex
 ```
 
-Or using the absolute path:
+or by using the absolute feature path:
 
     $ mdncomp api.HTMLCanvasElement.toBlob
 
-Or an regular expression:
+or an regular expression:
 
     $ mdncomp /.*html.*toblob$/
 
-Or an fuzzy expression:
+or as an fuzzy expression:
 
     $ mdncomp -z ahcb.
 
@@ -116,21 +126,96 @@ Or an fuzzy expression:
 
     $ mdncomp html*toblob -s
     
-![Shorthand format](https://i.imgur.com/B1C4fBA.png)<br>
-<sup>*cmder snapshot*</sup>
+![Shorthand format](https://i.imgur.com/wyd5QMj.png)<br>
+<sup>*cygwin/xterm snapshot*</sup>
 
-Rendered in markdown as well (live preview for viewers supporting tables
-in markdown):
+You can now do a local filtering of the result by simply adding one or more keywords (or search-terms)
+to the argument list. For example - this will only list child features containing "line" in the 
+`CanvasRenderingContext2D` API:
 
-Browsers:    |C  |E  |F  |IE |O  |S  |ca |em |fa |oa |si |wa
-:------------|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:
-toBlob       | 50| - | 19|10*| 37| Y*| 50| - | 4 | 37| - | 50
-Image quality| 50| - | 25| - | Y | - | - | - | 25| - | ? | 50
+```text
+$ node bin/mdncomp t2d line
 
-**List branches and status**
+api.CanvasRenderingContext2D
+Experimental
+https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D
 
-You can navigate using branches and dot notation to find parent objects, or to list status of a feature,
-for example: list all features with "experimental" status:
+DESKTOP                   |Chrome    |Edge      |Firefox   |IE        |Opera     |Safari
+:-------------------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
+CanvasRenderingContext2D !|    1     |    Y     |   1.5    |    9     |    9     |    2
+lineCap                   |    Y     |    12    |    Y     |    Y     |    Y     |    Y
+lineDashOffset            |    Y     |    12    |    27    |    11    |    Y     |    Y
+lineJoin                  |    Y     |    12    |    Y     |    Y     |    Y     |    Y
+lineWidth                 |    Y     |    12    |    Y     |    Y     |    Y     |    Y
+textBaseline              |    Y     |    12    |   3.5    |    9     |    Y     |    Y
+createLinearGradient      |    Y     |    12    |    Y     |    Y     |    Y     |    Y
+getLineDash               |    Y     |    12    |    27    |    11    |    Y     |    Y
+lineTo                    |    Y     |    12    |    Y     |    Y     |    Y     |    Y
+scrollPathIntoView !      |    YF    |    ?     |    -     |    -     |    Y     |    -
+setLineDash               |    Y     |    12    |    27    |    11    |    Y     |    Y
+---8X---
+! = Experimental
+```
+
+**List feature branches and status**
+
+You can navigate using branches and dot notation to find where a feature resides.
+
+To list root simply add the option `--list` (or shorthand `-l`) with no argument:
+
+```text
+mdncomp --list
+->
+Valid path roots:
+api
+css
+html
+http
+javascript
+mathml
+svg
+webdriver
+webextensions
+
+Valid statuses:
+standard, experimental, deprecated
+```
+
+List using one of the root branches:
+
+```text
+mdncomp --list api
+->
+[  0] F api.ANGLE_instanced_arrays
+[  1] F api.AbortController
+[  2] F api.AbortPaymentEvent
+[  3] F api.AbortSignal
+[  4] F api.AbstractWorker
+[  5] F api.AmbientLightSensor
+[  6] F api.AnalyserNode
+[  7] F api.Animation
+[  8] F api.AnimationEffect
+[  9] F api.AnimationEvent
+[ 10] F api.AnimationPlaybackEvent
+[ 11] F api.AnimationTimeline
+[ 12] F api.Attr
+[ 13] F api.AudioBuffer
+--8X--
+```
+
+You can go to next branch by adding the name of the branch, fully or partly (if unique):
+
+    mdncomp --list api.audiobu
+
+or simply by adding the index number in one of the following ways:
+
+    mdncomp --list api --index 13
+    mdncomp --list api -i 13
+    mdncomp --list api 13
+
+(this usage of index also applies to the regular search).
+
+List per status, for example: list all features with "experimental" status:
 
 ```text
 mdncomp -l experimental
@@ -147,38 +232,36 @@ api.AmbientLightSensor
 ```text
 mdncomp --browser current
 ->
-Chrome             67  2018-05-29  https://chromereleases.googleblog....
-Edge               17  2018-04-30  https://docs.microsoft.com/en-us/m...
-Edge Mobile        17  2018-04-30
-Firefox            61  2018-06-26  https://developer.mozilla.org/Fire...
-Firefox Android    61  2018-06-26  https://developer.mozilla.org/Fire...
-Internet Explorer  11  2013-10-17
-Opera              53  2018-05-10  https://dev.opera.com/blog/opera-5...
 STATUS: CURRENT
+Chrome              68   2018-07-24  https://chromereleases.googleblog.c...
+Edge                17   2018-04-30  https://docs.microsoft.com/en-us/mi...
+Edge Mobile         17   2018-04-30
+Firefox             61   2018-06-26  https://developer.mozilla.org/Firef...
+Firefox Android     61   2018-06-26  https://developer.mozilla.org/Firef...
+Internet Explorer   11   2013-10-17
 --8X--
 ```
 
-Tip: You can combine the option with `--no-notes, -N` to not show the 
-links at the end.
+Tip: You can combine the option with `--no-notes, -N` to not show the links at the end.
 
 List release history for a single browser:
 ```text
 mdncomp -Nb edge
 ->
-Edge  12  2015-07-28  retired
-Edge  13  2015-11-12  retired
-Edge  14  2016-08-02  retired
-Edge  15  2017-04-05  retired
-Edge  16  2017-10-17  retired
-Edge  17  2018-04-30  current
-Edge  18  -           nightly
+Edge  12   2015-07-28  retired
+Edge  13   2015-11-12  retired
+Edge  14   2016-08-02  retired
+Edge  15   2017-04-05  retired
+Edge  16   2017-10-17  retired
+Edge  17   2018-04-30  current
+Edge  18   -           nightly
 ```
 
 **Rich output, here additionally using the --desc and --specs options:**
 
     mdncomp sharedarraybuffer --desc --specs
     
-![Description and specifications summary example](https://i.imgur.com/4BzlwRR.png)<br>
+![Description and specifications summary example](https://i.imgur.com/km1qBon.png)<br>
 <sup>*cygwin snapshot*</sup>
 
 **Or as minimal, turning off extra information (here with options `-NRF`)**
@@ -186,13 +269,14 @@ Edge  18  -           nightly
     # -R = no-children, -N = no-notes, -F = no-flags (also see --help, -h)
     mdncomp sharedarraybuffer -RNF
     
-![Minimalistic example](https://i.imgur.com/nbP5vRU.png)<br>
+![Minimalistic example](https://i.imgur.com/Hg1bytI.png)<br>
 <sup>*cygwin snapshot*</sup>
 
-**The tables are also markdown enabled**
+Markdown enabled tables
+-----------------------
 
-In other words: they can be pasted directly into a markdown document and will show
-as rendered table in markdown flavors which support tables -  **live preview:**
+The ASCII tabled can be pasted directly into a markdown documents and will show
+as rendered HTML tables in markdown-flavors which support tables - **live preview:**
 
 Desktop           |Chrome    |Edge      |Firefox   |IE        |Opera     |Safari
 :-----------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
@@ -207,6 +291,14 @@ mozGetAsFile      |     -    |     -    |     4    |     -    |     -    |     -
 toBlob            |    50    |     -    |    19    |    10    |    37    |     Y
 toDataURL         |     4    |    12    |    3.6   |     9    |     9    |     4
 
+And as shorthand format:
+
+Browsers:    |C  |E  |F  |IE |O  |S  |ca |em |fa |oa |si |wa
+:------------|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:
+toBlob       | 50| - | 19|10*| 37| Y*| 50| - | 4 | 37| - | 50
+Image quality| 50| - | 25| - | Y | - | - | - | 25| - | ? | 50
+
+
 Exploration
 -----------
 Feel like exploring? try:
@@ -217,14 +309,14 @@ Or try combining the `--random` option with `--desc`:
 
     $ mdncomp --random --desc
 
-You can also create a limited scope by providing a keyword or search term:
+You can also create a scope by providing a keyword or search term:
 
     $ mdncomp --random audio
     $ mdncomp --random abc --fuzzy --desc
 
-Optional Config file
---------------------
-Often used options can be permanently stored in a config file in user's home
+Optional Configuration file
+---------------------------
+Often used options can be permanently stored in a config file in the user's home
 directory in JSON format.
 
 A sample config file is included. Use the option`--configpath` to get
@@ -232,8 +324,11 @@ location to the config folder.
 
 Wiki
 ----
-See the [wiki pages](https://gitlab.com/epistemex/mdncomp/wikis/home) for more details on each options, how to create
-a config file and for usage examples.
+
+(**NOTE: TODO** Not yet updated for version 2.x.x, but see included config file sample).
+
+See the [wiki pages](https://gitlab.com/epistemex/mdncomp/wikis/home) for more details on each options,
+how to create a config file and for usage examples.
 
 The wiki is also included as markdown files in the included [wiki folder](./wiki/Home.md).
 
@@ -243,11 +338,11 @@ The MDN team is working hard to convert all the Browser Compatibility Data to
 their new format as used by this and other tools. For this reason some APIs and 
 objects are WIP and may still not be available quite yet.
 
-[How you can help them out](https://developer.mozilla.org/en-US/docs/MDN/Contribute/Structures/Compatibility_tables).
+[How to help them out](https://developer.mozilla.org/en-US/docs/MDN/Contribute/Structures/Compatibility_tables).
 
 Requirements
 ------------
-- Node v8 or newer (for older Node version you can try out version 1.x.x).
+- **Node v8** or newer (for older Node version you can try out version 1.x.x).
 - NPM to install `mdncomp i -g mdncomp`
 - Internet connection when updating (via the `--update` option)
 

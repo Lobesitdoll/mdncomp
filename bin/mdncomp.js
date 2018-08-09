@@ -130,7 +130,7 @@ Object.assign(global, {
   options : {}
 });
 
-const options = Object.assign(global.options, loadModule("init.options"));
+const options = global.options = loadModule("init.options");
 
 // Use ANSI color?
 if ( !options.colors ) {

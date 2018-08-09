@@ -54,8 +54,8 @@ function loadConfig(options) {
     });
 
     // sepChar
-    if ( fmt.long && typeof fmt.long.sepChar === "string" ) {
-      global.sepChar = fmt.long.sepChar;
+    if ( fmt && typeof fmt.sepChar === "string" ) {
+      global.sepChar = fmt.sepChar;
     }
 
   }

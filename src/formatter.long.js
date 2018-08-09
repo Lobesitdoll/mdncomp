@@ -122,6 +122,9 @@ function formatterLong(data, recursive = false) {
     if ( options.ext ) getFlags("ext");
     out.addLine()
   }
+  else {
+    out.addLine(options.history ? "" : "?R\nYou can use option ?c-y, --history?R to see historical data.")
+  }
 
   /* Show specifications -----------------------------------------------------*/
 
@@ -275,8 +278,7 @@ function formatterLong(data, recursive = false) {
           }
 
           if ( options.flags && history.flags.length ) {
-            if ( isNaN(version) ) version = "";
-            else version = " " + version;
+            version = isNaN(version) ? "" : " " + version;
 
             let entry = "?y" + name + version + ":?w ";
             history.flags.forEach(flag => {
@@ -293,13 +295,14 @@ function formatterLong(data, recursive = false) {
                   break;
               }
             });
+
             flags.push(utils.breakAnsiLine(entry, options.maxChars) + lf);
           }
         }
       }
     });
 
-    out.add(flags.join(""));
+    out.add(flags.join(lf));
   } // : getFlags
 
   function hasLink(str) {

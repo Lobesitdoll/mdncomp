@@ -28,13 +28,11 @@
     "specs"         : false,    // show specification links for this feature
     "workers"       : false,    // show worker support information for a feature (if any)
     "sab"           : false,    // show SharedArrayBuffer information for a feature (if any)
-    "obsoletes"     : false,    // show obsolete, non-standard and deprecated child features
+    "obsolete"      : false,    // show obsolete, non-standard and deprecated child features
     "colors"        : true,     // if false, all ANSI color codes are removed
     "maxChars"      : 84        // line-break at this position (except URLs)
   },
   "formatter": {
-    "long": {
-      "sepChar": "|"            // table cell separation char in ANSI long format output
-    }
+    "sepChar": "|"              // table cell separation char in ASCII format output
   }
 }
