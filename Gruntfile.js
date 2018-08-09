@@ -14,8 +14,8 @@ module.exports = (grunt) => {
           "build/core.io.js"             : ["src/core.io.js"],
           "build/core.output.js"         : ["src/core.output.js"],
           "build/core.table.js"          : ["src/core.table.js"],
-          "build/core.utils.js"          : ["src/core.utils.js"],
           "build/core.update.js"         : ["src/core.update.js"],
+          "build/core.utils.js"          : ["src/core.utils.js"],
           "build/formatter.common.js"    : ["src/formatter.common.js"],
           "build/formatter.long.js"      : ["src/formatter.long.js"],
           "build/formatter.short.js"     : ["src/formatter.short.js"],
@@ -25,8 +25,8 @@ module.exports = (grunt) => {
           "build/init.options.js"        : ["src/init.options.js"],
           "build/option.browser.js"      : ["src/option.browser.js"],
           "build/option.list.js"         : ["src/option.list.js"],
-          "build/option.search.js"       : ["src/option.search.js"],
           "build/option.random.js"       : ["src/option.random.js"],
+          "build/option.search.js"       : ["src/option.search.js"]
         }
       }
     }

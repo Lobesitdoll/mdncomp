@@ -3,7 +3,7 @@
 
 /*----------------------------------------------------------------------------*/
 
-const DEBUG = true;
+const DEBUG = false;
 
 /*----------------------------------------------------------------------------*/
 
@@ -214,7 +214,7 @@ else if ( options.random ) {
     showResults(path);
   }
   else {
-    console.error("Sorry, the keyword doesn't produce a scope. Try add --fuzzy.");
+    err("Sorry, the keyword doesn't produce a scope. Try add --fuzzy.");
   }
 }
 
