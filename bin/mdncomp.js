@@ -119,13 +119,14 @@ Object.assign(global, {
   _base,
   text,
   loadModule,
-  shortPad: 1,
-  sepChar : "|",
-  lang    : "en-US",
-  ANSI    : loadModule("core.ansi"),
-  log     : utils.log,
-  err     : utils.err,
-  options : {}
+  shortPad   : 1,
+  sepChar    : "|",
+  progBarChar: "#",
+  lang       : "en-US",
+  ANSI       : loadModule("core.ansi"),
+  log        : utils.log,
+  err        : utils.err,
+  options    : {}
 });
 
 const options = global.options = loadModule("init.options");
