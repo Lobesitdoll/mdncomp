@@ -3,7 +3,7 @@
 
 /*----------------------------------------------------------------------------*/
 
-const DEBUG = true;
+const DEBUG = false;
 
 /*----------------------------------------------------------------------------*/
 
@@ -82,7 +82,7 @@ const text = {
   versionWarning  : "WARNING: mdncomp is built for Node version 8 or newer. It may not work in older Node.js versions.",
   criticalDataFile: "Critical error: data file not found.\n?yTry running with option --fupdate to download latest snapshot.",
   missingModule   : "Critical: A core module seem to be missing. Use 'npm i -g mdncomp' to reinstall.",
-  unhandled       : `An unhandled error occurred!
+  unhandled       : `  An unhandled error occurred!
   Please consider reporting to help us solve it via GitLab:
   https://gitlab.com/epistemex/mdncomp/issues
   
@@ -90,11 +90,8 @@ const text = {
   `
 };
 
-/*-----------------------------------------------------------------------------*
+/*- SYSTEM VALIDATIONS AND ERROR HANDLING ------------------------------------*/
 
-    System validations and error handling
-
-*/
 if ( +process.versions.node.split(".")[ 0 ] < 8 ) {
   console.log(text.versionWarning);
 }
@@ -122,13 +119,13 @@ Object.assign(global, {
   _base,
   text,
   loadModule,
-  shortPad   : 1,
-  char       : {sep: "|", progressBar: "#", yes: "Y", no: "-", unknown: "?"},
-  lang       : "en-US",
-  ANSI       : loadModule("core.ansi"),
-  log        : utils.log,
-  err        : utils.err,
-  options    : {}
+  shortPad: 1,
+  char    : { sep: "|", progressBar: "#", yes: "Y", no: "-", unknown: "?" },
+  lang    : "en-US",
+  ANSI    : loadModule("core.ansi"),
+  log     : utils.log,
+  err     : utils.err,
+  options : {}
 });
 
 const options = global.options = loadModule("init.options");
@@ -141,74 +138,50 @@ if ( !options.colors ) {
     .forEach(color => ANSI[ color ] = "");
 }
 
-/*-----------------------------------------------------------------------------*
+/*- CHECK FOR UPDATE, UPDATE PATCH/FULL IF EXISTS, OR EXIT -------------------*/
 
-    Check for update, update patch/full if exists, or exit
-
-*/
 if ( options.update ) {
   loadModule("core.update")(false, false);
 }
 
-/*-----------------------------------------------------------------------------*
+/*- CHECK IF AN UPDATE IS AVAILABLE. -----------------------------------------*/
 
-    Check if an update is available.
-
-*/
 else if ( options.cupdate ) {
   loadModule("core.update")(false, true);
 }
 
-/*-----------------------------------------------------------------------------*
+/*- FORCE FULL UPDATE --------------------------------------------------------*/
 
-    Force full update
-
-*/
 else if ( options.fupdate ) {
   loadModule("core.update")(true, false);
 }
 
-/*-----------------------------------------------------------------------------*
+/*- SHOW CONFIG PATH ---------------------------------------------------------*/
 
-    Show config path
-
-*/
 else if ( options.configpath ) {
   console.log(require("path").resolve(loadModule("core.io").getConfigDataPath()));
 }
 
-/*-----------------------------------------------------------------------------*
+/*- LIST BROWSER VERSIONS AND STATUS -----------------------------------------*/
 
-    List browser versions and status
-
-*/
 else if ( options.browser ) {
   loadModule("option.browser")(options.browser);
 }
 
-/*-----------------------------------------------------------------------------*
+/*- LIST BY API PATHS --------------------------------------------------------*/
 
-    List by API paths
-
-*/
 else if ( options.list ) {
   loadModule("option.list")(options.list);
 }
 
-/*-----------------------------------------------------------------------------*
+/*- SEARCH APIS FOR FEATURES -------------------------------------------------*/
 
-    Search APIs for features
-
-*/
 else if ( options.args.length ) {
   search();
 }
 
-/*-----------------------------------------------------------------------------*
+/*- RANDOM -------------------------------------------------------------------*/
 
-    Random
-
-*/
 else if ( options.random ) {
   const path = loadModule("option.random")(options.random);
   if ( path.length ) {
@@ -219,20 +192,14 @@ else if ( options.random ) {
   }
 }
 
-/*-----------------------------------------------------------------------------*
+/*- IF NO OPTIONS OR KEYWORDS, DEFAULT TO HELP -------------------------------*/
 
-    If no options or keywords, default to help
-
-*/
 else {
   options.help();
 }
 
-/*-----------------------------------------------------------------------------*
+/*- SEARCH -------------------------------------------------------------------*/
 
-    SEARCH
-
-*/
 function search() {
   const keyword = options.args.shift(); // Note: secondary+ arg(s) is extracted in formatter.common module
   const result = loadModule("option.search")(keyword);
@@ -283,11 +250,7 @@ function showResults(path) {
   log(results, "?pData from MDN - `npm i -g mdncomp` by epistemex?w?R");
 }
 
-/*-----------------------------------------------------------------------------*
-
-    SYSTEM
-
-*/
+/*- SYSTEM -------------------------------------------------------------------*/
 
 /**
  * require() wrapper that incorporates error handling

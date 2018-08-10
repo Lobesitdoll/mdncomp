@@ -4,12 +4,15 @@ mdncomp 2
 (2.00.0-beta.x)
 TDO: Locale support (msg + descriptions in sep. files)
 
-2.00.0-alpha.3
-ADD: option "--expert" to disable hints, legends
-CHG: option "--workers" renamed to singular "--worker"
+(2.00.0-alpha.4)
 TDO: User input evaluation (https://github.com/epistemex/mdncomp/issues/8)
 TDO: Basic notification system via the update mechanism
 TDO: Custom browser column definitions
+
+2.00.0-alpha.3
+FIX: search recall with auto-fuzzy mode due to argument not reinserted
+ADD: option "--expert" to disable hints, legends
+CHG: option "--workers" renamed to singular "--worker"
 
 2.00.0-alpha.2
 HOT: Path for marking first-run message read, in [--help]

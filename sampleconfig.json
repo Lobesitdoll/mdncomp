@@ -26,7 +26,7 @@
     "history"       : false,     // show detailed history list (if any)
     "desc"          : false,    // show a short description for the feature
     "specs"         : false,    // show specification links for this feature
-    "workers"       : false,    // show worker support information for a feature (if any)
+    "worker"        : false,    // show worker support information for a feature (if any)
     "sab"           : false,    // show SharedArrayBuffer information for a feature (if any)
     "obsolete"      : false,    // show obsolete, non-standard and deprecated child features
     "colors"        : true,     // if false, all ANSI color codes are removed

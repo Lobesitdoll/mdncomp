@@ -3,4 +3,4 @@
   Copyright (c) 2018 Epistemex
   www.epistemex.com
 */
-const utils=require("./core.utils"),mdn=utils.loadMDN();function search(r,e){const t=utils.getComparer(r,options.fuzzy,!e),s=[];return utils.listTopLevels(mdn).filter(r=>"browsers"!==r).forEach(r=>(function r(e,o,u){const a=e[o];"object"==typeof a&&Object.keys(a).forEach(e=>{if("__compat"!==e&&"worker_support"!==e&&"sharedarraybuffer_support"!==e&&"SharedArrayBuffer_as_param"!==e){let n=u+"."+e;t.test(n)&&(e!==o&&s.length||!s.length)?s.push(n):r(a,e,u+"."+e)}})})(mdn,r,r)),s}module.exports=search;
+const utils=require("./core.utils"),mdn=utils.loadMDN();function search(t,r){const e=utils.getComparer(t,options.fuzzy,!r),o=[];return utils.getRootList(mdn).filter(t=>"browsers"!==t).forEach(t=>(function t(r,s,u){const a=r[s];"object"==typeof a&&Object.keys(a).forEach(r=>{if("__compat"!==r&&"worker_support"!==r&&"sharedarraybuffer_support"!==r&&"SharedArrayBuffer_as_param"!==r){let n=u+"."+r;e.test(n)&&(r!==s&&o.length||!o.length)?o.push(n):t(a,r,u+"."+r)}})})(mdn,t,t)),o}module.exports=search;
