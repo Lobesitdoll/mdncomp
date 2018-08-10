@@ -20,9 +20,10 @@ Features
 New main core with improved search algorithm to get you faster and more flexible
 to the compatibility data.
 
-- Browser Compatibility Data (BCD)
+- Browser Compatibility Data (BCD from Mozilla Developer Network)
   - Search **API, CSS, HTML, HTTP, JavaScript, MathML, SVG, WebDriver and WebExtensions**.
   - Search and list features using paths, wildcards, fuzzy terms or regular expressions
+  - Search case (in)sensitive
   - Navigate by path and branches
   - Shows data on the command line as a ANSI colored ASCII formatted table
   - Lists children features
@@ -31,10 +32,9 @@ to the compatibility data.
   - Show additional links for information in notes
   - Show optional detailed Web Worker support for a feature
   - Show optional detailed SharedArrayBuffer support for a feature
-  - Search case (in)sensitive
-  - Show information for desktop, mobile and many other browsers.
-  - Show information for Node.js.
-  - Once installed it works entirely offline (only --*update require a internet connection)
+  - Show information for desktop, mobile and other browsers.
+  - Show information for Node.js where relevant.
+  - All data available offline (only --*update require a internet connection)
 
 - Browser status
   - List **current** browser versions
@@ -51,35 +51,33 @@ to the compatibility data.
 - Integrated update mechanism
   - Lighting fast update process
   - Updates with patch files (RFC 6902/6901) with support for several versions back, providing a shorthand summary.
-  - Optional force update to reinitialize/clean all data, or if data corruption
+  - Optional force update to reinitialize/clean all data, or with data corruption
   - Compressed data transfers
   
 - Define permanent/often used options in a config file (which can be suspended via option).
 - Built-in help per option.
-- Documented with [wiki](https://gitlab.com/epistemex/mdncomp/wikis/home) pages
+- Documented with [wiki](https://gitlab.com/epistemex/mdncomp/wikis/home) pages (todo for v2)
 - Cross-platform (where node and npm is available).
 
-**Note to users of older version 1.x.x**: some options has been removed (and some 
-added) to make the tool more focused and lightweight for what it is intended to do.
-Please see the [Change-v2.log](./Change-v2.log) for details.
+**Note to users of older version 1.x.x**: some options has been removed (and some added) to 
+make the tool more focused and lightweight for what it is intended to do. Please see the 
+[Change-v2.log](./Change-v2.log) for details. Also see announcement at the top of this file. 
 
 Install
 -------
-NOTE: There is currently release version (1.x.x) and this new alpha version:
-
 Make sure to have [Node.js](https://nodejs.org/en/) and `npm` installed (included with node).
 
-If you want the **latest stable version**, install `mdncomp` using:
-
-    $ npm i -g mdncomp@1.23.0
-    
-To install **current development** version:
+To install **current development** version (**ALPHA**):
 
     $ npm i -g mdncomp
 
-These installs include a recent precompiled dataset. However, make sure to run mdncomp
-with the option `--update` the first time to get the latest data. You should also run
-this command weekly (data is usually updated every Thursday night US time).
+To install the **latest stable version**, install `mdncomp` using:
+
+    $ npm i -g mdncomp@1.23.0
+    
+These latest version includes a recent precompiled dataset. However, make sure to run mdncomp
+with the option `--update` the first time to get the latest data. It's recommended that you run
+this command weekly (data is usually updated every Thursday evening US time).
 
 
 Examples
@@ -112,19 +110,24 @@ LINKS:
 1: https://bugs.webkit.org/show_bug.cgi?id=71270
 ```
 
-or by using the absolute feature path:
+or using the absolute feature path (case-insensitive, see option `-c`):
 
     $ mdncomp api.HTMLCanvasElement.toBlob
+    $ mdncomp api.htmlcanvaselement.toblob
 
-or an regular expression:
+or as an regular expression:
 
-    $ mdncomp /.*html.*toblob$/
+    $ mdncomp /.*html.*toblob/
 
 or as an fuzzy expression:
 
     $ mdncomp -z ahcb.
+    
+From version 2 you can run without the `--fuzzy` option: if a result is not found 
+using the regular search method, a fuzzy search with the same expression (unless 
+the term contains astrix or starts with forward-slash) using the fuzzy method.
 
-**Show data in a compact shorthand format using option `-s, --shorthand`:**
+<h3>Show data in a compact shorthand format using option `-s, --shorthand`:</h3>
 
     $ mdncomp html*toblob -s
     
@@ -136,7 +139,7 @@ to the argument list. For example - this will only list child features containin
 `CanvasRenderingContext2D` API:
 
 ```text
-$ node bin/mdncomp t2d line
+$ mdncomp t2d line
 
 api.CanvasRenderingContext2D
 Experimental
@@ -159,7 +162,7 @@ setLineDash               |    Y     |    12    |    27    |    11    |    Y    
 ! = Experimental
 ```
 
-**List feature branches and status**
+<h3>List feature branches and status</h3>
 
 You can navigate using branches and dot notation to find where a feature resides.
 
@@ -229,7 +232,7 @@ api.AmbientLightSensor
 --8X--
 ```
 
-**List current browser versions:**
+<h3>List current browser versions:</h3>
 
 ```text
 mdncomp --browser current
@@ -259,16 +262,17 @@ Edge  17   2018-04-30  current
 Edge  18   -           nightly
 ```
 
-**Rich output, here additionally using the --desc and --specs options:**
+<h3>Rich output, here additionally using the --desc and --specs options:</h3>
 
     mdncomp sharedarraybuffer --desc --specs
     
 ![Description and specifications summary example](https://i.imgur.com/km1qBon.png)<br>
 <sup>*cygwin snapshot*</sup>
 
-**Or as minimal, turning off extra information (here with options `-NRF`)**
+<h3>Or as minimal, turning off extra information (here with options `-NRF`)</h3>
 
     # -R = no-children, -N = no-notes, -F = no-flags (also see --help, -h)
+    
     mdncomp sharedarraybuffer -RNF
     
 ![Minimalistic example](https://i.imgur.com/Hg1bytI.png)<br>
@@ -293,7 +297,7 @@ mozGetAsFile      |     -    |     -    |     4    |     -    |     -    |     -
 toBlob            |    50    |     -    |    19    |    10    |    37    |     Y
 toDataURL         |     4    |    12    |    3.6   |     9    |     9    |     4
 
-And as shorthand format:
+And in compact shorthand format:
 
 Browsers:    |C  |E  |F  |IE |O  |S  |ca |em |fa |oa |si |wa
 :------------|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:
@@ -347,7 +351,7 @@ objects are WIP and may still not be available quite yet.
 
 Requirements
 ------------
-- **Node v8** or newer (for older Node version you can try out version 1.x.x).
+- **Node v8** or newer (for older Node version use mdncomp version 1.23.0).
 - NPM to install `mdncomp i -g mdncomp`
 - Internet connection when updating (via the `--update` option)
 
