@@ -192,7 +192,7 @@ So to list for example the current active browsers:
  To not list links combine the -N, --no-notes option.`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["-w"] = help["--workers"] = `
+help["-w"] = help["--worker"] = `
 Show detailed information about Worker support (if any).`;
 
 /*--------------------------------------------------------------------------------------------------*/

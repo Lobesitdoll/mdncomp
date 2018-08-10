@@ -46,7 +46,7 @@ module.exports = (() => {
     .option("-y, --history", "List version history entries per browser.")
     .option("--desc", "Show Short description of the feature")
     .option("--specs", "Show specification links")
-    .option("-w, --workers", "Show detailed workers information.")
+    .option("-w, --worker", "Show detailed worker information.")
     .option("--sab", "Show detailed SharedArrayBuffer as param information.")
     .option("--obsolete", "Show obsolete, non-standard and deprecated child features.")
     .option("--update", "Update data from remote if available")
