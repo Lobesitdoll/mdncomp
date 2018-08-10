@@ -32,9 +32,9 @@ function format(path, isRecursive = false, subNotes, subLinks) {
   const support = compat.support || {};
   const status = compat.status || {};
   const url = compat.mdn_url && compat.mdn_url.length ? ("https://developer.mozilla.org/docs/" + compat.mdn_url).replace(".org/docs/Mozilla/Add-ons/", ".org/Add-ons/") : null;
-  const specs = options.specs ? compat.specs || [] : [];
+  const specs = compat.specs || [];
   const sab = pathObj.SharedArrayBuffer_as_param && options.sab && !isRecursive ? format(path + ".SharedArrayBuffer_as_param", true) : null;
-  const workers = pathObj.worker_support && options.workers && !isRecursive ? format(path + ".worker_support", true) : null;
+  const workers = pathObj.worker_support && options.worker && !isRecursive ? format(path + ".worker_support", true) : null;
   const isWebExt = path.startsWith("webextensions");
   const showNode = path.startsWith("javascript");
 
@@ -55,7 +55,8 @@ function format(path, isRecursive = false, subNotes, subLinks) {
     links       : [],
     children    : [],
     sab         : sab,
-    workers     : workers
+    workers     : workers,
+    isFiltered  : false
   };
 
   // extract browser information (forces a slot to contain value or undefined)
@@ -76,6 +77,8 @@ function format(path, isRecursive = false, subNotes, subLinks) {
     const filters = options.args.length
                     ? options.args.map(flt => utils.getComparer(flt, !(flt.includes("*") || flt.startsWith("/")), true))
                     : null;
+
+    result.isFiltered = !!filters;
 
     const _history = options.history;
     options.history = false;

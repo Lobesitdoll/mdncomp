@@ -10,7 +10,6 @@ const DEBUG = true;
 const lf = "\r\n";
 
 const text = {
-  yes              : "Y",
   basicSupport     : "Basic Support",
   desktop          : "Desktop",
   mobile           : "Mobile",
@@ -40,11 +39,15 @@ const text = {
   usesAltName      : " uses alternative name: ",
   versionColumn    : "Version ",
   partialImpl      : "Partial implementation.",
-  vendorPrefix     : "Vendor prefix: ",
+  vendorPrefix     : "Vendor prefix",
   tooLimitedScope  : "Sorry, too limited scope.",
   noResult         : "Sorry, no result",
-  workerHint       : "?R*) Use option ?c--workers?R to see Worker support details.",
-  sabHint          : "?R*) Use option ?c--sab?R to see SharedArrayBuffer as a parameter details.",
+  workerHint       : "?RUse option ?c-w, --worker?R to see Worker support details.",
+  sabHint          : "?RUse option ?c--sab?R to see SharedArrayBuffer as a parameter details.",
+  historyHint      : "?RUse option ?c-y, --history?R to see historical data.",
+  specsHint        : "?RUse option ?c--specs?R to see specifications.",
+  descHint         : "?RUse option ?c--desc?R to get a short description of the feature.",
+  filterHint       : "?RAdd additional search terms to filter result list.",
   refLink          : "Ref link",
   seeNote          : "See note",
   thisFeatBehind   : "This feature is behind the",
@@ -122,6 +125,9 @@ Object.assign(global, {
   shortPad   : 1,
   sepChar    : "|",
   progBarChar: "#",
+  yesChar    : "Y",
+  noChar     : "-",
+  unknownChar: "?",
   lang       : "en-US",
   ANSI       : loadModule("core.ansi"),
   log        : utils.log,
@@ -239,6 +245,7 @@ function search() {
   if ( !result.length ) {
     if ( !options.fuzzy && !keyword.includes("*") && !keyword.startsWith("/") ) {
       options.fuzzy = true;
+      options.args.unshift(keyword);  // reinsert as we do a second call, just with fuzzy
       search();
     }
     else {
@@ -277,7 +284,7 @@ function showResults(path) {
   const results = loadModule(options.shorthand ? "formatter.short" : "formatter.long")(preFormat);
 
   // Add footer
-  log(results, lf + "?pData from MDN - `npm i -g mdncomp` by epistemex?w?R");
+  log(results, "?pData from MDN - `npm i -g mdncomp` by epistemex?w?R");
 }
 
 /*-----------------------------------------------------------------------------*

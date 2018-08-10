@@ -9,7 +9,7 @@ const mdn = utils.loadMDN();
 
 function getRandom(path) {
 
-  let tbl = utils.buildTable(mdn);
+  let tbl = utils.bcdToList(mdn);
   let state = false;
   let i;
 

@@ -324,18 +324,8 @@ directory in JSON format.
 A sample config file is included. Use the option`--configpath` to get
 location to the config folder.
 
-You can of course, as an alternative, define aliases in some terminals. In cmder you could do
-(editing the "installfolder/config/user-aliases.cmd" file):
-
-    bcd=mdncomp -s $1
-
-which will always show shorthand format when running as "bcd".
-
-In a xterm terminal you can open and edit the file "/home/username/.bashrc":
-
-    alias bcd="mdncomp -s"
-
-to do the same. It's now simply a matter of adding different aliases for different purposes.
+Tip: You can as an alternative, define alias commands in some terminals with 
+specific settings for different purposes.
 
 Wiki
 ----

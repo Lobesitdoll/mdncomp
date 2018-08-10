@@ -24,11 +24,13 @@ const tblOptions = {
 
 function formatterLong(data, recursive = false) {
   const isWebExt = data.path.startsWith("webextensions");
+  const flags = [];
   let workerHint = false;
   let sabHint = false;
   let expHint = false;
   let depHint = false;
   let nonStdHint = false;
+  let hints = false;
 
   /* Header ------------------------------------------------------------------*/
 
@@ -67,29 +69,24 @@ function formatterLong(data, recursive = false) {
   if ( options.desktop ) doDevice("desktop");
   if ( options.mobile ) doDevice("mobile");
   if ( options.ext ) doDevice("ext");
+  out.addLine();
 
   /* Show hints if any -------------------------------------------------------*/
 
-  if ((depHint || nonStdHint || expHint) &&
-    (((options.workers && recursive) || (!options.workers && !recursive)) || ((options.sab && recursive) || (!options.sab && !recursive)))) {
-    let hint = [];
-    if (expHint) hint.push(`?o!?R = ${text.experimental}`);
-    if (depHint) hint.push(`?r-?R = ${text.deprecated}`);
-    if (nonStdHint) hint.push(`?rX?R = ${text.nonStandard}`);
-    out.addLine(lf, "?R", hint.join(", "));
-  }
-
-  if ( workerHint ) {
-    out.addLine(lf, utils.breakAnsiLine(text.workerHint, options.maxChars));
-  }
-
-  if ( sabHint ) {
-    out.addLine(lf, utils.breakAnsiLine(text.sabHint, options.maxChars));
+  if (!options.expert) {
+    if ((depHint || nonStdHint || expHint) &&
+      (((options.worker && recursive) || (!options.worker && !recursive)) || ((options.sab && recursive) || (!options.sab && !recursive)))) {
+      let hint = [];
+      if (expHint) hint.push(`?o!?R = ${text.experimental}`);
+      if (depHint) hint.push(`?r-?R = ${text.deprecated}`);
+      if (nonStdHint) hint.push(`?rX?R = ${text.nonStandard}`);
+      out.addLine("?R", hint.join(", "), lf);
+    }
   }
 
   /* Show table data for workers/SharedArrayBuffer ---------------------------*/
 
-  if ( options.workers && data.workers ) formatterLong(data.workers, true);
+  if ( options.worker && data.workers ) formatterLong(data.workers, true);
   if ( options.sab && data.sab ) formatterLong(data.sab, true);
 
   /* Show notes --------------------------------------------------------------*/
@@ -103,6 +100,7 @@ function formatterLong(data, recursive = false) {
 
       out.addLine(utils.breakAnsiLine(res, options.maxChars));
     });
+    out.addLine();
 
     // Links in notes
     if ( options.notes && data.links.length ) {
@@ -110,20 +108,20 @@ function formatterLong(data, recursive = false) {
       data.links.forEach(link => {
         out.addLine(`?c${link.index}?R: ?y${link.url}?R`);
       });
+      out.addLine()
     }
   }
 
   /* Show flags and history --------------------------------------------------*/
 
-  if ( (options.flags && hasFlags()) || (options.history && hasHistory()) ) {
-    addHeader(text.hdrFlagsHistory);
+  if ( options.flags || options.history) {
     if ( options.desktop ) getFlags("desktop");
     if ( options.mobile ) getFlags("mobile");
     if ( options.ext ) getFlags("ext");
-    out.addLine()
-  }
-  else {
-    out.addLine(options.history ? "" : "?R\nYou can use option ?c-y, --history?R to see historical data.")
+    if (flags.length) {
+      addHeader(text.hdrFlagsHistory);
+      out.add(flags.join(lf), lf, lf);
+    }
   }
 
   /* Show specifications -----------------------------------------------------*/
@@ -133,8 +131,46 @@ function formatterLong(data, recursive = false) {
     data.specs.forEach(spec => {
       out.addLine("?w" + `${utils.entities(spec.name)} ?R[${getSpecStatus(spec.status)}?R]${lf}${spec.url}`);
     });
+    out.addLine()
   } // :specs
 
+  /* Additional hints --------------------------------------------------------*/
+
+  if (!options.expert) {
+    if ( workerHint ) {
+      out.addLine(utils.breakAnsiLine(text.workerHint, options.maxChars));
+      hints = true;
+    }
+
+    if ( sabHint ) {
+      out.addLine(lf, utils.breakAnsiLine(text.sabHint, options.maxChars));
+      hints = true;
+    }
+
+    if (!options.specs && data.specs.length) {
+      out.addLine(text.specsHint);
+      hints = true;
+    }
+
+    if (!options.desc && data.description.length) {
+      out.addLine(text.descHint);
+      hints = true;
+    }
+
+    if (!options.history) {
+      out.addLine(text.historyHint);
+      hints = true;
+    }
+
+    if (!data.isFiltered && data.children.length > 9) {
+      out.addLine(text.filterHint);
+      hints = true;
+    }
+
+    if (hints) {
+      out.addLine()
+    }
+  }
 
   /* Helpers -----------------------------------------------------------------*/
 
@@ -155,7 +191,7 @@ function formatterLong(data, recursive = false) {
       data.children.forEach((child /*, i*/) => {
         let name = child.name;
 
-        if ( !workerHint && !options.workers && name === "worker_support" ) workerHint = true;
+        if ( !workerHint && !options.worker && name === "worker_support" ) workerHint = true;
         if ( !sabHint && !options.sab && name === "SharedArrayBuffer_as_param" ) sabHint = true;
 
         if ( name === dataName ) name += "()";
@@ -219,44 +255,7 @@ function formatterLong(data, recursive = false) {
     return result;
   } // : getLine
 
-  // todo move to utils
-  function hasFlags() {
-    const devices = [];
-    if ( options.desktop ) devices.push("desktop");
-    if ( options.mobile ) devices.push("mobile");
-    if ( options.ext ) devices.push("ext");
-
-    for(let device of devices) {
-      for(let browser of data.browsers[ device ]) {
-        if ( browser.history.length ) {
-          if ( options.history ) return true;
-          let max = options.history ? browser.history.length : 1;
-          for(let i = 0; i < max; i++) {
-            if ( browser.history[ i ].flags.length ) return true;
-          }
-        }
-      }
-    }
-    return false;
-  } // : hasFlags
-
-  // todo move to utils + improve
-  function hasHistory() {
-    const devices = [];
-    if ( options.desktop ) devices.push("desktop");
-    if ( options.mobile ) devices.push("mobile");
-    if ( options.ext ) devices.push("ext");
-
-    for(let device of devices) {
-      for(let browser of data.browsers[ device ]) {
-        if ( browser.history.length ) return true;
-      }
-    }
-    return false;
-  } // : hasHistory
-
   function getFlags(device) {
-    const flags = [];
 
     data.browsers[ device ].forEach(browser => {
       const name = browserNames[ browser.browser ];
@@ -296,13 +295,11 @@ function formatterLong(data, recursive = false) {
               }
             });
 
-            flags.push(utils.breakAnsiLine(entry, options.maxChars) + lf);
+            flags.push(utils.breakAnsiLine(entry, options.maxChars));
           }
         }
       }
     });
-
-    out.add(flags.join(lf));
   } // : getFlags
 
   function hasLink(str) {
@@ -337,7 +334,7 @@ function formatterLong(data, recursive = false) {
   } // : getSpecStatus
 
   function addHeader(txt) {
-    out.addLine(`${lf}?c${ANSI.underline}${txt}`);
+    out.addLine(`?c${ANSI.underline}${txt}`);
   }
 
   function sortRefs(a, b) {

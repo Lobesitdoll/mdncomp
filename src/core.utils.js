@@ -13,7 +13,7 @@ const utils = {
    * f.ex: mdn["api"]["Blob"]["slice"] => "api.Blob.slice"
    * @returns {Array}
    */
-  buildTable: (mdn) => {
+  bcdToList: (mdn) => {
     const result = [];
 
     utils
@@ -28,7 +28,7 @@ const utils = {
         Object.keys(subNode).forEach(key => {
           if ( key !== "__compat" && key !== "worker_support" && key !== "SharedArrayBuffer_as_param" ) {
             result.push(branch + "." + key);
-            _iterateNode(subNode, key, branch + "." + key); // -> async if stack-overflow problems
+            _iterateNode(subNode, key, branch + "." + key);
           }
         });
       }
@@ -43,9 +43,7 @@ const utils = {
    * @returns {string[]}
    */
   listTopLevels: (mdn) => {
-    let keys = Object.keys(mdn), i = keys.indexOf("browsers");
-    if ( i >= 0 ) keys.splice(i, 1);
-    return keys;
+    return Object.keys(mdn).filter(key => key !== "browsers")
   },
 
   /**
@@ -65,10 +63,9 @@ const utils = {
     let parts;
 
     if ( str.startsWith("/") ) {
-      str = str.substr(1);
       parts = str.split("/");
-      str = parts[ 0 ];
-      options = parts[ 1 ] || "";
+      str = parts[ 1 ];
+      options = parts[ 2 ] || "";
     }
     else {
       if ( fuzzy ) {
@@ -398,18 +395,18 @@ const utils = {
     let v = "";
 
     if ( add === null && rem === null ) {
-      v = "?r?";
+      v = "?r" + unknownChar;
     }
     else if ( add === null || typeof add === "undefined" ) {
-      v = "?r-";
+      v = "?r" + noChar;
     }
     else if ( typeof add === "boolean" ) {
-      if ( add ) v = "?g" + text.yes;
-      else v = "?r-";
+      if ( add ) v = "?g" + yesChar;
+      else v = "?r" + noChar;
     }
     else if ( typeof add === "string" ) {
       v = (rem ? "?r" : "?g") + add;
-      if ( rem ) v += typeof rem === "boolean" ? "-?" : "-" + rem;
+      if ( rem ) v += typeof rem === "boolean" ? "-" + unknownChar : "-" + rem;
     }
 
     return v;

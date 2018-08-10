@@ -74,7 +74,7 @@ function list(path, recursive = false) {
  */
 function listAPI(prefix, recursive = false) {
   const _prefix = options.caseSensitive ? prefix : prefix.toLowerCase();
-  const tbl = utils.buildTable(mdn);
+  const tbl = utils.bcdToList(mdn);
   const maxSegments = _prefix.split(".").length + 1;
 
   let last = "";
