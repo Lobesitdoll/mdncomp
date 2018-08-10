@@ -395,18 +395,18 @@ const utils = {
     let v = "";
 
     if ( add === null && rem === null ) {
-      v = "?r" + unknownChar;
+      v = "?r" + char.unknown;
     }
     else if ( add === null || typeof add === "undefined" ) {
-      v = "?r" + noChar;
+      v = "?r" + char.no;
     }
     else if ( typeof add === "boolean" ) {
-      if ( add ) v = "?g" + yesChar;
-      else v = "?r" + noChar;
+      if ( add ) v = "?g" + char.yes;
+      else v = "?r" + char.no;
     }
     else if ( typeof add === "string" ) {
       v = (rem ? "?r" : "?g") + add;
-      if ( rem ) v += typeof rem === "boolean" ? "-" + unknownChar : "-" + rem;
+      if ( rem ) v += typeof rem === "boolean" ? "-" + char.unknown : "-" + rem;
     }
 
     return v;

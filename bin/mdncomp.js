@@ -123,11 +123,7 @@ Object.assign(global, {
   text,
   loadModule,
   shortPad   : 1,
-  sepChar    : "|",
-  progBarChar: "#",
-  yesChar    : "Y",
-  noChar     : "-",
-  unknownChar: "?",
+  char       : {sep: "|", progressBar: "#", yes: "Y", no: "-", unknown: "?"},
   lang       : "en-US",
   ANSI       : loadModule("core.ansi"),
   log        : utils.log,
@@ -137,7 +133,7 @@ Object.assign(global, {
 
 const options = global.options = loadModule("init.options");
 
-// Use ANSI color?
+// No ANSI color?
 if ( !options.colors ) {
   Object
     .keys(global.ANSI)

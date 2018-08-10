@@ -12,7 +12,7 @@ const out = new Output(0, lf);
 const browserNames = utils.getBrowserShortNames();
 const tblOptions = {
   align       : [ "l" ],
-  delimiter   : global.sepChar,
+  delimiter   : char.sep,
   stringLength: utils.ansiLength
 };
 

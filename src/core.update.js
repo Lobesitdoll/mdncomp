@@ -93,7 +93,7 @@ function getRemoteData(callback, redundant) {
   );
 
   function _progressBar() {
-    log(clr + "?wDownloading data [?b" + progBarChar.repeat(prog) + " ".repeat(PWIDTH - prog) + "?w]?R");
+    log(clr + "?wDownloading data [?b" + char.progressBar.repeat(prog) + " ".repeat(PWIDTH - prog) + "?w]?R");
   }
 }
 

@@ -55,7 +55,7 @@ function loadConfig(options) {
 
     // sepChar
     if ( fmt && typeof fmt.sepChar === "string" ) {
-      global.sepChar = fmt.sepChar;
+      global.char.sep = fmt.sepChar;
     }
 
   }

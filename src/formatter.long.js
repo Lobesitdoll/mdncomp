@@ -16,7 +16,7 @@ const refs = [ "°", "¹", "²", "³", "a", "b", "c", "d", "e", "f", "g", "h", "
 
 const tblOptions = {
   align       : [ "l" ],
-  delimiter   : global.sepChar,
+  delimiter   : char.sep,
   stringLength: utils.ansiLength,
   start       : "?G",
   end         : "?R"
