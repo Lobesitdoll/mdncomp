@@ -30,7 +30,8 @@
     "sab"           : false,    // show SharedArrayBuffer information for a feature (if any)
     "obsolete"      : false,    // show obsolete, non-standard and deprecated child features
     "colors"        : true,     // if false, all ANSI color codes are removed
-    "maxChars"      : 84        // line-break at this position (except URLs)
+    "maxChars"      : 84,       // line-break at this position (except URLs)
+    "expert"        : false     // export mode - turns off all hints
   },
   "formatter": {
     "sepChar": "|"              // table cell separation char in ASCII format output

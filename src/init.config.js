@@ -31,16 +31,16 @@ function loadConfig(options) {
 
     const keys = [
       "desktop", "mobile", "ext", "children", "caseSensitive", "fuzzy", "shorthand", "notes", "flags",
-      "history", "desc", "specs", "workers", "sab", "obsoletes", "colors", "maxChars"
+      "history", "desc", "specs", "workers", "sab", "obsoletes", "colors", "maxChars", "expert"
     ];
 
     const types = [
       isBool, isBool, isBool, isBool, isBool, isBool, isBool, isBool, isBool,
-      isBool, isBool, isBool, isBool, isBool, isBool, isBool, isNum
+      isBool, isBool, isBool, isBool, isBool, isBool, isBool, isNum, isBool
     ];
 
     const validate = [
-      nop, nop, nop, nop, nop, nop, nop, nop, nop, nop, nop, nop, nop, nop, nop, nop, mx
+      nop, nop, nop, nop, nop, nop, nop, nop, nop, nop, nop, nop, nop, nop, nop, nop, mx, nop
     ];
 
     let fmt = Object.assign({}, cfg.formatter);
