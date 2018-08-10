@@ -12,7 +12,7 @@ function list(path, recursive = false) {
   // top-levels
   if ( typeof path !== "string" || !path.length || path === "." ) {
     log(`?R${text.valid} ${text.pathRoots}:`);
-    log(`?g${utils.listTopLevels(mdn).join(lf)}?R`);
+    log(`?g${utils.getRootList(mdn).join(lf)}?R`);
     log(lf + `${text.valid} ${text.statuses}:`);
     log("?gstandard, experimental, deprecated?R");
   }
@@ -115,7 +115,7 @@ function listAPI(prefix, recursive = false) {
 
 function listOnStatus(statTxt, recursive = false) {
   const result = [];
-  const keys = utils.listTopLevels(mdn);
+  const keys = utils.getRootList(mdn);
 
   if ( statTxt === "standard" ) statTxt += "_track";
 

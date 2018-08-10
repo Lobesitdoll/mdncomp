@@ -17,7 +17,7 @@ const utils = {
     const result = [];
 
     utils
-      .listTopLevels(mdn)
+      .getRootList(mdn)
       .filter(key => key !== "browsers")
       .forEach(key => _iterateNode(mdn, key, key));
 
@@ -42,7 +42,7 @@ const utils = {
    * various branches of the tree.
    * @returns {string[]}
    */
-  listTopLevels: (mdn) => {
+  getRootList: (mdn) => {
     return Object.keys(mdn).filter(key => key !== "browsers")
   },
 

@@ -20,7 +20,7 @@ function search(keyword, sensitive) {
   const result = [];
 
   utils
-    .listTopLevels(mdn)
+    .getRootList(mdn)
     .filter(key => key !== "browsers")
     .forEach(key => _iterateNode(mdn, key, key));
 
