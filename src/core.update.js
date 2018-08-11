@@ -67,8 +67,7 @@ function getRemoteData(callback, redundant) {
   let update;
   let prog;
 
-  io.request(_urlPrefix + "data.gz",
-    () => !clrLine(),
+  io.request(_urlPrefix + "data.gz", () => !clrLine(),
     (pct) => {
       prog = Math.ceil(PWIDTH * pct);
       update = Date.now();
@@ -85,7 +84,7 @@ function getRemoteData(callback, redundant) {
       wasRedundant = true;
       if ( redundant ) callback(err);
       else {
-        log("?yUsing redundancy...?R\n");
+        log("?Trying redundancy...?R\n");
         setImmediate(getRemoteData, callback, true);
       }
     },

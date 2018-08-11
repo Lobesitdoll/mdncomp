@@ -222,6 +222,16 @@ Show obsolete, non-standard and deprecated child features, prefixed with "-".
 If ANSI colors are enabled it will show as darker gray in the output.`;
 
 /*--------------------------------------------------------------------------------------------------*/
+help["--custom"] = help["-u"] = `
+Define custom columns (see option -b, --browser for a list of valid ids).
+
+    mdncomp -u "chrome edge firefox" html*toblob
+    mdncomp -u "chrome,edge,firefox;safari_ios" html*toblob
+    
+You can separate the ids with space, comma, semi-column or column.
+The columns will automatically be be sorted and segmented.`;
+
+/*--------------------------------------------------------------------------------------------------*/
 help["--sab"] = `
 Show detailed support for SharedArrayBuffer as param (usually with WebGL) (if any).`;
 

@@ -3,7 +3,7 @@
 
 /*----------------------------------------------------------------------------*/
 
-const DEBUG = false;
+const DEBUG = true;
 
 /*----------------------------------------------------------------------------*/
 
@@ -33,7 +33,7 @@ const text = {
   nonStandard      : "Non-Standard",
   standardShort    : "STD",
   experimentalShort: "EXP",
-  deprecatedShort  : "DEP",
+  deprecatedShort  : "DEPR",
   nonStandardShort : "NOSTD",
   altName          : "Alternative name",
   usesAltName      : " uses alternative name: ",
@@ -78,11 +78,12 @@ const text = {
 
   indexOutOfRange : "Index out of range",
   invalidRegex    : "Invalid regular expression.",
+  invalidColumnIds: "Invalid browser ids in custom columns.",
   notFeatureObject: "Not a feature object or parent to feature(s). Also see the \"--list\" option.",
   versionWarning  : "WARNING: mdncomp is built for Node version 8 or newer. It may not work in older Node.js versions.",
   criticalDataFile: "Critical error: data file not found.\n?yTry running with option --fupdate to download latest snapshot.",
   missingModule   : "Critical: A core module seem to be missing. Use 'npm i -g mdncomp' to reinstall.",
-  unhandled       : `  An unhandled error occurred!
+  unhandled       : ` *** An unhandled error occurred!
   Please consider reporting to help us solve it via GitLab:
   https://gitlab.com/epistemex/mdncomp/issues
   
@@ -98,7 +99,7 @@ if ( +process.versions.node.split(".")[ 0 ] < 8 ) {
 
 const _errHandler = (err) => {
   console.log(text.unhandled, err);
-  process.exit(1);
+  process.exitCode = 1;
 };
 
 process.on("error", _errHandler);
@@ -244,6 +245,8 @@ function search() {
  */
 function showResults(path) {
   const preFormat = loadModule("formatter.common")(path);
+  if (!preFormat ) return;
+
   const results = loadModule(options.shorthand ? "formatter.short" : "formatter.long")(preFormat);
 
   // Add footer

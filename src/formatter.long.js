@@ -66,9 +66,9 @@ function formatterLong(data, recursive = false) {
 
   /* Show table data ---------------------------------------------------------*/
 
-  if ( options.desktop ) doDevice("desktop");
-  if ( options.mobile ) doDevice("mobile");
-  if ( options.ext ) doDevice("ext");
+  if ( options.desktop && data.browsers.desktop.length ) doDevice("desktop");
+  if ( options.mobile && data.browsers.mobile.length ) doDevice("mobile");
+  if ( options.ext && data.browsers.ext.length ) doDevice("ext");
   out.addLine();
 
   /* Show hints if any -------------------------------------------------------*/

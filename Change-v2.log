@@ -5,12 +5,12 @@ mdncomp 2
 TDO: Locale support (msg + descriptions in sep. files)
 
 (2.00.0-alpha.4)
+ADD: Option "-u, --custom" to allow custom browser column definitions
 TDO: User input evaluation (https://github.com/epistemex/mdncomp/issues/8)
 TDO: Basic notification system via the update mechanism
-TDO: Custom browser column definitions
 
 2.00.0-alpha.3
-FIX: search recall with auto-fuzzy mode due to argument not reinserted
+FIX: search recall failed with auto-fuzzy mode due to search-term argument not reinserted
 ADD: option "--expert" to disable hints, legends
 CHG: option "--workers" renamed to singular "--worker"
 

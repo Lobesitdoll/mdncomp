@@ -32,7 +32,7 @@ module.exports = (() => {
     .description(`Get MDN Browser Compatibility Data, docs and specs.${lf}  Version: ${version + lf}  (c) 2018 epistemex.com`)
 
     .option("-l, --list [api]", "List paths starting with given branch(es), or none for root list")
-    .option("-b, --browser [id]", "Show information about this browser, or list if none")
+    .option("-b, --browser [id]", "Show information about this browser, or list ids if none")
     .option("-i, --index <index>", "Show this index from a multiple result list", -1)
     .option("-D, --no-desktop", "Don't show for desktop devices")
     .option("-M, --no-mobile", "Don't show for mobile devices")
@@ -49,6 +49,7 @@ module.exports = (() => {
     .option("-w, --worker", "Show detailed worker information.")
     .option("--sab", "Show detailed SharedArrayBuffer as param information.")
     .option("--obsolete", "Show obsolete, non-standard and deprecated child features.")
+    .option("-u, --columns <columns>", "Define custom columns using valid browser ids (see -b or -h -u)", null)
     .option("--update", "Update data from remote if available")
     .option("--fupdate", "Force update full data-set from remote")
     .option("--cupdate", "Check if update is available")

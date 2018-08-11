@@ -162,6 +162,24 @@ setLineDash               |    Y     |    12    |    27    |    11    |    Y    
 ! = Experimental
 ```
 
+<h3>List results using Custom Columns</h3>
+
+You can now define custom columns using a comma (or space, semi-column, column)
+separated list with the new option "-u, --custom":
+
+```text
+mdncomp t2d path --custom "chrome,edge,firefox"
+--8X--
+DESKTOP                   |Chrome    |Edge      |Firefox
+:-------------------------|:--------:|:--------:|:--------:
+CanvasRenderingContext2D !|    1     |    Y     |   1.5    
+beginPath                 |    Y     |    12    |    Y     
+closePath                 |    Y     |    12    |    Y     
+isPointInPath             |    Y     |    12    |    Y     
+scrollPathIntoView !      |    YF    |    ?     |    -     
+--8X--
+```
+
 <h3>List feature branches and status</h3>
 
 You can navigate using branches and dot notation to find where a feature resides.

@@ -23,11 +23,32 @@ function format(path, isRecursive = false, subNotes, subLinks) {
 
   if (!pathObj.__compat && !utils.hasChildren(pathObj)) {
     err(utils.breakAnsiLine(`?y${text.notFeatureObject}?R`, options.maxChars));
-    process.exit();
+    process.exitCode = 1;
+    return null
+  }
+
+  const browserList = utils.getBrowserList();
+
+  // validate custom columns
+  if (options.columns) {
+    const array = options.columns.split(/[ ,;:]/g);
+    const ids = Object.keys(utils.getBrowserShortNames());
+    const columns = array.filter(item => ids.includes(item));
+    if (!columns.length || columns.length !== array.length) {
+      if (!isRecursive) {
+        err(`\n?y${text.invalidColumnIds}?R`);
+        process.exitCode = 1;
+        return null
+      }
+    }
+    else {
+      browserList.desktop = browserList.desktop.filter(item => columns.includes(item));
+      browserList.mobile = browserList.mobile.filter(item => columns.includes(item));
+      browserList.ext = browserList.ext.filter(item => columns.includes(item));
+    }
   }
 
   const rxAhref = /<a\s+(?:[^>]*?\s+)?href=(["'])(.*?)\1/;
-  const browserList = utils.getBrowserList();
   const compat = pathObj.__compat || {};
   const support = compat.support || {};
   const status = compat.status || {};
@@ -60,17 +81,23 @@ function format(path, isRecursive = false, subNotes, subLinks) {
   };
 
   // extract browser information (forces a slot to contain value or undefined)
-  if (options.desktop) browserList.desktop.forEach(key => {
-    result.browsers.desktop.push( mergeSupport(key, support) )
-  });
+  if (options.desktop && browserList.desktop.length) {
+    browserList.desktop.forEach(key => {
+      result.browsers.desktop.push( mergeSupport(key, support) )
+    });
+  }
 
-  if (options.mobile) browserList.mobile.forEach(key => {
-    result.browsers.mobile.push( mergeSupport(key, support) )
-  });
+  if (options.mobile && browserList.mobile.length) {
+    browserList.mobile.forEach(key => {
+      result.browsers.mobile.push( mergeSupport(key, support) )
+    });
+  }
 
-  if (options.ext) browserList.ext.filter(key => showNode ? true : key !== "nodejs").forEach(key => {
-    result.browsers.ext.push( mergeSupport(key, support) );
-  });
+  if (options.ext && browserList.ext.length) {
+    browserList.ext.filter(key => showNode ? true : key !== "nodejs").forEach(key => {
+      result.browsers.ext.push( mergeSupport(key, support) );
+    });
+  }
 
   // get children
   if (options.children && !isRecursive) {

@@ -24,9 +24,9 @@ function formatterShort(data) {
 
   // headers
   const header = [ "?y" + text.hdrBrowsers ];
-  if ( options.desktop ) header.push(...getNames("desktop", "?w"));
-  if ( options.mobile ) header.push(...getNames("mobile", "?c"));
-  if ( options.ext ) header.push(...getNames("ext", "?y"));
+  if ( options.desktop && data.browsers.desktop.length ) header.push(...getNames("desktop", "?w"));
+  if ( options.mobile && data.browsers.mobile.length ) header.push(...getNames("mobile", "?c"));
+  if ( options.ext && data.browsers.ext.length ) header.push(...getNames("ext", "?y"));
   header[ header.length - 1 ] += "?G";
   tbl.push(header);
 
