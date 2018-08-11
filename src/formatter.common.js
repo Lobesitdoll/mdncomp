@@ -130,11 +130,10 @@ function format(path, isRecursive = false, subNotes, subLinks) {
     for(let f of filters) if (f.test(key)) return true;
   }
 
-  function mergeSupport(key, support) {
+  function mergeSupport(key, supportObj) {
     const history = [];
     const noteIndices = [];
-
-    support = support[key] || {};
+    const support = supportObj[key] || {};
 
     // Support entries for this specific browser
     let entries = Array.isArray(support) ? support : [support];

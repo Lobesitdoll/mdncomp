@@ -4,10 +4,15 @@ mdncomp 2
 (2.00.0-beta.x)
 TDO: Locale support (msg + descriptions in sep. files)
 
-(2.00.0-alpha.4)
-ADD: Option "-u, --custom" to allow custom browser column definitions
+(2.00.0-alpha.6)
 TDO: User input evaluation (https://github.com/epistemex/mdncomp/issues/8)
 TDO: Basic notification system via the update mechanism
+
+2.00.0-alpha.5
+NPM: published bypassing private npm, another bump due to build mode...
+
+2.00.0-alpha.4
+ADD: Option "-u, --custom" to allow custom browser column definitions
 
 2.00.0-alpha.3
 FIX: search recall failed with auto-fuzzy mode due to search-term argument not reinserted

@@ -1,11 +1,12 @@
 {
   "name": "mdncomp",
-  "version": "2.0.0-alpha.4",
+  "version": "2.0.0-alpha.5",
   "description": "Browser Compatibility Data on the command line.",
   "main": "bin/mdncomp.min.js",
   "private": false,
   "publishConfig": {
-    "registry": "https://registry.npmjs.org"
+    "registry": "http://localhost:4444",
+    "p_registry": "https://registry.npmjs.org"
   },
   "author": {
     "name": "epistemex",

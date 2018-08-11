@@ -243,10 +243,10 @@ List per status, for example: list all features with "experimental" status:
 ```text
 mdncomp -l experimental
 ->
-api.AbortController
-api.AbortPaymentEvent
-api.AbortSignal
-api.AmbientLightSensor
+[  0] api.AbortController
+[  1] api.AbortPaymentEvent
+[  2] api.AbortSignal
+[  3] api.AmbientLightSensor
 --8X--
 ```
 
