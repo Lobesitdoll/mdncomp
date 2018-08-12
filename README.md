@@ -21,7 +21,9 @@ New main core with improved search algorithm to get you faster and more flexible
 to the compatibility data.
 
 - Browser Compatibility Data (BCD from Mozilla Developer Network)
-  - Search **API, CSS, HTML, HTTP, JavaScript, MathML, SVG, WebDriver and WebExtensions**.
+- Browser Compatibility Data (BCD from Mozilla Developer Network)
+  - Search **API**, **CSS**, **HTML**, **HTTP**, **JavaScript**, **MathML**, **SVG**,
+   **WebDriver** and **WebExtensions**.
   - Search and list features using paths, wildcards, fuzzy terms or regular expressions
   - Search case (in)sensitive
   - Navigate by path and branches
@@ -44,14 +46,15 @@ to the compatibility data.
 
 - Additional documentation:
   - Show title text per feature.
-  - Show a summary **description** per feature (included in the dataset for mdncomp only).
-  - Provides a verified URL to the feature's documentation page on [MDN](https://developer.mozilla.org/).
-  - Show standards/specification references, status and links (W3C, WHATWG, KHRONOS, ECMA, IETF etc.) (included in the dataset for mdncomp only).
+  - Show a summary **description** per feature *(included in the dataset for mdncomp only)*.
+  - Provides a *verified* URL to the feature's documentation page on [MDN](https://developer.mozilla.org/).
+  - Show standards/specification references, status and links (W3C, WHATWG, KHRONOS, ECMA, IETF etc.)
+   *(included in the dataset for mdncomp only)*.
 
 - Integrated update mechanism
   - Lighting fast update process
-  - Updates with patch files (RFC 6902/6901) with support for several versions back, providing a shorthand summary.
-  - Optional force update to reinitialize/clean all data, or with data corruption
+  - Updates with patch files (RFC 6902 / 6901) with support for several versions back.
+  - Optional forced data update to reinitialize with a full clean data set, f.ex. with data corruption.
   - Compressed data transfers
   
 - Define permanent/often used options in a config file (which can be suspended via option).
@@ -130,8 +133,8 @@ the term contains astrix or starts with forward-slash) using the fuzzy method.
 <h3>Show data in a compact shorthand format using option `-s, --shorthand`:</h3>
 
     $ mdncomp html*toblob -s
-    
-![Shorthand format](https://i.imgur.com/wyd5QMj.png)<br>
+
+![Shorthand format](https://i.imgur.com/CPKgQOL.png)<br>
 <sup>*cygwin/xterm snapshot*</sup>
 
 You can now do a local filtering of the result by simply adding one or more keywords (or search-terms)

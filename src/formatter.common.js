@@ -12,12 +12,12 @@ const mdn = utils.loadMDN();
 /**
  * This will flatten and normalize the __compat + support + status objects.
  * @param {string} path
- * @param {boolean} [isRecursive=false] - used when analysing sub-objects, children on the primary __compat object
+ * @param {boolean} [recursive=false] - used when analysing sub-objects, children on the primary __compat object
  * @param subNotes
  * @param subLinks
  * @returns {*}
  */
-function format(path, isRecursive = false, subNotes, subLinks) {
+function format(path, recursive = false, subNotes, subLinks) {
 
   const pathObj = utils.getPathAsObject(mdn, path);
 
@@ -35,7 +35,7 @@ function format(path, isRecursive = false, subNotes, subLinks) {
     const ids = Object.keys(utils.getBrowserShortNames());
     const columns = array.filter(item => ids.includes(item));
     if (!columns.length || columns.length !== array.length) {
-      if (!isRecursive) {
+      if (!recursive) {
         err(`\n?y${text.invalidColumnIds}?R`);
         process.exitCode = 1;
         return null
@@ -45,6 +45,7 @@ function format(path, isRecursive = false, subNotes, subLinks) {
       browserList.desktop = browserList.desktop.filter(item => columns.includes(item));
       browserList.mobile = browserList.mobile.filter(item => columns.includes(item));
       browserList.ext = browserList.ext.filter(item => columns.includes(item));
+      options.ext = browserList.ext.length > 0;
     }
   }
 
@@ -54,8 +55,8 @@ function format(path, isRecursive = false, subNotes, subLinks) {
   const status = compat.status || {};
   const url = compat.mdn_url && compat.mdn_url.length ? ("https://developer.mozilla.org/docs/" + compat.mdn_url).replace(".org/docs/Mozilla/Add-ons/", ".org/Add-ons/") : null;
   const specs = compat.specs || [];
-  const sab = pathObj.SharedArrayBuffer_as_param && options.sab && !isRecursive ? format(path + ".SharedArrayBuffer_as_param", true) : null;
-  const workers = pathObj.worker_support && options.worker && !isRecursive ? format(path + ".worker_support", true) : null;
+  const sab = pathObj.SharedArrayBuffer_as_param && options.sab && !recursive ? format(path + ".SharedArrayBuffer_as_param", true) : null;
+  const workers = pathObj.worker_support && options.worker && !recursive ? format(path + ".worker_support", true) : null;
   const isWebExt = path.startsWith("webextensions");
   const showNode = path.startsWith("javascript");
 
@@ -69,7 +70,7 @@ function format(path, isRecursive = false, subNotes, subLinks) {
     url         : url,
     specs       : specs,
     experimental: status.experimental,
-    standard    : status.standard_track || (isRecursive && isWebExt),
+    standard    : status.standard_track || (recursive && isWebExt),
     deprecated  : status.deprecated,
     browsers    : { desktop: [], mobile: [], ext: [] },
     notes       : [],
@@ -100,7 +101,7 @@ function format(path, isRecursive = false, subNotes, subLinks) {
   }
 
   // get children
-  if (options.children && !isRecursive) {
+  if (options.children && !recursive) {
     const filters = options.args.length
                     ? options.args.map(flt => utils.getComparer(flt, !(flt.includes("*") || flt.startsWith("/")), true))
                     : null;

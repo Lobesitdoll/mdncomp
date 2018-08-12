@@ -4,12 +4,17 @@ mdncomp 2
 (2.00.0-beta.x)
 TDO: Locale support (msg + descriptions in sep. files)
 
-(2.00.0-alpha.6)
+(2.00.0-alpha.7)
 TDO: User input evaluation (https://github.com/epistemex/mdncomp/issues/8)
-TDO: Basic notification system via the update mechanism
+TDO: Basic notification system via the update mechanism (only important messages, breaking changes etc.)
+TDO: Deep search option? (search notes, description, flags etc.) --deep, -p
+
+2.00.0-alpha.6
+IMP: --ext option automatically applied when --custom columns contains extended browsers
 
 2.00.0-alpha.5
 NPM: published bypassing private npm, another bump due to build mode...
+     (NB: package.json overrides both cmd line arg --registry and env settings)
 
 2.00.0-alpha.4
 ADD: Option "-u, --custom" to allow custom browser column definitions

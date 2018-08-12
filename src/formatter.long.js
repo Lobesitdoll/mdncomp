@@ -283,14 +283,15 @@ function formatterLong(data, recursive = false) {
             history.flags.forEach(flag => {
               switch( flag.type ) {
                 case "preference":
-                  entry += `${text.thisFeatBehind} ?c${flag.name}?w ${text.preference}.`;
-                  if ( flag.value_to_set ) entry += ` (${text.setTo} ?c${flag.value_to_set}?w).`;
+                  entry += `${text.thisFeatBehind} ?c${flag.name}?w ${text.preference}`;
+                  if ( flag.value_to_set ) entry += ` (${text.setTo} ?c${flag.value_to_set}?w)`;
+                  entry += ".";
                   break;
                 case "compile_flag":
                   entry += `${text.compileWith} ?c${flag.name}?w ${text.setTo} ?c${flag.value_to_set}?w.`;
                   break;
                 case "runtime_flag":
-                  entry += `${text.startWith} ?c${flag.name}?w. `;
+                  entry += `${text.startWith} ?c${flag.name}?w.`;
                   break;
               }
             });
