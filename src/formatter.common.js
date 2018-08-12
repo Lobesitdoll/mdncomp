@@ -180,15 +180,11 @@ function format(path, recursive = false, subNotes, subLinks) {
       }
 
       if (options.history || (!options.history && !history.length)) {
-        history.push({
-          add    : entry.version_added,
-          removed: entry.version_removed || (entry.version_added === null ? null : false),
-          prefix : entry.prefix,
-          altName: entry.alternative_name,
-          flags  : entry.flags || [],
-          partial: entry.partial_implementation,
-          notes  : localNotesIndices
-        })
+        history.push(Object.assign(entry, {
+          version_removed: entry.version_removed || (entry.version_added === null ? null : false),
+          flags          : entry.flags || [],
+          notes          : localNotesIndices
+        }))
       }
     });
 

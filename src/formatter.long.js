@@ -232,7 +232,7 @@ function formatterLong(data, recursive = false) {
       .sort(sortRefs)
       .forEach(stat => {
         const history = stat.history[ 0 ];
-        let v = utils.versionAddRem(history.add, history.removed);
+        let v = utils.versionAddRem(history.version_added, history.version_removed);
 
         if ( stat.noteIndex.length ) {
           v += "?c";
@@ -256,21 +256,20 @@ function formatterLong(data, recursive = false) {
   } // : getLine
 
   function getFlags(device) {
-
     data.browsers[ device ].forEach(browser => {
       const name = browserNames[ browser.browser ];
 
       if ( browser.history.length ) {
         let max = options.history ? browser.history.length : 1;
         for(let i = 0; i < max; i++) {
-          let history = browser.history[ i ];
-          let version = utils.ansiFree(utils.versionAddRem(history.add, history.removed));
+          const history = browser.history[ i ];
+          let version = utils.ansiFree(utils.versionAddRem(history.version_added, history.version_removed));
 
           if ( options.history ) {
             let _version = isNaN(version) ? "" : " " + version;
-            if ( history.altName ) flags.push(`?y${name}${_version}?w: ${text.altName}: ?c${history.altName}?w`);
+            if ( history.alternative_name ) flags.push(`?y${name}${_version}?w: ${text.altName}: ?c${history.alternative_name}?w`);
             if ( history.prefix ) flags.push(`?y${name}${_version}?w: ${text.vendorPrefix}: ?c${history.prefix}?w`);
-            if ( history.partial ) flags.push(`?y${name}${_version}?w: ${text.partialImpl}.?w`);
+            if ( history.partial_implementation ) flags.push(`?y${name}${_version}?w: ${text.partialImpl}.?w`);
             if ( history.notes.length ) {
               flags.push(`?y${name}${_version}?w: ${text.seeNote} ?c${history.notes.map(i => refs[ i % refs.length ]).join(", ")}?w`);
             }
@@ -304,6 +303,7 @@ function formatterLong(data, recursive = false) {
   } // : getFlags
 
   function hasLink(str) {
+    // todo make this more solid?
     return str.includes("<a href");
   }
 
