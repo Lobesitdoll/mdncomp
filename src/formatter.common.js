@@ -151,7 +151,7 @@ function format(path, recursive = false, subNotes, subLinks) {
         const notes = Array.isArray(entry.notes) ? entry.notes : (entry.notes ? [ entry.notes ] : []);
 
         if (entry.prefix) {
-          notes.push(text.vendorPrefix + entry.prefix)
+          notes.push(text.vendorPrefix + ": " + entry.prefix)
         }
 
         if (entry.alternative_name) {
