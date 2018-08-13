@@ -278,11 +278,7 @@ and the documentation excerpts cache.`;
 /*--------------------------------------------------------------------------------------------------*/
 help["-G"] = help["--no-config"] = `
 Ignores the config file if specified. As the config file will override
-options this option will allow bypassing those overrides.
-
-Options that will be ignored regardless are:
---no-config, --out, --all, --index, --browser, --list,
---version, --update, --cupdate, --fupdate and --help.`;
+options this option will allow bypassing those overrides.`;
 
 /*--------------------------------------------------------------------------------------------------*/
 help["--set"] = `
