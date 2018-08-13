@@ -285,6 +285,24 @@ Options that will be ignored regardless are:
 --version, --update, --cupdate, --fupdate and --help.`;
 
 /*--------------------------------------------------------------------------------------------------*/
+help["--set"] = `
+Set or clear a value in the config file. If no config exists, one will be created.
+
+Example: define permanent custom columns:
+
+  mdncomp --set columns=edge,chrome,firefox
+
+Clear the setting from the config file entirely:
+
+  mdncomp --set columns=
+
+List valid keys:
+
+  mdncomp --set ?
+
+The settings can be manually edited directly in the JSON config file. See --configpath.`;
+
+/*--------------------------------------------------------------------------------------------------*/
 help["--update"] = help["--cupdate"] = help["--fupdate"] = `
 Update the precompiled Browser Compatibility Data object. If the data
 is considered to be the same (using MD5 hash against server file) no

@@ -7,17 +7,19 @@ TDO: Locale support (msg + descriptions in sep. files)
 (2.00.0-alpha.7)
 TDO: User input evaluation (https://github.com/epistemex/mdncomp/issues/8)
 TDO: Basic notification system via the update mechanism (only important messages, breaking changes etc.)
-TDO: Deep search option? (search notes, description, flags etc.) --deep, -p
+TDO: Deep search option? (search notes, description, flags etc.) --deep, -p (modularize progressbar)
 
 2.00.0-alpha.6
+ADD: Option "--set" to set or clear a config key.
 IMP: --ext option automatically applied when --custom columns contains extended browsers
+TDO: Does it make more sense enabling obsoletes by default? (inverse of what is now, see --obsolete)
 
 2.00.0-alpha.5
-NPM: published bypassing private npm, another bump due to build mode...
+NPM: published bypassing private npm, another version bump due to build mode...
      (NB: package.json overrides both cmd line arg --registry and env settings)
 
 2.00.0-alpha.4
-ADD: Option "-u, --custom" to allow custom browser column definitions
+ADD: Option "-u, --columns" to allow custom browser column definitions
 
 2.00.0-alpha.3
 FIX: search recall failed with auto-fuzzy mode due to search-term argument not reinserted

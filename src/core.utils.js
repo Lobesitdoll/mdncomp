@@ -389,7 +389,7 @@ const utils = {
       "&gt;": ">",
     };
 
-    const rx = new RegExp(Object.keys(ent).join("|"), "gmi");
+    const rx = new RegExp(Object.keys(ent).join("|"), "gi");
     return txt.replace(rx, m => ent[m])
   },
 
@@ -421,7 +421,7 @@ const utils = {
     }
     catch(err) {
       utils.err(`?r${text.criticalDataFile}?R`);
-      process.exit();
+      process.exit(1);
     }
 
     return mdn;

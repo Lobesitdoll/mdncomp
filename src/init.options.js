@@ -49,17 +49,19 @@ module.exports = (() => {
     .option("-w, --worker", "Show detailed worker information.")
     .option("--sab", "Show detailed SharedArrayBuffer as param information.")
     .option("--obsolete", "Show obsolete, non-standard and deprecated child features.")
-    .option("-u, --columns <columns>", "Define custom columns using valid browser ids (see -b or -h -u)", null)
+    .option("-u, --columns <columns>", "Define custom columns using valid browser ids (see -b)")
     .option("--update", "Update data from remote if available")
     .option("--fupdate", "Force update full data-set from remote")
     .option("--cupdate", "Check if update is available")
-    .option("--random [scope]", "Show a random entry within \"scope\" (use . for any)")
+    .option("--random [scope]", "Show a random entry within optional scope")
     .option("--no-colors", "Don't use colors in output")
     .option("--max-chars <width>", "Max number of chars per line before wrap", 84)
-    .option("-G, --no-config", "Ignore config file (mdncomp.json) in config folder")
-    .option("--expert", "Expert mode - disables hints.")
-    .option("--read", "Mark notifications in the current update as read") // todo notifications
+    .option("-G, --no-config", "Ignore config file")
+//    .option("--read", "Mark notifications in the current update as read") // todo notifications
+    .option("--set <kv>", "Set key/value for config file. Use ? to list valid keys.")
+    //.option("--get [key]", "Get value for key from config file. If no arg. show config file.") // todo --get
     .option("--configpath", "Show path to where config file and cache is stored")
+    .option("--expert", "Expert mode - disables hints.")
     .on("--help", extendedHelp)
     .parse(args);
 
