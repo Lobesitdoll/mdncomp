@@ -362,7 +362,7 @@ To see valid keys use:
     mdncomp --set ?
 
 You can also edit the config file directly. Use the option`--configpath` to get 
-location to the config folder.
+the location to the config folder.
 
 Tip: You can as an alternative, define alias commands in some terminals with 
 specific settings for different purposes.

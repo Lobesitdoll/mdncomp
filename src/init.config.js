@@ -9,7 +9,8 @@
 const fs = require("fs");
 const Path = require("path");
 const utils = loadModule("core.utils");
-const filePath = Path.resolve(global.loadModule("core.io").getConfigDataPath(), ".config.json");
+const io = loadModule("core.io");
+const filePath = Path.resolve(io.getConfigDataPath(), ".config.json");
 
 /**
  * The method tries to load a config file from the user area in the folder
@@ -105,6 +106,17 @@ function initConfig(options) {
     }
     else {
       delete config.options[ key ];
+    }
+
+    // create folder for config if not exists
+    try {
+      if (!fs.existsSync(io.getConfigDataPath())) {
+        fs.mkdirSync(io.getConfigDataPath())
+      }
+    }
+    catch(_err) {
+      err(`?rCould not create config folder: ${io.getConfigDataPath()}.${DEBUG ? lf + _err : ""}?R`);
+      process.exit(1);
     }
 
     // save back config and exit
