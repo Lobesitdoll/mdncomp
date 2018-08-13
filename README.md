@@ -11,7 +11,7 @@ Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data
 
     $ mdncomp html*toblob
 
-![xterm color output](https://i.imgur.com/rF3fITW.png)<br>
+![xterm color output](https://i.imgur.com/KKXedwV.png)<br>
 <sup>*cygwin/xterm snapshot*</sup>
 
 Features
@@ -20,7 +20,6 @@ Features
 New main core with improved search algorithm to get you faster and more flexible
 to the compatibility data.
 
-- Browser Compatibility Data (BCD from Mozilla Developer Network)
 - Browser Compatibility Data (BCD from Mozilla Developer Network)
   - Search **API**, **CSS**, **HTML**, **HTTP**, **JavaScript**, **MathML**, **SVG**,
    **WebDriver** and **WebExtensions**.
@@ -134,7 +133,7 @@ the term contains astrix or starts with forward-slash) using the fuzzy method.
 
     $ mdncomp html*toblob -s
 
-![Shorthand format](https://i.imgur.com/CPKgQOL.png)<br>
+![Shorthand format](https://i.imgur.com/UbsfBNv.png)<br>
 <sup>*cygwin/xterm snapshot*</sup>
 
 You can now do a local filtering of the result by simply adding one or more keywords (or search-terms)
@@ -168,10 +167,10 @@ setLineDash               |    Y     |    12    |    27    |    11    |    Y    
 <h3>List results using Custom Columns</h3>
 
 You can now define custom columns using a comma (or space, semi-column, column)
-separated list with the new option "-u, --custom":
+separated list with the new option "-u, --columns":
 
 ```text
-mdncomp t2d path --custom "chrome,edge,firefox"
+mdncomp t2d path --columns "chrome,edge,firefox"
 --8X--
 DESKTOP                   |Chrome    |Edge      |Firefox
 :-------------------------|:--------:|:--------:|:--------:
@@ -287,7 +286,7 @@ Edge  18   -           nightly
 
     mdncomp sharedarraybuffer --desc --specs
     
-![Description and specifications summary example](https://i.imgur.com/km1qBon.png)<br>
+![Description and specifications summary example](https://i.imgur.com/wpz2LX0.png)<br>
 <sup>*cygwin snapshot*</sup>
 
 <h3>Or as minimal, turning off extra information (here with options `-NRF`)</h3>
@@ -341,12 +340,28 @@ You can also create a scope by providing a keyword or search term:
     $ mdncomp --random audio
     $ mdncomp --random abc --fuzzy --desc
 
-Optional Configuration file
----------------------------
+Global Configuration
+--------------------
 Often used options can be permanently stored in a config file in the user's home
 directory in JSON format.
 
-A sample config file is included. Use the option`--configpath` to get
+To set or clear an option you can do:
+
+    mdncomp --set expert=true
+    mdncomp --set expert=1
+
+A config file is created automatically if none exist.
+
+To clear a setting from the config file use an empty value:
+
+    mdncomp --set expert=
+    mdncomp --set expert
+
+To see valid keys use:
+
+    mdncomp --set ?
+
+You can also edit the config file directly. Use the option`--configpath` to get 
 location to the config folder.
 
 Tip: You can as an alternative, define alias commands in some terminals with 
