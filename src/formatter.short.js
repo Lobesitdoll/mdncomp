@@ -68,7 +68,7 @@ function formatterShort(data) {
     browser
       .forEach((stat, i) => {
         const history = stat.history[ 0 ];
-        let v = utils.versionAddRem(history.version_added, history.version_removed);
+        let v = utils.versionAddRem(history.version_added, history.version_removed, stat.noteIndex.length > 0);
 
         if ( stat.noteIndex.length ) v += "?c*";
         v += (i === browser.length - 1 ? "?w" : "?G");

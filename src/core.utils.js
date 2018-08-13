@@ -393,7 +393,7 @@ const utils = {
     return txt.replace(rx, m => ent[m])
   },
 
-  versionAddRem: (add, rem) => {
+  versionAddRem: (add, rem, hasNotes) => {
     let v = "";
 
     if ( add === null && rem === null ) {
@@ -403,11 +403,11 @@ const utils = {
       v = "?r" + char.no;
     }
     else if ( typeof add === "boolean" ) {
-      if ( add ) v = "?g" + char.yes;
+      if ( add ) v = (hasNotes ? "?y" : "?g") + char.yes;
       else v = "?r" + char.no;
     }
     else if ( typeof add === "string" ) {
-      v = (rem ? "?r" : "?g") + add;
+      v = (rem ? "?r" : (hasNotes ? "?y" : "?g")) + add;
       if ( rem ) v += typeof rem === "boolean" ? "-" + char.unknown : "-" + rem;
     }
 

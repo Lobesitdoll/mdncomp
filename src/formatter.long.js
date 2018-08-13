@@ -232,7 +232,7 @@ function formatterLong(data, recursive = false) {
       .sort(sortRefs)
       .forEach(stat => {
         const history = stat.history[ 0 ];
-        let v = utils.versionAddRem(history.version_added, history.version_removed);
+        let v = utils.versionAddRem(history.version_added, history.version_removed, stat.noteIndex.length > 0);
 
         if ( stat.noteIndex.length ) {
           v += "?c";
@@ -263,7 +263,7 @@ function formatterLong(data, recursive = false) {
         let max = options.history ? browser.history.length : 1;
         for(let i = 0; i < max; i++) {
           const history = browser.history[ i ];
-          let version = utils.ansiFree(utils.versionAddRem(history.version_added, history.version_removed));
+          let version = utils.ansiFree(utils.versionAddRem(history.version_added, history.version_removed, false));
 
           if ( options.history ) {
             let _version = isNaN(version) ? "" : " " + version;
