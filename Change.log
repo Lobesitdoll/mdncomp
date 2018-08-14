@@ -10,6 +10,7 @@ TDO: Basic notification system via the update mechanism (only important messages
 TDO: Deep search option? (search notes, description, flags etc.) "--deep, -p" (modularize progressbar)
 
 2.00.0-alpha.6
+FIX: --list on status now correctly list all entries
 ADD: Support for multiple links in notes.
 ADD: Option "--set" to set or clear a config key.
 IMP: Color coding for added support changed from green to yellow if notes exists.

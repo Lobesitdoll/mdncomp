@@ -101,7 +101,7 @@ function listAPI(prefix, recursive = false) {
         prefix = "P"
       }
 
-      const index = recursive ? "" : "?y[?g" + (i + "").padStart((arr.length + "").length) + "?y]?R ";
+      const index = recursive ? "" : "?y[?g" + (i + "").padStart(Math.log10(arr.length) + 1) + "?y]?R ";
 
       if (color.length) {
         const parts = path.split(".");
@@ -115,35 +115,42 @@ function listAPI(prefix, recursive = false) {
 
 function listOnStatus(statTxt, recursive = false) {
   const result = [];
-  const keys = utils.getRootList(mdn);
 
   if ( statTxt === "standard" ) statTxt += "_track";
 
-  keys.forEach(key1 => {
-    let o = mdn[ key1 ];
-    if ( o.__compat && _check(o) ) result.push(key1);
-    Object.keys(mdn[ key1 ]).forEach(key2 => {
-      let o = mdn[ key1 ][ key2 ];
-      if ( o.__compat && _check(o) ) result.push(key1 + "." + key2);
-      Object.keys(mdn[ key1 ][ key2 ]).forEach(key3 => {
-        let o = mdn[ key1 ][ key2 ][ key3 ];
-        if ( key3.__compat && _check(o) ) result.push(key1 + "." + key2 + "." + key3);
+  utils
+    .getRootList(mdn)
+    .filter(key => key !== "browsers" && key !== "webextensions")
+    .forEach(key => _iterateNode(mdn, key, key));
+
+  function _iterateNode(node, inKey, branch) {
+    const subNode = node[ inKey ];
+
+    if ( typeof subNode === "object" ) {
+      Object.keys(subNode).forEach(key => {
+        if ( key !== "__compat") {
+          if (_check(subNode[key].__compat)) result.push(branch + "." + key);
+          _iterateNode(subNode, key, branch + "." + key);
+        }
       });
-    });
-  });
+    }
+  }
 
   function _check(compat) {
-    const status = compat.__compat.status || {};
-    return !!status[ statTxt ];
+    if (compat) {
+      const status = compat.status || {};
+      return !!status[ statTxt ];
+    }
   }
 
   // colorize
   const color = statTxt === "deprecated" ? "?o" : (statTxt === "experimental" ? "?y" : "?g");
+  const pad = Math.log10(result.length) + 1;
 
   return result
     .sort()
-    .map((res, i, arr) => {
-      const index = recursive ? "" : "?y[?g" + (i + "").padStart((arr.length + "").length) + "?y]?R ";
+    .map((res, i) => {
+      const index = recursive ? "" : "?y[?g" + (i + "").padStart(pad) + "?y]?R ";
       const t = res.lastIndexOf(".") + 1;
       return `?R${index}${res.substr(0, t) + color + res.substr(t)}`;
     });
