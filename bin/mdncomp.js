@@ -77,7 +77,7 @@ const text = {
 
   indexOutOfRange : "Index out of range",
   invalidRegex    : "Invalid regular expression.",
-  invalidColumnIds: "Invalid browser ids in custom columns.",
+  invalidColumnIds: "Invalid browser id in custom columns.",
   notFeatureObject: "Not a feature object or parent to feature(s). Also see the \"--list\" option.",
   versionWarning  : "WARNING: mdncomp is built for Node version 8 or newer. It may not work in older Node.js versions.",
   criticalDataFile: "Critical error: data file not found.\n?yTry running with option --fupdate to download latest snapshot.",
@@ -201,7 +201,7 @@ else {
 /*- SEARCH -------------------------------------------------------------------*/
 
 function search() {
-  const keyword = options.args.shift(); // Note: secondary+ arg(s) is extracted in formatter.common module
+  const keyword = options.args.shift(); // Note: secondary+ args are extracted in formatter.common module
   const result = loadModule("option.search")(keyword);
 
   // no result
@@ -218,7 +218,7 @@ function search() {
 
   // multiple results
   else if ( result.length > 1 && options.index < 0 ) {
-    let pad = ("" + result.length).length;
+    let pad = Math.log10(result.length) + 1;
     let str = "";
     result.forEach((line, i) => {
       str += `?y[?g${("" + i).padStart(pad)}?y] ?w${line}\n`;

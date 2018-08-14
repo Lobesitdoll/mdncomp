@@ -13,8 +13,7 @@
     "email": "epistemex@users.noreply.github.com"
   },
   "scripts": {
-    "start": "node ./bin/mdncomp.min.js",
-    "update": "node ./bin/mdncomp.min.js --update"
+    "start": "node ./bin/mdncomp.min.js"
   },
   "keywords": [
     "mdn",

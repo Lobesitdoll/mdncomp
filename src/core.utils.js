@@ -247,7 +247,7 @@ const utils = {
       .replace(/<\/code>/gi, resetColor)
       .replace(/<a href/gi, linkColor + "<a href")
       .replace(/<\/a>/gi, "</a>" + resetColor)
-      .replace(/(<([^>]+)>)/ig, "");
+      .replace(/(<([^>]+)>)/gi, "");
 
     if ( convTags ) str = str.replace(/&lt;/gi, "<").replace(/&gt;/gi, ">");
     return str;
@@ -363,9 +363,9 @@ const utils = {
     const ent = {
       "&nbsp;": " ",
       "&quot;": "\"",
-      "&amp;": "&",
-      "&lt;": "<",
-      "&gt;": ">",
+      "&amp;" : "&",
+      "&lt;"  : "<",
+      "&gt;"  : ">",
     };
 
     const rx = new RegExp(Object.keys(ent).join("|"), "gi");
