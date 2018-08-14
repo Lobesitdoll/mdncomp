@@ -9,7 +9,7 @@ const Output = loadModule("core.output");
 const table = loadModule("core.table");
 
 const out = new Output(0, lf);
-const browserNames = utils.getBrowserShortNames();
+const browserNames = utils.getBrowserNames();
 const tblOptions = {
   align       : [ "l" ],
   delimiter   : char.sep,
@@ -20,7 +20,7 @@ function formatterShort(data) {
   const tbl = [];
 
   out.addLine(`${lf}?c${data.prePath}?w${data.name}  ${getStatus()}?R`);
-  if (data.url) out.addLine(data.url);
+  if ( data.url ) out.addLine(data.url);
 
   // headers
   const header = [ "?y" + text.hdrBrowsers ];
@@ -36,7 +36,7 @@ function formatterShort(data) {
 
   function getNames(device, color = "?w") {
     const dev = data.browsers[ device ];
-    return dev.map((o, i) => color + browserNames[ o.browser ].padEnd(3) + (i === dev.length - 1 ? "?w" : "?G"));
+    return dev.map((o, i) => color + browserNames[ o.browser ].short.padEnd(3) + (i === dev.length - 1 ? "?w" : "?G"));
   } // : getNames
 
   function doLines() {
@@ -82,7 +82,7 @@ function formatterShort(data) {
   } // :getBrowser
 
   function getStatus() {
-    if (data.path.startsWith("webextensions")) return "";
+    if ( data.path.startsWith("webextensions") ) return "";
     let status = [];
     if ( data.standard ) status.push(`?g${text.standardShort}?R`);
     if ( data.experimental ) status.push(`?y${text.experimentalShort}?R`);

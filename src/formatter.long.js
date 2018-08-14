@@ -11,7 +11,7 @@ const Output = loadModule("core.output");
 const table = loadModule("core.table");
 
 const out = new Output(0, lf);
-const browserNames = utils.getBrowserLongNames();
+const browserNames = utils.getBrowserNames();
 const refs = [ "°", "¹", "²", "³", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "p", "q", "r", "s", "^", "ª", "º" ]; // skipping "o" on purpose
 
 const tblOptions = {
@@ -47,7 +47,7 @@ function formatterLong(data, recursive = false) {
   else {
     // path + api, status, url
     out.addLine("\n?c%0?w%1?R", data.prePath, data.name);
-    if (!isWebExt) {
+    if ( !isWebExt ) {
       out.addLine("%0", getStatus());
     }
     if ( data.url ) out.addLine(data.url ? "?G" + data.url : "-", "?R");
@@ -74,13 +74,13 @@ function formatterLong(data, recursive = false) {
 
   /* Show hints if any -------------------------------------------------------*/
 
-  if (!options.expert) {
-    if ((depHint || nonStdHint || expHint) &&
-      (((options.worker && recursive) || (!options.worker && !recursive)) || ((options.sab && recursive) || (!options.sab && !recursive)))) {
+  if ( !options.expert ) {
+    if ( (depHint || nonStdHint || expHint) &&
+      (((options.worker && recursive) || (!options.worker && !recursive)) || ((options.sab && recursive) || (!options.sab && !recursive))) ) {
       let hint = [];
-      if (expHint) hint.push(`?o!?R = ${text.experimental}`);
-      if (depHint) hint.push(`?r-?R = ${text.deprecated}`);
-      if (nonStdHint) hint.push(`?rX?R = ${text.nonStandard}`);
+      if ( expHint ) hint.push(`?o!?R = ${text.experimental}`);
+      if ( depHint ) hint.push(`?r-?R = ${text.deprecated}`);
+      if ( nonStdHint ) hint.push(`?rX?R = ${text.nonStandard}`);
       out.addLine("?R", hint.join(", "), lf);
     }
   }
@@ -109,17 +109,17 @@ function formatterLong(data, recursive = false) {
       data.links.forEach(link => {
         out.addLine(`?c${link.index}?R: ?y${link.url}?R`);
       });
-      out.addLine()
+      out.addLine();
     }
   }
 
   /* Show flags and history --------------------------------------------------*/
 
-  if ( options.flags || options.history) {
+  if ( options.flags || options.history ) {
     if ( options.desktop ) getFlags("desktop");
     if ( options.mobile ) getFlags("mobile");
     if ( options.ext ) getFlags("ext");
-    if (flags.length) {
+    if ( flags.length ) {
       addHeader(options.history ? text.hdrFlagsHistory : text.hdrFlags);
       out.add(flags.join(lf), lf, lf);
     }
@@ -132,12 +132,12 @@ function formatterLong(data, recursive = false) {
     data.specs.forEach(spec => {
       out.addLine("?w" + `${utils.entities(spec.name)} ?R[${getSpecStatus(spec.status)}?R]${lf}${spec.url}`);
     });
-    out.addLine()
+    out.addLine();
   } // :specs
 
   /* Additional hints --------------------------------------------------------*/
 
-  if (!options.expert) {
+  if ( !options.expert ) {
     if ( workerHint ) {
       out.addLine(utils.breakAnsiLine(text.workerHint, options.maxChars));
       hints = true;
@@ -148,28 +148,28 @@ function formatterLong(data, recursive = false) {
       hints = true;
     }
 
-    if (!options.specs && data.specs.length) {
+    if ( !options.specs && data.specs.length ) {
       out.addLine(text.specsHint);
       hints = true;
     }
 
-    if (!options.desc && data.description.length) {
+    if ( !options.desc && data.description.length ) {
       out.addLine(text.descHint);
       hints = true;
     }
 
-    if (!options.history) {
+    if ( !options.history ) {
       out.addLine(text.historyHint);
       hints = true;
     }
 
-    if (!data.isFiltered && data.children.length > 9) {
+    if ( !data.isFiltered && data.children.length > 9 ) {
       out.addLine(text.filterHint);
       hints = true;
     }
 
-    if (hints) {
-      out.addLine()
+    if ( hints ) {
+      out.addLine();
     }
   }
 
@@ -182,7 +182,7 @@ function formatterLong(data, recursive = false) {
 
     // Header line
     const tableName = [ "?y" + text[ device ].toUpperCase() + "?G" ];
-    const colNames = dev.map(o => `?w${browserNames[ o.browser ].padEnd(10)}?G`);
+    const colNames = dev.map(o => `?w${browserNames[ o.browser ].long.padEnd(10)}?G`);
     tbl.push(tableName.concat(colNames));
 
     // Main feature name
@@ -209,18 +209,18 @@ function formatterLong(data, recursive = false) {
 
     // Status
     let stat = " ";
-    if (!isWebExt) {
-      if (!(data.standard || data.experimental)) {
+    if ( !isWebExt ) {
+      if ( !(data.standard || data.experimental) ) {
         stat += "?rX";
-        nonStdHint = true
+        nonStdHint = true;
       }
-      if (data.experimental) {
+      if ( data.experimental ) {
         stat += "?o!";
-        expHint = true
+        expHint = true;
       }
-      if (data.deprecated) {
+      if ( data.deprecated ) {
         stat += "?r-";
-        depHint = true
+        depHint = true;
       }
     }
     stat = stat.trimRight();
@@ -259,7 +259,7 @@ function formatterLong(data, recursive = false) {
     data
       .browsers[ device ]
       .forEach(browser => {
-        const name = browserNames[ browser.browser ];
+        const name = browserNames[ browser.browser ].long;
 
         if ( browser.history.length ) {
           let max = options.history ? browser.history.length : 1;
@@ -273,7 +273,8 @@ function formatterLong(data, recursive = false) {
               if ( history.prefix ) flags.push(`?y${name}${_version}?w: ${text.vendorPrefix}: ?c${history.prefix}?w`);
               if ( history.partial_implementation ) flags.push(`?y${name}${_version}?w: ${text.partialImpl}.?w`);
               if ( history.notes.length ) {
-                flags.push(`?y${name}${_version}?w: ${text.seeNote} ?c${history.notes.map(i => refs[ i % refs.length ]).join(", ")}?w`);
+                flags.push(`?y${name}${_version}?w: ${text.seeNote} ?c${history.notes.map(i => refs[ i % refs.length ])
+                  .join(", ")}?w`);
               }
             }
 
@@ -322,20 +323,20 @@ function formatterLong(data, recursive = false) {
 
   function getSpecStatus(status) {
     return "?" + ({
-      "RFC"      : "yIETF RFC",
-      "STANDARD" : `g${text.specStandard}`,
-      "REC"      : `g${text.specRec}`,
-      "CR"       : `c${text.candidate} ${text.specRec}`,
-      "LIVING"   : `c${text.specLiving} ${text.specStandard}`,
-      "DRAFT"    : `y${text.specDraft}`,
-      "PR"       : `y${text.specProposed} ${text.specRec}`,
-      "RC"       : `c${text.specRelease} ${text.specCandidate}`,
-      "WD"       : `b${text.specWorking} ${text.specDraft}`,
-      "ED"       : `g${text.specEditors} ${text.specDraft}`,
-      "OBSOLETE" : `r${text.obsolete}`,
-      "LC"       : `y${text.lastCallWorking} ${text.specDraft}`,
+      "RFC"           : "yIETF RFC",
+      "STANDARD"      : `g${text.specStandard}`,
+      "REC"           : `g${text.specRec}`,
+      "CR"            : `c${text.candidate} ${text.specRec}`,
+      "LIVING"        : `c${text.specLiving} ${text.specStandard}`,
+      "DRAFT"         : `y${text.specDraft}`,
+      "PR"            : `y${text.specProposed} ${text.specRec}`,
+      "RC"            : `c${text.specRelease} ${text.specCandidate}`,
+      "WD"            : `b${text.specWorking} ${text.specDraft}`,
+      "ED"            : `g${text.specEditors} ${text.specDraft}`,
+      "OBSOLETE"      : `r${text.obsolete}`,
+      "LC"            : `y${text.lastCallWorking} ${text.specDraft}`,
       "OLD-TRANSFORMS": `o${text.hasMergedAnother} ${text.specDraft.toLowerCase()}`
-    }[ status.toUpperCase() ] || `y${text.status}`) + "?R"
+    }[ status.toUpperCase() ] || `y${text.status}`) + "?R";
   } // : getSpecStatus
 
   function addHeader(txt) {

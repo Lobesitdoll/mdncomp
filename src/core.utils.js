@@ -90,7 +90,7 @@ const utils = {
     }
     catch(err) {
       utils.err(text.invalidRegex);
-      process.exit();
+      process.exit(1);
     }
 
     function getFuzzy(q) {
@@ -137,6 +137,7 @@ const utils = {
     return i ? path.substr(i) : "";
   },
 
+  // todo: use full path -feature?
   prePathFromPath: (mdn, path) => {
     let parts = path.split("."), o = mdn, res = "";
     parts.pop();
@@ -184,50 +185,28 @@ const utils = {
     };
   },
 
-  getBrowserLongNames: () => {
+  getBrowserNames: () => {
     return {
-      "chrome"                 : "Chrome",
-      "edge"                   : "Edge",
-      "firefox"                : "Firefox",
-      "ie"                     : "IE",
-      "opera"                  : "Opera",
-      "safari"                 : "Safari",
-      "chrome_android"         : "Chrome/A",
-      "edge_mobile"            : "Edge/mob",
-      "firefox_android"        : "Firefox/A",
-      "opera_android"          : "Opera/A",
-      "safari_ios"             : "Safari/iOS",
-      "webview_android"        : "Webview/A",
-      "nodejs"                 : "Node JS",
-      "qq_android"             : "QQ/A",
-      "samsunginternet_android": "Samsung/A",
-      "uc_android"             : "UC/A",
-      "uc_chinese_android"     : "UC-Ch/A"
-    };
-  },
+      "chrome"                 : {short: "C", long: "Chrome"},
+      "edge"                   : {short: "E", long: "Edge"},
+      "firefox"                : {short: "F", long: "Firefox"},
+      "ie"                     : {short: "IE", long: "IE"},
+      "opera"                  : {short: "O", long: "Opera"},
+      "safari"                 : {short: "S", long: "Safari"},
 
-  getBrowserShortNames: () => {
-    return {
-      "chrome"                 : "C",
-      "edge"                   : "E",
-      "firefox"                : "F",
-      "ie"                     : "IE",
-      "opera"                  : "O",
-      "safari"                 : "S",
+      "chrome_android"         : {short: "Ca", long: "Chrome/A"},
+      "edge_mobile"            : {short: "Em", long: "Edge/mob"},
+      "firefox_android"        : {short: "Fa", long: "Firefox/A"},
+      "opera_android"          : {short: "Oa", long: "Opera/A"},
+      "safari_ios"             : {short: "Si", long: "Safari/iOS"},
+      "webview_android"        : {short: "Wa", long: "Webview/A"},
 
-      "chrome_android"         : "Ca",
-      "edge_mobile"            : "Em",
-      "firefox_android"        : "Fa",
-      "opera_android"          : "Oa",
-      "safari_ios"             : "Si",
-      "webview_android"        : "Wa",
-
-      "nodejs"                 : "ND",
-      "qq_android"             : "QQ",
-      "samsunginternet_android": "SM",
-      "uc_android"             : "UC",
-      "uc_chinese_android"     : "UCC"
-    };
+      "nodejs"                 : {short: "ND", long: "Node JS"},
+      "qq_android"             : {short: "QQ", long: "QQ/A"},
+      "samsunginternet_android": {short: "SM", long: "Samsung/A"},
+      "uc_android"             : {short: "UC", long: "UC/A"},
+      "uc_chinese_android"     : {short: "UCC", long: "UC-Ch/A"}
+    }
   },
 
   /**
@@ -301,7 +280,7 @@ const utils = {
           if ( len === _max || ch === _lf ) {
             if ( lastBreak < 0 ) lastBreak = i;
 
-            lines.push(s.substring(lineStart, lastBreak).trim());
+            lines.push(s.substring(lineStart, lastBreak));
             lineStart = lastBreak;
             lastBreak = -1;
             len = i - lineStart;

@@ -21,32 +21,32 @@ function format(path, recursive = false, subNotes, subLinks) {
 
   const pathObj = utils.getPathAsObject(mdn, path);
 
-  if (!pathObj.__compat && !utils.hasChildren(pathObj)) {
+  if ( !pathObj.__compat && !utils.hasChildren(pathObj) ) {
     err(utils.breakAnsiLine(`?y${text.notFeatureObject}?R`, options.maxChars));
     process.exitCode = 1;
-    return null
+    return null;
   }
 
-  const browserList = utils.getBrowserList();
+  const browsers = utils.getBrowserList();
 
   // validate custom columns
-  if (options.columns) {
+  if ( options.columns ) {
     //todo share check with --set
     const array = options.columns.split(/[ ,;:]/g);
-    const ids = Object.keys(utils.getBrowserShortNames());
+    const ids = Object.keys(utils.getBrowserNames());
     const columns = array.filter(item => ids.includes(item));
-    if (!columns.length || columns.length !== array.length) {
-      if (!recursive) {
+    if ( !columns.length || columns.length !== array.length ) {
+      if ( !recursive ) {
         err(`\n?y${text.invalidColumnIds}?R`);
         process.exitCode = 1;
-        return null
+        return null;
       }
     }
     else {
-      browserList.desktop = browserList.desktop.filter(item => columns.includes(item));
-      browserList.mobile = browserList.mobile.filter(item => columns.includes(item));
-      browserList.ext = browserList.ext.filter(item => columns.includes(item));
-      options.ext = browserList.ext.length > 0;
+      browsers.desktop = browsers.desktop.filter(item => columns.includes(item));
+      browsers.mobile = browsers.mobile.filter(item => columns.includes(item));
+      browsers.ext = browsers.ext.filter(item => columns.includes(item));
+      options.ext = browsers.ext.length > 0;
     }
   }
 
@@ -83,26 +83,26 @@ function format(path, recursive = false, subNotes, subLinks) {
   };
 
   // extract browser information (forces a slot to contain value or undefined)
-  if (options.desktop && browserList.desktop.length) {
-    browserList.desktop.forEach(key => {
-      result.browsers.desktop.push( mergeSupport(key, support) )
+  if ( options.desktop && browsers.desktop.length ) {
+    browsers.desktop.forEach(key => {
+      result.browsers.desktop.push(mergeSupport(key, support));
     });
   }
 
-  if (options.mobile && browserList.mobile.length) {
-    browserList.mobile.forEach(key => {
-      result.browsers.mobile.push( mergeSupport(key, support) )
+  if ( options.mobile && browsers.mobile.length ) {
+    browsers.mobile.forEach(key => {
+      result.browsers.mobile.push(mergeSupport(key, support));
     });
   }
 
-  if (options.ext && browserList.ext.length) {
-    browserList.ext.filter(key => showNode ? true : key !== "nodejs").forEach(key => {
-      result.browsers.ext.push( mergeSupport(key, support) );
+  if ( options.ext && browsers.ext.length ) {
+    browsers.ext.filter(key => showNode ? true : key !== "nodejs").forEach(key => {
+      result.browsers.ext.push(mergeSupport(key, support));
     });
   }
 
   // get children
-  if (options.children && !recursive) {
+  if ( options.children && !recursive ) {
     const filters = options.args.length
                     ? options.args.map(flt => utils.getComparer(flt, !(flt.includes("*") || flt.startsWith("/")), true))
                     : null;
@@ -113,13 +113,13 @@ function format(path, recursive = false, subNotes, subLinks) {
     options.history = false;
 
     Object.keys(pathObj).forEach(child => {
-      const compat = pathObj[child].__compat;
-      if (compat) {
+      const compat = pathObj[ child ].__compat;
+      if ( compat ) {
         const status = compat.status || {};
-        if (options.obsolete || isWebExt || ((status.experimental || status.standard_track || status.deprecated) && !status.deprecated)) {
+        if ( options.obsolete || isWebExt || ((status.experimental || status.standard_track || status.deprecated) && !status.deprecated) ) {
           const childPath = path + "." + child;
-          if (!filters || testFilter(child, filters)) {
-            result.children.push(format(childPath, true, result.notes, result.links))
+          if ( !filters || testFilter(child, filters) ) {
+            result.children.push(format(childPath, true, result.notes, result.links));
           }
         }
       }
@@ -129,17 +129,17 @@ function format(path, recursive = false, subNotes, subLinks) {
   }
 
   function testFilter(key, filters) {
-    for(let f of filters) if (f.test(key)) return true;
+    for(let f of filters) if ( f.test(key) ) return true;
   }
 
   function mergeSupport(key, supportObj) {
     const history = [];
     const noteIndices = [];
-    const support = supportObj[key] || {};
+    const support = supportObj[ key ] || {};
 
     // Support entries for this specific browser
-    let entries = Array.isArray(support) ? support : [support];
-    if (!options.history) entries = [entries[0]];
+    let entries = Array.isArray(support) ? support : [ support ];
+    if ( !options.history ) entries = [ entries[ 0 ] ];
 
     const _notes = (subNotes || result.notes);
     const _links = (subLinks || result.links);
@@ -148,60 +148,60 @@ function format(path, recursive = false, subNotes, subLinks) {
       const localNotesIndices = [];
 
       // all notes for this entry
-      if (options.notes && (entry.notes || entry.prefix || entry.alternative_name || entry.partial_implementation)) {
+      if ( options.notes && (entry.notes || entry.prefix || entry.alternative_name || entry.partial_implementation) ) {
         const notes = Array.isArray(entry.notes) ? entry.notes : (entry.notes ? [ entry.notes ] : []);
 
-        if (entry.prefix) {
-          notes.push(text.vendorPrefix + ": " + entry.prefix)
+        if ( entry.prefix ) {
+          notes.push(text.vendorPrefix + ": " + entry.prefix);
         }
 
-        if (entry.alternative_name) {
+        if ( entry.alternative_name ) {
           notes.push(
             text.versionColumn + utils.ansiFree(utils.versionAddRem(entry.version_added, entry.version_removed)) + text.usesAltName + entry.alternative_name
-          )
+          );
         }
 
-        if (entry.partial_implementation) {
-          notes.push(text.partialImpl)
+        if ( entry.partial_implementation ) {
+          notes.push(text.partialImpl);
         }
 
         notes.forEach(note => {
           let index = getNoteIndex(note, _notes);
-          if (index < 0) {
+          if ( index < 0 ) {
             index = _notes.length;
-            _notes.push({index, note});
+            _notes.push({ index, note });
 
             // extract links
             note.replace(rxAhref, (a, b, href) => {
-              _links.push({index: index, url: href});
-            })
+              _links.push({ index: index, url: href });
+            });
           }
 
           noteIndices.push(index);
-          localNotesIndices.push(index)
+          localNotesIndices.push(index);
         });
       }
 
-      if (options.history || (!options.history && !history.length)) {
+      if ( options.history || (!options.history && !history.length) ) {
         history.push(Object.assign(entry, {
           version_removed: entry.version_removed || (entry.version_added === null ? null : false),
           flags          : entry.flags || [],
           notes          : localNotesIndices
-        }))
+        }));
       }
     });
 
-    return {browser: key, history, noteIndex: noteIndices.sort()}
+    return { browser: key, history, noteIndex: noteIndices.sort() };
   }
 
   function getNoteIndex(note, notes) {
     for(let i = 0; i < notes.length; i++) {
-      if (notes[i].note === note) return notes[i].index
+      if ( notes[ i ].note === note ) return notes[ i ].index;
     }
-    return -1
+    return -1;
   }
 
-  return result
+  return result;
 }
 
 module.exports = format;
