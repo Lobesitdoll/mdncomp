@@ -74,5 +74,6 @@ REM: Option "--mdn" removed.
 REM: Option "--waitkey" removed. Was for scripting; use script equivalent instead.
 REM: Options "--doc" and "--docforce".
 
+Checkout branch version-1 to see Change.log for version 1.
 
 (c) Epistemex 2018
