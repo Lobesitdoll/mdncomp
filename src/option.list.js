@@ -120,19 +120,20 @@ function listOnStatus(statTxt, recursive = false) {
 
   utils
     .getRootList(mdn)
-    .filter(key => key !== "browsers" && key !== "webextensions")
+    .filter(key => key !== "webextensions")
     .forEach(key => _iterateNode(mdn, key, key));
 
   function _iterateNode(node, inKey, branch) {
     const subNode = node[ inKey ];
 
     if ( typeof subNode === "object" ) {
-      Object.keys(subNode).forEach(key => {
-        if ( key !== "__compat") {
+      Object
+        .keys(subNode)
+        .filter(key => key !== "__compat")
+        .forEach(key => {
           if (_check(subNode[key].__compat)) result.push(branch + "." + key);
           _iterateNode(subNode, key, branch + "." + key);
-        }
-      });
+        });
     }
   }
 
@@ -144,7 +145,7 @@ function listOnStatus(statTxt, recursive = false) {
   }
 
   // colorize
-  const color = statTxt === "deprecated" ? "?o" : (statTxt === "experimental" ? "?y" : "?g");
+  const color = statTxt === "deprecated" ? "?r" : (statTxt === "experimental" ? "?y" : "?g");
   const pad = Math.log10(result.length) + 1;
 
   return result

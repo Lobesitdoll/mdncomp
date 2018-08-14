@@ -21,7 +21,6 @@ function search(keyword, sensitive) {
 
   utils
     .getRootList(mdn)
-    .filter(key => key !== "browsers")
     .forEach(key => _iterateNode(mdn, key, key));
 
   function _iterateNode(node, inKey, branch) {
