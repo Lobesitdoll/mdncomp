@@ -4,15 +4,14 @@
  */
 
 const fs = require("fs");
-const path = require("path");
+const Path = require("path");
 const zlib = require("zlib");
-
-const io = require("./core.io");
 const rfc6902 = require("rfc6902");
+const io = loadModule("core.io");
 
+const filePrefix = Path.join(__dirname, "../data") + Path.sep;                                      // Local data/ path
 const urlPrefix = "https://raw.githubusercontent.com/epistemex/mdncomp-data/master/";               // Main server
 const urlPrefixR = "https://gitlab.com/epistemex/mdncomp-data/raw/master/";                         // Redundancy server
-const filePrefix = path.normalize(path.dirname(process[ "mainModule" ].filename) + "/../data/");    // Local data/ path
 
 const clr = ANSI.clrToCursor + ANSI.cursorUp;
 const PWIDTH = 40;
@@ -109,7 +108,7 @@ function getCurrentData() {
 
 /**
  * Update data
- * @param {boolean} [force=false] - ignore diff file (todo)
+ * @param {boolean} force - ignore patch file
  * @param {boolean} checkOnly - check if an update is available, but don't update
  */
 function update(force, checkOnly) {
@@ -138,12 +137,14 @@ function update(force, checkOnly) {
           log("Applying patch...\n");
 
           let patch = JSON.parse(patchStr);
-          rfc6902.applyPatch(data, patch).forEach(err => {
-            if ( err ) {
-              err(`?rError with "${err.name}": ${err.message}?R`);
-              hasErrors = true;
-            }
-          });
+          rfc6902
+            .applyPatch(data, patch)
+            .forEach(err => {
+              if ( err ) {
+                err(`?rError with "${err.name}": ${err.message}?R`);
+                hasErrors = true;
+              }
+            });
 
           if ( hasErrors ) {
             err(`?rError during patching ${md5.local} -> ${md5.remote}.?y${lf}Downloading full dataset...?R`);
@@ -164,12 +165,12 @@ function update(force, checkOnly) {
         else if ( entry.op === "remove" ) removes++;
         else if ( entry.op === "replace" ) updates++;
       });
-      log(`?RDiff: ${adds} adds, ${updates} updates, ${removes} removes\n`)
+      log(`?RDiff summary: ${adds} adds, ${updates} updates, ${removes} removes\n`)
     }
 
     function _remote() {
-      getRemoteData((err, data) => {
-        if ( err ) err(err);
+      getRemoteData((_err, data) => {
+        if ( _err ) err(_err);
         else {
           _save(data, md5.remote);
         }
@@ -181,7 +182,7 @@ function update(force, checkOnly) {
         fs.writeFileSync(filePrefix + "data.json", data, "utf-8");
         fs.writeFileSync(filePrefix + "data.md5", remoteMD5, "utf-8");
       }
-      catch(err) {err(err)}
+      catch(_err) {err(_err)}
 
       clrLine();
       log("?gData updated!?R")

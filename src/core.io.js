@@ -20,48 +20,55 @@ module.exports = {
    * @param {boolean} [rawBuffer=false] - if true send back raw buffer to callback, otherwise string
    */
   request: function(url, onResp, onProgress, onData, onError, rawBuffer) {
-    onResp = onResp || function() {return true};
+    onResp = onResp || (() => true);
 
     let _res;
 
-    const req = https.get(url, res => {
-      let buffer = [], current = 0;
-      _res = res;
+    const req = https
+      .get(url, res => {
+        const buffer = [];
+        let current = 0;
+        _res = res;
 
-      // handle redirects
+        // handle redirects
 
-      if (!res || !res.statusCode) {
-        onError("Could not connect");
-      }
-      else if (res.statusCode === 301 || res.statusCode === 302) {
-        return this.request(res.headers.location, onResp, onProgress, onData, onError);
-      }
-      else if (res.statusCode === 200 && onResp({headers: res.headers})) {
-        let length = res.headers["content-length"]|0;
-        res.on("data", d => {
-          buffer.push(d);
-          current += d.length;
-          if (onProgress) onProgress(length ? current / length : (current % 7) / 7);
-        }).on("end", () => {
-          onData(rawBuffer ? Buffer.concat(buffer) : Buffer.concat(buffer).toString());
-        });
-      }
-      else if (onError) _error(res, "");
+        if (!res || !res.statusCode) {
+          onError("Could not connect");
+        }
+        else if (res.statusCode === 301 || res.statusCode === 302) {
+          return this.request(res.headers.location, onResp, onProgress, onData, onError);
+        }
+        else if (res.statusCode === 200 && onResp({headers: res.headers})) {
+          let length = res.headers["content-length"]|0;
+          res.on("data", d => {
+            buffer.push(d);
+            current += d.length;
+            if (onProgress) onProgress(length ? current / length : (current % 7) / 7);
+          }).on("end", () => {
+            onData(rawBuffer ? Buffer.concat(buffer) : Buffer.concat(buffer).toString());
+          });
+        }
+        else if (onError) _error(res, "");
 
-    }).on("error", err => _error(_res, err));
+      })
+      .on("error", err => _error(_res, err));
 
     req.end();
 
-    function _error(res, err) {
-      if (onError) onError({statusCode: res && res.statusCode ? res.statusCode : -1, error: err});
-      else log("Error", res, err);
+    function _error(res, error) {
+      if (onError) onError({statusCode: res && res.statusCode ? res.statusCode : -1, error: error});
+      else err("Error", res, error);
     }
   },
 
   getConfigRootPath: function() {
-    let app = process.platform === "win32" ? path.resolve(process.env.APPDATA, "../../") : process.env.HOME;
-    return (process.platform === "darwin")
-           ? require("path").resolve(app, "/Library/Preferences") : app
+    let app = process.platform === "win32"
+              ? path.resolve(process.env.APPDATA, "../../")
+              : process.env.HOME;
+
+    return process.platform === "darwin"
+           ? require("path").resolve(app, "/Library/Preferences")
+           : app
   },
 
   getConfigPath: function() {

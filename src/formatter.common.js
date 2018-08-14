@@ -50,7 +50,7 @@ function format(path, recursive = false, subNotes, subLinks) {
     }
   }
 
-  const rxAhref = /<a\s+(?:[^>]*?\s+)?href=(["'])(.*?)\1/;
+  const rxAhref = /<a\s+(?:[^>]*?\s+)?href=(["'])(.*?)\1/gi;
   const compat = pathObj.__compat || {};
   const support = compat.support || {};
   const status = compat.status || {};
@@ -172,11 +172,9 @@ function format(path, recursive = false, subNotes, subLinks) {
             _notes.push({index, note});
 
             // extract links
-            let link;
-            while(link = note.match(rxAhref)) {
-              _links.push({index: index, url: link[link.length - 1]});
-              note = note.replace(link[0], "")
-            }
+            note.replace(rxAhref, (a, b, href) => {
+              _links.push({index: index, url: href});
+            })
           }
 
           noteIndices.push(index);

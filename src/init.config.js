@@ -57,9 +57,6 @@ function initConfig(options) {
 
   const config = Object.assign({ options: {}, formatter: { sepChar: char.sep } }, loadConfigFile());
 
-  // todo build object based on default values for booleans. To be used as NOT object for config file.
-  // options[]->defaultValue, bool?
-
   // apply valid settings from config file
   Object.keys(config.options).forEach(key => {
     const valid = keys.get(key);
@@ -106,17 +103,6 @@ function initConfig(options) {
     }
     else {
       delete config.options[ key ];
-    }
-
-    // create folder for config if not exists
-    try {
-      if (!fs.existsSync(io.getConfigDataPath())) {
-        fs.mkdirSync(io.getConfigDataPath())
-      }
-    }
-    catch(_err) {
-      err(`?rCould not create config folder: ${io.getConfigDataPath()}.${DEBUG ? lf + _err : ""}?R`);
-      process.exit(1);
     }
 
     // save back config and exit

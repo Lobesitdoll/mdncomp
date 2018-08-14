@@ -12,7 +12,7 @@ const table = loadModule("core.table");
 
 const out = new Output(0, lf);
 const browserNames = utils.getBrowserLongNames();
-const refs = [ "°", "¹", "²", "³", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "^", "ª", "º", "'", "\"", "`" ];
+const refs = [ "°", "¹", "²", "³", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "p", "q", "r", "s", "^", "ª", "º" ]; // skipping "o" on purpose
 
 const tblOptions = {
   align       : [ "l" ],
@@ -45,6 +45,7 @@ function formatterLong(data, recursive = false) {
       .addLine("%0", getStatus());
   }
   else {
+    // path + api, status, url
     out.addLine("\n?c%0?w%1?R", data.prePath, data.name);
     if (!isWebExt) {
       out.addLine("%0", getStatus());
@@ -59,8 +60,8 @@ function formatterLong(data, recursive = false) {
 
     // Description
     if ( options.desc && data.description && data.description !== data.short ) {
-      let desc = utils.entities("?R" + utils.breakAnsiLine(utils.cleanHTML(data.description), options.maxChars));
-      out.addLine(lf, desc, lf);
+      let desc = utils.entities("?w" + utils.breakAnsiLine(utils.cleanHTML(data.description, true, ANSI.white), options.maxChars));
+      out.addLine(lf, desc);
     }
   }
 
@@ -119,7 +120,7 @@ function formatterLong(data, recursive = false) {
     if ( options.mobile ) getFlags("mobile");
     if ( options.ext ) getFlags("ext");
     if (flags.length) {
-      addHeader(text.hdrFlagsHistory);
+      addHeader(options.history ? text.hdrFlagsHistory : text.hdrFlags);
       out.add(flags.join(lf), lf, lf);
     }
   }
@@ -203,9 +204,8 @@ function formatterLong(data, recursive = false) {
     out.add(lf, "?G", table(tbl, tblOptions));
   }
 
-  function getLine(name, status, data, isChild /*, bgToggle*/) {
+  function getLine(name, status, data, isChild) {
     const color = isChild ? "?R" : (data.isCompat ? "?w" : "?g");
-      //const bg = bgToggle % 4 === 0 ? ANSI.bg2 : ANSI.bg1;
 
     // Status
     let stat = " ";
@@ -226,7 +226,7 @@ function formatterLong(data, recursive = false) {
     stat = stat.trimRight();
 
     // feature/child name as first entry
-    const result = [ color /* + bg*/ + utils.getFeatureName(name) + stat + "?G" ];
+    const result = [ color + utils.getFeatureName(name) + stat + "?G" ];
 
     status
       .sort(sortRefs)
@@ -249,57 +249,61 @@ function formatterLong(data, recursive = false) {
         }
 
         v += "?G";
-        result.push(/*bg + */ v);
+        result.push(v);
       });
 
     return result;
   } // : getLine
 
   function getFlags(device) {
-    data.browsers[ device ].forEach(browser => {
-      const name = browserNames[ browser.browser ];
+    data
+      .browsers[ device ]
+      .forEach(browser => {
+        const name = browserNames[ browser.browser ];
 
-      if ( browser.history.length ) {
-        let max = options.history ? browser.history.length : 1;
-        for(let i = 0; i < max; i++) {
-          const history = browser.history[ i ];
-          let version = utils.ansiFree(utils.versionAddRem(history.version_added, history.version_removed, false));
+        if ( browser.history.length ) {
+          let max = options.history ? browser.history.length : 1;
+          for(let i = 0; i < max; i++) {
+            const history = browser.history[ i ];
+            let version = utils.ansiFree(utils.versionAddRem(history.version_added, history.version_removed, false));
 
-          if ( options.history ) {
-            let _version = isNaN(version) ? "" : " " + version;
-            if ( history.alternative_name ) flags.push(`?y${name}${_version}?w: ${text.altName}: ?c${history.alternative_name}?w`);
-            if ( history.prefix ) flags.push(`?y${name}${_version}?w: ${text.vendorPrefix}: ?c${history.prefix}?w`);
-            if ( history.partial_implementation ) flags.push(`?y${name}${_version}?w: ${text.partialImpl}.?w`);
-            if ( history.notes.length ) {
-              flags.push(`?y${name}${_version}?w: ${text.seeNote} ?c${history.notes.map(i => refs[ i % refs.length ]).join(", ")}?w`);
+            if ( options.history ) {
+              let _version = isNaN(version) ? "" : " " + version;
+              if ( history.alternative_name ) flags.push(`?y${name}${_version}?w: ${text.altName}: ?c${history.alternative_name}?w`);
+              if ( history.prefix ) flags.push(`?y${name}${_version}?w: ${text.vendorPrefix}: ?c${history.prefix}?w`);
+              if ( history.partial_implementation ) flags.push(`?y${name}${_version}?w: ${text.partialImpl}.?w`);
+              if ( history.notes.length ) {
+                flags.push(`?y${name}${_version}?w: ${text.seeNote} ?c${history.notes.map(i => refs[ i % refs.length ]).join(", ")}?w`);
+              }
+            }
+
+            if ( options.flags && history.flags.length ) {
+              version = isNaN(version) ? "" : " " + version;
+
+              let entry = "?y" + name + version + ":?w ";
+              history
+                .flags
+                .forEach(flag => {
+                  switch( flag.type ) {
+                    case "preference":
+                      entry += `${text.thisFeatBehind} ?c${flag.name}?w ${text.preference}`;
+                      if ( flag.value_to_set ) entry += ` (${text.setTo} ?c${flag.value_to_set}?w)`;
+                      entry += ".";
+                      break;
+                    case "compile_flag":
+                      entry += `${text.compileWith} ?c${flag.name}?w ${text.setTo} ?c${flag.value_to_set}?w.`;
+                      break;
+                    case "runtime_flag":
+                      entry += `${text.startWith} ?c${flag.name}?w.`;
+                      break;
+                  }
+                });
+
+              flags.push(utils.breakAnsiLine(entry, options.maxChars));
             }
           }
-
-          if ( options.flags && history.flags.length ) {
-            version = isNaN(version) ? "" : " " + version;
-
-            let entry = "?y" + name + version + ":?w ";
-            history.flags.forEach(flag => {
-              switch( flag.type ) {
-                case "preference":
-                  entry += `${text.thisFeatBehind} ?c${flag.name}?w ${text.preference}`;
-                  if ( flag.value_to_set ) entry += ` (${text.setTo} ?c${flag.value_to_set}?w)`;
-                  entry += ".";
-                  break;
-                case "compile_flag":
-                  entry += `${text.compileWith} ?c${flag.name}?w ${text.setTo} ?c${flag.value_to_set}?w.`;
-                  break;
-                case "runtime_flag":
-                  entry += `${text.startWith} ?c${flag.name}?w.`;
-                  break;
-              }
-            });
-
-            flags.push(utils.breakAnsiLine(entry, options.maxChars));
-          }
         }
-      }
-    });
+      });
   } // : getFlags
 
   function hasLink(str) {
