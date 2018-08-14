@@ -171,10 +171,14 @@ function format(path, recursive = false, subNotes, subLinks) {
             index = _notes.length;
             _notes.push({index, note});
 
-            // extract any links
-            let link = note.match(rxAhref);
-            if (link) _links.push({index: index, url: link[link.length - 1]});
+            // extract links
+            let link;
+            while(link = note.match(rxAhref)) {
+              _links.push({index: index, url: link[link.length - 1]});
+              note = note.replace(link[0], "")
+            }
           }
+
           noteIndices.push(index);
           localNotesIndices.push(index)
         });
