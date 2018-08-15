@@ -1,10 +1,10 @@
-/*!
+/*
   Search module
   Copyright (c) 2018 Epistemex
   www.epistemex.com
 */
 
-const utils = require("./core.utils");
+const utils = loadModule("core.utils");
 const mdn = utils.loadMDN();
 
 /**
@@ -24,24 +24,25 @@ function search(keyword, sensitive) {
     .forEach(key => _iterateNode(mdn, key, key));
 
   function _iterateNode(node, inKey, branch) {
-    const subNode = node[inKey];
+    const subNode = node[ inKey ];
 
-    if (typeof subNode === "object") {
-      Object.keys(subNode).forEach(key => {
-        if (key !== "__compat" && key !== "worker_support" && key !== "sharedarraybuffer_support" && key !== "SharedArrayBuffer_as_param") {
+    if ( typeof subNode === "object" ) {
+      Object
+        .keys(subNode)
+        .filter(key => key !== "__compat" && key !== "worker_support" && key !== "sharedarraybuffer_support" && key !== "SharedArrayBuffer_as_param")
+        .forEach(key => {
           let cBranch = branch + "." + key;
-          if (cmp.test(cBranch) && ((key !== inKey && result.length) || !result.length)) {
+          if ( cmp.test(cBranch) && ((key !== inKey && result.length) || !result.length) ) {
             result.push(cBranch);
           }
           else {
             _iterateNode(subNode, key, branch + "." + key);
           }
-        }
-      });
+        });
     }
   }
 
-  return result
+  return result;
 }
 
 module.exports = search;
