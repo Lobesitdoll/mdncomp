@@ -126,7 +126,18 @@ Object.assign(global, {
   text,
   loadModule,
   shortPad: 1,
-  char    : { sep: "|", progressBar: "#", yes: "Y", no: "-", unknown: "?", feature: "F", parent: "P", branch: "B", flags: "F", notes: "*" },
+  char    : {
+    sep        : "|",
+    progressBar: "#",
+    yes        : "Y",
+    no         : "-",
+    unknown    : "?",
+    feature    : "F",
+    parent     : "P",
+    branch     : "B",
+    flags      : "F",
+    notes      : "*"
+  },
   lang    : "en-US",
   ANSI    : loadModule("core.ansi"),
   log     : utils.log,
@@ -252,10 +263,10 @@ function showResults(path) {
   const preFormat = loadModule("formatter.common")(path);
   if (!preFormat ) return;
 
-  const results = loadModule(options.shorthand ? "formatter.short" : "formatter.long")(preFormat);
+  loadModule(options.shorthand ? "formatter.short" : "formatter.long")(preFormat);
 
   // Add footer
-  log(results, "?pData from MDN - `npm i -g mdncomp` by epistemex?w?R");
+  log("?pData from MDN - `npm i -g mdncomp` by epistemex?w?R");
 }
 
 /*- SYSTEM -------------------------------------------------------------------*/

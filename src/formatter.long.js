@@ -7,10 +7,8 @@
 "use strict";
 
 const utils = loadModule("core.utils");
-const Output = loadModule("core.output");
 const table = loadModule("core.table");
 
-const out = new Output(0, lf);
 const browserNames = utils.getBrowserNames();
 const refs = [ "°", "¹", "²", "³", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "p", "q", "r", "s", "^", "ª", "º" ]; // skipping "o" on purpose
 
@@ -35,42 +33,41 @@ function formatterLong(data, recursive = false) {
   /* Header ------------------------------------------------------------------*/
 
   if ( data.name === "worker_support" ) {
-    out
-      .addLine(lf, "?c", text.hdrWorkers, "?w")
-      .addLine("%0", getStatus());
+    log(`${lf}?c${text.hdrWorkers}?w`);
+    log(getStatus());
   }
   else if ( data.name === "SharedArrayBuffer_as_param" ) {
-    out
-      .addLine(lf, "?c", text.hdrSAB, "?w")
-      .addLine("%0", getStatus());
+    log(`${lf}?c${text.hdrSAB}?w`);
+    log(getStatus());
   }
   else {
     // path + api, status, url
-    out.addLine("\n?c%0?w%1?R", data.prePath, data.name);
+    log(`\n?c${data.prePath}?w${data.name}?R`);
     if ( !isWebExt ) {
-      out.addLine("%0", getStatus());
+      log(getStatus());
     }
-    if ( data.url ) out.addLine(data.url ? "?G" + data.url : "-", "?R");
+    if ( data.url ) log((data.url ? "?G" + data.url : "-") + "?R");
 
     // Short title
     if ( data.short && data.short.length ) {
       let short = utils.entities("?R" + utils.breakAnsiLine(utils.cleanHTML(data.short), options.maxChars));
-      out.addLine(short, lf);
+      log(short, lf);
     }
 
     // Description
     if ( options.desc && data.description && data.description !== data.short ) {
       let desc = utils.entities("?w" + utils.breakAnsiLine(utils.cleanHTML(data.description, true, ANSI.white), options.maxChars));
-      out.addLine(lf, desc);
+      log(lf + desc);
     }
   }
+
+  log();
 
   /* Show table data ---------------------------------------------------------*/
 
   if ( options.desktop && data.browsers.desktop.length ) doDevice("desktop");
   if ( options.mobile && data.browsers.mobile.length ) doDevice("mobile");
   if ( options.ext && data.browsers.ext.length ) doDevice("ext");
-  out.addLine();
 
   /* Show hints if any -------------------------------------------------------*/
 
@@ -81,7 +78,7 @@ function formatterLong(data, recursive = false) {
       if ( expHint ) hint.push(`?o!?R = ${text.experimental}`);
       if ( depHint ) hint.push(`?r-?R = ${text.deprecated}`);
       if ( nonStdHint ) hint.push(`?rX?R = ${text.nonStandard}`);
-      out.addLine("?R", hint.join(", "), lf);
+      log("?R" + hint.join(", ") + lf);
     }
   }
 
@@ -99,17 +96,17 @@ function formatterLong(data, recursive = false) {
       res += `?R${utils.cleanHTML(note.note, true, "?R", "?c", "?y")}`;
       res += hasLink(note.note) ? `?R ${text.refLink} ${note.index}.?R` : "?R";
 
-      out.addLine(utils.breakAnsiLine(res, options.maxChars));
+      log(utils.breakAnsiLine(res, options.maxChars));
     });
-    out.addLine();
+    log();
 
     // Links in notes
     if ( options.notes && data.links.length ) {
       addHeader(text.hdrLinks);
       data.links.forEach(link => {
-        out.addLine(`?c${link.index}?R: ?y${link.url}?R`);
+        log(`?c${link.index}?R: ?y${link.url}?R`);
       });
-      out.addLine();
+      log();
     }
   }
 
@@ -121,7 +118,7 @@ function formatterLong(data, recursive = false) {
     if ( options.ext ) getFlags("ext");
     if ( flags.length ) {
       addHeader(options.history ? text.hdrFlagsHistory : text.hdrFlags);
-      out.add(flags.join(lf), lf, lf);
+      log(flags.join(lf) + lf);
     }
   }
 
@@ -130,46 +127,46 @@ function formatterLong(data, recursive = false) {
   if ( options.specs && data.specs.length ) {
     addHeader(text.hdrSpecs);
     data.specs.forEach(spec => {
-      out.addLine("?w" + `${utils.entities(spec.name)} ?R[${getSpecStatus(spec.status)}?R]${lf}${spec.url}`);
+      log(`?w${utils.entities(spec.name)} ?R[${getSpecStatus(spec.status)}?R]${lf}${spec.url}`);
     });
-    out.addLine();
+    log();
   } // :specs
 
   /* Additional hints --------------------------------------------------------*/
 
   if ( !options.expert ) {
     if ( workerHint ) {
-      out.addLine(utils.breakAnsiLine(text.workerHint, options.maxChars));
+      log(utils.breakAnsiLine(text.workerHint, options.maxChars));
       hints = true;
     }
 
     if ( sabHint ) {
-      out.addLine(lf, utils.breakAnsiLine(text.sabHint, options.maxChars));
+      log(utils.breakAnsiLine(text.sabHint, options.maxChars));
       hints = true;
     }
 
     if ( !options.specs && data.specs.length ) {
-      out.addLine(text.specsHint);
+      log(text.specsHint);
       hints = true;
     }
 
     if ( !options.desc && data.description.length ) {
-      out.addLine(text.descHint);
+      log(text.descHint);
       hints = true;
     }
 
     if ( !options.history ) {
-      out.addLine(text.historyHint);
+      log(text.historyHint);
       hints = true;
     }
 
     if ( !data.isFiltered && data.children.length > 9 ) {
-      out.addLine("?R" + text.filterHint);
+      log("?R" + text.filterHint);
       hints = true;
     }
 
     if ( hints ) {
-      out.addLine();
+      log();
     }
   }
 
@@ -201,7 +198,7 @@ function formatterLong(data, recursive = false) {
       });
     }
 
-    out.add(lf, "?G", table(tbl, tblOptions));
+    log("?G" + table(tbl, tblOptions));
   }
 
   function getLine(name, status, data, isChild) {
@@ -340,14 +337,13 @@ function formatterLong(data, recursive = false) {
   } // : getSpecStatus
 
   function addHeader(txt) {
-    out.addLine(`?c${ANSI.underline}${txt}`);
+    log(`?c${ANSI.underline}${txt}`);
   }
 
   function sortRefs(a, b) {
     return a < b ? -1 : (a > b ? 1 : 0);
   }
 
-  return out.toString();
 }
 
 module.exports = formatterLong;

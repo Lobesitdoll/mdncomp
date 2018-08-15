@@ -12,7 +12,6 @@ module.exports = (grunt) => {
           "bin/mdncomp.min.js"           : ["bin/mdncomp.js"],
           "build/core.ansi.js"           : ["src/core.ansi.js"],
           "build/core.io.js"             : ["src/core.io.js"],
-          "build/core.output.js"         : ["src/core.output.js"],
           "build/core.table.js"          : ["src/core.table.js"],
           "build/core.update.js"         : ["src/core.update.js"],
           "build/core.utils.js"          : ["src/core.utils.js"],

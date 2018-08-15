@@ -5,10 +5,8 @@
 */
 
 const utils = loadModule("core.utils");
-const Output = loadModule("core.output");
 const table = loadModule("core.table");
 
-const out = new Output(0, lf);
 const browserNames = utils.getBrowserNames();
 const tblOptions = {
   align       : [ "l" ],
@@ -22,8 +20,8 @@ let hasFlags = false;
 function formatterShort(data) {
   const tbl = [];
 
-  out.addLine(`${lf}?c${data.prePath}?w${data.name}  ${getStatus()}?R`);
-  if ( data.url ) out.addLine(data.url);
+  log(`${lf}?c${data.prePath}?w${data.name}  ${getStatus()}?R`);
+  if ( data.url ) log("?G" + data.url + "?R");
 
   // headers
   const header = [ "?y" + text.hdrBrowsers ];
@@ -35,15 +33,15 @@ function formatterShort(data) {
 
   // table data
   tbl.push(...doLines());
-  out.add(lf, table(tbl, tblOptions), lf);
+  log(lf + table(tbl, tblOptions));
 
   // hints
   if (!options.expert) {
     const hints = [];
     hints.push(`?c${char.notes}?R) ${text.someNotesHint}`);
     hints.push(`?c${char.flags}?R) ${text.someFlagsHint}`);
-    out.addLine(hints.join(", "));
-    if (hints.length) out.addLine(text.someHints, lf)
+    log(hints.join(", "));
+    if (hints.length) log(text.someHints + lf)
   }
 
   function getNames(device, color = "?w") {
@@ -109,7 +107,7 @@ function formatterShort(data) {
     return status.length ? "?G[" + status.join(", ") + "?G]?R" : "?R";
   } // : getStatus
 
-  return out.toString();
+  //return out.toString();
 }
 
 module.exports = formatterShort;
