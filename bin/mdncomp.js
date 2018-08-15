@@ -78,7 +78,7 @@ const text = {
   valid            : "Valid",
   browserIds       : "browser identifiers:",
   statuses         : "statuses",
-  pathRoots        : "path roots",
+  pathRoots        : "root paths",
   addOptionIndex   : "Add option '-i <n>' to list a specific feature using the same search.",
 
   indexOutOfRange : "Index out of range",

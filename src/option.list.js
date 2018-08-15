@@ -16,8 +16,8 @@ function list(path, recursive = false) {
   // top-levels
   if ( typeof path !== "string" || !path.length || path === "." ) {
     log(`?R${text.valid} ${text.pathRoots}:`);
-    log(`?g${utils.getRootList(mdn).join(lf)}?R`);
-    log(lf + `${text.valid} ${text.statuses}:`);
+    log(`?g${ utils.getRootList(mdn).join(lf) }?R` + lf);
+    log(`${text.valid} ${text.statuses}:`);
     log("?gstandard, experimental, deprecated?R");
   }
 
@@ -120,7 +120,7 @@ function listAPI(prefix, recursive = false) {
         prefix = char.branch;
       }
 
-      const index = recursive ? "" : "?y[?g" + (i + "").padStart(Math.log10(arr.length) + 1) + "?y]?R ";
+      const index = recursive ? "" : `?y[?g${ (i + "").padStart(Math.log10(arr.length) + 1) }?y]?R `;
 
       if (color.length) {
         const parts = path.split(".");
@@ -170,9 +170,9 @@ function listOnStatus(statTxt, recursive = false) {
   return result
     .sort()
     .map((res, i) => {
-      const index = recursive ? "" : "?y[?g" + (i + "").padStart(pad) + "?y]?R ";
+      const index = recursive ? "" : `?y[?g${ (i + "").padStart(pad) }?y]?R `;
       const t = res.lastIndexOf(".") + 1;
-      return `?R${index}${res.substr(0, t) + color + res.substr(t)}`;
+      return `?R${index}${ res.substr(0, t) + color + res.substr(t) }`;
     });
 }
 
