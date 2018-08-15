@@ -14,11 +14,10 @@ const tblOptions = {
   stringLength: utils.ansiLength
 };
 
-let hasNotes = false;
-let hasFlags = false;
-
 function formatterShort(data) {
   const tbl = [];
+  let hasNotes = false;
+  let hasFlags = false;
 
   log(`${lf}?c${data.prePath}?w${data.name}  ${getStatus()}?R`);
   if ( data.url ) log("?G" + data.url + "?R");
