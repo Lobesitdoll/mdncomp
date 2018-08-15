@@ -48,7 +48,7 @@ module.exports = (() => {
     .option("--specs", "Show specification links")
     .option("-w, --worker", "Show detailed worker information.")
     .option("--sab", "Show detailed SharedArrayBuffer as param information.")
-    .option("--obsolete", "Show obsolete, non-standard and deprecated child features.")
+    .option("--no-obsolete", "Hide obsolete, non-standard and deprecated child features.")
     .option("-u, --columns <columns>", "Define custom columns using valid browser ids (see -b)")
     .option("--update", "Update data from remote if available")
     .option("--fupdate", "Force update full data-set from remote")

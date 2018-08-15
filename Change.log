@@ -10,6 +10,7 @@ TDO: Basic notification system via the update mechanism (only important messages
 TDO: Deep search option? (search notes, description, flags etc.) "--deep, -p" (modularize progressbar)
 
 2.00.0-alpha.6
+CHG: Option "--obsolete" made inverse -> "--no-obsolete" and must be given to hide obsolete entries
 ADD: Legends/hints for "--shorthand" format (flags, notes)
 ADD: Legends/hints for "--list" results
 FIX: "--list" on status now correctly list all entries
@@ -17,7 +18,6 @@ ADD: Support for multiple links in notes.
 ADD: Option "--set" to set or clear a config key.
 IMP: Color coding for added support changed from green to yellow if notes exists.
 IMP: "--ext" option automatically applied when "--columns" contains extended browsers
-TDO: Does it make more sense enabling obsoletes by default? (inverse of what is now, see "--obsolete")
 
 2.00.0-alpha.5
 NPM: published bypassing private npm, another version bump due to build mode...
