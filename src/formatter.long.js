@@ -245,7 +245,7 @@ function formatterLong(data, recursive = false) {
         }
 
         if ( options.flags && history.flags && history.flags.length ) {
-          v += isChild ? "?mF" : "?bF";
+          v += (isChild ? "?m" : "?b") + char.flags;
         }
 
         v += "?G";

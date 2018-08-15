@@ -123,7 +123,7 @@ Object.assign(global, {
   text,
   loadModule,
   shortPad: 1,
-  char    : { sep: "|", progressBar: "#", yes: "Y", no: "-", unknown: "?", feature: "F", parent: "P", branch: "B" },
+  char    : { sep: "|", progressBar: "#", yes: "Y", no: "-", unknown: "?", feature: "F", parent: "P", branch: "B", flags: "F" },
   lang    : "en-US",
   ANSI    : loadModule("core.ansi"),
   log     : utils.log,
