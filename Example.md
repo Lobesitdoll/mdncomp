@@ -1,7 +1,8 @@
-Example output shorthand format and with extended browser information (index 1
-pre-selected from search result):
+Example output shorthand format and with extended browser information:
 
-    $ mdncomp rendcontext 1 -sx
+    $ mdncomp t2d -sx
+
+(cropped to showing table only)
 
 Browsers:               |C  |E  |F  |IE |O  |S  |Ca |Em |Fa |Oa |Si |Wa |QQ |SM |UC |UCC
 :-----------------------|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:
@@ -43,6 +44,8 @@ createPattern           | Y |12 | Y | Y | Y | Y | Y | Y | Y | Y | Y | Y | - | Y 
 createRadialGradient    | Y |12 | Y | Y | Y | Y | Y | Y | Y | Y | Y | Y | - | Y | - | - 
 drawFocusIfNeeded       | Y | ? |32 | - | Y | Y | Y | ? |32 | Y | Y | Y | - | Y | - | - 
 drawImage               | Y |12 | Y | Y | Y | Y | Y | Y | Y | Y | Y | Y | - | Y | - | - 
+-drawWidgetAsOnScreen   | - | - |41 | - | - | - | - | - |41 | - | - | - | - | - | - | - 
+-drawWindow             | - | - | Y | - | - | - | - | - | Y | - | - | - | - | - | - | - 
 ellipse                 |31 |13 |48 | - |18 | 9 | Y | Y | Y | - | Y | - | - | Y | - | - 
 fill                    | Y |12 | Y | Y | Y | Y | Y | Y | Y | Y | Y | Y | - | Y | - | - 
 fillRect                | Y |12 | Y | Y | Y | Y | Y | Y | Y | Y | Y | Y | - | Y | - | - 
@@ -74,4 +77,4 @@ translate               | Y |12 | Y | Y | Y | Y | Y | Y | Y | Y | Y | Y | - | Y 
 
 Terminal snapshot (cygwin):
 
-![cygwin](https://i.imgur.com/8MZ5VIB.png)
+![cygwin](https://i.imgur.com/3FWXpJe.png)
