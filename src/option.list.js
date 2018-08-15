@@ -7,6 +7,10 @@
 const utils = loadModule("core.utils");
 const mdn = utils.loadMDN();
 
+let hasFeatures = false;
+let hasParent = false;
+let hasBranch = false;
+
 function list(path, recursive = false) {
 
   // top-levels
@@ -54,6 +58,14 @@ function list(path, recursive = false) {
     }
     else {
       log(result);
+
+      if (!options.expert) {
+        const hints = [];
+        if (hasFeatures) hints.push(`?c${char.feature}?R = ${text.listFeature}`);
+        if (hasParent) hints.push(`?g${char.parent}?R = ${text.listParent}`);
+        if (hasBranch) hints.push(`?y${char.branch}?R = ${text.listBranch}`);
+        if (hints.length) log(utils.breakAnsiLine(lf + hints.join(", "), options.maxChars))
+      }
     }
   }
 }
@@ -89,16 +101,23 @@ function listAPI(prefix, recursive = false) {
     .sort()
     .map((path, i, arr) => {
       const obj = utils.getPathAsObject(mdn, path);
-      let color = "";
-      let prefix = "?GB?R";
+      let color;
+      let prefix;
 
       if (obj.__compat) {
+        hasFeatures = true;
         color = "?c";
-        prefix = "F"
+        prefix = char.feature
       }
       else if (utils.hasChildren(obj)) {
+        hasParent = true;
         color = "?g";
-        prefix = "P"
+        prefix = char.parent
+      }
+      else {
+        hasBranch = true;
+        color = "?y";
+        prefix = char.branch;
       }
 
       const index = recursive ? "" : "?y[?g" + (i + "").padStart(Math.log10(arr.length) + 1) + "?y]?R ";
