@@ -164,7 +164,7 @@ function formatterLong(data, recursive = false) {
     }
 
     if ( !data.isFiltered && data.children.length > 9 ) {
-      out.addLine(text.filterHint);
+      out.addLine("?R" + text.filterHint);
       hints = true;
     }
 

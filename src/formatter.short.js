@@ -16,6 +16,9 @@ const tblOptions = {
   stringLength: utils.ansiLength
 };
 
+let hasNotes = false;
+let hasFlags = false;
+
 function formatterShort(data) {
   const tbl = [];
 
@@ -33,6 +36,15 @@ function formatterShort(data) {
   // table data
   tbl.push(...doLines());
   out.add(lf, table(tbl, tblOptions), lf);
+
+  // hints
+  if (!options.expert) {
+    const hints = [];
+    hints.push(`?c${char.notes}?R) ${text.someNotesHint}`);
+    hints.push(`?c${char.flags}?R) ${text.someFlagsHint}`);
+    out.addLine(hints.join(", "));
+    if (hints.length) out.addLine(text.someHints, lf)
+  }
 
   function getNames(device, color = "?w") {
     const dev = data.browsers[ device ];
@@ -70,10 +82,14 @@ function formatterShort(data) {
         const history = stat.history[ 0 ];
         let v = utils.versionAddRem(history.version_added, history.version_removed, stat.noteIndex.length > 0);
 
-        if ( stat.noteIndex.length ) v += "?c*";
+        if ( stat.noteIndex.length ) {
+          hasNotes = true;
+          v += "?c" + char.notes;
+        }
         v += (i === browser.length - 1 ? "?w" : "?G");
 
         if ( history.flags && history.flags.length ) {
+          hasFlags = true;
           v += (isChild ? "?m" : "?b") + char.flags + "?G";
         }
 
