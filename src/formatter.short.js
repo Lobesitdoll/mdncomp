@@ -20,7 +20,7 @@ function formatterShort(data) {
   let hasFlags = false;
 
   log(`${lf}?c${data.prePath}?w${data.name}  ${getStatus()}?R`);
-  if ( data.url ) log("?G" + data.url + "?R");
+  if ( data.url ) log(`?G${data.url}?R`);
 
   // headers
   const header = [ "?y" + text.hdrBrowsers ];
@@ -37,10 +37,12 @@ function formatterShort(data) {
   // hints
   if (!options.expert) {
     const hints = [];
-    hints.push(`?c${char.notes}?R) ${text.someNotesHint}`);
-    hints.push(`?c${char.flags}?R) ${text.someFlagsHint}`);
-    log(hints.join(", "));
-    if (hints.length) log(text.someHints + lf)
+    if (hasNotes) hints.push(`?c${char.notes}?R) ${text.someNotesHint}`);
+    if (hasFlags) hints.push(`?c${char.flags}?R) ${text.someFlagsHint}`);
+    if (hints.length) {
+      log(hints.join(", "));
+      log(text.someHints + lf)
+    }
   }
 
   function getNames(device, color = "?w") {
@@ -98,15 +100,16 @@ function formatterShort(data) {
 
   function getStatus() {
     if ( data.path.startsWith("webextensions") ) return "";
-    let status = [];
+
+    const status = [];
     if ( data.standard ) status.push(`?g${text.standardShort}?R`);
     if ( data.experimental ) status.push(`?y${text.experimentalShort}?R`);
     if ( data.deprecated ) status.push(`?r${text.deprecatedShort}?R`);
     if ( !status.length ) status.push(`?r${text.nonStandardShort}?R`);
-    return status.length ? "?G[" + status.join(", ") + "?G]?R" : "?R";
+
+    return status.length ? `?G[${status.join(", ")}?G]?R` : "?R";
   } // : getStatus
 
-  //return out.toString();
 }
 
 module.exports = formatterShort;
