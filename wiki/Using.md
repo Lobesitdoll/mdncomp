@@ -98,6 +98,10 @@ $ mdncomp "/\.Panner|\.Analyse/gi"
 [15] api.PannerNode.setPosition
 ```
 
+IMPORTANT: If you use pipe chars (|) in the regular expression you need to
+enclose the expression in quotes. Otherwise it will be interpreted as a pipe
+operation in the CLI.
+
 An error will be displayed if the regex is invalid.
 
 **Special cases to consider:**
@@ -114,13 +118,13 @@ mdncomp api.blob.
 or using wildcards:
 
 ```text
-mdncomp html*toblob.
+mdncomp html*toblob
 ```
 
 or using fuzzy terms (add option [`--fuzzy` or `-z`](./Options.md#-z-fuzzy)):
 
 ```text
-mdncomp -z hctblb.
+mdncomp -z hctblb
 -> will find HTMLCanvasElement.toBlob
 ```
 
@@ -131,16 +135,14 @@ Saving data to file
 
 We can also output the information to files instead of to the console.
 
-Simply add the option [`-o, --out`](./Options.md#-o-out-):
-
 ```text
-mdncomp blobuilder -o blob-builder.txt
+mdncomp blobuilder --no-colors > blob-builder.txt
 ```
 
-Here we'll end up with a plain text file. If we wanted ANSI codes we could use:
+Here we'll end up with a plain text file. If we want to keep the ANSI codes:
 
 ```text
-mdncomp blobuilder -o blob-builder.ansi
+mdncomp blobuilder > blob-builder.ansi
 ```
 
 Using --list
@@ -149,10 +151,8 @@ List can be powerful in two ways: it can navigate by branches which will give yo
 of all the content in each API branch, and two: it can provide lists with status such as deprecated,
 experimental, standard as well as list object that misses documentation links.
 
-To get top-level use a dot:
-
 ```text
-mdncomp --list .
+mdncomp --list
 -->
 api
 css
@@ -221,10 +221,10 @@ Browser release status
 mdncomp will also list status of a browser, or all of a certain status using the
 [`-b, --browser`](./Options.md#-b-browser) option.
 
-To list supported browser names you can use a single dot:
+To list supported browser ids:
 
 ```text
-mdncomp -b .
+mdncomp -b
 ->
 Valid browser identifiers:
 chrome
