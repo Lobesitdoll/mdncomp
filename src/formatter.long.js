@@ -23,26 +23,31 @@ const tblOptions = {
 function formatterLong(data, recursive = false) {
   const isWebExt = data.path.startsWith("webextensions");
   const flags = [];
-  let workerHint = false;
-  let sabHint = false;
-  let expHint = false;
-  let depHint = false;
-  let nonStdHint = false;
-  let hints = false;
+  const hint = {
+    worker: false,
+    sab   : false,
+    exp   : false,
+    dep   : false,
+    nonStd: false,
+    parent: false
+  };
+  let hasHints = false;
 
   /* Header ------------------------------------------------------------------*/
 
+  if ( !recursive ) log();
+
   if ( data.name === "worker_support" ) {
-    log(`${lf}?c${text.hdrWorkers}?w`);
+    log(`?c${text.hdrWorkers}?w`);
     log(getStatus());
   }
   else if ( data.name === "SharedArrayBuffer_as_param" ) {
-    log(`${lf}?c${text.hdrSAB}?w`);
+    log(`?c${text.hdrSAB}?w`);
     log(getStatus());
   }
   else {
     // path + api, status, url
-    log(`\n?c${data.prePath}?w${data.name}?R`);
+    log(`?c${data.prePath}?w${data.name}?R`);
     if ( !isWebExt ) {
       log(getStatus());
     }
@@ -51,7 +56,7 @@ function formatterLong(data, recursive = false) {
     // Short title
     if ( data.short && data.short.length ) {
       let short = utils.entities("?R" + utils.breakAnsiLine(utils.cleanHTML(data.short), options.maxChars));
-      log(short, lf);
+      log(short + lf);
     }
 
     // Description
@@ -72,13 +77,14 @@ function formatterLong(data, recursive = false) {
   /* Show hints if any -------------------------------------------------------*/
 
   if ( !options.expert ) {
-    if ( (depHint || nonStdHint || expHint) &&
+    if ( (hint.dep || hint.nonStd || hint.exp || hint.parent) &&
       (((options.worker && recursive) || (!options.worker && !recursive)) || ((options.sab && recursive) || (!options.sab && !recursive))) ) {
-      let hint = [];
-      if ( expHint ) hint.push(`?o!?R = ${text.experimental}`);
-      if ( depHint ) hint.push(`?r-?R = ${text.deprecated}`);
-      if ( nonStdHint ) hint.push(`?rX?R = ${text.nonStandard}`);
-      log("?R" + hint.join(", ") + lf);
+      let hints = [];
+      if ( hint.exp ) hints.push(`?o${char.experimental}?R = ${text.experimental}`);
+      if ( hint.dep ) hints.push(`?r${char.deprecated}?R = ${text.deprecated}`);
+      if ( hint.nonStd ) hints.push(`?r${char.nonStd}?R = ${text.nonStandard}`);
+      if ( hint.parent ) hints.push(`?g${char.parent}?R = ${text.listParent}`);
+      log("?R" + hints.join(", ") + lf);
     }
   }
 
@@ -126,56 +132,57 @@ function formatterLong(data, recursive = false) {
 
   if ( options.specs && data.specs.length ) {
     addHeader(text.hdrSpecs);
-    data.specs.forEach(spec => {
-      log(`?w${utils.entities(spec.name)} ?R[${getSpecStatus(spec.status)}?R]${lf}${spec.url}`);
-    });
+    data
+      .specs
+      .forEach(spec => {
+        log(`?w${utils.entities(spec.name)} ?R[${getSpecStatus(spec.status)}?R]${lf}${spec.url}`);
+      });
+
     log();
   } // :specs
 
   /* Additional hints --------------------------------------------------------*/
 
-  if ( !options.expert ) {
-    if ( workerHint ) {
-      log(utils.breakAnsiLine(text.workerHint, options.maxChars));
-      hints = true;
+  function logHint(txt) {
+    log(txt);
+    hasHints = true;
+  }
+
+  if ( !options.expert && !recursive ) {
+
+    if ( hint.worker ) {
+      logHint(utils.breakAnsiLine(text.workerHint, options.maxChars));
     }
 
-    if ( sabHint ) {
-      log(utils.breakAnsiLine(text.sabHint, options.maxChars));
-      hints = true;
+    if ( hint.sab ) {
+      logHint(utils.breakAnsiLine(text.sabHint, options.maxChars));
     }
 
     if ( !options.specs && data.specs.length ) {
-      log(text.specsHint);
-      hints = true;
+      logHint(text.specsHint);
     }
 
     if ( !options.desc && data.description.length ) {
-      log(text.descHint);
-      hints = true;
+      logHint(text.descHint);
     }
 
     if ( !options.history ) {
-      log(text.historyHint);
-      hints = true;
+      logHint(text.historyHint);
     }
 
     if ( !data.isFiltered && data.children.length > 9 ) {
-      log("?R" + text.filterHint);
-      hints = true;
+      logHint("?R" + text.filterHint);
     }
 
-    if ( hints ) {
-      log();
-    }
+    if ( hasHints ) log();
   }
 
   /* Helpers -----------------------------------------------------------------*/
 
   function doDevice(device) {
+    const tbl = [];
     const dev = data.browsers[ device ];
     const dataName = data.name;
-    const tbl = [];
 
     // Header line
     const tableName = [ "?y" + text[ device ].toUpperCase() + "?G" ];
@@ -183,18 +190,23 @@ function formatterLong(data, recursive = false) {
     tbl.push(tableName.concat(colNames));
 
     // Main feature name
-    tbl.push(getLine(data.isCompat ? dataName : "P " + dataName, dev, data, false /*, 2*/));
+    let _dataName = dataName;
+    if (!data.isCompat) {
+      _dataName = char.parent + " " + dataName;
+      hint.parent = true;
+    }
+    tbl.push(getLine(_dataName, dev, data, false));
 
     if ( options.children && data.children.length ) {
-      data.children.forEach((child /*, i*/) => {
+      data.children.forEach((child) => {
         let name = child.name;
 
-        if ( !workerHint && !options.worker && name === "worker_support" ) workerHint = true;
-        if ( !sabHint && !options.sab && name === "SharedArrayBuffer_as_param" ) sabHint = true;
+        if ( !hint.worker && !options.worker && name === "worker_support" ) hint.worker = true;
+        if ( !hint.sab && !options.sab && name === "SharedArrayBuffer_as_param" ) hint.sab = true;
 
         if ( name === dataName ) name += "()";
 
-        tbl.push(getLine(name, child.browsers[ device ], child, true/*, i+2*/));
+        tbl.push(getLine(name, child.browsers[ device ], child, true));
       });
     }
 
@@ -206,20 +218,22 @@ function formatterLong(data, recursive = false) {
 
     // Status
     let stat = " ";
+
     if ( !isWebExt ) {
       if ( !(data.standard || data.experimental) ) {
-        stat += "?rX";
-        nonStdHint = true;
+        stat += "?r" + char.nonStd;
+        hint.nonStd = true;
       }
       if ( data.experimental ) {
-        stat += "?o!";
-        expHint = true;
+        stat += "?o" + char.experimental;
+        hint.exp = true;
       }
       if ( data.deprecated ) {
-        stat += "?r-";
-        depHint = true;
+        stat += "?r" + char.deprecated;
+        hint.dep = true;
       }
     }
+
     stat = stat.trimRight();
 
     // feature/child name as first entry
@@ -270,8 +284,8 @@ function formatterLong(data, recursive = false) {
               if ( history.prefix ) flags.push(`?y${name}${_version}?w: ${text.vendorPrefix}: ?c${history.prefix}?w`);
               if ( history.partial_implementation ) flags.push(`?y${name}${_version}?w: ${text.partialImpl}.?w`);
               if ( history.notes.length ) {
-                flags.push(`?y${name}${_version}?w: ${text.seeNote} ?c${history.notes.map(i => refs[ i % refs.length ])
-                  .join(", ")}?w`);
+                const _noteRefs = history.notes.map(i => refs[ i % refs.length ]).join(", ");
+                flags.push(`?y${name}${_version}?w: ${text.seeNote} ?c${_noteRefs}?w`);
               }
             }
 
@@ -305,8 +319,7 @@ function formatterLong(data, recursive = false) {
   } // : getFlags
 
   function hasLink(str) {
-    // todo make this more solid?
-    return str.includes("<a href");
+    return str.includes("<a");
   }
 
   function getStatus() {
