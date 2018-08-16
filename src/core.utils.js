@@ -399,6 +399,28 @@ const utils = {
   err: function(...args) {
     console.error(utils.parseColorCodes(args.join(" ")));
   }
+
+//  getLongestAbove: (min) => {
+//    return utils
+//      .bcdToList(utils.loadMDN())
+//      .sort((a, b) => {
+//        return a.length > b.length ? -1 : (a.length > b.length ? 1 : 0)
+//      })
+//      .filter(item => item.length >= min)
+//  }
+
+//  longestPath: () => {
+//    const _list = utils.bcdToList(utils.loadMDN());
+//    let max = 0, index = -1;
+//    _list.forEach((item, i) => {
+//      if (item.length > max) {
+//        max = item.length;
+//        index = i
+//      }
+//    });
+//    return _list[index]
+//  }
+
 };
 
 module.exports = utils;
