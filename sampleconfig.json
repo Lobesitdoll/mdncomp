@@ -6,6 +6,9 @@
       This file allow you to permanently set options you use frequently.
       You can suspend the settings in here using the option --no-config.
 
+      You can create it manually using this as a template, or simply use the new "--set" option to automatically
+      create and set values in the correct format.
+
       Only define options you use frequently. Any other options below should be deleted to
       allow them being used from the command line (these help entries should be deleted as well)
 
@@ -23,7 +26,7 @@
     "shorthand"     : false,    // show a compressed output table
     "notes"         : true,     // show notes (if any)
     "flags"         : true,     // show flags details (if any)
-    "history"       : false,     // show detailed history list (if any)
+    "history"       : false,    // show detailed history list (if any)
     "desc"          : false,    // show a short description for the feature
     "specs"         : false,    // show specification links for this feature
     "worker"        : false,    // show worker support information for a feature (if any)
