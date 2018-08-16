@@ -12,9 +12,10 @@ TDO: Option to allow unicode characters (✓ instead of "Y" etc.) ?
 TDO: Deep search option? (search notes, description, flags etc.) "--deep, -p" (modularize progressbar)
 TDO: Basic notification system via the update mechanism (only important messages, breaking changes etc.)
 TDO: Locale infrastructure (main program, let lang-code affect which update file to download -> update service)
+TDO: Renumber link references
 
 2.00.0-alpha.6
-TDO: "--expert" from boolean to level? 0=all hints, 1=only table legends, 2=none
+CHG: "--expert" from boolean to level: 0 = all hints, 1 = table legends only, 2 = none
 ADD: Shortcut "-O" to option "--no-obsolete"
 REM: Removing options "--worker", "--sab"
 IMP: Version marking (via "--history")

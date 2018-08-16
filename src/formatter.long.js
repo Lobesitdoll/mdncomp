@@ -73,7 +73,7 @@ function formatterLong(data) {
 
   /* Show hints if any -------------------------------------------------------*/
 
-  if ( !options.expert ) {
+  if ( options.expert < 2 ) {
     if ( hint.dep || hint.nonStd || hint.exp || hint.parent || hint.flags ) {
       let hints = [];
       if ( hint.exp ) hints.push(`?y${char.experimental}?R = ${text.experimental}`);
@@ -151,7 +151,7 @@ function formatterLong(data) {
     hasHints = true;
   }
 
-  if ( !options.expert ) {
+  if ( options.expert < 1) {
 
     if ( !options.specs && data.specs.length ) {
       logHint(text.specsHint);

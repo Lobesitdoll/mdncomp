@@ -24,6 +24,7 @@ function initConfig(options) {
 
   const nop = (v) => v;
   const mx = (v) => Math.max(0, v | 0);
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v | 0));
   const isBool = (v) => typeof v === "boolean";
   const isNum = (v) => typeof v === "number";
   const toBool = (v) => !(v === "0" || v.toLowerCase() === "false");
@@ -51,7 +52,7 @@ function initConfig(options) {
     .set("colors", { type: isBool, convert: toBool, validate: nop })
     .set("maxChars", { type: isNum, convert: toNum, validate: mx })
     .set("columns", { type: isList, convert: toList, validate: valList })
-    .set("expert", { type: isBool, convert: toBool, validate: nop });
+    .set("expert", { type: isNum, convert: toNum, validate: v => clamp(v, 0, 2) });
 
   /*- Load / Init Config file if any -------------------------------------------------------------*/
 

@@ -35,7 +35,7 @@ function formatterShort(data) {
   log(lf + table(tbl, tblOptions));
 
   // hints
-  if (!options.expert) {
+  if (options.expert < 2) {
     const hints = [];
     if (hasNotes) hints.push(`?c${char.notes}?R) ${text.someNotesHint}`);
     if (hasFlags) hints.push(`?c${char.flags}?R) ${text.someFlagsHint}`);

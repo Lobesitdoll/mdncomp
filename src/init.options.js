@@ -60,7 +60,7 @@ module.exports = (() => {
     .option("--set <kv>", "Set key/value for config file. Use ? to list valid keys.")
     //.option("--get [key]", "Get value for key from config file. If no arg. show config file.") // todo --get
     .option("--configpath", "Show path to where config file and cache is stored")
-    .option("--expert", "Expert mode - disables hints.")
+    .option("--expert [level]", "Expert mode - disables hints.", 0)
     .on("--help", extendedHelp)
     .parse(args);
 
