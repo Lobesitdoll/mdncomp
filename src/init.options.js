@@ -56,7 +56,6 @@ module.exports = (() => {
     .option("--max-chars <width>", "Max number of chars per line before wrap", 84)
     .option("-G, --no-config", "Ignore config file")
 //    .option("--read", "Mark notifications in the current update as read") // todo notifications
-    // CHECK: --set - possible bug in commander when using [kv] + default -> can't show default help, always keys
     .option("--set <kv>", "Set key/value for config file. Use ? to list valid keys.")
     //.option("--get [key]", "Get value for key from config file. If no arg. show config file.") // todo --get
     .option("--configpath", "Show path to where config file and cache is stored")
