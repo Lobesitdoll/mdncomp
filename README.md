@@ -357,7 +357,7 @@ To clear a setting from the config file use an empty value:
     mdncomp --set expert=
     mdncomp --set expert
 
-To see valid keys use:
+To see a list of valid keys that can be used:
 
     mdncomp --set ?
 

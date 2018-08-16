@@ -21,17 +21,17 @@ function show() {
     log(text ? text : "Unknown option.");
   }
   else {
-    log();
     log("  Examples:");
-    log("    mdncomp arcTo         show information for arcTo");
-    log("    mdncomp html*toblob   will find HTMLCanvasElement.toBlob");
-    log("    mdncomp -z hctbb.     will find HTMLCanvasElement.toBlob (fuzzy)");
-    log("    mdncomp --list        list all top-level paths");
+    log("    mdncomp arcTo            show information for arcTo");
+    log("    mdncomp html*toblob      will find HTMLCanvasElement.toBlob");
+    log("    mdncomp -z hctbb.        will find HTMLCanvasElement.toBlob (fuzzy)");
+    log("    mdncomp --list           list root paths");
     log()
   }
 
   // Welcome message and reminder to update data
   const frPath = Path.join(__dirname, "../data/.firstrun");
+
   if (!fs.existsSync(frPath)) {
     log("?g" + "-".repeat(76));
     log("  ?gWELCOME! This seem to be the first run. To get the latest data file run:\n");
@@ -41,7 +41,7 @@ function show() {
     try {
       if (!DEBUG) fs.writeFileSync(frPath, "OK", "utf-8")
     }
-    catch(err) {if (DEBUG) console.error(err)}
+    catch(err) {console.error(err)}
   }
 
   process.exit()

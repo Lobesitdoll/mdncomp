@@ -8,6 +8,7 @@ TDO: Locale support (msg + descriptions in sep. files)
 TDO: User input evaluation (https://github.com/epistemex/mdncomp/issues/8)
 TDO: Basic notification system via the update mechanism (only important messages, breaking changes etc.)
 TDO: Deep search option? (search notes, description, flags etc.) "--deep, -p" (modularize progressbar)
+TDO: Locale infrastructure (main program, let lang-code affect which update file to download)
 
 2.00.0-alpha.6
 CHG: Option "--obsolete" made inverse -> "--no-obsolete" and must be given to hide obsolete entries
@@ -18,6 +19,7 @@ ADD: Support for multiple links in notes.
 ADD: Option "--set" to set or clear a config key.
 IMP: Color coding for added support changed from green to yellow if notes exists.
 IMP: "--ext" option automatically applied when "--columns" contains extended browsers
+IMP: All error output goes to STDERR, the rest to STDOUT
 
 2.00.0-alpha.5
 NPM: published bypassing private npm, another version bump due to build mode...
