@@ -11,7 +11,7 @@ Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data
 
     $ mdncomp html*toblob
 
-![xterm color output](https://i.imgur.com/EAZ5kik.png)<br>
+![xterm color output](https://i.imgur.com/kaOJPc3.png)<br>
 <sup>*cygwin/xterm snapshot*</sup>
 
 Features
@@ -90,27 +90,26 @@ Using wildcard:
 ```text
 $ mdncomp html*toblob
 
-HTMLCanvasElement.toBlob
-On Standard Track
-https://developer.mozilla.org/docs/Web/API/HTMLCanvasElement/toBlob
-
-DESKTOP      |Chrome    |Edge      |Firefox   |IE        |Opera     |Safari
-:------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
-toBlob       |    50    |    -     |    19    |   10°    |    37    |    Y¹
-Image_quality|    50    |    -     |    25    |    -     |    Y     |    -
-
-MOBILE       |Chrome/A  |Edge/mob  |Firefox/A |Opera/A   |Safari/iOS|Webview/A
-:------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
-toBlob       |    50    |    -     |    4     |    37    |    -     |    50
-Image_quality|    -     |    -     |    25    |    -     |    ?     |    50
-
-NOTES:
-°: Vendor prefix: ms
-¹: See WebKit bug 71270. Ref link 1.
-
-LINKS:
-1: https://bugs.webkit.org/show_bug.cgi?id=71270
-```
+api.HTMLCanvasElement.toBlob                                                       
+On Standard Track                                                                  
+https://developer.mozilla.org/docs/Web/API/HTMLCanvasElement/toBlob                
+                                                                                   
+DESKTOP          |Chrome    |Edge      |Firefox   |IE        |Opera     |Safari    
+:----------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
+toBlob           |    50    |    -     |    19    |   10°    |    37    |    Y¹    
+Image_quality    |    50    |    -     |    25    |    -     |    Y     |    -     
+                                                                                   
+MOBILE           |Chrome/A  |Edge/mob  |Firefox/A |Opera/A   |Safari/iOS|Webview/A 
+:----------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
+toBlob           |    50    |    -     |    4     |    37    |    -     |    50    
+Image_quality    |    -     |    -     |    25    |    -     |    ?     |    50    
+                                                                                   
+NOTES                                                                              
+°: Vendor prefix: ms                                                               
+¹: See WebKit bug 71270. Ref link 1.                                               
+                                                                                   
+LINKS                                                                              
+1: https://bugs.webkit.org/show_bug.cgi?id=71270                                   ```
 
 or using the absolute feature path (case-insensitive, see option `-c`):
 
@@ -143,23 +142,23 @@ to the argument list. For example - this will only list child features containin
 ```text
 $ mdncomp t2d line
 
-api.CanvasRenderingContext2D
-Experimental
-https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D
-
-DESKTOP                   |Chrome    |Edge      |Firefox   |IE        |Opera     |Safari
+api.CanvasRenderingContext2D                                                                
+Experimental                                                                                
+https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D                         
+                                                                                            
+DESKTOP                   |Chrome    |Edge      |Firefox   |IE        |Opera     |Safari    
 :-------------------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
-CanvasRenderingContext2D !|    1     |    Y     |   1.5    |    9     |    9     |    2
-lineCap                   |    Y     |    12    |    Y     |    Y     |    Y     |    Y
-lineDashOffset            |    Y     |    12    |    27    |    11    |    Y     |    Y
-lineJoin                  |    Y     |    12    |    Y     |    Y     |    Y     |    Y
-lineWidth                 |    Y     |    12    |    Y     |    Y     |    Y     |    Y
-textBaseline              |    Y     |    12    |   3.5    |    9     |    Y     |    Y
-createLinearGradient      |    Y     |    12    |    Y     |    Y     |    Y     |    Y
-getLineDash               |    Y     |    12    |    27    |    11    |    Y     |    Y
-lineTo                    |    Y     |    12    |    Y     |    Y     |    Y     |    Y
-scrollPathIntoView !      |    YF    |    ?     |    -     |    -     |    Y     |    -
-setLineDash               |    Y     |    12    |    27    |    11    |    Y     |    Y
+CanvasRenderingContext2D !|    1     |    Y     |   1.5    |    9     |    9     |    2     
+lineCap                   |    Y     |    12    |    Y     |    Y     |    Y     |    Y     
+lineDashOffset            |    Y     |    12    |    27    |    11    |    Y     |    Y     
+lineJoin                  |    Y     |    12    |    Y     |    Y     |    Y     |    Y     
+lineWidth                 |    Y     |    12    |    Y     |    Y     |    Y     |    Y     
+textBaseline              |    Y     |    12    |   3.5    |    9     |    Y     |    Y     
+createLinearGradient      |    Y     |    12    |    Y     |    Y     |    Y     |    Y     
+getLineDash               |    Y     |    12    |    27    |    11    |    Y     |    Y     
+lineTo                    |    Y     |    12    |    Y     |    Y     |    Y     |    Y     
+scrollPathIntoView !      |    YF    |    ?     |    -     |    -     |    Y     |    -     
+setLineDash               |    Y     |    12    |    27    |    11    |    Y     |    Y     
 ---8X---
 ! = Experimental
 ```
@@ -172,13 +171,12 @@ separated list with the new option "-u, --columns":
 ```text
 mdncomp t2d path --columns "chrome,edge,firefox"
 --8X--
-DESKTOP                   |Chrome    |Edge      |Firefox
+DESKTOP                   |Chrome    |Edge      |Firefox   
 :-------------------------|:--------:|:--------:|:--------:
 CanvasRenderingContext2D !|    1     |    Y     |   1.5    
 beginPath                 |    Y     |    12    |    Y     
 closePath                 |    Y     |    12    |    Y     
 isPointInPath             |    Y     |    12    |    Y     
-scrollPathIntoView !      |    YF    |    ?     |    -     
 --8X--
 ```
 
@@ -191,18 +189,18 @@ To list root simply add the option `--list` (or shorthand `-l`) with no argument
 ```text
 mdncomp --list
 ->
-Valid path roots:
-api
-css
-html
-http
-javascript
-mathml
-svg
-webdriver
-webextensions
-
-Valid statuses:
+Valid root paths:                 
+api                               
+css                               
+html                              
+http                              
+javascript                        
+mathml                            
+svg                               
+webdriver                         
+webextensions                     
+                                  
+Valid statuses:                   
 standard, experimental, deprecated
 ```
 
@@ -236,7 +234,7 @@ or simply by adding the index number in one of the following ways:
 
     mdncomp --list api --index 13
     mdncomp --list api -i 13
-    mdncomp --list api 13
+    mdncomp -l api 13
 
 (this usage of index also applies to the regular search).
 
@@ -284,18 +282,18 @@ Edge  18   -           nightly
 
 <h3>Rich output, here additionally using the --desc and --specs options:</h3>
 
-    mdncomp sharedarraybuffer --desc --specs
+    mdncomp jssharedarraybuffer. --desc --specs
     
-![Description and specifications summary example](https://i.imgur.com/wpz2LX0.png)<br>
+![Description and specifications summary example](https://i.imgur.com/aElwsBg.png)<br>
 <sup>*cygwin snapshot*</sup>
 
 <h3>Or as minimal, turning off extra information (here with options `-NRF`)</h3>
 
     # -R = no-children, -N = no-notes, -F = no-flags (also see --help, -h)
     
-    mdncomp sharedarraybuffer -RNF
+    mdncomp jssharedarraybuffer. -RNF
     
-![Minimalistic example](https://i.imgur.com/Hg1bytI.png)<br>
+![Minimalistic example](https://i.imgur.com/0LBDDrb.png)<br>
 <sup>*cygwin snapshot*</sup>
 
 Markdown enabled tables
