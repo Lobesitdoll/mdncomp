@@ -58,22 +58,22 @@ function formatterShort(data) {
       data.children.forEach(child => {
         let name = child.name;
         if ( child.name === data.name ) name += "()";
-        if ( !(child.standard || child.experimental || child.deprecated) ) name = "?G" + char.deprecated + name + "?R";
-        line.push(getLine(name, child.browsers, "?R", true));
+        if ( !(child.standard || child.experimental || child.deprecated) ) name = "?G" + char.deprecated + name;
+        line.push(getLine(name + "?w", child.browsers, "?R"));
       });
     }
     return line;
   } // : doLines
 
-  function getLine(name, browsers, color = "?R", isChild = false) {
-    const result = [ color + utils.getFeatureName(name) ];
-    if ( options.desktop ) result.push(...getBrowser(browsers[ "desktop" ], isChild));
-    if ( options.mobile ) result.push(...getBrowser(browsers[ "mobile" ], isChild));
-    if ( options.ext ) result.push(...getBrowser(browsers[ "ext" ], isChild));
+  function getLine(name, browsers, color = "?R") {
+    const result = [ color + name ];
+    if ( options.desktop ) result.push(...getBrowser(browsers[ "desktop" ]));
+    if ( options.mobile ) result.push(...getBrowser(browsers[ "mobile" ]));
+    if ( options.ext ) result.push(...getBrowser(browsers[ "ext" ]));
     return result;
   } // : getLine
 
-  function getBrowser(browser, isChild = false) {
+  function getBrowser(browser) {
     const result = [];
 
     browser
