@@ -6,13 +6,36 @@
 
 "use strict";
 
+/*
+    Good test candidates:
+      - websocket 0 (hist.)
+      - api.Navigator. (notes/hist., link numbering)
+      - api.Window. (notes/hist., link numbering)
+      - api.datatransfer. (multiple links)
+      - api.MediaTrackSettings.autoGainControl (conf. markings if hist.)
+      - api.Bluetooth.getAvailability (link validity, currently 404)
+
+    Currently longest API path (93 chars):
+    javascript.functions.default_parameters.parameters_without_defaults_after_default_parameters
+
+    >= 84
+    javascript.functions.default_parameters.parameters_without_defaults_after_default_parameters
+    javascript.functions.default_parameters.destructured_parameter_with_default_value_assignment
+    api.WindowOrWorkerGlobalScope.createImageBitmap.resizeWidth_resizeHeight_resizeQuality
+    webextensions.manifest.chrome_settings_overrides.search_provider.suggest_url_post_params
+    webextensions.manifest.chrome_settings_overrides.search_provider.image_url_post_params
+    webextensions.manifest.chrome_settings_overrides.search_provider.instant_url_post_params
+    webextensions.manifest.chrome_settings_overrides.search_provider.search_url_post_params
+ */
+
 const utils = loadModule("core.utils");
 const table = loadModule("core.table");
 
 const browserNames = utils.getBrowserNames();
 const refs = [ // skipping "l", "o", "x, on purpose:
   "°", "¹", "²", "³", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "m", "n", "p", "q", "r", "s", "t", "u", "v", "w", "y", "z", "^", "ª", "º",
-  "æ", "ø", "å", "ä", "ö", "á", "é", "ò", "ú", "à", "è", "ù", "Æ", "Ø", "Å", "Ö", "Ä", "Á", "É", "Ò", "Ú", "À", "È"
+  "æ", "ø", "å", "ä", "ö", "á", "é", "ò", "ú", "à", "è", "ù", "Æ", "Ø", "Å", "Ö", "Ä", "Á", "É", "Ò", "Ú", "À", "È" // ey, running out of chars here, are all within Latin1 ?
+  // why not capital ASCII? due to location: in Greko-Latin "Y" (yes) -> "S", in Germanic -> "J", etc..
 ];
 
 const tblOptions = {
@@ -153,12 +176,12 @@ function formatterLong(data) {
 
   if ( options.expert < 1) {
 
-    if ( !options.specs && data.specs.length ) {
-      logHint(text.specsHint);
-    }
-
     if ( !options.desc && data.description.length ) {
       logHint(text.descHint);
+    }
+
+    if ( !options.specs && data.specs.length ) {
+      logHint(text.specsHint);
     }
 
     if ( !options.history && data.notes.length ) {
@@ -264,7 +287,6 @@ function formatterLong(data) {
           let max = options.history ? browser.history.length : 1;
           for(let i = 0; i < max; i++) {
             const history = browser.history[ i ];
-            // examples: websocket 0, api.Navigator
             let version = utils.ansiFree(utils.versionAddRem(history.version_added, history.version_removed, false));
             version = version === char.yes ? "" : " " + version;
 
