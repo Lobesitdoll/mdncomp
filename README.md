@@ -11,7 +11,7 @@ Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data
 
     $ mdncomp html*toblob
 
-![xterm color output](https://i.imgur.com/KKXedwV.png)<br>
+![xterm color output](https://i.imgur.com/EAZ5kik.png)<br>
 <sup>*cygwin/xterm snapshot*</sup>
 
 Features
