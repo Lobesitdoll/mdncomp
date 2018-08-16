@@ -114,8 +114,18 @@ function formatterLong(data, recursive = false) {
     // Links in notes
     if ( options.notes && data.links.length ) {
       addHeader(text.hdrLinks);
+      let lastIndex = "";
       data.links.forEach(link => {
-        log(`?c${link.index}?R: ?G${link.url}?R`);
+        let index;
+        if (link.index === lastIndex) {
+          index = "".padStart(Math.log10(data.links.length) + 1) + "  ";
+        }
+        else {
+          lastIndex = link.index;
+          index = `?c${link.index}?R: `
+        }
+
+        log(`${index}?G${link.url}?R`);
       });
       log("?R");
     }

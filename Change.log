@@ -4,13 +4,16 @@ mdncomp 2
 (2.00.0-beta.x)
 TDO: Locale support (msg + descriptions in sep. files)
 
-(2.00.0-alpha.7)
+(2.00.0-alpha.8)
 TDO: User input evaluation (https://github.com/epistemex/mdncomp/issues/8)
-TDO: Basic notification system via the update mechanism (only important messages, breaking changes etc.)
+
+(2.00.0-alpha.7)
 TDO: Deep search option? (search notes, description, flags etc.) "--deep, -p" (modularize progressbar)
+TDO: Basic notification system via the update mechanism (only important messages, breaking changes etc.)
 TDO: Locale infrastructure (main program, let lang-code affect which update file to download)
 
 2.00.0-alpha.6
+IMP: Formatting of multiple links in a note (in links section)
 CHG: Option "--obsolete" made inverse -> "--no-obsolete" and must be given to hide obsolete entries
 ADD: Legends/hints for "--shorthand" format (flags, notes)
 ADD: Legends/hints for "--list" results
