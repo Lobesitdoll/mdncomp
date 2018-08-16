@@ -51,6 +51,7 @@ const text = {
   someNotesHint    : "Some entries has notes",
   someFlagsHint    : "Some entries has flags",
   someHints        : "Use full format to see details",
+  hasFlagsHint     : "Has flags",
   refLink          : "Ref link",
   seeNote          : "See note",
   thisFeatBehind   : "This feature is behind the",
