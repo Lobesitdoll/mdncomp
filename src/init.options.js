@@ -46,7 +46,7 @@ module.exports = (() => {
     .option("-y, --history", "List version history entries per browser.")
     .option("--desc", "Show Short description of the feature")
     .option("--specs", "Show specification links")
-    .option("--no-obsolete", "Hide obsolete, non-standard and deprecated child features.")
+    .option("-O, --no-obsolete", "Hide obsolete, non-standard and deprecated child features.")
     .option("-u, --columns <columns>", "Define custom columns using valid browser ids (see -b)")
     .option("--update", "Update data from remote if available")
     .option("--fupdate", "Force update full data-set from remote")

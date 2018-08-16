@@ -14,6 +14,10 @@ TDO: Basic notification system via the update mechanism (only important messages
 TDO: Locale infrastructure (main program, let lang-code affect which update file to download -> update service)
 
 2.00.0-alpha.6
+TDO: "--expert" from boolean to level? 0=all hints, 1=only table legends, 2=none
+ADD: Shortcut "-O" to option "--no-obsolete"
+REM: Removing options "--worker", "--sab"
+IMP: Version marking (via "--history")
 IMP: Formatting of multiple links in a note (in links section)
 CHG: Option "--obsolete" made inverse -> "--no-obsolete" and must be given to hide obsolete entries
 ADD: Legends/hints for "--shorthand" format (flags, notes)
