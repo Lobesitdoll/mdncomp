@@ -376,7 +376,7 @@ const utils = {
     let v = "";
 
     if ( add === null && rem === null ) {
-      v = "?r" + char.unknown;
+      v = "?G" + char.unknown;
     }
     else if ( add === null || typeof add === "undefined" ) {
       v = "?r" + char.no;

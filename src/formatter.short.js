@@ -89,7 +89,8 @@ function formatterShort(data) {
 
         if ( history.flags && history.flags.length ) {
           hasFlags = true;
-          v += (isChild ? "?m" : "?b") + char.flags + "?G";
+          v += "?m" + char.flags + "?G";
+          //v += (isChild ? "?m" : "?b") + char.flags + "?G";
         }
 
         result.push(v);

@@ -86,11 +86,11 @@ function formatterLong(data, recursive = false) {
     if ( (hint.dep || hint.nonStd || hint.exp || hint.parent || hint.flags) &&
       (((options.worker && recursive) || (!options.worker && !recursive)) || ((options.sab && recursive) || (!options.sab && !recursive))) ) {
       let hints = [];
-      if ( hint.exp ) hints.push(`?o${char.experimental}?R = ${text.experimental}`);
+      if ( hint.exp ) hints.push(`?y${char.experimental}?R = ${text.experimental}`);
       if ( hint.dep ) hints.push(`?r${char.deprecated}?R = ${text.deprecated}`);
       if ( hint.nonStd ) hints.push(`?r${char.nonStd}?R = ${text.nonStandard}`);
       if ( hint.parent ) hints.push(`?g${char.parent}?R = ${text.listParent}`);
-      if ( hint.flags ) hints.push(`?b${char.flags}?R = ${text.hasFlagsHint}`);
+      if ( hint.flags ) hints.push(`?m${char.flags}?R = ${text.hasFlagsHint}`);
       log("?R" + hints.join(", ") + lf);
     }
   }
@@ -243,7 +243,7 @@ function formatterLong(data, recursive = false) {
         hint.nonStd = true;
       }
       if ( data.experimental ) {
-        stat += "?o" + char.experimental;
+        stat += "?y" + char.experimental;
         hint.exp = true;
       }
       if ( data.deprecated ) {
@@ -271,7 +271,8 @@ function formatterLong(data, recursive = false) {
         }
 
         if ( options.flags && history.flags && history.flags.length ) {
-          version += (isChild ? "?m" : "?b") + char.flags;
+          version += "?m" + char.flags;
+          //version += (isChild ? "?m" : "?b") + char.flags;
           hint.flags = true;
         }
 
