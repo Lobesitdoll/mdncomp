@@ -107,7 +107,7 @@ function formatterLong(data, recursive = false) {
     data.notes.forEach(note => {
       let res = `?c${refs[ note.index % refs.length ]}?R: `;
       res += `?R${utils.cleanHTML(note.note, true, "?R", "?c", "?y")}`;
-      res += hasLink(note.note) ? `?R ${text.refLink} ${note.linkIndex}.?R` : "?R";
+      res += hasLink(note.note) ? `?R ${text.refLink} ${note.index}.?R` : "?R";
 
       log(utils.breakAnsiLine(res, options.maxChars));
     });
@@ -294,14 +294,14 @@ function formatterLong(data, recursive = false) {
           for(let i = 0; i < max; i++) {
             const history = browser.history[ i ];
             let version = utils.ansiFree(utils.versionAddRem(history.version_added, history.version_removed, false));
-            version = isNaN(version) ? "" : " " + version;
+            version = version === char.yes ? "" : " " + version;
 
             if ( options.history ) {
               if ( history.alternative_name ) flags.push(`?y${name}${version}?w: ${text.altName}: ?c${history.alternative_name}?w`);
               if ( history.prefix ) flags.push(`?y${name}${version}?w: ${text.vendorPrefix}: ?c${history.prefix}?w`);
               if ( history.partial_implementation ) flags.push(`?y${name}${version}?w: ${text.partialImpl}.?w`);
               if ( history.notes.length ) {
-                const _noteRefs = history.notes.map(i => refs[ i % refs.length ]).join(", ");
+                const _noteRefs = history.notes.map(i => refs[ i % refs.length ]).join("?R,?c");
                 flags.push(`?y${name}${version}?w: ${text.seeNote} ?c${_noteRefs}?w`);
               }
             }

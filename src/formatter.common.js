@@ -61,8 +61,6 @@ function format(path, recursive = false, subNotes, subLinks) {
   const isWebExt = path.startsWith("webextensions");
   const showNode = path.startsWith("javascript");
 
-  let linkIndex = 0;
-
   const result = {
     isCompat    : typeof pathObj.__compat === "object",
     path        : path,
@@ -158,8 +156,7 @@ function format(path, recursive = false, subNotes, subLinks) {
         }
 
         if ( entry.alternative_name ) {
-          let version = ""; // todo -- experiment -- utils.ansiFree(utils.versionAddRem(entry.version_added, entry.version_removed));
-          //version = isNaN(version) || recursive ? "" : version + " ";
+          let version = utils.ansiFree(utils.versionAddRem(entry.version_added, entry.version_removed));
           notes.push(
             text.versionColumn + version + text.usesAltName + "?w" + entry.alternative_name + "?R"
           );
@@ -173,16 +170,16 @@ function format(path, recursive = false, subNotes, subLinks) {
           let index = getNoteIndex(note, _notes);
           if ( index < 0 ) {
             index = _notes.length;
-            _notes.push({ index, note, linkIndex });
+            _notes.push({ index, note });
 
             // extract links
             note.replace(rxAhref, (a, b, href) => {
-              _links.push({ index: linkIndex++, url: href });
+              _links.push({ index, url: href });
             });
           }
 
-          noteIndices.push(index);
-          localNotesIndices.push(index);
+          if (!noteIndices.includes(index)) noteIndices.push(index);
+          if (!localNotesIndices.includes(index)) localNotesIndices.push(index);
         });
       }
 
