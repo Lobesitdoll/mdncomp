@@ -268,7 +268,7 @@ function showResults(path) {
   const preFormat = loadModule("formatter.common")(path);
   if (!preFormat ) return;
 
-  loadModule(options.shorthand ? "formatter.title" : "formatter.long")(preFormat);
+  loadModule(options.shorthand ? "formatter.short" : "formatter.long")(preFormat);
 
   // Add footer
   log("?pData from MDN - `npm i -g mdncomp` by epistemex?w?R" + lf);
