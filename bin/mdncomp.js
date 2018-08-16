@@ -36,7 +36,7 @@ const text = {
   deprecatedShort  : "DEPR",
   nonStandardShort : "NOSTD",
   altName          : "Alternative name",
-  usesAltName      : " uses alternative name: ",
+  usesAltName      : "uses alternative name: ",
   versionColumn    : "Version ",
   partialImpl      : "Partial implementation.",
   vendorPrefix     : "Vendor prefix",

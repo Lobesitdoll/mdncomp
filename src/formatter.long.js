@@ -105,7 +105,7 @@ function formatterLong(data, recursive = false) {
     data.notes.forEach(note => {
       let res = `?c${refs[ note.index % refs.length ]}?R: `;
       res += `?R${utils.cleanHTML(note.note, true, "?R", "?c", "?y")}`;
-      res += hasLink(note.note) ? `?R ${text.refLink} ${note.index}.?R` : "?R";
+      res += hasLink(note.note) ? `?R ${text.refLink} ${note.linkIndex}.?R` : "?R";
 
       log(utils.breakAnsiLine(res, options.maxChars));
     });
@@ -259,24 +259,21 @@ function formatterLong(data, recursive = false) {
       .sort(sortRefs)
       .forEach(stat => {
         const history = stat.history[ 0 ];
-        let v = utils.versionAddRem(history.version_added, history.version_removed, stat.noteIndex.length > 0);
+        let version = utils.versionAddRem(history.version_added, history.version_removed, stat.noteIndex.length > 0);
 
         if ( stat.noteIndex.length ) {
-          v += "?c";
-          if ( isChild && options.shorthand ) v += "*";
-          else {
-            stat.noteIndex.forEach(ref => {
-              v += refs[ ref % refs.length ];
-            });
-          }
+          version += "?c";
+          stat.noteIndex.forEach(ref => {
+            version += refs[ ref % refs.length ];
+          });
         }
 
         if ( options.flags && history.flags && history.flags.length ) {
-          v += (isChild ? "?m" : "?b") + char.flags;
+          version += (isChild ? "?m" : "?b") + char.flags;
         }
 
-        v += "?G";
-        result.push(v);
+        version += "?G";
+        result.push(version);
       });
 
     return result;
@@ -293,21 +290,19 @@ function formatterLong(data, recursive = false) {
           for(let i = 0; i < max; i++) {
             const history = browser.history[ i ];
             let version = utils.ansiFree(utils.versionAddRem(history.version_added, history.version_removed, false));
+            version = isNaN(version) ? "" : " " + version;
 
             if ( options.history ) {
-              let _version = isNaN(version) ? "" : " " + version;
-              if ( history.alternative_name ) flags.push(`?y${name}${_version}?w: ${text.altName}: ?c${history.alternative_name}?w`);
-              if ( history.prefix ) flags.push(`?y${name}${_version}?w: ${text.vendorPrefix}: ?c${history.prefix}?w`);
-              if ( history.partial_implementation ) flags.push(`?y${name}${_version}?w: ${text.partialImpl}.?w`);
+              if ( history.alternative_name ) flags.push(`?y${name}${version}?w: ${text.altName}: ?c${history.alternative_name}?w`);
+              if ( history.prefix ) flags.push(`?y${name}${version}?w: ${text.vendorPrefix}: ?c${history.prefix}?w`);
+              if ( history.partial_implementation ) flags.push(`?y${name}${version}?w: ${text.partialImpl}.?w`);
               if ( history.notes.length ) {
                 const _noteRefs = history.notes.map(i => refs[ i % refs.length ]).join(", ");
-                flags.push(`?y${name}${_version}?w: ${text.seeNote} ?c${_noteRefs}?w`);
+                flags.push(`?y${name}${version}?w: ${text.seeNote} ?c${_noteRefs}?w`);
               }
             }
 
             if ( options.flags && history.flags.length ) {
-              version = isNaN(version) ? "" : " " + version;
-
               let entry = "?y" + name + version + ":?w ";
               history
                 .flags
