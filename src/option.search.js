@@ -29,7 +29,7 @@ function search(keyword, sensitive) {
     if ( typeof subNode === "object" ) {
       Object
         .keys(subNode)
-        .filter(key => key !== "__compat" && key !== "worker_support" && key !== "sharedarraybuffer_support" && key !== "SharedArrayBuffer_as_param")
+        .filter(key => key !== "__compat")
         .forEach(key => {
           let cBranch = branch + "." + key;
           if ( cmp.test(cBranch) && ((key !== inKey && result.length) || !result.length) ) {
