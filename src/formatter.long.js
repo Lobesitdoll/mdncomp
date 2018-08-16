@@ -48,8 +48,8 @@ function formatterLong(data) {
 
   // Short title
   if ( data.short && data.short.length ) {
-    let short = utils.entities("?R" + utils.breakAnsiLine(utils.cleanHTML(data.short), options.maxChars));
-    log(short + lf);
+    let short = utils.entities("?w" + utils.breakAnsiLine(utils.cleanHTML(data.short, true, "?w"), options.maxChars));
+    log(lf + short);
   }
 
   // Description
