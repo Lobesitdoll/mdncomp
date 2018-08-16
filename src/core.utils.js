@@ -137,24 +137,24 @@ const utils = {
     return i ? path.substr(i) : "";
   },
 
-  // todo: use full path -feature?
   prePathFromPath: (mdn, path) => {
-    let parts = path.split("."), o = mdn, res = "";
+    const parts = path.split(".");
+    let o = mdn;
+    let result = [];
+
+    // remove last part since that's the feature we check
     parts.pop();
+
     parts.forEach(part => {
-      if ( o ) {
-        if ( o[ part ].__compat ) res += part + ".";
-        o = o[ part ];
+      o = (o || {})[part];
+      if (o) {
+        // colors: feature > hasChildren = cyan, hasChildren, no feature = green, just branch = gray
+        let color = o.__compat ? "?c" : (utils.hasChildren(o) ? "?g" : "?G");
+        result.push(color + part);
       }
     });
 
-    if ( res.length < 2 ) {
-      parts = path.split(".");
-      parts.pop();
-      res = parts.join(".") + ".";
-    }
-
-    return res.length > 1 ? res : "";
+    return result.join("?R.") + "?R.";
   },
 
   /**

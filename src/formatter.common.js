@@ -67,7 +67,7 @@ function format(path, recursive = false, subNotes, subLinks) {
     prePath     : utils.prePathFromPath(mdn, path),
     name        : utils.nameFromPath(path),
     description : compat.description || "",
-    short       : (compat.short || "").replace("→", "-&gt;"),
+    title       : (compat.title || compat.short || "").replace("→", "-&gt;"),
     url         : url,
     specs       : specs,
     experimental: status.experimental,
