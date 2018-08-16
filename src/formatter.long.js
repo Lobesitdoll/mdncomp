@@ -60,13 +60,18 @@ function formatterLong(data, recursive = false) {
     }
 
     // Description
-    if ( options.desc && data.description && data.description !== data.short ) {
-      let desc = utils.entities("?w" + utils.breakAnsiLine(utils.cleanHTML(data.description, true, ANSI.white), options.maxChars));
-      log(lf + desc);
+    if ( options.desc ) {
+      if ( data.description && data.description !== data.short ) {
+        let desc = utils.entities("?w" + utils.breakAnsiLine(utils.cleanHTML(data.description, true, "?w"), options.maxChars));
+        log(lf + desc);
+      }
+      else {
+        log(lf + "?R" + text.noDescription);
+      }
     }
   }
 
-  log();
+  log("?R");
 
   /* Show table data ---------------------------------------------------------*/
 
@@ -104,15 +109,15 @@ function formatterLong(data, recursive = false) {
 
       log(utils.breakAnsiLine(res, options.maxChars));
     });
-    log();
+    log("?R");
 
     // Links in notes
     if ( options.notes && data.links.length ) {
       addHeader(text.hdrLinks);
       data.links.forEach(link => {
-        log(`?c${link.index}?R: ?y${link.url}?R`);
+        log(`?c${link.index}?R: ?G${link.url}?R`);
       });
-      log();
+      log("?R");
     }
   }
 
@@ -124,7 +129,8 @@ function formatterLong(data, recursive = false) {
     if ( options.ext ) getFlags("ext");
     if ( flags.length ) {
       addHeader(options.history ? text.hdrFlagsHistory : text.hdrFlags);
-      log(flags.join(lf) + lf);
+      log(flags.join(lf));
+      log("?R");
     }
   }
 
@@ -135,10 +141,10 @@ function formatterLong(data, recursive = false) {
     data
       .specs
       .forEach(spec => {
-        log(`?w${utils.entities(spec.name)} ?R[${getSpecStatus(spec.status)}?R]${lf}${spec.url}`);
+        log(`?w${utils.entities(spec.name)} ?R[${getSpecStatus(spec.status)}?R]${lf}?G${spec.url}?R`);
       });
 
-    log();
+    log("?R");
   } // :specs
 
   /* Additional hints --------------------------------------------------------*/
@@ -174,7 +180,7 @@ function formatterLong(data, recursive = false) {
       logHint("?R" + text.filterHint);
     }
 
-    if ( hasHints ) log();
+    if ( hasHints ) log("?R");
   }
 
   /* Helpers -----------------------------------------------------------------*/
@@ -191,7 +197,7 @@ function formatterLong(data, recursive = false) {
 
     // Main feature name
     let _dataName = dataName;
-    if (!data.isCompat) {
+    if ( !data.isCompat ) {
       _dataName = char.parent + " " + dataName;
       hint.parent = true;
     }
@@ -350,7 +356,7 @@ function formatterLong(data, recursive = false) {
   } // : getSpecStatus
 
   function addHeader(txt) {
-    log(`?c${ANSI.underline}${txt}`);
+    log(`?b${txt}?R`);
   }
 
   function sortRefs(a, b) {

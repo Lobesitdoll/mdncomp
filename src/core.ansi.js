@@ -10,7 +10,6 @@ module.exports = {
 
   clrToCursor: "\x1b[2K",
   cursorUp   : "\x1b[1A",
-  underline  : "", //\x1b[4m",
 
   black  : "\x1b[0;30m",
   red    : "\x1b[0;1;31m",
@@ -23,8 +22,5 @@ module.exports = {
   cyan   : "\x1b[0;1;36m",
   white  : "\x1b[0;1;37m",
   gray   : "\x1b[0;1;30m",
-  reset  : "\x1b[0m"/*,
-
-  bg1    : "\x1b[49m",
-  bg2    : "\x1b[44m"*/
+  reset  : "\x1b[0m"
 };
