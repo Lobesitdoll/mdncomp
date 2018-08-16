@@ -287,7 +287,7 @@ function formatterLong(data) {
           let max = options.history ? browser.history.length : 1;
           for(let i = 0; i < max; i++) {
             const history = browser.history[ i ];
-            let version = utils.ansiFree(utils.versionAddRem(history.version_added, history.version_removed, false));
+            let version = utils.ansiFree(utils.versionAddRem(history.version_added, history.version_removed, false, true));
             version = version === char.yes ? "" : " " + version;
 
             if ( options.history ) {
