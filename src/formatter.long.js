@@ -10,7 +10,10 @@ const utils = loadModule("core.utils");
 const table = loadModule("core.table");
 
 const browserNames = utils.getBrowserNames();
-const refs = [ "°", "¹", "²", "³", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "p", "q", "r", "s", "^", "ª", "º" ]; // skipping "o" on purpose
+const refs = [ // skipping "l", "o", "x, on purpose:
+  "°", "¹", "²", "³", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "m", "n", "p", "q", "r", "s", "t", "u", "v", "w", "y", "z", "^", "ª", "º",
+  "æ", "ø", "å", "ä", "ö", "á", "é", "ò", "ú", "à", "è", "ù", "Æ", "Ø", "Å", "Ö", "Ä", "Á", "É", "Ò", "Ú", "À", "È"
+];
 
 const tblOptions = {
   align       : [ "l" ],
@@ -261,7 +264,7 @@ function formatterLong(data) {
           let max = options.history ? browser.history.length : 1;
           for(let i = 0; i < max; i++) {
             const history = browser.history[ i ];
-            // examples: websocket 0
+            // examples: websocket 0, api.Navigator
             let version = utils.ansiFree(utils.versionAddRem(history.version_added, history.version_removed, false));
             version = version === char.yes ? "" : " " + version;
 
