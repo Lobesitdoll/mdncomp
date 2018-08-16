@@ -85,6 +85,19 @@ function formatterLong(data) {
     }
   }
 
+  /* Show flags and history --------------------------------------------------*/
+
+  if ( options.flags || options.history ) {
+    if ( options.desktop ) getFlags("desktop");
+    if ( options.mobile ) getFlags("mobile");
+    if ( options.ext ) getFlags("ext");
+    if ( flags.length ) {
+      addHeader(options.history ? text.hdrFlagsHistory : text.hdrFlags);
+      log(flags.join(lf));
+      log("?R");
+    }
+  }
+
   /* Show notes --------------------------------------------------------------*/
 
   if ( options.notes && data.notes.length ) {
@@ -114,19 +127,6 @@ function formatterLong(data) {
 
         log(`${index}?G${link.url}?R`);
       });
-      log("?R");
-    }
-  }
-
-  /* Show flags and history --------------------------------------------------*/
-
-  if ( options.flags || options.history ) {
-    if ( options.desktop ) getFlags("desktop");
-    if ( options.mobile ) getFlags("mobile");
-    if ( options.ext ) getFlags("ext");
-    if ( flags.length ) {
-      addHeader(options.history ? text.hdrFlagsHistory : text.hdrFlags);
-      log(flags.join(lf));
       log("?R");
     }
   }
@@ -161,7 +161,7 @@ function formatterLong(data) {
       logHint(text.descHint);
     }
 
-    if ( !options.history ) {
+    if ( !options.history && data.notes.length ) {
       logHint(text.historyHint);
     }
 
