@@ -15,6 +15,7 @@ TDO: Locale infrastructure (main program, let lang-code affect which update file
 TDO: Renumber link references
 
 2.00.0-alpha.6
+IMP: "--history" range is no marked as interval i.e. "[4-6>" (from and incl. 4, to but not incl. 6)
 IMP: Full API path for feature in header with color coding.
 CHG: Notes and Flags/History has changed order (history/flags is now before notes)
 CHG: "--expert" from boolean to level: 0 = all hints, 1 = table legends only, 2 = none

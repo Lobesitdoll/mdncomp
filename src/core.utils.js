@@ -369,7 +369,10 @@ const utils = {
     }
     else if ( typeof add === "string" ) {
       v = (rem ? "?r" : (hasNotes ? "?y" : "?g")) + add;
-      if ( rem ) v += "?R-?r" + (typeof rem === "boolean" ? char.unknown : rem);
+      if ( rem ) {
+        v += "?R-?r" + (typeof rem === "boolean" ? char.unknown : rem);
+        if (typeof rem !== "boolean") v = "[" + v + ">"
+      }
     }
 
     return v;
