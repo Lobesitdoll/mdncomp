@@ -210,24 +210,6 @@ const utils = {
   },
 
   /**
-   * Format a feature name (formatters).
-   * Choose special name over ordinary name.
-   * Replace underscores with space
-   * @param {string} name
-   * @returns {string}
-   */
-  getFeatureName: (name) => {
-    if ( name === "worker_support" )
-      name = text.workerSupport;
-//    else if ( name === "sab_in_dataview" )
-//      name = text.sabInDataView;
-    else if ( name === "SharedArrayBuffer_as_param" )
-      name = text.sabSupport;
-
-    return name; //.replace(/_/g, " ")
-  },
-
-  /**
    * Removes any HTML tags from a string. <code> tags are replaced
    * with ANSI colored text.
    * @param str
@@ -372,7 +354,7 @@ const utils = {
     return txt.replace(rx, m => ent[m])
   },
 
-  versionAddRem: (add, rem, hasNotes) => {
+  versionAddRem: (add, rem, hasNotes = false) => {
     let v = "";
 
     if ( add === null && rem === null ) {

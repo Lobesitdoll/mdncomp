@@ -20,12 +20,10 @@ const tblOptions = {
   end         : "?R"
 };
 
-function formatterLong(data, recursive = false) {
+function formatterLong(data) {
   const isWebExt = data.path.startsWith("webextensions");
   const flags = [];
   const hint = {
-    worker: false,
-    sab   : false,
     exp   : false,
     dep   : false,
     nonStd: false,
@@ -36,39 +34,29 @@ function formatterLong(data, recursive = false) {
 
   /* Header ------------------------------------------------------------------*/
 
-  if ( !recursive ) log();
+  log();
 
-  if ( data.name === "worker_support" ) {
-    log(`?c${text.hdrWorkers}?w`);
+  // path + api, status, url
+  log(`?c${data.prePath}?w${data.name}?R`);
+  if ( !isWebExt ) {
     log(getStatus());
   }
-  else if ( data.name === "SharedArrayBuffer_as_param" ) {
-    log(`?c${text.hdrSAB}?w`);
-    log(getStatus());
+  if ( data.url ) log((data.url ? "?G" + data.url : "-") + "?R");
+
+  // Short title
+  if ( data.short && data.short.length ) {
+    let short = utils.entities("?R" + utils.breakAnsiLine(utils.cleanHTML(data.short), options.maxChars));
+    log(short + lf);
   }
-  else {
-    // path + api, status, url
-    log(`?c${data.prePath}?w${data.name}?R`);
-    if ( !isWebExt ) {
-      log(getStatus());
-    }
-    if ( data.url ) log((data.url ? "?G" + data.url : "-") + "?R");
 
-    // Short title
-    if ( data.short && data.short.length ) {
-      let short = utils.entities("?R" + utils.breakAnsiLine(utils.cleanHTML(data.short), options.maxChars));
-      log(short + lf);
+  // Description
+  if ( options.desc ) {
+    if ( data.description && data.description !== data.short ) {
+      let desc = utils.entities("?w" + utils.breakAnsiLine(utils.cleanHTML(data.description, true, "?w"), options.maxChars));
+      log(lf + desc);
     }
-
-    // Description
-    if ( options.desc ) {
-      if ( data.description && data.description !== data.short ) {
-        let desc = utils.entities("?w" + utils.breakAnsiLine(utils.cleanHTML(data.description, true, "?w"), options.maxChars));
-        log(lf + desc);
-      }
-      else {
-        log(lf + "?R" + text.noDescription);
-      }
+    else {
+      log(lf + "?R" + text.noDescription);
     }
   }
 
@@ -83,8 +71,7 @@ function formatterLong(data, recursive = false) {
   /* Show hints if any -------------------------------------------------------*/
 
   if ( !options.expert ) {
-    if ( (hint.dep || hint.nonStd || hint.exp || hint.parent || hint.flags) &&
-      (((options.worker && recursive) || (!options.worker && !recursive)) || ((options.sab && recursive) || (!options.sab && !recursive))) ) {
+    if ( hint.dep || hint.nonStd || hint.exp || hint.parent || hint.flags ) {
       let hints = [];
       if ( hint.exp ) hints.push(`?y${char.experimental}?R = ${text.experimental}`);
       if ( hint.dep ) hints.push(`?r${char.deprecated}?R = ${text.deprecated}`);
@@ -94,11 +81,6 @@ function formatterLong(data, recursive = false) {
       log("?R" + hints.join(", ") + lf);
     }
   }
-
-  /* Show table data for workers/SharedArrayBuffer ---------------------------*/
-
-  if ( options.worker && data.workers ) formatterLong(data.workers, true);
-  if ( options.sab && data.sab ) formatterLong(data.sab, true);
 
   /* Show notes --------------------------------------------------------------*/
 
@@ -166,15 +148,7 @@ function formatterLong(data, recursive = false) {
     hasHints = true;
   }
 
-  if ( !options.expert && !recursive ) {
-
-    if ( hint.worker ) {
-      logHint(utils.breakAnsiLine(text.workerHint, options.maxChars));
-    }
-
-    if ( hint.sab ) {
-      logHint(utils.breakAnsiLine(text.sabHint, options.maxChars));
-    }
+  if ( !options.expert ) {
 
     if ( !options.specs && data.specs.length ) {
       logHint(text.specsHint);
@@ -218,12 +192,7 @@ function formatterLong(data, recursive = false) {
     if ( options.children && data.children.length ) {
       data.children.forEach((child) => {
         let name = child.name;
-
-        if ( !hint.worker && !options.worker && name === "worker_support" ) hint.worker = true;
-        if ( !hint.sab && !options.sab && name === "SharedArrayBuffer_as_param" ) hint.sab = true;
-
         if ( name === dataName ) name += "()";
-
         tbl.push(getLine(name, child.browsers[ device ], child, true));
       });
     }
@@ -255,7 +224,7 @@ function formatterLong(data, recursive = false) {
     stat = stat.trimRight();
 
     // feature/child name as first entry
-    const result = [ color + utils.getFeatureName(name) + stat + "?G" ];
+    const result = [ color + name + stat + "?G" ];
 
     status
       .sort(sortRefs)
@@ -272,7 +241,6 @@ function formatterLong(data, recursive = false) {
 
         if ( options.flags && history.flags && history.flags.length ) {
           version += "?m" + char.flags;
-          //version += (isChild ? "?m" : "?b") + char.flags;
           hint.flags = true;
         }
 
@@ -293,16 +261,17 @@ function formatterLong(data, recursive = false) {
           let max = options.history ? browser.history.length : 1;
           for(let i = 0; i < max; i++) {
             const history = browser.history[ i ];
+            // examples: websocket 0
             let version = utils.ansiFree(utils.versionAddRem(history.version_added, history.version_removed, false));
             version = version === char.yes ? "" : " " + version;
 
             if ( options.history ) {
-              if ( history.alternative_name ) flags.push(`?y${name}${version}?w: ${text.altName}: ?c${history.alternative_name}?w`);
-              if ( history.prefix ) flags.push(`?y${name}${version}?w: ${text.vendorPrefix}: ?c${history.prefix}?w`);
-              if ( history.partial_implementation ) flags.push(`?y${name}${version}?w: ${text.partialImpl}.?w`);
+              if ( history.alternative_name ) flags.push(`?y${name}${version}?R: ${text.altName}: ?c${history.alternative_name}`);
+              if ( history.prefix ) flags.push(`?y${name}${version}?R: ${text.vendorPrefix}: ?c${history.prefix}`);
+              if ( history.partial_implementation ) flags.push(`?y${name}${version}?R: ${text.partialImpl}.`);
               if ( history.notes.length ) {
                 const _noteRefs = history.notes.map(i => refs[ i % refs.length ]).join("?R,?c");
-                flags.push(`?y${name}${version}?w: ${text.seeNote} ?c${_noteRefs}?w`);
+                flags.push(`?y${name}${version}?R: ${text.seeNote} ?c${_noteRefs}?w`);
               }
             }
 
