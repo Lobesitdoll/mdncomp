@@ -5,8 +5,8 @@
   "main": "bin/mdncomp.min.js",
   "private": false,
   "publishConfig": {
-    "registry": "http://localhost:4444",
-    "p_registry": "https://registry.npmjs.org"
+    "p_registry": "http://localhost:4444",
+    "registry": "https://registry.npmjs.org"
   },
   "author": {
     "name": "epistemex",

@@ -3,7 +3,7 @@
 
 /*----------------------------------------------------------------------------*/
 
-const DEBUG = true;
+const DEBUG = false;
 
 /*----------------------------------------------------------------------------*/
 
@@ -38,7 +38,7 @@ const text = {
   altName          : "Alternative name",
   usesAltName      : "uses alternative name: ",
   versionColumn    : "Version ",
-  partialImpl      : "Partial implementation.",
+  partialImpl      : "Partial implementation",
   vendorPrefix     : "Vendor prefix",
   tooLimitedScope  : "Sorry, too limited scope.",
   noResult         : "Sorry, no result",
@@ -53,6 +53,7 @@ const text = {
   someHints        : "Use full format to see details",
   hasFlagsHint     : "Has flags",
   refLink          : "Ref link",
+  //todo refLinks         : "Ref links",
   seeNote          : "See note",
   thisFeatBehind   : "This feature is behind the",
   preference       : "preference",
@@ -159,13 +160,13 @@ if ( !options.colors ) {
     .forEach(color => ANSI[ color ] = "");
 }
 
-/*- CHECK FOR UPDATE, UPDATE PATCH/FULL IF EXISTS, OR EXIT -------------------*/
+/*- CHECKS FOR UPDATE, UPDATE PATCH/FULL IF EXISTS, OR EXIT -------------------*/
 
 if ( options.update ) {
   loadModule("core.update")(false, false);
 }
 
-/*- CHECK IF AN UPDATE IS AVAILABLE. -----------------------------------------*/
+/*- CHECKS IF AN UPDATE IS AVAILABLE. -----------------------------------------*/
 
 else if ( options.cupdate ) {
   loadModule("core.update")(false, true);
@@ -267,10 +268,10 @@ function showResults(path) {
   const preFormat = loadModule("formatter.common")(path);
   if (!preFormat ) return;
 
-  loadModule(options.shorthand ? "formatter.short" : "formatter.long")(preFormat);
+  loadModule(options.shorthand ? "formatter.title" : "formatter.long")(preFormat);
 
   // Add footer
-  log("?pData from MDN - `npm i -g mdncomp` by epistemex?w?R");
+  log("?pData from MDN - `npm i -g mdncomp` by epistemex?w?R" + lf);
 }
 
 /*- SYSTEM -------------------------------------------------------------------*/
