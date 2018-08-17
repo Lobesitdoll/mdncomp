@@ -10,6 +10,7 @@ TDO: Option to allow unicode characters (✓ instead of "Y" etc.) ?
 TDO: Locale: let lang-code affect which update file to download -> update service
 
 2.00.0-alpha.8
+ADD: Help option (?) to option "--lang"
 ADD: Locale infrastructure (main program)
 ADD: Generic locales for English (--lang en), Spanish (--lang es), Norwegian (--lang no)
 IMP: deprecated/non-standard symbol markings in tables

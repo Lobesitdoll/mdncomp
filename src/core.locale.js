@@ -19,18 +19,25 @@ if (i > -1) {
   }
 }
 
+// Show help for supported languages
+if (lang === "?") {
+  log("?g\nSupported languages: ?c" + global.languages.join(", ") + "\n?R");
+  process.exit()
+}
+
+// Load language file or default to English
 if ( global.languages.includes(lang) ) {
   let loaded = loadLang(lang);
   if ( !loaded ) {
     loaded = loadLang(lang.split(/[-_]/)[ 0 ]);
   }
   if ( !loaded ) {
-    global.err(lf + "?y" + text.couldNotLoadLanguage + ": ?c" + lang + "?R");
+    global.err(`\n?yCould not load language: ?c${lang}?R`);
     loadLang("en");
   }
 }
 else {
-  global.err(lf + "?y" + text.unsupportedLanguage + ": ?c" + lang + "?R");
+  global.err(`\n?yUnsupported language: ?c${lang}?R`);
   loadLang("en");
 }
 
@@ -41,7 +48,7 @@ function loadLang(lang) {
     Object.assign(global.char, langFile.chars);
     return true
   }
-  catch(err) {
-    //if (DEBUG) console.log(err);
+  catch(_err) {
+    //if (DEBUG) err(_err);
   }
 }

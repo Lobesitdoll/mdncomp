@@ -37,7 +37,7 @@
     "optionsSet"          : "Set key/value for config file. Use ? to list valid keys.",
     "optionsConfigPath"   : "Show path to where config file and cache is stored",
     "optionsExpert"       : "Expert mode, disables hints.",
-    "optionsLang"         : "Language code for UI and descriptions.",
+    "optionsLang"         : "Language code for UI and descriptions. Use ? to see list.",
 
     "basicSupport"        : "Basic Support",
     "desktop"             : "Desktop",

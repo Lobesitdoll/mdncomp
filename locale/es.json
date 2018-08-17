@@ -37,7 +37,7 @@
     "optionsSet"          : "Establecer la clave/valor para el archivo de configuración. Utilizar ? para enumerar claves válidas",
     "optionsConfigPath"   : "Mostrar ruta hacia donde se almacena el archivo de configuración y la memoria caché",
     "optionsExpert"       : "Modo experto, deshabilita las pistas",
-    "optionsLang"         : "ódigo de idioma para UI y descripciones",
+    "optionsLang"         : "ódigo de idioma para UI y descripciones. Utilizar ? para ver la lista",
 
     "basicSupport"        : "Soporte Básico",
     "desktop"             : "Escritorio",
