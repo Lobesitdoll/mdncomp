@@ -299,6 +299,25 @@ List valid keys:
 The settings can be manually edited directly in the JSON config file. See --configpath.`;
 
 /*--------------------------------------------------------------------------------------------------*/
+help["--lang"] = `
+Use a specific language. Language is an ISO code, for example:
+
+  mdncomp --lang en
+  mdncomp --lang en-us
+  mdncomp --lang es
+  mdncomp --lang no
+
+Languages can be set permanently using the --set option:
+
+  mdncomp --set lang=en
+
+And removed (in which case the default en-us will be used):
+
+  mdncomp --set lang=
+
+The language setting affects the user interface and descriptions (where available).`;
+
+/*--------------------------------------------------------------------------------------------------*/
 help["--update"] = help["--cupdate"] = help["--fupdate"] = `
 Update the precompiled Browser Compatibility Data object. If the data
 is considered to be the same (using MD5 hash against server file) no
