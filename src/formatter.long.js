@@ -127,7 +127,7 @@ function formatterLong(data) {
     data.notes.forEach(note => {
       let res = `?c${refs[ note.index % refs.length ]}?R: `;
       res += `?R${utils.cleanHTML(note.note, true, "?R", "?c", "?y")}`;
-      res += hasLink(note.note) ? `?R ${text.refLink} ${note.index}.?R` : "?R";
+      res += hasLink(note.note) ? `?R ${text.refLink} ${linkFromNoteIndex(note).linkIndex}.?R` : "?R";
 
       log(utils.breakAnsiLine(res, options.maxChars));
     });
@@ -144,7 +144,7 @@ function formatterLong(data) {
         }
         else {
           lastIndex = link.index;
-          index = `?c${link.index}?R: `;
+          index = `?c${link.linkIndex}?R: `;
         }
 
         log(`${index}?G${link.url}?R`);
@@ -356,6 +356,13 @@ function formatterLong(data) {
       "OLD-TRANSFORMS": `o${text.hasMergedAnother} ${text.specDraft.toLowerCase()}`
     }[ status.toUpperCase() ] || `y${text.status}`) + "?R";
   } // : getSpecStatus
+
+  function linkFromNoteIndex(note) {
+    for(let link of data.links) {
+      if (link.index === note.index) return link
+    }
+    return {linkIndex: "-"}
+  }
 
   function addHeader(txt) {
     log(`?b${txt}?R`);

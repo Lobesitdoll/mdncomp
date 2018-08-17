@@ -198,6 +198,19 @@ function format(path, recursive = false, subNotes, subLinks) {
     return -1;
   }
 
+  function renumLinks() {
+    let i = -1, last = -1;
+    result.links.forEach(link => {
+      if (link.index !== last) {
+        last = link.index;
+        i++;
+      }
+      link.linkIndex = i;
+    })
+  }
+
+  renumLinks();
+
   return result;
 }
 
