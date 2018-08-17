@@ -40,7 +40,9 @@
   "files": [
     "bin/mdncomp.min.js",
     "build/",
-    "locale/",
+    "locale/en.json",
+    "locale/es.json",
+    "locale/no.json",
     "data/data.json",
     "data/data.md5",
     "package.json",
