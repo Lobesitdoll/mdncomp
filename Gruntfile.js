@@ -9,9 +9,10 @@ module.exports = (grunt) => {
           }
         },
         files: {
-          "bin/mdncomp.min.js"           : ["bin/mdncomp.js"],
+          "bin/mdncomp.js"               : ["src/mdncomp.js"],
           "build/core.ansi.js"           : ["src/core.ansi.js"],
           "build/core.io.js"             : ["src/core.io.js"],
+          "build/core.locale.js"         : ["src/core.locale.js"],
           "build/core.table.js"          : ["src/core.table.js"],
           "build/core.update.js"         : ["src/core.update.js"],
           "build/core.utils.js"          : ["src/core.utils.js"],
