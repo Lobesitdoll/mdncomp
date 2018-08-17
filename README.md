@@ -301,7 +301,7 @@ Edge  18   -           nightly
     
     mdncomp sharedarraybuffer. -RNF
     
-![Minimalistic example](https://i.imgur.com/0LBDDrb.png)<br>
+![Minimalistic example](./wiki/mdncomp_anim_opt.png)<br>
 <sup>*cygwin snapshot*</sup>
 
 Markdown enabled tables
