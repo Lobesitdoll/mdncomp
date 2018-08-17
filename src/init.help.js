@@ -14,18 +14,18 @@ function show() {
 
   if (args.length >= 4) {
     let option = (args[2] === "-h" || args[2] === "--help") ? args[3] : args[2];
-    let text = require("./help.options").help[option];
+    let helpText = require("./help.options").help[option];
 
     log();
-    log(`?gHelp for option "${option}":?R`);
-    log(text ? text : "Unknown option.");
+    log(`?g${text.helpForOption} "${option}":?R`);
+    log(helpText ? helpText : text.helpUnknownOption);
   }
   else {
-    log("  Examples:");
-    log("    mdncomp arcTo            show information for arcTo");
-    log("    mdncomp html*toblob      will find HTMLCanvasElement.toBlob");
-    log("    mdncomp -z hctbb.        will find HTMLCanvasElement.toBlob (fuzzy)");
-    log("    mdncomp --list           list root paths");
+    log(`  ${text.aboutExamples}:`);
+    log(`    mdncomp arcTo            ${text.example1} arcTo`);
+    log(`    mdncomp html*toblob      ${text.example2} HTMLCanvasElement.toBlob`);
+    log(`    mdncomp -z hctbb.        ${text.example2} HTMLCanvasElement.toBlob (fuzzy)`);
+    log(`    mdncomp --list           ${text.example3}`);
     log()
   }
 
@@ -33,6 +33,7 @@ function show() {
   const frPath = Path.join(__dirname, "../data/.firstrun");
 
   if (!fs.existsSync(frPath)) {
+    // Not localized due to being shown before user (perhaps) know about --lang
     log("?g" + "-".repeat(76));
     log("  ?gWELCOME! This seem to be the first run. To get the latest data file run:\n");
     log("  ?wmdncomp --update\n");
