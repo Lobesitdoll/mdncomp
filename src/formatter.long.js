@@ -14,6 +14,7 @@
       - api.datatransfer. (multiple links)
       - api.MediaTrackSettings.autoGainControl (conf. markings if hist.)
       - api.Bluetooth.getAvailability (link validity, currently 404)
+      - sharedarraybuffer.
 
     Currently longest API path (93 chars):
     javascript.functions.default_parameters.parameters_without_defaults_after_default_parameters
@@ -35,7 +36,7 @@ const browserNames = utils.getBrowserNames();
 const refs = [ // skipping "l", "o", "x, on purpose:
   "°", "¹", "²", "³", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "m", "n", "p", "q", "r", "s", "t", "u", "v", "w", "y", "z", "^", "ª", "º",
   "æ", "ø", "å", "ä", "ö", "á", "é", "ò", "ú", "à", "è", "ù", "Æ", "Ø", "Å", "Ö", "Ä", "Á", "É", "Ò", "Ú", "À", "È" // ey, running out of chars here, are all within Latin1 ?
-  // why not capital ASCII? due to location: in Greko-Latin "Y" (yes) -> "S", in Germanic -> "J", etc..
+  // why not capital ASCII? due to locales: in Greko-Latin "Y" (yes) -> "S", in Germanic -> "J", etc..
 ];
 
 const tblOptions = {
@@ -53,8 +54,7 @@ function formatterLong(data) {
     exp   : false,
     dep   : false,
     nonStd: false,
-    parent: false,
-    flags : false
+    parent: false
   };
   let hasHints = false;
 
@@ -97,13 +97,12 @@ function formatterLong(data) {
   /* Show hints if any -------------------------------------------------------*/
 
   if ( options.expert < 2 ) {
-    if ( hint.dep || hint.nonStd || hint.exp || hint.parent || hint.flags ) {
+    if ( hint.dep || hint.nonStd || hint.exp || hint.parent ) {
       let hints = [];
       if ( hint.exp ) hints.push(`?y${char.experimental}?R = ${text.experimental}`);
       if ( hint.dep ) hints.push(`?r${char.deprecated}?R = ${text.deprecated}`);
       if ( hint.nonStd ) hints.push(`?r${char.nonStd}?R = ${text.nonStandard}`);
       if ( hint.parent ) hints.push(`?g${char.parent}?R = ${text.listParent}`);
-      if ( hint.flags ) hints.push(`?m${char.flags}?R = ${text.hasFlagsHint}`);
       log("?R" + hints.join(", ") + lf);
     }
   }
@@ -115,7 +114,7 @@ function formatterLong(data) {
     if ( options.mobile ) getFlags("mobile");
     if ( options.ext ) getFlags("ext");
     if ( flags.length ) {
-      addHeader(options.history ? text.hdrFlagsHistory : text.hdrFlags);
+      addHeader((options.history ? text.hdrFlagsHistory : text.hdrFlags) + " (?m" + char.flags + "?b)");
       log(flags.join(lf));
       log("?R");
     }
@@ -140,12 +139,12 @@ function formatterLong(data) {
       let lastIndex = "";
       data.links.forEach(link => {
         let index;
-        if (link.index === lastIndex) {
+        if ( link.index === lastIndex ) {
           index = "".padStart(Math.log10(data.links.length) + 1) + "  ";
         }
         else {
           lastIndex = link.index;
-          index = `?c${link.index}?R: `
+          index = `?c${link.index}?R: `;
         }
 
         log(`${index}?G${link.url}?R`);
@@ -174,7 +173,7 @@ function formatterLong(data) {
     hasHints = true;
   }
 
-  if ( options.expert < 1) {
+  if ( options.expert < 1 ) {
 
     if ( !options.desc && data.description.length ) {
       logHint(text.descHint);
@@ -203,7 +202,8 @@ function formatterLong(data) {
     const dataName = data.name;
 
     // Header line
-    const tableName = [ "?y" + text[ device ].toUpperCase().padEnd(Math.max(0, options.maxChars - 67)) + "?G" ];
+    const tableName = [ "?y" + text[ device ].toUpperCase()
+      .padEnd(Math.max(0, options.maxChars - 67)) + "?G" ];
     const colNames = dev.map(o => `?w${browserNames[ o.browser ].long.padEnd(10)}?G`);
     tbl.push(tableName.concat(colNames));
 
@@ -267,7 +267,6 @@ function formatterLong(data) {
 
         if ( options.flags && history.flags && history.flags.length ) {
           version += "?m" + char.flags;
-          hint.flags = true;
         }
 
         version += "?G";
