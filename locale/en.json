@@ -3,6 +3,13 @@
     "aboutBCD"            : "MDN Browser Compatibility Data",
     "aboutOptions"        : "options",
     "aboutVersion"        : "Version",
+    "aboutExamples"       : "Examples",
+    "example1"            : "show information for",
+    "example2"            : "will find",
+    "example3"            : "list root paths",
+    "helpForOption"       : "Help for option",
+    "helpUnknownOption"   : "Unknown option",
+
     "optionsList"         : "List paths starting with given branch(es), or none for root list",
     "optionsBrowser"      : "Show information about this browser, or list ids if none",
     "optionsIndex"        : "Show this index from a multiple result list",

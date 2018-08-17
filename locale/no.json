@@ -3,6 +3,13 @@
     "aboutBCD"            : "MDN Nettleser Kompatibilitets Data",
     "aboutOptions"        : "opsjoner",
     "aboutVersion"        : "Versjon",
+    "aboutExamples"       : "Eksempler",
+    "example1"            : "vis informasjon for",
+    "example2"            : "finner",
+    "example3"            : "list rotstier",
+    "helpForOption"       : "Hjelp for opsjon",
+    "helpUnknownOption"   : "Ukjent opsjon",
+
     "optionsList"         : "List stier som starter med gitt gren(er). Rotliste hvis ingen",
     "optionsBrowser"      : "Vis informasjon om denne nettleseren. List IDer hvis ingen",
     "optionsIndex"        : "Vis denne indeksen fra flerresultat-liste",

@@ -347,15 +347,15 @@ directory in JSON format.
 
 To set or clear an option you can do:
 
-    mdncomp --set expert=true
-    mdncomp --set expert=1
+    mdncomp --set lang=es
+    mdncomp --set lang=en-us
 
 A config file is created automatically if none exist.
 
 To clear a setting from the config file use an empty value:
 
-    mdncomp --set expert=
-    mdncomp --set expert
+    mdncomp --set lang=
+    mdncomp --set lang
 
 To see a list of valid keys that can be used:
 
@@ -383,7 +383,7 @@ The MDN team is working hard to convert all the Browser Compatibility Data to
 their new format as used by this and other tools. For this reason some APIs and 
 objects are WIP and may still not be available quite yet.
 
-[How to help them out](https://developer.mozilla.org/en-US/docs/MDN/Contribute/Structures/Compatibility_tables).
+[Click here to help them out](https://developer.mozilla.org/en-US/docs/MDN/Contribute/Structures/Compatibility_tables).
 
 Requirements
 ------------

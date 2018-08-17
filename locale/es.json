@@ -3,6 +3,13 @@
     "aboutBCD"            : "MDN Datos de Compatibilidad del Navegador",
     "aboutOptions"        : "opciones",
     "aboutVersion"        : "Versión",
+    "aboutExamples"       : "Ejemplos",
+    "example1"            : "mostrar información para",
+    "example2"            : "encontrará",
+    "example3"            : "enumerar rutas de raíz",
+    "helpForOption"       : "Ayuda para la opción",
+    "helpUnknownOption"   : "Opción desconocida",
+
     "optionsList"         : "Enumere las rutas que comienzan con una o varias ramas, o lista raíz si ninguno",
     "optionsBrowser"      : "Mostrar información sobre este navegador o listar identificadores si ninguno",
     "optionsIndex"        : "Muestre este índice de una lista de resultados múltiples",
