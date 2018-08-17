@@ -12,8 +12,13 @@ Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data
 
     $ mdncomp html*toblob
 
-![xterm color output](https://i.imgur.com/kaOJPc3.png)<br>
+![xterm color output](https://i.imgur.com/NW9Frsr.png)<br>
 <sup>*cygwin/xterm snapshot*</sup>
+
+In different languages:
+
+![xterm color output lang option](https://i.imgur.com/ZQuo2hP.png)<br>
+<sup>*cygwin/xterm snapshot with Spanish locale*</sup>
 
 Features
 --------
@@ -111,7 +116,8 @@ NOTES
 ¹: See WebKit bug 71270. Ref link 1.                                               
                                                                                    
 LINKS                                                                              
-1: https://bugs.webkit.org/show_bug.cgi?id=71270                                   ```
+1: https://bugs.webkit.org/show_bug.cgi?id=71270
+```
 
 or using the absolute feature path (case-insensitive, see option `-c`):
 
