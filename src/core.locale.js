@@ -15,6 +15,7 @@ const i = args.indexOf("--lang");
 if (i > -1) {
   if (args.length > i + 1) {
     lang = args[i + 1].toLowerCase();
+    args.splice(i, 2);
   }
 }
 
