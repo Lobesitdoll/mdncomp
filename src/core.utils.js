@@ -148,8 +148,8 @@ const utils = {
     parts.forEach(part => {
       o = (o || {})[part];
       if (o) {
-        // colors: feature > hasChildren = cyan, hasChildren, no feature = green, just branch = gray
-        let color = o.__compat ? "?c" : (utils.hasChildren(o) ? "?g" : "?G");
+        // colors: feature > hasChildren = cyan, hasChildren, no feature = green, just branch = yellow
+        let color = o.__compat ? "?c" : (utils.hasChildren(o) ? "?g" : "?y");
         result.push(color + part);
       }
     });
@@ -285,15 +285,6 @@ const utils = {
 
     return lines.length ? lines.join(lf) : "";
   },
-
-  //  getMaxLength: list => {
-  //    let max = 0;
-  //    list.forEach(e => {
-  //      let len = (utils.prePathFromPath(e) + utils.nameFromPath(e)).length;
-  //      if (len > max) max = len;
-  //    });
-  //    return max
-  //  },
 
   ansiLength: (str) => {
     return utils.ansiFree(str).length;
