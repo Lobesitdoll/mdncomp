@@ -12,13 +12,8 @@ Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data
 
     $ mdncomp html*toblob
 
-![xterm color output](https://i.imgur.com/NW9Frsr.png)<br>
-<sup>*cygwin/xterm snapshot*</sup>
-
-In different languages:
-
-![xterm color output lang option](https://i.imgur.com/ZQuo2hP.png)<br>
-<sup>*cygwin/xterm snapshot with Spanish locale*</sup>
+![xterm color + languages output](https://i.imgur.com/hSbng4R.gif)<br>
+<sup>*cygwin/xterm snapshot (English, Spanish, Norwegian)*</sup>
 
 Features
 --------
@@ -301,7 +296,7 @@ Edge  18   -           nightly
     
     mdncomp sharedarraybuffer. -RNF
     
-![Minimalistic example](./wiki/mdncomp_anim_opt.png)<br>
+![Minimalistic example](https://i.imgur.com/0LBDDrb.png)<br>
 <sup>*cygwin snapshot*</sup>
 
 Markdown enabled tables
