@@ -43,8 +43,6 @@
     "hdrFlagsHistory"     : "BANDERAS Y HISTORIA",
     "hdrHistory"          : "HISTORIA",
     "hdrSpecs"            : "PRESUPUESTO",
-    "hdrWorkers"          : "SOPORTE WORKER",
-    "hdrSAB"              : "SOPORTESHAREDARRAYBUFFER AS PARAMETER",
     "hdrBrowsers"         : "Navegadores:",
     "standard"            : "En la pista estándar",
     "experimental"        : "Experimental",

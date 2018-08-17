@@ -43,8 +43,6 @@
     "hdrFlagsHistory"     : "FLAGS & HISTORY",
     "hdrHistory"          : "HISTORY",
     "hdrSpecs"            : "SPECS",
-    "hdrWorkers"          : "WORKER SUPPORT",
-    "hdrSAB"              : "SHAREDARRAYBUFFER AS PARAMETER SUPPORT",
     "hdrBrowsers"         : "Browsers:",
     "standard"            : "On Standard Track",
     "experimental"        : "Experimental",
