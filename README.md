@@ -290,7 +290,7 @@ Edge  18   -           nightly
 
 <h3>Rich output, here additionally using the --desc and --specs options:</h3>
 
-    mdncomp jssharedarraybuffer. --desc --specs
+    mdncomp sharedarraybuffer. --desc --specs
     
 ![Description and specifications summary example](https://i.imgur.com/aElwsBg.png)<br>
 <sup>*cygwin snapshot*</sup>
@@ -299,7 +299,7 @@ Edge  18   -           nightly
 
     # -R = no-children, -N = no-notes, -F = no-flags (also see --help, -h)
     
-    mdncomp jssharedarraybuffer. -RNF
+    mdncomp sharedarraybuffer. -RNF
     
 ![Minimalistic example](https://i.imgur.com/0LBDDrb.png)<br>
 <sup>*cygwin snapshot*</sup>
