@@ -12,6 +12,8 @@ const utils = loadModule("core.utils");
 const io = loadModule("core.io");
 const filePath = Path.resolve(io.getConfigDataPath(), ".config.json");
 
+let configFile = null;
+
 /**
  * The method tries to load a config file from the user area in the folder
  * .mdncomp/*. If found settings are checked against a whitelist and applied
@@ -27,10 +29,13 @@ function initConfig(options) {
   const clamp = (v, min, max) => Math.max(min, Math.min(max, v | 0));
   const isBool = (v) => typeof v === "boolean";
   const isNum = (v) => typeof v === "number";
+  const isStr = (v) => typeof v === "string";
   const toBool = (v) => !(v === "0" || v.toLowerCase() === "false");
   const toNum = (v) => v | 0;
+  const toStr = (v) => "" + v;
   const isList = () => true; // todo share check with formatter.common
   const valList = (v) => v; // todo share check with formatter.common
+  const valLang = (v) => global.languages.includes(v.toLowerCase()) ? v.toLowerCase() : "en-us";
   const toList = (v) => v;
 
   const keys = (new Map())
@@ -52,11 +57,12 @@ function initConfig(options) {
     .set("colors", { type: isBool, convert: toBool, validate: nop })
     .set("maxChars", { type: isNum, convert: toNum, validate: mx })
     .set("columns", { type: isList, convert: toList, validate: valList })
-    .set("expert", { type: isNum, convert: toNum, validate: v => clamp(v, 0, 2) });
+    .set("expert", { type: isNum, convert: toNum, validate: v => clamp(v, 0, 2) })
+    .set("lang", { type: isStr, convert: toStr, validate: v => valLang(v) });
 
   /*- Load / Init Config file if any -------------------------------------------------------------*/
 
-  const config = Object.assign({ options: {}, formatter: { sepChar: char.sep } }, loadConfigFile());
+  const config = Object.assign({ options: {}, formatter: { sepChar: char.sep } }, configFile);
 
   // apply valid settings from config file
   Object.keys(config.options).forEach(key => {
@@ -127,4 +133,9 @@ function loadConfigFile() {
   }
 }
 
-module.exports = initConfig;
+module.exports = {
+  initConfig,
+  config: () => configFile,
+  preload: () => configFile = loadConfigFile(),
+  locale: () => (configFile.options && configFile.options.lang) ? configFile.options.lang : "en-us"
+};
