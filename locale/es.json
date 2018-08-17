@@ -106,8 +106,6 @@
 
     "unknownBrowser"      : "Navegador desconocido",
     "noArgListsId"        : "Ningún argumento enumera todos los ID válidos",
-    "unsupportedLanguage" : "Idioma no admitido",
-    "couldNotLoadLanguage": "No se pudo cargar el archivo de configuración regional para",
     "indexOutOfRange"     : "Índice fuera de rango",
     "invalidRegex"        : "Expresión regular inválida (RegExp).",
     "invalidColumnIds"    : "ID de navegador no válido en columnas personalizadas.",

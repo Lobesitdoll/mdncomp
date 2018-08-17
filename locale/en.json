@@ -106,8 +106,6 @@
 
     "unknownBrowser"      : "Unknown browser",
     "noArgListsId"        : "No argument lists all valid IDs",
-    "unsupportedLanguage" : "Unsupported language",
-    "couldNotLoadLanguage": "Could not load locale file for",
     "indexOutOfRange"     : "Index out of range",
     "invalidRegex"        : "Invalid regular expression.",
     "invalidColumnIds"    : "Invalid browser id in custom columns.",

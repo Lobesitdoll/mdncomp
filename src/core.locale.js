@@ -20,29 +20,28 @@ if (i > -1) {
 }
 
 if ( global.languages.includes(lang) ) {
-  let langFile = loadLang(lang);
-  if ( !langFile ) {
-    langFile = loadLang(lang.split("-")[ 0 ]);
+  let loaded = loadLang(lang);
+  if ( !loaded ) {
+    loaded = loadLang(lang.split(/[-_]/)[ 0 ]);
   }
-
-  if ( langFile ) {
-    Object.assign(global.text, langFile.texts);
-    Object.assign(global.char, langFile.chars);
-  }
-  else {
-    global.err(lf + "?y" + text.couldNotLoadLanguage + ": ?c" + options.lang + "?R");
+  if ( !loaded ) {
+    global.err(lf + "?y" + text.couldNotLoadLanguage + ": ?c" + lang + "?R");
+    loadLang("en");
   }
 }
 else {
-  global.err(lf + "?y" + text.unsupportedLanguage + ": ?c" + options.lang + "?R");
+  global.err(lf + "?y" + text.unsupportedLanguage + ": ?c" + lang + "?R");
+  loadLang("en");
 }
 
 function loadLang(lang) {
   try {
-    return require(`../locale/${lang}.json`)
+    const langFile = require(`../locale/${lang}.json`);
+    Object.assign(global.text, langFile.texts);
+    Object.assign(global.char, langFile.chars);
+    return true
   }
   catch(err) {
     //if (DEBUG) console.log(err);
-    return null
   }
 }

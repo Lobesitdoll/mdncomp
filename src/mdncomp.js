@@ -11,6 +11,8 @@ const lf = "\r\n";
 
 // Internal texts needed in case errors happens before locale files are loaded. Are merged with locale below.
 const text = {
+  "unsupportedLanguage" : "Unsupported language",
+  "couldNotLoadLanguage": "Could not load locale file for",
   "versionWarning"      : "WARNING: mdncomp is built for Node version 8 or newer. It may not work in older Node.js versions.",
   "criticalDataFile"    : "Critical error: data file not found.\n?yTry running with option --fupdate to download latest snapshot.",
   "missingModule"       : "Critical: A core module seem to be missing. Use 'npm i -g mdncomp' to reinstall.",
