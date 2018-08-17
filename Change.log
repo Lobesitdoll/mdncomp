@@ -10,18 +10,16 @@ TDO: Option to allow unicode characters (✓ instead of "Y" etc.) ?
 TDO: Locale: let lang-code affect which update file to download -> update service
 
 2.00.0-alpha.8
-ADD: Generic locales for English (--lang en), Spanish (--lang es), Norwegian (--lang no)
 ADD: Locale infrastructure (main program)
+ADD: Generic locales for English (--lang en), Spanish (--lang es), Norwegian (--lang no)
+IMP: deprecated/non-standard symbol markings in tables
 TDO: Deep search option? (search notes, description, flags etc.) "--deep, -p" (modularize progressbar)
 TDO: Basic notification system via the update mechanism (only important messages, breaking changes etc.)
 TDO: Renumber link references
-TDO: Improve deprecated/non-standard markings in table list
 ISS: --history will add note ref. to current version even if history items don't apply. Marking can be confusing.
 
-2.00.0-alpha.7
+2.00.0-alpha.6-7
 HOT: ..as always. IDE a bit too eager to rename .short to .title everywhere.. Fixed + release.
-
-2.00.0-alpha.6
 IMP: Minimum field length for 1. row in table depending on --max-chars (long format). Auto-expands as needed (as before)
 IMP: "--history" range is now marked as interval i.e. "[4-6>" (from and incl. 4, to but not incl. 6)
 IMP: Full API path for feature in header with color coding.
@@ -41,11 +39,9 @@ IMP: Color coding for added support changed from green to yellow if notes exists
 IMP: "--ext" option automatically applied when "--columns" contains extended browsers
 IMP: All error output goes to STDERR, the rest to STDOUT
 
-2.00.0-alpha.5
+2.00.0-alpha.4-5
 NPM: published bypassing private npm, another version bump due to build mode...
      (NB: package.json overrides both cmd line arg --registry and env settings)
-
-2.00.0-alpha.4
 ADD: Option "-u, --columns" to allow custom browser column definitions
 
 2.00.0-alpha.3
@@ -53,10 +49,8 @@ FIX: search recall failed with auto-fuzzy mode due to search-term argument not r
 ADD: option "--expert" to disable hints, legends
 CHG: option "--workers" renamed to singular "--worker"
 
-2.00.0-alpha.2
+2.00.0-alpha.1-2
 HOT: Path for marking first-run message read, in [--help]
-
-2.00.0-alpha.1
 CHG: Only show Node.js data if a JavaScript path.
 ADD: Local result filter in multi-line result (simply providing (multiple) additional args)
 ADD: Status symbols in long-format output, more hints, special treat of webextensions

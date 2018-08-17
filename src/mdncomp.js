@@ -59,9 +59,9 @@ Object.assign(global, {
     branch      : "B",
     flags       : "F",
     notes       : "*",
-    nonStd      : "X",
+    nonStd      : "?",
     experimental: "!",
-    deprecated  : "-"
+    deprecated  : "x"
   },
   lang    : "en-US",
   ANSI    : loadModule("core.ansi"),

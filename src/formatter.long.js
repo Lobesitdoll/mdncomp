@@ -100,7 +100,7 @@ function formatterLong(data) {
     if ( hint.dep || hint.nonStd || hint.exp || hint.parent ) {
       let hints = [];
       if ( hint.exp ) hints.push(`?y${char.experimental}?R = ${text.experimental}`);
-      if ( hint.dep ) hints.push(`?r${char.deprecated}?R = ${text.deprecated}`);
+      if ( hint.dep ) hints.push(`?b${char.deprecated}?R = ${text.deprecated}`);
       if ( hint.nonStd ) hints.push(`?r${char.nonStd}?R = ${text.nonStandard}`);
       if ( hint.parent ) hints.push(`?g${char.parent}?R = ${text.listParent}`);
       log("?R" + hints.join(", ") + lf);
@@ -230,9 +230,13 @@ function formatterLong(data) {
     const color = isChild ? "?R" : (data.isCompat ? "?w" : "?g");
 
     // Status
-    let stat = " ";
+    let stat = "";
 
     if ( !isWebExt ) {
+      if ( data.deprecated ) {
+        stat += "?b" + char.deprecated;
+        hint.dep = true;
+      }
       if ( !(data.standard || data.experimental) ) {
         stat += "?r" + char.nonStd;
         hint.nonStd = true;
@@ -241,16 +245,12 @@ function formatterLong(data) {
         stat += "?y" + char.experimental;
         hint.exp = true;
       }
-      if ( data.deprecated ) {
-        stat += "?r" + char.deprecated;
-        hint.dep = true;
-      }
     }
 
-    stat = stat.trimRight();
+    if (stat.length) stat += " ";
 
     // feature/child name as first entry
-    const result = [ color + name + stat + "?G" ];
+    const result = [ stat + color + name + "?G" ];
 
     status
       .sort(sortRefs)
