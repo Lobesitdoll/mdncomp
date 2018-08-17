@@ -55,10 +55,11 @@ to the compatibility data.
   - Updates with patch files (RFC 6902 / 6901) with support for several versions back.
   - Optional forced data update to reinitialize with a full clean data set, f.ex. with data corruption.
   - Compressed data transfers
-  
+
 - Define permanent/often used options in a config file (which can be suspended via option).
 - Built-in help per option.
 - Documented with [wiki](https://gitlab.com/epistemex/mdncomp/wikis/home) pages (todo for v2)
+- Locale/language support for user interface and descriptions (where available) (English, Spanish, Norwegian, ...)
 - Cross-platform (where node and npm is available).
 
 **Note to users of older version 1.x.x**: some options has been removed (and some added) to 
