@@ -33,8 +33,26 @@ Note: Keys and values must always be enclosed in quotes.
 The language files must have a "minimum" language, for example English must
 have "en.json" as fallback for when "en-uk.json" doesn't exist etc.
 
+
+Special color codes
+-------------------
+
+A *very few* phrases contains *color codes*. These are codes that starts with a question
+mark followed by a single letter, for example:
+
+    "historyHint" : "Use option ?c-y, --history?R to see historical data."
+
+Here the codes are `?c` and `?R`. This simply means use color cyan and then Reset.
+These must be kept as-is for the same purpose as originally intended, here that would
+be to color the `-y, --history` option in the text.
+
+Normal question marks should be handled as normal (incl. in languages such as
+Spanish where the question would start with ¿: "¿que pasa?" etc., though at the
+moment there are no questions in the file).
+
+
 Contribute a Translation file
------------------------------
+=============================
 
 To contribute with a translated file (or improve an existing one)-
 
