@@ -6,6 +6,8 @@
 
 "use strict";
 
+const colorCodes = "rgyobmpcwGR";
+
 const utils = {
 
   /**
@@ -248,7 +250,7 @@ const utils = {
     let ch;
 
     while( ch = s[ i ] ) {
-      if ( inAnsi && isShort && !"rgyobmpcwGR".includes(ch) ) inAnsi = false;
+      if ( inAnsi && isShort && !colorCodes.includes(ch) ) inAnsi = false;
 
       if ( !inAnsi ) {
         if ( ch === "\x1b" || ch === "?" ) {
@@ -256,7 +258,9 @@ const utils = {
           isShort = ch === "?";
         }
         else {
-          if ( ch === " " || ch === _lf ) lastBreak = i;
+          // todo for now, we need more checks for dot to work "properly" (undefined, other break chars etc.)
+          //if ( ch === " " || ch === _lf || ch === "/" || (ch === "." && s[i + 1] !== " ")) lastBreak = i;
+          if ( ch === " " || ch === _lf || ch === "/" || ch === ".") lastBreak = i;
 
           len++;
           if ( len === _max || ch === _lf ) {
@@ -291,7 +295,8 @@ const utils = {
   },
 
   ansiFree: (str) => {
-    return str.replace(/\x1b[^m]*m/g, "").replace(/\?[rgyobmpcwGR]/g, "");
+    const rx = new RegExp("\x1b[^m]*m|\\?[" + colorCodes + "]", "g");
+    return str.replace(rx, "");
   },
 
   parseColorCodes: (str) => {

@@ -6,7 +6,7 @@ TDO: Locale support (msg + descriptions in sep. files)
 
 (2.00.0-alpha.9)
 TDO: User input evaluation (https://github.com/epistemex/mdncomp/issues/8)
-TDO: Option to allow unicode characters (✓ instead of "Y" etc.) ?
+TDO: Option to allow unicode (> Latin1) characters (✓ instead of "Y" etc.) ?
 TDO: Locale: let lang-code affect which update file to download -> update service
 
 2.00.0-alpha.8
@@ -17,7 +17,7 @@ IMP: deprecated/non-standard symbol markings in tables
 IMP: Renumber link references
 TDO: Deep search option? (search notes, description, flags etc.) "--deep, -p" (modularize progressbar)
 TDO: Basic notification system via the update mechanism (only important messages, breaking changes etc.)
-ISS: --history will add note ref. to current version even if history items don't apply. Marking can be confusing.
+ISS: "--history" will add note ref. to current version even if history items don't apply. Marking can be confusing.
 
 2.00.0-alpha.6-7
 HOT: ..as always. IDE a bit too eager to rename .short to .title everywhere.. Fixed + release.

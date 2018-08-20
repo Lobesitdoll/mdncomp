@@ -1,10 +1,10 @@
-mdncomp v2
+mdncomp<sup>nx</sup>
 =========
 
 ![Announcement](https://i.imgur.com/thxTAqD.png?1) Announcement
 ===
 
-***Next Generation mdncomp (v2) is currently being built - 
+***Next Generation mdncomp<sup>nx</sup> (v2) is currently being built - 
 [have your say](https://github.com/epistemex/mdncomp/issues/8) about features you would like to see.***  
 <hr>
 

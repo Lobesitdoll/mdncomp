@@ -21,7 +21,7 @@ if (i > -1) {
 
 // Show help for supported languages
 if (lang === "?") {
-  log("?g\nSupported languages: ?c" + global.languages.join(", ") + "\n?R");
+  log(`?g\nSupported languages: ?c${global.languages.join(", ")}\n?R`);
   process.exit()
 }
 

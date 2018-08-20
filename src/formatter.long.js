@@ -16,12 +16,11 @@
       - api.Bluetooth.getAvailability (link validity, currently 404)
       - sharedarraybuffer.
 
-    Currently longest API path (93 chars):
-    javascript.functions.default_parameters.parameters_without_defaults_after_default_parameters
-
-    >= 84
+    Currently longest API paths (93 chars):
     javascript.functions.default_parameters.parameters_without_defaults_after_default_parameters
     javascript.functions.default_parameters.destructured_parameter_with_default_value_assignment
+
+    >= 84
     api.WindowOrWorkerGlobalScope.createImageBitmap.resizeWidth_resizeHeight_resizeQuality
     webextensions.manifest.chrome_settings_overrides.search_provider.suggest_url_post_params
     webextensions.manifest.chrome_settings_overrides.search_provider.image_url_post_params
@@ -35,8 +34,7 @@ const table = loadModule("core.table");
 const browserNames = utils.getBrowserNames();
 const refs = [ // skipping "l", "o", "x, on purpose:
   "°", "¹", "²", "³", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "m", "n", "p", "q", "r", "s", "t", "u", "v", "w", "y", "z", "^", "ª", "º",
-  "æ", "ø", "å", "ä", "ö", "á", "é", "ò", "ú", "à", "è", "ù", "Æ", "Ø", "Å", "Ö", "Ä", "Á", "É", "Ò", "Ú", "À", "È" // ey, running out of chars here, are all within Latin1 ?
-  // why not capital ASCII? due to locales: in Greko-Latin "Y" (yes) -> "S", in Germanic -> "J", etc..
+  "æ", "ø", "å", "ä", "ö", "á", "é", "ò", "ú", "à", "è", "ù", "Æ", "Ø", "Å", "Ö", "Ä", "Á", "É", "Ò", "Ú", "À", "È"
 ];
 
 const tblOptions = {
@@ -63,7 +61,7 @@ function formatterLong(data) {
   log();
 
   // path + api, status, url
-  log(`?c${data.prePath}?w${data.name}?R`);
+  log(utils.breakAnsiLine(`?c${data.prePath}?w${data.name}?R`, options.maxChars));
   if ( !isWebExt ) {
     log(getStatus());
   }

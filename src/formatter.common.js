@@ -54,10 +54,13 @@ function format(path, recursive = false, subNotes, subLinks) {
   const compat = pathObj.__compat || {};
   const support = compat.support || {};
   const status = compat.status || {};
-  const url = compat.mdn_url && compat.mdn_url.length ? ("https://developer.mozilla.org/docs/" + compat.mdn_url).replace(".org/docs/Mozilla/Add-ons/", ".org/Add-ons/") : null;
   const specs = compat.specs || [];
   const isWebExt = path.startsWith("webextensions");
   const showNode = path.startsWith("javascript");
+
+  const url = compat.mdn_url && compat.mdn_url.length
+              ? ("https://developer.mozilla.org/docs/" + compat.mdn_url).replace(".org/docs/Mozilla/Add-ons/", ".org/Add-ons/")
+              : null;
 
   const result = {
     isCompat    : typeof pathObj.__compat === "object",
