@@ -78,7 +78,6 @@ const utils = {
           str = str.substr(0, str.length - 1);
           endLine = "$";
         }
-        if ( !str.startsWith("*") ) str = "*" + str;
         if ( !str.endsWith("*") && !endLine.length ) str += "*";
         str = str.split("*").join(".*") + endLine;
       }

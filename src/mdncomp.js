@@ -161,7 +161,7 @@ function search() {
 
   // no result
   if ( !result.length ) {
-    if ( !options.fuzzy && !keyword.includes("*") && !keyword.startsWith("/") ) {
+    if ( !options.fuzzy && !options.deep && !keyword.includes("*") && !keyword.startsWith("/") ) {
       options.fuzzy = true;
       options.args.unshift(keyword);  // reinsert as we do a second call, just with fuzzy
       search();

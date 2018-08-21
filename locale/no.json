@@ -19,6 +19,7 @@
     "optionsNoChildren"   : "Ikke vis barneobjekter i tabell",
     "optionsCaseSens"     : "Search in case-sensitive mode",
     "optionsFuzzy"        : "Bruk fuzzy metode for søkebegrep",
+    "optionsDeep"         : "Utfør dypt søk (fotnoter, historie etc.)",
     "optionsShorthand"    : "Vis kompakt tabellformat",
     "optionsNoNotes"      : "Ikke vis fotnoter",
     "optionsNoFlags"      : "Ikke vis flagg",

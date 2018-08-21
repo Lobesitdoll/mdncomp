@@ -100,6 +100,12 @@ The option can be stored in the "config file" if you want to use it
 permanently.`;
 
 /*--------------------------------------------------------------------------------------------------*/
+help["-d"] = help["--deep"] = `
+Do a deep search using the search term for descriptions, title, footnotes and history as well.
+
+Note: The search may take significantly more time to execute.`;
+
+/*--------------------------------------------------------------------------------------------------*/
 help["-i"] = help["--index"] = `
 When multiple results are listed they are assigned a index number in 
 the result list. To list one particular result from that list, use this

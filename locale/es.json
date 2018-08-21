@@ -19,6 +19,7 @@
     "optionsNoChildren"   : "No mostrar objetos de niños en la tabla",
     "optionsCaseSens"     : "Buscar en modo de mayúsculas y minúsculas",
     "optionsFuzzy"        : "Utilice el método difuso para el término de búsqueda",
+    "optionsDeep"         : "Hacer una búsqueda profunda (notas, historia, etc.)",
     "optionsShorthand"    : "Mostrar como formato de tabla compacta",
     "optionsNoNotes"      : "No mostrar notas a pie de página",
     "optionsNoFlags"      : "No mostrar banderas",

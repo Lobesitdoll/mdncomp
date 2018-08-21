@@ -26,6 +26,7 @@ to the compatibility data.
    **WebDriver** and **WebExtensions**.
   - Search and list features using paths, wildcards, fuzzy terms or regular expressions
   - Search case (in)sensitive
+  - Deep search option (search additionally in notes, flags, alternative names etc.)
   - Navigate by path and branches
   - Shows data on the command line as a ANSI colored ASCII formatted table
   - Lists children features

@@ -19,6 +19,7 @@
     "optionsNoChildren"   : "Don't show children object in table",
     "optionsCaseSens"     : "Search in case-sensitive mode",
     "optionsFuzzy"        : "Use fuzzy method for search term",
+    "optionsDeep"         : "Do deep search (footnotes, history etc.)",
     "optionsShorthand"    : "Show compact table format",
     "optionsNoNotes"      : "Don't show footnotes",
     "optionsNoFlags"      : "Don't show flags",

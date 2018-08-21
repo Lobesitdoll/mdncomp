@@ -40,6 +40,7 @@ module.exports = (() => {
     .option("-R, --no-children", text.optionsNoChildren)
     .option("-c, --case-sensitive", text.optionsCaseSens)
     .option("-z, --fuzzy", text.optionsFuzzy)
+    .option("-d, --deep", text.optionsDeep)
     .option("-s, --shorthand", text.optionsShorthand)
     .option("-N, --no-notes", text.optionsNoNotes)
     .option("-F, --no-flags", text.optionsNoFlags)

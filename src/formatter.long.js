@@ -15,6 +15,7 @@
       - api.MediaTrackSettings.autoGainControl (conf. markings if hist.)
       - api.Bluetooth.getAvailability (link validity, currently 404)
       - sharedarraybuffer.
+      - javascript.statements.let (same link ref'ed twice)
 
     Currently longest API paths (93 chars):
     javascript.functions.default_parameters.parameters_without_defaults_after_default_parameters
