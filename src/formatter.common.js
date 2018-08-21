@@ -156,6 +156,7 @@ function format(path, recursive = false, subNotes, subLinks) {
 
         if ( entry.alternative_name ) {
           let version = utils.ansiFree(utils.versionAddRem(entry.version_added, entry.version_removed));
+          version = (version === char.yes) ? "" : version + " ";
           notes.push(
             text.versionColumn + version + text.usesAltName + ": ?w" + entry.alternative_name + "?R"
           );
