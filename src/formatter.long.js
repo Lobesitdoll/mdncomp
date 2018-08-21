@@ -96,7 +96,11 @@ function formatterLong(data) {
   /* Show hints if any -------------------------------------------------------*/
 
   if ( options.expert < 2 ) {
-    if ( hint.dep || hint.nonStd || hint.exp || hint.parent ) {
+    if ( data.inSAB ) log(`?g+ ?R${text.availableForHint} ?cSharedArrayBuffer?R (${text.see} sharedarraybuffer_support)`);
+    if ( data.inSABParam ) log(`?g+ ?R${text.availableForHint} ?cSharedArrayBuffer?R ${text.asParameter} (${text.see} SharedArrayBuffer_as_param)`);
+    if ( data.inWorker ) log(`?g+ ?R${text.availableInHint} ?cWorker?R (${text.see} worker_support)`);
+
+    if ( hint.dep || hint.nonStd || hint.exp || hint.parent) {
       let hints = [];
       if ( hint.exp ) hints.push(`?y${char.experimental}?R = ${text.experimental}`);
       if ( hint.dep ) hints.push(`?b${char.deprecated}?R = ${text.deprecated}`);

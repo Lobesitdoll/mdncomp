@@ -64,6 +64,9 @@ function format(path, recursive = false, subNotes, subLinks) {
 
   const result = {
     isCompat    : typeof pathObj.__compat === "object",
+    inWorker    : typeof pathObj.worker_support === "object" && typeof pathObj.worker_support.__compat === "object",
+    inSAB       : typeof pathObj.sharedarraybuffer_support === "object" && typeof pathObj.sharedarraybuffer_support.__compat === "object",
+    inSABParam  : typeof pathObj.SharedArrayBuffer_as_param === "object" && typeof pathObj.SharedArrayBuffer_as_param.__compat === "object",
     path        : path,
     prePath     : utils.prePathFromPath(mdn, path),
     name        : utils.nameFromPath(path),
