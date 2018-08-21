@@ -71,7 +71,7 @@ const utils = {
     }
     else {
       if ( fuzzy ) {
-        str = getFuzzy(str.toLowerCase());
+        str = getFuzzy(insensitive ? str.toLowerCase() : str);
       }
       else {
         if ( str.endsWith(".") ) {

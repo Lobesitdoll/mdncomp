@@ -57,6 +57,7 @@ function format(path, recursive = false, subNotes, subLinks) {
   const specs = compat.specs || [];
   const isWebExt = path.startsWith("webextensions");
   const showNode = path.startsWith("javascript");
+  const inWorker = typeof pathObj.worker_support === "object" && typeof pathObj.worker_support.__compat === "object";
 
   const url = compat.mdn_url && compat.mdn_url.length
               ? ("https://developer.mozilla.org/docs/" + compat.mdn_url).replace(".org/docs/Mozilla/Add-ons/", ".org/Add-ons/")
@@ -64,9 +65,7 @@ function format(path, recursive = false, subNotes, subLinks) {
 
   const result = {
     isCompat    : typeof pathObj.__compat === "object",
-    inWorker    : typeof pathObj.worker_support === "object" && typeof pathObj.worker_support.__compat === "object",
-    inSAB       : typeof pathObj.sharedarraybuffer_support === "object" && typeof pathObj.sharedarraybuffer_support.__compat === "object",
-    inSABParam  : typeof pathObj.SharedArrayBuffer_as_param === "object" && typeof pathObj.SharedArrayBuffer_as_param.__compat === "object",
+    inWorker    : inWorker,
     path        : path,
     prePath     : utils.prePathFromPath(mdn, path),
     name        : utils.nameFromPath(path),

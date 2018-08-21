@@ -53,9 +53,9 @@ function formatterLong(data) {
     exp   : false,
     dep   : false,
     nonStd: false,
-    parent: false
+    parent: false,
+    any   : false
   };
-  let hasHints = false;
 
   /* Header ------------------------------------------------------------------*/
 
@@ -96,10 +96,6 @@ function formatterLong(data) {
   /* Show hints if any -------------------------------------------------------*/
 
   if ( options.expert < 2 ) {
-    if ( data.inSAB ) log(`?g+ ?R${text.availableForHint} ?cSharedArrayBuffer?R (${text.see} sharedarraybuffer_support)`);
-    if ( data.inSABParam ) log(`?g+ ?R${text.availableForHint} ?cSharedArrayBuffer?R ${text.asParameter} (${text.see} SharedArrayBuffer_as_param)`);
-    if ( data.inWorker ) log(`?g+ ?R${text.availableInHint} ?cWorker?R (${text.see} worker_support)`);
-
     if ( hint.dep || hint.nonStd || hint.exp || hint.parent) {
       let hints = [];
       if ( hint.exp ) hints.push(`?y${char.experimental}?R = ${text.experimental}`);
@@ -108,6 +104,8 @@ function formatterLong(data) {
       if ( hint.parent ) hints.push(`?g${char.parent}?R = ${text.listParent}`);
       log("?R" + hints.join(", ") + lf);
     }
+
+    if ( data.inWorker ) log(`?g+ ?R${text.availableInHint} ?cWorker?R.\n`);
   }
 
   /* Show flags and history --------------------------------------------------*/
@@ -173,28 +171,28 @@ function formatterLong(data) {
 
   function logHint(txt) {
     log(txt);
-    hasHints = true;
+    hint.any = true;
   }
 
   if ( options.expert < 1 ) {
 
     if ( !options.desc && data.description.length ) {
-      logHint(text.descHint);
+      logHint(text.useOptionHint + " ?c--desc?R " + text.descHint);
     }
 
     if ( !options.specs && data.specs.length ) {
-      logHint(text.specsHint);
+      logHint(text.useOptionHint + " ?c--specs?R " + text.specsHint);
     }
 
     if ( !options.history && data.notes.length ) {
-      logHint(text.historyHint);
+      logHint(text.useOptionHint + " ?c-y, --history?R " + text.historyHint);
     }
 
     if ( !data.isFiltered && data.children.length > 9 ) {
       logHint("?R" + text.filterHint);
     }
 
-    if ( hasHints ) log("?R");
+    if ( hint.any ) log("?R");
   }
 
   /* Helpers -----------------------------------------------------------------*/

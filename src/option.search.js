@@ -6,7 +6,6 @@
 
 const utils = loadModule("core.utils");
 const mdn = utils.loadMDN();
-const excluded = ["__compat", "worker_support", "sharedarraybuffer_support", "SharedArrayBuffer_as_param"];
 
 /**
  * Performs a search through the MDN tree using simple regex
@@ -27,31 +26,31 @@ function search(keyword) {
     const subNode = node[ inKey ];
 
     if ( typeof subNode === "object" ) {
-      Object
-        .keys(subNode)
-        .filter(key => options.deep ? true : !excluded.includes(key))
-        .forEach(key => {
-          // Deep mode
-          if ( key === "__compat" && !result.includes(branch) ) {
-            const o = subNode[ key ];
-            if (
-              (typeof o.description === "string" && cmp.test(o.description)) ||
-              (typeof (o.title || o.short) === "string" && cmp.test(o.title || o.short) ||
-                inSupportObject(o.support))
-            ) {
-              result.push(branch);
-            }
+      let keys = Object.keys(subNode);
+      if ( !options.deep ) keys = keys.filter(key => key !== "__compat"); // && key !== "SharedArrayBuffer_as_param" && !key.endsWith("_support") );
+
+      keys.forEach(key => {
+        // Deep mode
+        if ( key === "__compat" && !result.includes(branch) ) {
+          const o = subNode[ key ];
+          if (
+            (typeof o.description === "string" && cmp.test(o.description)) ||
+            (typeof (o.title || o.short) === "string" && cmp.test(o.title || o.short) ||
+              inSupportObject(o.support))
+          ) {
+            result.push(branch);
+          }
+        }
+        else {
+          const currentBranch = branch + "." + key;
+          if ( cmp.test(currentBranch) && ((key !== inKey && result.length) || !result.length) ) {
+            result.push(currentBranch);
           }
           else {
-            const cBranch = branch + "." + key;
-            if ( cmp.test(cBranch) && ((key !== inKey && result.length) || !result.length) ) {
-              result.push(cBranch);
-            }
-            else {
-              _iterateNode(subNode, key, cBranch);
-            }
+            _iterateNode(subNode, key, currentBranch);
           }
-        });
+        }
+      });
     }
   }
 
