@@ -65,6 +65,7 @@
     "versionColumn"       : "Versjon ",
     "see"                 : "Se",
     "seeOption"           : "Se opsjon",
+    "required"            : "påkrevd",
     "partialImpl"         : "Delvis implementert",
     "vendorPrefix"        : "Leverandørens prefiks",
     "tooLimitedScope"     : "Beklager, for begrenset omfang.",

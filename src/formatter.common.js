@@ -65,6 +65,7 @@ function format(path, recursive = false, subNotes, subLinks) {
 
   const result = {
     isCompat    : typeof pathObj.__compat === "object",
+    reqNew      : typeof pathObj.new_required === "object",
     inWorker    : inWorker,
     path        : path,
     prePath     : utils.prePathFromPath(mdn, path),
@@ -113,18 +114,20 @@ function format(path, recursive = false, subNotes, subLinks) {
     const _history = options.history;
     options.history = false;
 
-    Object.keys(pathObj).forEach(child => {
-      const compat = pathObj[ child ].__compat;
-      if ( compat ) {
-        const status = compat.status || {};
-        if ( options.obsolete || isWebExt || ((status.experimental || status.standard_track || status.deprecated) && !status.deprecated) ) {
-          const childPath = path + "." + child;
-          if ( !filters || testFilter(child, filters) ) {
-            result.children.push(format(childPath, true, result.notes, result.links));
+    Object
+      .keys(pathObj)
+      .forEach(child => {
+        const compat = pathObj[ child ].__compat;
+        if ( compat && child !== "new_required" && !child.endsWith("_without_new_throws")) {
+          const status = compat.status || {};
+          if ( options.obsolete || isWebExt || ((status.experimental || status.standard_track || status.deprecated) && !status.deprecated) ) {
+            const childPath = path + "." + child;
+            if ( !filters || testFilter(child, filters) ) {
+              result.children.push(format(childPath, true, result.notes, result.links));
+            }
           }
         }
-      }
-    });
+      });
 
     options.history = _history;
   }

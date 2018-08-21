@@ -65,6 +65,7 @@
     "versionColumn"       : "Versión ",
     "see"                 : "Ver",
     "seeOption"           : "Ver opción",
+    "required"            : "necesario",
     "partialImpl"         : "Implementación parcial",
     "vendorPrefix"        : "Prefijo del vendedor",
     "tooLimitedScope"     : "Lo sentimos, alcance demasiado limitado.",

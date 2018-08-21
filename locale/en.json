@@ -65,6 +65,7 @@
     "versionColumn"       : "Version ",
     "see"                 : "See",
     "seeOption"           : "See option",
+    "required"            : "required",
     "partialImpl"         : "Partial implementation",
     "vendorPrefix"        : "Vendor prefix",
     "tooLimitedScope"     : "Sorry, too limited scope.",

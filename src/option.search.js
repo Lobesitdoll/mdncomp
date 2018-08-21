@@ -27,7 +27,7 @@ function search(keyword) {
 
     if ( typeof subNode === "object" ) {
       let keys = Object.keys(subNode);
-      if ( !options.deep ) keys = keys.filter(key => key !== "__compat"); // && key !== "SharedArrayBuffer_as_param" && !key.endsWith("_support") );
+      if ( !options.deep ) keys = keys.filter(key => key !== "__compat" && key !== "new_required" && !key.endsWith("_without_new_throws")); // && key !== "SharedArrayBuffer_as_param" && !key.endsWith("_support") );
 
       keys.forEach(key => {
         // Deep mode

@@ -105,7 +105,11 @@ function formatterLong(data) {
       log("?R" + hints.join(", ") + lf);
     }
 
-    if ( data.inWorker ) log(`?g+ ?R${text.availableInHint} ?cWorker?R.\n`);
+    if ( data.inWorker || data.reqNew ) {
+      if ( data.inWorker ) log(`?g+ ?R${text.availableInHint} ?cWorker?R.`);
+      if ( data.reqNew ) log(`?g* ?cnew?R ${text.required}.`);
+      log()
+    }
   }
 
   /* Show flags and history --------------------------------------------------*/
