@@ -71,12 +71,11 @@ Object.assign(global, {
 
 /*- PRELOAD CONFIG FILE ------------------------------------------------------*/
 
-const configFile = loadModule("init.config");
+// preload config file, second step is executed in init.options below.
+loadModule("init.config").preload();
 
 /*- INIT LOCALES -------------------------------------------------------------*/
 
-// preload config file
-configFile.preload();
 loadModule("core.locale");
 
 /*- INIT OPTIONS -------------------------------------------------------------*/

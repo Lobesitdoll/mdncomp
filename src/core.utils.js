@@ -7,6 +7,7 @@
 "use strict";
 
 const colorCodes = "rgyobmpcwGR";
+let featureNames = null;
 
 const utils = {
 
@@ -158,13 +159,25 @@ const utils = {
     return result.join("?R.") + "?R.";
   },
 
+  /**
+   * To localize metadata branches
+   * @param name
+   * @returns {*}
+   */
   featureName: (name) => {
-    if (name === "worker_support") return text.availableInHint + " ?cWorker?R";
-    if (name === "sharedarraybuffer_support") return "?cSAB?R " + text.asBuffer;
-    if (name === "new_required" || name.endsWith("_without_new_throws")) return text.missing + " ?cnew?R " + text.throws;
-    if (name === "svg_support") return text.supportIn + " SVG";
-    if (name === "textarea_support") return text.supportOn + " ?c<text-area>?R";
-    return name
+    if (!featureNames) {
+      featureNames = new Map()
+        .set("worker_support", `${text.availableInHint} ?cWorker?R`)
+        .set("sharedarraybuffer_support", `?cSAB?R ${text.asBuffer}`)
+        .set("new_required", `${text.missing} ?cnew?R ${text.throws}`)
+        .set("svg_support", `${text.supportIn} SVG`)
+        .set("textarea_support", `${text.supportOn} ?c<text-area>?R`)
+        .set("SharedArrayBuffer_as_param", `?cSAB?R ${text.asParam}`)
+        .set("cors_support", `?cCORS?R ${text.support}`);
+    }
+    if (name.endsWith("_without_new_throws")) name = "new_required";
+
+    return featureNames.get(name) || name;
   },
 
   /**

@@ -5,7 +5,6 @@
 */
 
 const utils = loadModule("core.utils");
-const mdn = utils.loadMDN();
 
 /**
  * Performs a search through the MDN tree using simple regex
@@ -15,6 +14,7 @@ const mdn = utils.loadMDN();
  * @returns {Array}
  */
 function search(keyword) {
+  const mdn = utils.loadMDN();
   const cmp = utils.getComparer(keyword, options.fuzzy, !options.caseSensitive);
   const result = [];
 
