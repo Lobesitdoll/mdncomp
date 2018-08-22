@@ -324,6 +324,21 @@ And removed (in which case the default en-us will be used):
 The language setting affects the user interface and descriptions (where available).`;
 
 /*--------------------------------------------------------------------------------------------------*/
+help["--read"] = `
+Mark any unread messages (if any at all) read.
+
+Messages are currently distributed with the dataset and updates of it.
+If any messages are embedded they are shown at the bottom of any output
+when mdncomp is run, until marked unread.
+
+You can mark messages in current dataset unread via the option --unread.`;
+
+/*--------------------------------------------------------------------------------------------------*/
+help["--unread"] = `
+Mark any messages (if any at all) as read.
+See help for option --read for more details.`;
+
+/*--------------------------------------------------------------------------------------------------*/
 help["--update"] = help["--cupdate"] = help["--fupdate"] = `
 Update the precompiled Browser Compatibility Data object. If the data
 is considered to be the same (using MD5 hash against server file) no
