@@ -69,12 +69,9 @@ function format(path, recursive = false, subNotes, subLinks) {
 
   const result = {
     isCompat    : typeof pathObj.__compat === "object",
-    support     : {
-      newRequired : newRequired,
-      inWorker    : inWorker,
-      sabAsBuffer : sabAsBuffer,
-      inSVG       : inSVG,
-      inTextArea  : inTextArea
+    support: {
+      newRequired, inWorker, sabAsBuffer, inSVG, inTextArea,
+      any: newRequired || inWorker || sabAsBuffer || inSVG || inTextArea
     },
     path        : path,
     prePath     : utils.prePathFromPath(mdn, path),

@@ -106,15 +106,13 @@ function formatterLong(data) {
     }
 
     const support = data.support;
-    if (!options.children && (
-      support.inWorker || support.newRequired || support.sabAsBuffer || support.inSVG || support.inTextArea
-    ) ) {
+    if ( !options.children && support.any ) {
       if ( support.newRequired ) log(`?g*?R ${text.missing} ?cnew?R ${text.throws}`);
       if ( support.inWorker ) log(`?g+ ?R${text.availableInHint} ?cWorker?R.`);
       if ( support.sabAsBuffer ) log(`?g+?R ${text.accepts} ?cSharedArrayBuffer?R ${text.asBuffer}`);
       if ( support.inSVG ) log(`?g+?R ${text.hasSupportDetails} SVG`);
       if ( support.inTextArea ) log(`?g+?R ${text.hasSupportDetails} ?c<text-area>?R`);
-      log()
+      log();
     }
   }
 
