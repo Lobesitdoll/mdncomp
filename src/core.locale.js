@@ -46,6 +46,7 @@ function loadLang(lang) {
     const langFile = require(`../locale/${lang}.json`);
     Object.assign(global.text, langFile.texts);
     Object.assign(global.char, langFile.chars);
+    global.lang = lang;
     return true
   }
   catch(_err) {

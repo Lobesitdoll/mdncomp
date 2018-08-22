@@ -35,9 +35,9 @@ function show() {
   if (!fs.existsSync(frPath)) {
     // Not localized due to being shown before user (perhaps) know about --lang
     log("?g" + "-".repeat(76));
-    log("  ?gWELCOME! This seem to be the first run. To get the latest data file run:\n");
+    log("?gWELCOME! This appear to be a first run. To get the latest data file run:\n");
     log("  ?wmdncomp --update\n");
-    log("  ?gHope mdncomp will be useful! This message is only shown at the first run.");
+    log("?gHope mdncomp will be useful! This message is only shown at the first install");
     log("-".repeat(76), "?R");
     try {
       if (!DEBUG) fs.writeFileSync(frPath, "OK", "utf-8")

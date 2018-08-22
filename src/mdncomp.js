@@ -83,6 +83,17 @@ loadModule("core.locale");
 
 const options = global.options = loadModule("init.options");
 
+/*- CHECKS MESSAGES ----------------------------------------------------------*/
+
+process.on("exit", () => {
+  if (options.read) utils.markMessages(true);
+  else {
+    if (options.unread) utils.markMessages(false);
+    const msg = utils.getMessages(0);
+    if (msg) log(msg);
+  }
+});
+
 /*- COLORS -------------------------------------------------------------------*/
 
 // No ANSI color?

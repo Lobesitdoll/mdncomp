@@ -10,6 +10,9 @@ TDO: Option to allow unicode (> Latin1) characters (✓ instead of "Y" etc.) ?
 TDO: Locale: let lang-code affect which update file to download -> update service
 
 2.00.0-alpha.8
+ADD: New option for messages: "--read" marks unread messages read.
+ADD: New option for messages: "--unread" marks all current messages unread.
+ADD: Basic notification system via the update mechanism (only important messages, breaking changes etc.)
 ADD: Special support for some metadata branches (Worker, "new" required, SAB as buffer, in SVG, in TextArea)
 ADD: Option "-d, --deep" doing deep search (searches descriptions, footnotes, history etc. as well)
 CHG: Auto-fuzzy mode (second search-pass) disabled with --deep, must be specified manually.
@@ -19,7 +22,6 @@ ADD: Locale infrastructure (main program)
 ADD: Generic locales for English (--lang en), Spanish (--lang es), Norwegian (--lang no)
 IMP: deprecated/non-standard symbol markings in tables
 IMP: Renumber link references
-TDO: Basic notification system via the update mechanism (only important messages, breaking changes etc.)
 ISS: "--history" will add note ref. to current version even if history items don't apply. Marking can be confusing.
 ISS: Same link can appear more than once in LINKS sections (todo check if there is missing a #-part)
 

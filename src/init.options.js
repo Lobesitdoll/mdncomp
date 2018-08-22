@@ -61,6 +61,8 @@ module.exports = (() => {
     //.option("--get [key]", "Get value for key from config file. If no arg. show config file.") // todo --get
     .option("--configpath", text.optionsConfigPath)
     .option("--expert [level]", text.optionsExpert, 0)
+    .option("--read", text.optionsRead)
+    .option("--unread", text.optionsUnread)
     .option("--lang <isocode>", text.optionsLang, "en-us")
     .on("--help", extendedHelp)
     .parse(args);

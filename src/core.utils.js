@@ -45,7 +45,7 @@ const utils = {
    * @returns {string[]}
    */
   getRootList: (mdn) => {
-    return Object.keys(mdn).filter(key => key !== "browsers")
+    return Object.keys(mdn).filter(key => key !== "browsers" && key !== "__mdncomp")
   },
 
   /**
@@ -393,6 +393,75 @@ const utils = {
     }
 
     return mdn;
+  },
+
+  markMessages: (state) => {
+    const mdn = utils.loadMDN();
+    const msg = mdn.__mdncomp;
+    if (Array.isArray(msg)) {
+      msg.forEach(msg => msg.read = state);
+      const path = require("path").resolve(__dirname, "../data/data.json");
+      try {
+        require("fs").writeFileSync(path, JSON.stringify(mdn), "utf-8");
+      }
+      catch(err) {
+        console.log("Could not update data file!", err);
+      }
+    }
+
+  },
+
+  /**
+   * Entry in data.json as first branch followed by "api":
+   * "__mdncomp":[
+   *   {
+   *     "text" : "This is a test",
+   *     "read" : false,
+   *     "level": 0,    // 0=normal, 1=important, 2=critical
+   *     "date":1534000000000
+   *   }]
+   *
+   *  or with localized texts:
+   *
+   * "__mdncomp":[
+   *   {
+   *     "text" : {
+   *       "en": "This is a test",
+   *       "es": "Esto es una prueba",
+   *       ...
+   *     }
+   *     "read" : false,
+   *     "level": 0,
+   *     "date":1534000000000
+   *   }]
+   *
+   * @param lastCount
+   * @returns {*}
+   */
+  getMessages: (lastCount = 0) => {
+    const msg = utils.loadMDN().__mdncomp;
+
+    function _text(o) {
+      if (typeof o === "string") return o;
+      else {
+        return o[lang] || o["en-US"] || o["en"]
+      }
+    }
+
+    if (Array.isArray(msg)) {
+      msg.sort((a, b) => {
+        return a.date > b.date ? -1 : (a.data < b.date ? 1 : 0)
+      });
+      const result = msg
+        .filter(msg => !msg.read || (lastCount && msg.length < lastCount))
+        .map(msg => {
+          const date = new Date(+msg.date).toLocaleDateString(lang, { weekday: "long", year: "numeric", month: "short", day: "numeric" });
+          return `?b${date}:\n${["?g", "?y", "?r"][msg.level | 0]}${utils.breakAnsiLine(_text(msg.text), options.maxChars)}`
+        });
+
+      return result.length ? `?w${text.messages}:\n\n${result.join("\n")}\n\n?R${text.seeOption} ?c--read?R ${text.useOptionRead}` : null
+    }
+    return null
   },
 
   log: function(...args) {
