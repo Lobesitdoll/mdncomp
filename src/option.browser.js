@@ -20,12 +20,15 @@ const tblOptions = {
 function browsers(_path) {
   let path = typeof _path === "boolean" ? "." : _path;
   if (path === ".") {
+    log();
     log(`?R${text.valid} ${text.browserIds}:`);
     log(`?g${browserKeys().join(lf)}?R`);
     log(lf + `${text.valid} ${text.statuses}:`);
     log(ANSI.green + getBrowserStatusList().join(", "));
+    log();
   }
   else {
+    log();
     log(listBrowsers(path.toLowerCase()))
   }
 }
@@ -115,7 +118,7 @@ function listBrowserOnStatus(status) {
   });
 
   // render
-  tbl.push([`?R${text.status.toUpperCase()}?R: ${col}${status.toUpperCase()}?R`]);
+  tbl.push([`?R${text.status.toUpperCase()}?R: ${col}${status.toUpperCase()}?R\n`]);
   browsers.forEach(o => {
     tbl.push([
       /* browser */  `?w${o.browser}`,

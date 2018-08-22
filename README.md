@@ -13,7 +13,7 @@ Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data
     $ mdncomp html*toblob
 
 ![xterm color + languages output](https://i.imgur.com/hSbng4R.gif)<br>
-<sup>*cygwin/xterm snapshot (English, Spanish, Norwegian)*</sup>
+<sup>*cygwin/xterm snapshot ([English, Spanish, Norwegian, ...](./locale#contribute-a-translation-file))*</sup>
 
 Features
 --------
@@ -26,16 +26,15 @@ to the compatibility data.
    **WebDriver** and **WebExtensions**.
   - Search and list features using paths, wildcards, fuzzy terms or regular expressions
   - Search case (in)sensitive
-  - Deep search option (search additionally in notes, flags, alternative names etc.)
-  - Navigate by path and branches
+  - Deep search option (search in notes, flags, alternative names, prefixes etc.)
+  - Navigate and show information using path and branches
   - Shows data on the command line as a ANSI colored ASCII formatted table
   - Lists children features
   - Get feature status (standard, experimental or deprecated).
   - Show notes, flags, vendor prefix, history and security issues.
   - Show additional links for information in notes
-  - Show optional detailed Web Worker support for a feature
-  - Show optional detailed SharedArrayBuffer support for a feature
-  - Show optional detailed API specific support for a feature (CORS, blob data, region, service workers etc.)
+  - Show optional detailed API specific support for a feature (Worker support, 
+    SharedArrayBuffer support, CORS support, blob data, service workers etc.)
   - Show information for desktop, mobile and other browsers.
   - Show information for Node.js where relevant.
   - All data available offline (only --*update require a internet connection)
@@ -46,10 +45,10 @@ to the compatibility data.
   - List current, esr, beta, nightly, planned and retired versions *per status*.
   - List status and release dates per browser, including release notes (if available).
 
-- Additional documentation:
-  - Show title text per feature.
-  - Show a summary **description** per feature *(included in the dataset for mdncomp only)*.
-  - Provides a *verified* URL to the feature's documentation page on [MDN](https://developer.mozilla.org/).
+- Additional included documentation:
+  - Show a optional summary **description** per feature *(included in the dataset for mdncomp only)*.
+  - (TODO Localized descriptions (where and when available))
+  - Includes a *verified* URL to the feature's documentation page on [MDN](https://developer.mozilla.org/).
   - Show standards/specification references, status and links (W3C, WHATWG, KHRONOS, ECMA, IETF etc.)
    *(included in the dataset for mdncomp only)*.
 
@@ -57,17 +56,20 @@ to the compatibility data.
   - Lighting fast update process
   - Updates with patch files (RFC 6902 / 6901) with support for several versions back.
   - Optional forced data update to reinitialize with a full clean data set, f.ex. with data corruption.
+  - Integrated message system to notify of important changes, updates.
   - Compressed data transfers
+  - (TODO Update with language patches for selected locale)
 
 - Define permanent/often used options in a config file (which can be suspended via option).
-- Built-in help per option.
 - Documented with [wiki](https://gitlab.com/epistemex/mdncomp/wikis/home) pages (todo for v2)
-- Locale/language support for user interface and descriptions (where available) (English, Spanish, Norwegian, ...)
+- Localized user interface.
+- Built-in help per option.
 - Cross-platform (where node and npm is available).
 
 **Note to users of older version 1.x.x**: some options has been removed (and some added) to 
 make the tool more focused and lightweight for what it is intended to do. Please see the 
 [Change.log](./Change.log) for details. Also see announcement at the top of this file. 
+
 
 Install
 -------
@@ -91,30 +93,9 @@ Examples
 
 Using wildcard:
 
-```text
-$ mdncomp html*toblob
+    $ mdncomp html*toblob
 
-api.HTMLCanvasElement.toBlob                                                       
-On Standard Track                                                                  
-https://developer.mozilla.org/docs/Web/API/HTMLCanvasElement/toBlob                
-                                                                                   
-DESKTOP          |Chrome    |Edge      |Firefox   |IE        |Opera     |Safari    
-:----------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
-toBlob           |    50    |    -     |    19    |   10°    |    37    |    Y¹    
-Image_quality    |    50    |    -     |    25    |    -     |    Y     |    -     
-                                                                                   
-MOBILE           |Chrome/A  |Edge/mob  |Firefox/A |Opera/A   |Safari/iOS|Webview/A 
-:----------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
-toBlob           |    50    |    -     |    4     |    37    |    -     |    50    
-Image_quality    |    -     |    -     |    25    |    -     |    ?     |    50    
-                                                                                   
-NOTES                                                                              
-°: Vendor prefix: ms                                                               
-¹: See WebKit bug 71270. Ref link 1.                                               
-                                                                                   
-LINKS                                                                              
-1: https://bugs.webkit.org/show_bug.cgi?id=71270
-```
+![wildcard example](https://i.imgur.com/HyfyQg8.png)
 
 or using the absolute feature path (case-insensitive, see option `-c`):
 
@@ -137,53 +118,28 @@ the term contains astrix or starts with forward-slash) using the fuzzy method.
 
     $ mdncomp html*toblob -s
 
-![Shorthand format](https://i.imgur.com/UbsfBNv.png)<br>
+![Shorthand format](https://i.imgur.com/yzqlDVY.png)<br>
 <sup>*cygwin/xterm snapshot*</sup>
 
 You can now do a local filtering of the result by simply adding one or more keywords (or search-terms)
-to the argument list. For example - this will only list child features containing "line" in the 
-`CanvasRenderingContext2D` API:
+to the argument list. For example - this will only list child features containing "stroke" or "fill"
+in the `CanvasRenderingContext2D` API (using only the last part of the name, here "`t2d`"):
 
-```text
-$ mdncomp t2d line
+    $ mdncomp t2d stroke fill
 
-api.CanvasRenderingContext2D                                                                
-Experimental                                                                                
-https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D                         
-                                                                                            
-DESKTOP                   |Chrome    |Edge      |Firefox   |IE        |Opera     |Safari    
-:-------------------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
-CanvasRenderingContext2D !|    1     |    Y     |   1.5    |    9     |    9     |    2     
-lineCap                   |    Y     |    12    |    Y     |    Y     |    Y     |    Y     
-lineDashOffset            |    Y     |    12    |    27    |    11    |    Y     |    Y     
-lineJoin                  |    Y     |    12    |    Y     |    Y     |    Y     |    Y     
-lineWidth                 |    Y     |    12    |    Y     |    Y     |    Y     |    Y     
-textBaseline              |    Y     |    12    |   3.5    |    9     |    Y     |    Y     
-createLinearGradient      |    Y     |    12    |    Y     |    Y     |    Y     |    Y     
-getLineDash               |    Y     |    12    |    27    |    11    |    Y     |    Y     
-lineTo                    |    Y     |    12    |    Y     |    Y     |    Y     |    Y     
-scrollPathIntoView !      |    YF    |    ?     |    -     |    -     |    Y     |    -     
-setLineDash               |    Y     |    12    |    27    |    11    |    Y     |    Y     
----8X---
-! = Experimental
-```
+![example local filter](https://i.imgur.com/eTAGGg4.png)
 
 <h3>List results using Custom Columns</h3>
 
 You can now define custom columns using a comma (or space, semi-column, column)
-separated list with the new option "-u, --columns":
+separated list with the new option "-u, --columns". An example using custom
+columns and local filter:
 
-```text
-mdncomp t2d path --columns "chrome,edge,firefox"
---8X--
-DESKTOP                   |Chrome    |Edge      |Firefox   
-:-------------------------|:--------:|:--------:|:--------:
-CanvasRenderingContext2D !|    1     |    Y     |   1.5    
-beginPath                 |    Y     |    12    |    Y     
-closePath                 |    Y     |    12    |    Y     
-isPointInPath             |    Y     |    12    |    Y     
---8X--
-```
+    mdncomp t2d path --columns "chrome,edge,firefox"
+
+![example custom header + filter](https://i.imgur.com/CVNJV6P.png)
+
+Tip: See config file section below for how you can store custom columns permanently.
 
 <h3>List feature branches and status</h3>
 
@@ -191,45 +147,15 @@ You can navigate using branches and dot notation to find where a feature resides
 
 To list root simply add the option `--list` (or shorthand `-l`) with no argument:
 
-```text
-mdncomp --list
-->
-Valid root paths:                 
-api                               
-css                               
-html                              
-http                              
-javascript                        
-mathml                            
-svg                               
-webdriver                         
-webextensions                     
-                                  
-Valid statuses:                   
-standard, experimental, deprecated
-```
+    mdncomp --list
+
+![example of root list](https://i.imgur.com/7EVhbXl.png)
 
 List using one of the root branches:
 
-```text
-mdncomp --list api
-->
-[  0] F api.ANGLE_instanced_arrays
-[  1] F api.AbortController
-[  2] F api.AbortPaymentEvent
-[  3] F api.AbortSignal
-[  4] F api.AbstractWorker
-[  5] F api.AmbientLightSensor
-[  6] F api.AnalyserNode
-[  7] F api.Animation
-[  8] F api.AnimationEffect
-[  9] F api.AnimationEvent
-[ 10] F api.AnimationPlaybackEvent
-[ 11] F api.AnimationTimeline
-[ 12] F api.Attr
-[ 13] F api.AudioBuffer
---8X--
-```
+    mdncomp --list webext
+
+![example list an api](https://i.imgur.com/FBARr1D.png)
 
 You can go to next branch by adding the name of the branch, fully or partly (if unique):
 
@@ -237,64 +163,46 @@ You can go to next branch by adding the name of the branch, fully or partly (if 
 
 or simply by adding the index number in one of the following ways:
 
-    mdncomp --list api --index 13
-    mdncomp --list api -i 13
-    mdncomp -l api 13
+    mdncomp --list api --index 7
+    mdncomp --list api -i 7
+    mdncomp -l api 7
 
 (this usage of index also applies to the regular search).
 
 List per status, for example: list all features with "experimental" status:
 
-```text
-mdncomp -l experimental
-->
-[  0] api.AbortController
-[  1] api.AbortPaymentEvent
-[  2] api.AbortSignal
-[  3] api.AmbientLightSensor
---8X--
-```
+    mdncomp -l experimental
+
+![example list on status](https://i.imgur.com/Uvc7fqH.png)
 
 <h3>List current browser versions:</h3>
 
-```text
-mdncomp --browser current
-->
-STATUS: CURRENT
-Chrome              68   2018-07-24  https://chromereleases.googleblog.c...
-Edge                17   2018-04-30  https://docs.microsoft.com/en-us/mi...
-Edge Mobile         17   2018-04-30
-Firefox             61   2018-06-26  https://developer.mozilla.org/Firef...
-Firefox Android     61   2018-06-26  https://developer.mozilla.org/Firef...
-Internet Explorer   11   2013-10-17
---8X--
-```
+    mdncomp --browser current
+
+![example show current browsers](https://i.imgur.com/kJuN8hV.png)
 
 Tip: You can combine the option with `--no-notes, -N` to not show the links at the end.
 
 List release history for a single browser:
-```text
-mdncomp -Nb edge
-->
-Edge  12   2015-07-28  retired
-Edge  13   2015-11-12  retired
-Edge  14   2016-08-02  retired
-Edge  15   2017-04-05  retired
-Edge  16   2017-10-17  retired
-Edge  17   2018-04-30  current
-Edge  18   -           nightly
-```
+
+    mdncomp -Nb edge
+
+![example listing on browser](https://i.imgur.com/7MIgKbU.png)
 
 <h3>Rich output, here additionally using the --desc and --specs options:</h3>
 
     mdncomp sharedarraybuffer. --desc --specs
-    
-![Description and specifications summary example](https://i.imgur.com/aElwsBg.png)<br>
+
+*(the dot "`.`" above signifies end of string, or ends with the given search term)*
+
+![Description and specifications summary example](https://i.imgur.com/cS0x70R.png)<br>
 <sup>*cygwin snapshot*</sup>
 
-<h3>Or as minimal, turning off extra information (here with options `-NRF`)</h3>
+<h3>Or as minimal, turning off extra information</h3>
 
-    # -R = no-children, -N = no-notes, -F = no-flags (also see --help, -h)
+Here with options `-NRF`:
+
+`-R` = no-children, `-N` = no-notes, `-F` = no-flags (also see `-h, --help`)
     
     mdncomp sharedarraybuffer. -RNF
     
@@ -304,7 +212,7 @@ Edge  18   -           nightly
 Markdown enabled tables
 -----------------------
 
-The ASCII tabled can be pasted directly into a markdown documents and will show
+The ASCII tables can be pasted directly into a markdown document and will show
 as rendered HTML tables in markdown-flavors which support tables - **live preview:**
 
 Desktop           |Chrome    |Edge      |Firefox   |IE        |Opera     |Safari
@@ -386,7 +294,7 @@ The MDN team is working hard to convert all the Browser Compatibility Data to
 their new format as used by this and other tools. For this reason some APIs and 
 objects are WIP and may still not be available quite yet.
 
-[Click here to help them out](https://developer.mozilla.org/en-US/docs/MDN/Contribute/Structures/Compatibility_tables).
+[Find out how to help them out here ➝](https://developer.mozilla.org/en-US/docs/MDN/Contribute/Structures/Compatibility_tables)
 
 Requirements
 ------------

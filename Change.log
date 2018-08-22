@@ -12,6 +12,7 @@ TDO: Data service changes -> mark metadata branches (affects hints and titles)
 (2.00.0-alpha.9)
 TDO: Option to allow unicode (> Latin1) characters (✓ instead of "Y" etc.) ?
 TDO: option "--get" (?)
+TDO: Local filters for --list and --browser
 ISS: "--history" will add note ref. to current version even if history items don't apply. Marking can be confusing.
 ISS: Same link can appear more than once in LINKS sections (todo check if there is missing a #-part)
 

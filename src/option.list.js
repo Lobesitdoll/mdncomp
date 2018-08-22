@@ -15,10 +15,12 @@ function list(path, recursive = false) {
 
   // top-levels
   if ( typeof path !== "string" || !path.length || path === "." ) {
+    log();
     log(`?R${text.valid} ${text.pathRoots}:`);
     log(`?g${ utils.getRootList(mdn).join(lf) }?R` + lf);
     log(`${text.valid} ${text.statuses}:`);
     log("?gstandard, experimental, deprecated?R");
+    log();
   }
 
   // list on status
@@ -57,6 +59,7 @@ function list(path, recursive = false) {
       list(line, true);
     }
     else {
+      log();
       log(result);
 
       if (!options.expert) {
@@ -66,6 +69,7 @@ function list(path, recursive = false) {
         if (hasBranch) hints.push(`?y${char.branch}?R = ${text.listBranch}`);
         if (hints.length) log(utils.breakAnsiLine(lf + hints.join(", "), options.maxChars))
       }
+      log();
     }
   }
 }
