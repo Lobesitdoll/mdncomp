@@ -10,6 +10,7 @@ module.exports = (grunt) => {
         },
         files: {
           "bin/mdncomp.js"               : ["src/mdncomp.js"],
+          "build/core.commander.js"      : ["src/core.commander.js"],
           "build/core.ansi.js"           : ["src/core.ansi.js"],
           "build/core.io.js"             : ["src/core.io.js"],
           "build/core.locale.js"         : ["src/core.locale.js"],

@@ -52,7 +52,6 @@
     "sampleconfig.json"
   ],
   "dependencies": {
-    "commander": "^2.17.1",
     "rfc6902": "^2.4.0"
   },
   "devDependencies": {

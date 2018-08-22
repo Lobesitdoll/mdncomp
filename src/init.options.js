@@ -6,7 +6,7 @@
 
 "use strict";
 
-const options = require("commander");
+const options = loadModule("core.commander");
 const version = require("../package.json").version;
 const args = process.argv;
 
@@ -14,7 +14,7 @@ const args = process.argv;
  * Parse command line arguments.
  * Provides a help text if no (valid) arguments are supplied.
  * Can show help per option as well ("--help --browser").
- * @type {options.CommanderStatic}
+ * @type {*}
  * @returns {*} The options object with flags and arguments.
  */
 module.exports = (() => {
@@ -56,7 +56,6 @@ module.exports = (() => {
     .option("--no-colors", text.optionsNoColors)
     .option("--max-chars <width>", text.optionsMaxChars, 84)
     .option("-G, --no-config", text.optionsNoConfig)
-//    .option("--read", "Mark notifications in the current update as read") // todo notifications
     .option("--set <kv>", text.optionsSet)
     //.option("--get [key]", "Get value for key from config file. If no arg. show config file.") // todo --get
     .option("--configpath", text.optionsConfigPath)
@@ -67,7 +66,7 @@ module.exports = (() => {
     .on("--help", extendedHelp)
     .parse(args);
 
-  // apply config file settings if any
+  // apply config file settings to options. Config JSON is preloaded in main (if any)
   loadModule("init.config").initConfig(options);
 
   function extendedHelp() {
