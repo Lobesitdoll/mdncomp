@@ -17,6 +17,7 @@ ISS: "--history" will add note ref. to current version even if history items don
 ISS: Same link can appear more than once in LINKS sections (todo check if there is missing a #-part)
 
 2.00.0-alpha.8
+FIX: Flag output formatting when version was no ("-")
 FIX: Option case-sensitive was ignored
 ADD: Integrated localized version of the commander module
 ADD: New option for messages: "--read" marks unread messages read.

@@ -217,12 +217,12 @@ const utils = {
       "opera"                  : {short: "O", long: "Opera"},
       "safari"                 : {short: "S", long: "Safari"},
 
-      "chrome_android"         : {short: "Ca", long: "Chrome/A"},
-      "edge_mobile"            : {short: "Em", long: "Edge/mob"},
-      "firefox_android"        : {short: "Fa", long: "Firefox/A"},
-      "opera_android"          : {short: "Oa", long: "Opera/A"},
-      "safari_ios"             : {short: "Si", long: "Safari/iOS"},
-      "webview_android"        : {short: "Wa", long: "Webview/A"},
+      "chrome_android"         : {short: "C/a", long: "Chrome/A"},
+      "edge_mobile"            : {short: "E/m", long: "Edge/mob"},
+      "firefox_android"        : {short: "F/a", long: "Firefox/A"},
+      "opera_android"          : {short: "O/a", long: "Opera/A"},
+      "safari_ios"             : {short: "S/i", long: "Safari/iOS"},
+      "webview_android"        : {short: "W/a", long: "Webview/A"},
 
       "nodejs"                 : {short: "ND", long: "Node JS"},
       "qq_android"             : {short: "QQ", long: "QQ/A"},

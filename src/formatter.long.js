@@ -296,7 +296,7 @@ function formatterLong(data) {
           for(let i = 0; i < max; i++) {
             const history = browser.history[ i ];
             let version = utils.ansiFree(utils.versionAddRem(history.version_added, history.version_removed, false, true));
-            version = version === char.yes ? "" : " " + version;
+            version = version === char.yes || version === char.no ? "" : " " + version;
 
             if ( options.history ) {
               if ( history.alternative_name ) flags.push(`?y${name}${version}?R: ${text.altName}: ?c${history.alternative_name}`);

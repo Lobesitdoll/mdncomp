@@ -24,10 +24,11 @@ to the compatibility data.
 - Browser Compatibility Data (BCD from Mozilla Developer Network)
   - Search **API**, **CSS**, **HTML**, **HTTP**, **JavaScript**, **MathML**, **SVG**,
    **WebDriver** and **WebExtensions**.
-  - Search and list features using paths, wildcards, fuzzy terms or regular expressions
+  - Search and list features using keywords, paths, wildcards, fuzzy terms or regular expressions
   - Search case (in)sensitive
   - Deep search option (search in notes, flags, alternative names, prefixes etc.)
   - Navigate and show information using path and branches
+  - Filter results using additional search terms
   - Shows data on the command line as a ANSI colored ASCII formatted table
   - Lists children features
   - Get feature status (standard, experimental or deprecated).
@@ -46,7 +47,7 @@ to the compatibility data.
   - List status and release dates per browser, including release notes (if available).
 
 - Additional included documentation:
-  - Show a optional summary **description** per feature *(included in the dataset for mdncomp only)*.
+  - Show a optional **summary description** per feature *(included in the dataset for mdncomp only)*.
   - (TODO Localized descriptions (where and when available))
   - Includes a *verified* URL to the feature's documentation page on [MDN](https://developer.mozilla.org/).
   - Show standards/specification references, status and links (W3C, WHATWG, KHRONOS, ECMA, IETF etc.)
@@ -61,10 +62,10 @@ to the compatibility data.
   - (TODO Update with language patches for selected locale)
 
 - Define permanent/often used options in a config file (which can be suspended via option).
-- Documented with [wiki](https://gitlab.com/epistemex/mdncomp/wikis/home) pages (todo for v2)
 - Localized user interface.
 - Built-in help per option.
 - Cross-platform (where node and npm is available).
+- Documented with [wiki](https://gitlab.com/epistemex/mdncomp/wikis/home) pages (todo for v2)
 
 **Note to users of older version 1.x.x**: some options has been removed (and some added) to 
 make the tool more focused and lightweight for what it is intended to do. Please see the 
@@ -93,26 +94,29 @@ Examples
 
 Using wildcard:
 
-    $ mdncomp html*toblob
+    $ mdncomp j*let.
 
-![wildcard example](https://i.imgur.com/HyfyQg8.png)
+*(the stop-dot "`.`" above indicates that a result line **ends** with this search term.)*
 
-or using the absolute feature path (case-insensitive, see option `-c`):
+![wildcard example](https://i.imgur.com/3PoMXRY.png)
 
-    $ mdncomp api.HTMLCanvasElement.toBlob
-    $ mdncomp api.htmlcanvaselement.toblob
+or using the absolute feature path:
+
+    $ mdncomp javascript.statements.let
 
 or as an regular expression:
 
-    $ mdncomp /.*html.*toblob/
+    $ mdncomp /j.*let$/
 
-or as an fuzzy expression:
+or as an fuzzy expression (here for `api.HTMLCanvasElement.toBlob`):
 
     $ mdncomp -z ahcb.
-    
-From version 2 you can run without the `--fuzzy` option: if a result is not found 
-using the regular search method, a fuzzy search with the same expression (unless 
-the term contains astrix or starts with forward-slash) using the fuzzy method.
+    $ mdncomp ahcb.
+
+From *version 2* you can run without the `--fuzzy` option: if a result is not found 
+using the basic search method, a second search using the same expression (unless the 
+term contains astrix or starts with forward-slash) using the fuzzy method is 
+automatically invoked.
 
 <h3>Show data in a compact shorthand format using option `-s, --shorthand`:</h3>
 
@@ -181,7 +185,7 @@ List per status, for example: list all features with "experimental" status:
 
 ![example show current browsers](https://i.imgur.com/kJuN8hV.png)
 
-Tip: You can combine the option with `--no-notes, -N` to not show the links at the end.
+Tip: You can combine the option with `-N, --no-notes` to hide the links at the end.
 
 List release history for a single browser:
 
@@ -189,13 +193,11 @@ List release history for a single browser:
 
 ![example listing on browser](https://i.imgur.com/7MIgKbU.png)
 
-<h3>Rich output, here additionally using the --desc and --specs options:</h3>
+<h3>Rich output with additional options</h3>
 
-    mdncomp sharedarraybuffer. --desc --specs
+    mdncomp sharedarraybuffer. --desc --specs --ext --history
 
-*(the dot "`.`" above signifies end of string, or ends with the given search term)*
-
-![Description and specifications summary example](https://i.imgur.com/cS0x70R.png)<br>
+![Description and specifications summary example](https://i.imgur.com/W5eU6h4.png)<br>
 <sup>*cygwin snapshot*</sup>
 
 <h3>Or as minimal, turning off extra information</h3>
@@ -230,11 +232,10 @@ toDataURL         |     4    |    12    |    3.6   |     9    |     9    |     4
 
 And in compact shorthand format:
 
-Browsers:    |C  |E  |F  |IE |O  |S  |ca |em |fa |oa |si |wa
+Browsers:    |C  |E  |F  |IE |O  |S  |C/a|E/m|F/a|O/a|S/i|W/a
 :------------|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:
-toBlob       | 50| - | 19|10*| 37| Y*| 50| - | 4 | 37| - | 50
-Image quality| 50| - | 25| - | Y | - | - | - | 25| - | ? | 50
-
+toBlob       |50 | - |19 |10*|37 |Y* |50 | - | 4 |37 | - |50
+Image_quality|50 | - |25 | - | Y | - | - | - |25 | - | ? |50
 
 Exploration
 -----------
@@ -267,6 +268,11 @@ To clear a setting from the config file use an empty value:
 
     mdncomp --set lang=
     mdncomp --set lang
+
+So for example, if you always want a description to be shown:
+
+    mdncomp --set desc=true
+    mdncomp --set desc=1
 
 To see a list of valid keys that can be used:
 
