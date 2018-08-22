@@ -35,7 +35,7 @@ to the compatibility data.
   - Show additional links for information in notes
   - Show optional detailed Web Worker support for a feature
   - Show optional detailed SharedArrayBuffer support for a feature
-  - Show optional detailed API specific support for a feature
+  - Show optional detailed API specific support for a feature (CORS, blob data, region, service workers etc.)
   - Show information for desktop, mobile and other browsers.
   - Show information for Node.js where relevant.
   - All data available offline (only --*update require a internet connection)

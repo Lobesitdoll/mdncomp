@@ -105,9 +105,15 @@ function formatterLong(data) {
       log("?R" + hints.join(", ") + lf);
     }
 
-    if ( data.inWorker || data.reqNew ) {
-      if ( data.inWorker ) log(`?g+ ?R${text.availableInHint} ?cWorker?R.`);
-      if ( data.reqNew ) log(`?g* ?cnew?R ${text.required}.`);
+    const support = data.support;
+    if (!options.children && (
+      support.inWorker || support.newRequired || support.sabAsBuffer || support.inSVG || support.inTextArea
+    ) ) {
+      if ( support.newRequired ) log(`?g*?R ${text.missing} ?cnew?R ${text.throws}`);
+      if ( support.inWorker ) log(`?g+ ?R${text.availableInHint} ?cWorker?R.`);
+      if ( support.sabAsBuffer ) log(`?g+?R ${text.accepts} ?cSharedArrayBuffer?R ${text.asBuffer}`);
+      if ( support.inSVG ) log(`?g+?R ${text.hasSupportDetails} SVG`);
+      if ( support.inTextArea ) log(`?g+?R ${text.hasSupportDetails} ?c<text-area>?R`);
       log()
     }
   }
@@ -213,7 +219,7 @@ function formatterLong(data) {
     tbl.push(tableName.concat(colNames));
 
     // Main feature name
-    let _dataName = dataName;
+    let _dataName =  utils.featureName(dataName);
     if ( !data.isCompat ) {
       _dataName = char.parent + " " + dataName;
       hint.parent = true;
@@ -222,7 +228,7 @@ function formatterLong(data) {
 
     if ( options.children && data.children.length ) {
       data.children.forEach((child) => {
-        let name = child.name;
+        let name = utils.featureName(child.name);
         if ( name === dataName ) name += "()";
         tbl.push(getLine(name, child.browsers[ device ], child, true));
       });

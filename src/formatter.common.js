@@ -58,6 +58,10 @@ function format(path, recursive = false, subNotes, subLinks) {
   const isWebExt = path.startsWith("webextensions");
   const showNode = path.startsWith("javascript");
   const inWorker = typeof pathObj.worker_support === "object" && typeof pathObj.worker_support.__compat === "object";
+  const newRequired = typeof pathObj.new_required === "object";
+  const sabAsBuffer = typeof pathObj.sharedarraybuffer_support === "object";
+  const inSVG = typeof pathObj.svg_support === "object";
+  const inTextArea = typeof pathObj.textarea_support === "object";
 
   const url = compat.mdn_url && compat.mdn_url.length
               ? ("https://developer.mozilla.org/docs/" + compat.mdn_url).replace(".org/docs/Mozilla/Add-ons/", ".org/Add-ons/")
@@ -65,8 +69,13 @@ function format(path, recursive = false, subNotes, subLinks) {
 
   const result = {
     isCompat    : typeof pathObj.__compat === "object",
-    reqNew      : typeof pathObj.new_required === "object",
-    inWorker    : inWorker,
+    support     : {
+      newRequired : newRequired,
+      inWorker    : inWorker,
+      sabAsBuffer : sabAsBuffer,
+      inSVG       : inSVG,
+      inTextArea  : inTextArea
+    },
     path        : path,
     prePath     : utils.prePathFromPath(mdn, path),
     name        : utils.nameFromPath(path),
@@ -118,7 +127,7 @@ function format(path, recursive = false, subNotes, subLinks) {
       .keys(pathObj)
       .forEach(child => {
         const compat = pathObj[ child ].__compat;
-        if ( compat && child !== "new_required" && !child.endsWith("_without_new_throws")) {
+        if ( compat ) {
           const status = compat.status || {};
           if ( options.obsolete || isWebExt || ((status.experimental || status.standard_track || status.deprecated) && !status.deprecated) ) {
             const childPath = path + "." + child;
@@ -178,8 +187,8 @@ function format(path, recursive = false, subNotes, subLinks) {
             _notes.push({ index, note });
 
             // extract links
-            note.replace(rxAhref, (a, b, href) => {
-              _links.push({ index, url: href });
+            note.replace(rxAhref, (a, b, url) => {
+              _links.push({ index, url });
             });
           }
 

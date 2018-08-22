@@ -158,6 +158,15 @@ const utils = {
     return result.join("?R.") + "?R.";
   },
 
+  featureName: (name) => {
+    if (name === "worker_support") return text.availableInHint + " ?cWorker?R";
+    if (name === "sharedarraybuffer_support") return "?cSAB?R " + text.asBuffer;
+    if (name === "new_required" || name.endsWith("_without_new_throws")) return text.missing + " ?cnew?R " + text.throws;
+    if (name === "svg_support") return text.supportIn + " SVG";
+    if (name === "textarea_support") return text.supportOn + " ?c<text-area>?R";
+    return name
+  },
+
   /**
    * Check if path points to an object with compatibility
    * information or not.
