@@ -1,8 +1,9 @@
 /*
-  Modified for local need:
+  Modified 2.17.1 version for local need:
   - Locale support
   - ES6 format
   - Stripped off unneeded functionality
+  - Reduced overall size (from ~28kb to ~7kb in build)
 
   Module dependencies.
 
@@ -29,7 +30,6 @@
   CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
   TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
   SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
  */
 
 const EventEmitter = require("events").EventEmitter;
@@ -96,7 +96,6 @@ Option.prototype = {
  * @param {String} [name]
  * @api public
  */
-
 function Command(name = "") {
   this.commands = [];
   this.options = [];
@@ -443,19 +442,6 @@ Command.prototype = {
   },
 
   /**
-   * Argument `name` is missing.
-   *
-   * @param {String} name
-   * @api private
-   */
-  missingArgument: function(name) {
-    console.error();
-    console.error(`  ${text.optionError}: ${text.optionReqMissing} "${name}"`);
-    console.error();
-    process.exit(1);
-  },
-
-  /**
    * `Option` is missing an argument, but received `flag` or nothing.
    *
    * @param {String} option
@@ -463,14 +449,14 @@ Command.prototype = {
    * @api private
    */
   optionMissingArgument: function(option, flag) {
-    console.error();
+    err();
     if ( flag ) {
-      console.error(`  ${text.optionError}: ${text.optionOption} "${option.flags}" ${text.optionArgMissing}, ${text.optionGot} "${flag}"`);
+      err(`  ?y${text.optionError}:?w ${text.optionOption} "?c${option.flags}?w" ${text.optionArgMissing}, ${text.optionGot} "${flag}"?R`);
     }
     else {
-      console.error(`  ${text.optionError}: ${text.optionOption} "${option.flags}" ${text.optionArgMissing}`);
+      err(`  ?y${text.optionError}:?w ${text.optionOption} "?c${option.flags}?w" ${text.optionArgMissing}?R`);
     }
-    console.error();
+    err();
     process.exit(1);
   },
 
@@ -482,22 +468,9 @@ Command.prototype = {
    */
   unknownOption: function(flag) {
     if ( this._allowUnknownOption ) return;
-    console.error();
-    console.error(`  ${text.optionError}: ${text.optionUnknownOption} "${flag}"`);
-    console.error();
-    process.exit(1);
-  },
-
-  /**
-   * Variadic argument with `name` is not the last argument as required.
-   *
-   * @param {String} name
-   * @api private
-   */
-  variadicArgNotLast: function(name) {
-    console.error();
-    console.error(`  ${text.optionError}: ${text.optionVariadic} "${name}"`);
-    console.error();
+    err();
+    err(`  ?y${text.optionError}:?w ${text.optionUnknownOption} "?c${flag}?w"?R`);
+    err();
     process.exit(1);
   },
 
@@ -674,9 +647,9 @@ Command.prototype = {
 
     // Append the help information
     return this.options.map(function(option) {
-      return pad(option.flags, width) + "  " + option.description +
+      return "?c" + pad(option.flags, width) + "?R  " + option.description +
         ((option.bool && option.defaultValue !== undefined) ? ` (${text.optionDefault}.: ${option.defaultValue})` : "");
-    }).concat([ pad("-h, --help", width) + "  " + text.optionOutputUsage ])
+    }).concat([ "?c" + pad("-h, --help", width) + "?R  " + text.optionOutputUsage ])
       .join("\n");
   },
 
@@ -690,8 +663,8 @@ Command.prototype = {
     let desc = [];
     if ( this._description ) {
       desc = [
-        "  " + this._description,
-        ""
+        "  ?b" + this._description,
+        "?R"
       ];
 
       let argsDescription = this._argsDescription;
@@ -700,7 +673,7 @@ Command.prototype = {
         desc.push("  " + text.optionArguments + ":");
         desc.push("");
         this._args.forEach(function(arg) {
-          desc.push("    " + pad(arg.name, width) + "  " + argsDescription[ arg.name ]);
+          desc.push("    ?c" + pad(arg.name, width) + "?R  " + argsDescription[ arg.name ]);
         });
         desc.push("");
       }
@@ -710,14 +683,14 @@ Command.prototype = {
     if ( this._alias ) {
       cmdName = cmdName + "|" + this._alias;
     }
-    let usage = [
+    const usage = [
       "",
-      "  " + text.optionUsage + ": " + cmdName + " " + this.usage(),
+      "  ?g" + text.optionUsage + ": ?w" + cmdName + " " + this.usage() + "?R",
       ""
     ];
 
-    let options = [
-      "  " + text.optionOptions + ":",
+    const options = [
+      "  ?w" + text.optionOptions + ":?R",
       "",
       "" + this.optionHelp().replace(/^/gm, "    "),
       ""
@@ -727,7 +700,7 @@ Command.prototype = {
       .concat(desc)
       .concat(options)
       .concat([ "" ])
-      .join("\n");
+      .join(lf);
   },
 
   /**
@@ -741,7 +714,7 @@ Command.prototype = {
         return passthru;
       };
     }
-    process.stdout.write(cb(this.helpInformation()));
+    log(cb(this.helpInformation()));
     this.emit("--help");
   },
 
@@ -754,7 +727,6 @@ Command.prototype = {
     this.outputHelp(cb);
     process.exit();
   }
-
 };
 
 /**

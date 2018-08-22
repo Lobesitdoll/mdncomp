@@ -18,11 +18,9 @@
     "optionArguments"     : "Argumentos",
     "optionError"         : "error",
     "optionArgMissing"    : "argumento faltante",
-    "optionReqMissing"    : "falta el argumento requerido",
     "optionOption"        : "opción",
     "optionUnknownOption" : "opción desconocida",
     "optionGot"           : "tiene",
-    "optionVariadic"      : "Los argumentos variados deben ser últimos",
 
     "optionsList"         : "Ver rutas que comienzan con rama, o lista raíz si ninguno",
     "optionsBrowser"      : "Mostrar información sobre este navegador o listar ID si ninguno",

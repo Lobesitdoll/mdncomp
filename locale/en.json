@@ -18,11 +18,9 @@
     "optionArguments"     : "Arguments",
     "optionError"         : "error",
     "optionArgMissing"    : "argument missing",
-    "optionReqMissing"    : "missing required argument",
     "optionOption"        : "option",
     "optionUnknownOption" : "unknown option",
     "optionGot"           : "got",
-    "optionVariadic"      : "variadic arguments must be last",
 
     "optionsList"         : "List paths starting with given branch(es), or none for root list",
     "optionsBrowser"      : "Show information about this browser, or list ids if none",

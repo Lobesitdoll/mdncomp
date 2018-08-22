@@ -18,11 +18,9 @@
     "optionArguments"     : "Argumenter",
     "optionError"         : "feil",
     "optionArgMissing"    : "argument mangler",
-    "optionReqMissing"    : "mangler påkrevd argument",
     "optionOption"        : "opsjon",
     "optionUnknownOption" : "ukjent opsjon",
     "optionGot"           : "fikk",
-    "optionVariadic"      : "variable argumenter må vӕre på slutten",
 
     "optionsList"         : "List stier som starter med gitt gren(er). Rot-liste hvis ingen",
     "optionsBrowser"      : "Vis informasjon om denne nettleseren. List IDer hvis ingen",
