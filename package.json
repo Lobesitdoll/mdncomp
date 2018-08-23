@@ -13,7 +13,9 @@
     "email": "epistemex@users.noreply.github.com"
   },
   "scripts": {
-    "start": "node ./bin/mdncomp.min.js"
+    "start": "node ./bin/mdncomp.js",
+    "debug": "node ./src/mdncomp.js",
+    "push": "parallelshell \"git push gitlab\" \"git push origin master\""
   },
   "keywords": [
     "mdn",

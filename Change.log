@@ -1,6 +1,10 @@
 mdncomp 2
 =========
 
+(2.00.0-beta.0)
+TDO: wiki files
+TDO: proofreading/checking locale files
+
 (2.00.0-alpha.10)
 TDO: User input evaluation (https://github.com/epistemex/mdncomp/issues/8)
 TDO: Data service changes -> localized patches
