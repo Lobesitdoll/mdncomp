@@ -10,7 +10,7 @@ const fs = require("fs");
 const Path = require("path");
 const utils = loadModule("core.utils");
 const io = loadModule("core.io");
-const filePath = Path.resolve(io.getConfigDataPath(), ".config.json");
+const filePath = Path.join(io.getConfigDataPath(), ".config.json");
 
 let configFile = null;
 
@@ -114,29 +114,14 @@ function initConfig(options) {
     }
 
     // save back config and exit
-    try {
-      fs.writeFileSync(filePath, JSON.stringify(config), "utf-8");
-      process.exit();
-    }
-    catch(_err) {
-      err(`?rCould not write config file.${DEBUG ? lf + _err : ""}?R`);
-      process.exit(1);
-    }
-  }
-}
-
-function loadConfigFile() {
-  try {
-    return require(filePath);
-  }
-  catch(err) {
-    return {};
+    utils.saveConfigFile(config);
+    process.exit();
   }
 }
 
 module.exports = {
   initConfig,
   config: () => configFile,
-  preload: () => configFile = loadConfigFile(),
+  preload: () => configFile = utils.loadConfigFile(),
   locale: () => (configFile.options && configFile.options.lang) ? configFile.options.lang : "en-us"
 };

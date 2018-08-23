@@ -75,9 +75,15 @@ module.exports = {
     return path.resolve(this.getConfigRootPath(), ".mdncomp")
   },
 
+  getConfigFilePath: function() {
+    return path.join(this.getConfigDataPath(), ".config.json")
+  },
+
   /**
    * Get config path and/or sub folders within the config path.
    * Will create the directories that are missing.
+   *
+   * This is the main method to use for configs/data etc.
    *
    * @example
    *

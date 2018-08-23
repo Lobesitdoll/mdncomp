@@ -425,7 +425,29 @@ const utils = {
 
   },
 
-  /**
+  loadConfigFile: () => {
+    const fileName = loadModule("core.io").getConfigFilePath();
+    try {
+      return require(fileName);
+    }
+    catch(err) {
+      return {};
+    }
+  },
+
+  saveConfigFile: (config) => {
+    const fileName = loadModule("core.io").getConfigFilePath();
+    try {
+      require("fs").writeFileSync(fileName, JSON.stringify(config), "utf-8");
+    }
+    catch(_err) {
+      // don't localize this
+      err(`?rCould not write config file.${DEBUG ? lf + _err : ""}?R`);
+      process.exitCode = 1;
+    }
+  },
+
+/**
    * Entry in data.json as first branch followed by "api":
    * "__mdncomp":[
    *   {
