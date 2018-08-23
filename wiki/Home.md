@@ -1,4 +1,5 @@
-Thank you for your interest in `mdncomp`, hopefully an helpful assistance when looking for browser compatible data for your web application / page.
+*Please be patient as we build version 2, or next generation mdncomp. We will add updated
+wikis when we enter beta phase.*
 
 Install
 =======
