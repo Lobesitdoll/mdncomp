@@ -2,7 +2,8 @@
   "name": "mdncomp",
   "version": "2.0.0-alpha.8",
   "description": "Browser Compatibility Data on the command line.",
-  "main": "bin/mdncomp.js",
+  "main": "./bin/mdncomp.js",
+  "bin": "./bin/mdncomp.js",
   "private": false,
   "publishConfig": {
     "p_registry": "http://localhost:4444",
@@ -13,9 +14,13 @@
     "email": "epistemex@users.noreply.github.com"
   },
   "scripts": {
-    "start": "node ./bin/mdncomp.js",
     "debug": "node ./src/mdncomp.js",
-    "push": "parallelshell \"git push gitlab\" \"git push origin master\""
+    "push": "parallelshell \"git push gitlab\" \"git push origin master\"",
+    "start": "node ./bin/mdncomp.js",
+    "prepare": "grunt",
+    "postpublish": "parallelshell \"git push gitlab\" \"git push origin master\"",
+    "postinstall" : "node bin/mdncomp.js --fupdate",
+    "preuninstall": "node bin/mdncomp.js ---UNINSTALL"
   },
   "keywords": [
     "mdn",
@@ -32,9 +37,6 @@
     "specifications"
   ],
   "license": "MIT",
-  "bin": {
-    "mdncomp": "./bin/mdncomp.min.js"
-  },
   "repository": {
     "type": "git",
     "url": "https://gitlab.com/epistemex/mdncomp.git"
@@ -43,7 +45,7 @@
     "node" : ">=8.3"
   },
   "files": [
-    "bin/mdncomp.min.js",
+    "bin/",
     "build/",
     "locale/en.json",
     "locale/es.json",

@@ -3,9 +3,16 @@
 
 /*----------------------------------------------------------------------------*/
 
-const DEBUG = true;   // Run "node src/mdncomp ..." in debug mode
+const DEBUG = __dirname.endsWith("src");
+if (DEBUG) console.log("DEBUG MODE");
 
 /*----------------------------------------------------------------------------*/
+
+if (!DEBUG && process.argv[2] === "---UNINSTALL") {
+  console.log("Uninstalling mdncomp");
+  //console.log("Removing config and data files...")
+  process.exit();
+}
 
 const lf = "\r\n";
 
