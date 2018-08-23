@@ -1,13 +1,10 @@
 mdncomp 2
 =========
 
-(2.00.0-beta.x)
-TDO: Locale support (msg + descriptions in sep. files)
-
 (2.00.0-alpha.10)
 TDO: User input evaluation (https://github.com/epistemex/mdncomp/issues/8)
 TDO: Data service changes -> localized patches
-TDO: Data service changes -> mark metadata branches (affects hints and titles)
+TDO: Data service changes -> mark metadata branches (affects search result, hints and localized titles)
 
 (2.00.0-alpha.9)
 TDO: Option to allow unicode (> Latin1) characters (✓ instead of "Y" etc.) ?
@@ -19,6 +16,7 @@ ISS: Same link can appear more than once in LINKS sections (todo check if there 
 2.00.0-alpha.8
 FIX: Flag output formatting when version was no ("-")
 FIX: Option case-sensitive was ignored
+ADD: Option "--no-msg" to ignore message checking
 ADD: Integrated localized version of the commander module
 ADD: New option for messages: "--read" marks unread messages read.
 ADD: New option for messages: "--unread" marks all current messages unread.

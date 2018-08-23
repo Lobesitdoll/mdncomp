@@ -26,6 +26,9 @@ module.exports = (() => {
     }
   }
 
+  // override "?" -> -h
+  if (args.length === 3 && args[2] === "?") args[2] = "-h";
+
   options
     .version(version, "-v, --version")
     .usage(`[${text.aboutOptions}] [*]`)
@@ -62,6 +65,7 @@ module.exports = (() => {
     .option("--expert [level]", text.optionsExpert, 0)
     .option("--read", text.optionsRead)
     .option("--unread", text.optionsUnread)
+    .option("--no-msg", text.optionsNoMsg)
     .option("--lang <isocode>", text.optionsLang, "en-us")
     .on("--help", extendedHelp)
     .parse(args);

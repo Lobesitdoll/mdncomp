@@ -11,8 +11,8 @@
     "helpUnknownOption"   : "Opción desconocida",
 
     "optionOptions"       : "Opciones",
-    "optionOutputVersion" : "dar salida al número de versión",
-    "optionOutputUsage"   : "dar salida información de uso",
+    "optionOutputVersion" : "Dar salida al número de versión",
+    "optionOutputUsage"   : "Dar salida información de uso",
     "optionDefault"       : "def",
     "optionUsage"         : "Uso",
     "optionArguments"     : "Argumentos",
@@ -52,6 +52,7 @@
     "optionsExpert"       : "Modo experto, deshabilita las pistas",
     "optionsLang"         : "Código de idioma para UI. Utilizar ? para ver lista",
     "optionsRead"         : "Marcar mensajes leídos como leídos",
+    "optionsNoMsg"        : "No revisar mensajes",
     "optionsUnread"       : "Marcar mensajes no leídos",
 
     "basicSupport"        : "Soporte Básico",
@@ -135,16 +136,15 @@
     "statuses"            : "estados",
     "pathRoots"           : "rutas raíz",
     "addOptionIndex"      : "Agregue la opción '-i <n>' para listar una característica específica usando la misma búsqueda",
+    "skippingMsg"         : "Saltarse el mensaje de verificación",
+    "dataUpdated"         : "Datos actualizados",
 
     "unknownBrowser"      : "Navegador desconocido",
     "noArgListsId"        : "Ningún argumento enumera todos los ID válidos",
     "indexOutOfRange"     : "Índice fuera de rango",
     "invalidRegex"        : "Expresión regular inválida (RegExp).",
     "invalidColumnIds"    : "ID de navegador no válido en columnas personalizadas.",
-    "notFeatureObject"    : "No es un objeto de función o principal para función(es). Ver también la opción '--list'.",
-    "criticalDataFile"    : "Error crítico: archivo de datos no encontrado.\n?yIntente ejecutar con la opción --fupdate para descargar la última instantánea.",
-    "missingModule"       : "Crítico: Parece que falta un módulo principal. Uso 'npm i -g mdncomp' por reinstalar.",
-    "unhandled"           : "*** Se produjo un error no controlado!\nConsidere informar para ayudarnos a resolverlo a través de GitLab:\nhttps:\/\/gitlab.com/epistemex/mdncomp/issues\n\nPrueba actualizar / reinstalar 'npm i -g mdncomp' (ó --fupdate) si el problema persiste."
+    "notFeatureObject"    : "No es un objeto de función o principal para función(es). Ver también la opción '--list'."
   },
   "chars": {
     "yes"         : "S",

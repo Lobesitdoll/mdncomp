@@ -185,7 +185,7 @@ function update(force, checkOnly) {
       catch(_err) {err(_err)}
 
       clrLine();
-      log("?gData updated!?R")
+      log(`?g${text.dataUpdated}!?R`);
     }
   });
 }

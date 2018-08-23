@@ -11,8 +11,8 @@
     "helpUnknownOption"   : "Unknown option",
 
     "optionOptions"       : "Options",
-    "optionOutputVersion" : "output the version number",
-    "optionOutputUsage"   : "output usage information",
+    "optionOutputVersion" : "Output the version number",
+    "optionOutputUsage"   : "Output usage information",
     "optionDefault"       : "def",
     "optionUsage"         : "Usage",
     "optionArguments"     : "Arguments",
@@ -52,6 +52,7 @@
     "optionsExpert"       : "Expert mode, disables hints.",
     "optionsLang"         : "Language code for UI and descriptions. Use ? to see list.",
     "optionsRead"         : "Mark unread messages read",
+    "optionsNoMsg"        : "Don't check messages",
     "optionsUnread"       : "Mark messages unread",
 
     "basicSupport"        : "Basic Support",
@@ -135,16 +136,15 @@
     "statuses"            : "statuses",
     "pathRoots"           : "root paths",
     "addOptionIndex"      : "Add option '-i <n>' to list a specific feature using the same search.",
+    "skippingMsg"         : "Skipping message check",
+    "dataUpdated"         : "Data updated",
 
     "unknownBrowser"      : "Unknown browser",
     "noArgListsId"        : "No argument lists all valid IDs",
     "indexOutOfRange"     : "Index out of range",
     "invalidRegex"        : "Invalid regular expression.",
     "invalidColumnIds"    : "Invalid browser id in custom columns.",
-    "notFeatureObject"    : "Not a feature object or parent to feature(s). Also see the '--list' option.",
-    "criticalDataFile"    : "Critical error: data file not found.\n?yTry running with option --fupdate to download latest snapshot.",
-    "missingModule"       : "Critical: A core module seem to be missing. Use 'npm i -g mdncomp' to reinstall.",
-    "unhandled"           : "*** An unhandled error occurred!\nPlease consider reporting to help us solve it via GitLab:\nhttps:\/\/gitlab.com/epistemex/mdncomp/issues\n\nTry update/reinstall 'npm i -g mdncomp' (or --fupdate) if the issue persists."
+    "notFeatureObject"    : "Not a feature object or parent to feature(s). Also see the '--list' option."
   },
   "chars": {
     "yes"         : "Y",

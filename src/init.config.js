@@ -58,7 +58,8 @@ function initConfig(options) {
     .set("maxChars", { type: isNum, convert: toNum, validate: mx })
     .set("columns", { type: isList, convert: toList, validate: valList })
     .set("expert", { type: isNum, convert: toNum, validate: v => clamp(v, 0, 2) })
-    .set("lang", { type: isStr, convert: toStr, validate: v => valLang(v) });
+    .set("lang", { type: isStr, convert: toStr, validate: v => valLang(v) })
+    .set("msg", { type: isBool, convert: toBool, validate: nop });
 
   /*- Load / Init Config file if any -------------------------------------------------------------*/
 
@@ -91,10 +92,10 @@ function initConfig(options) {
     if ( !valid ) {
       let msg = "";
       if ( key !== "?" ) {
-        msg = `?yInvalid key "?c${key}?y". `;
+        msg = `\n?yInvalid key "?c${key}?y". `;
         process.exitCode = 1;
       }
-      err(`${msg}?gValid config keys:\n?w${utils.breakAnsiLine([ ...keys.keys() ].sort().join("?R, ?w"), options.maxChars)}?R`);
+      err(`${msg}\n?gValid config keys:\n\n?w${utils.breakAnsiLine([ ...keys.keys() ].sort().join("?R, ?w"), options.maxChars)}?R\n`);
       process.exit();
     }
 

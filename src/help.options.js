@@ -339,6 +339,14 @@ Mark any messages (if any at all) as read.
 See help for option --read for more details.`;
 
 /*--------------------------------------------------------------------------------------------------*/
+help["--no-msg"] = `
+Skip message checking on run.
+
+Although possible, it's not recommended to set this as a permanent option via 
+--set as you may miss important messages when updating the dataset with --update.
+Or run with option -G, --no-config right after an update to check for messages.`;
+
+/*--------------------------------------------------------------------------------------------------*/
 help["--update"] = help["--cupdate"] = help["--fupdate"] = `
 Update the precompiled Browser Compatibility Data object. If the data
 is considered to be the same (using MD5 hash against server file) no

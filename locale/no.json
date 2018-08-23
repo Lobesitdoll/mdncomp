@@ -11,8 +11,8 @@
     "helpUnknownOption"   : "Ukjent opsjon",
 
     "optionOptions"       : "Opsjoner",
-    "optionOutputVersion" : "vis versjonsnummer",
-    "optionOutputUsage"   : "vis bruks-informasjon",
+    "optionOutputVersion" : "Vis versjonsnummer",
+    "optionOutputUsage"   : "Vis bruks-informasjon",
     "optionDefault"       : "normv",
     "optionUsage"         : "Bruk",
     "optionArguments"     : "Argumenter",
@@ -52,6 +52,7 @@
     "optionsExpert"       : "Ekspertmodus, gjemmer hint",
     "optionsLang"         : "Språkkode for grensesnitt og beskrivelser. Bruk ? for å se liste",
     "optionsRead"         : "Markér uleste meldinger lest",
+    "optionsNoMsg"        : "Ikke sjekk meldinger",
     "optionsUnread"       : "Markér meldinger som ulest",
 
     "basicSupport"        : "Basis Støtte",
@@ -135,16 +136,15 @@
     "statuses"            : "statuser",
     "pathRoots"           : "rot-stier",
     "addOptionIndex"      : "Bruk opsjon '-i <n>' for å liste spesifikk egenskap med samme søkebegrep.",
+    "skippingMsg"         : "Hopper over melding-sjekk",
+    "dataUpdated"         : "Data oppdatert",
 
     "unknownBrowser"      : "Ukjent nettleser",
     "noArgListsId"        : "Ingen argument lister alle gyldige IDer",
     "indexOutOfRange"     : "Indeks utenfor rekkevidde",
     "invalidRegex"        : "Ugyldig uttrykk (RegExp)",
     "invalidColumnIds"    : "Ugyldig nettleser-ID i brukerkolonner",
-    "notFeatureObject"    : "Ikke et egenskapobjekt eller foreldre til egenskap(er). Se også \"--list\" opsjonen.",
-    "criticalDataFile"    : "Kritisk feil: datafil ikke funnet.\n?yPrøv å kjøre med opsjonen --fupdate for å laste ned siste datafil.",
-    "missingModule"       : "Kritisk: En kjernemodul ser ut til å mangle. Bruk 'npm i -g mdncomp' for å om-installere.",
-    "unhandled"           : "*** En ubehandlet feil oppstod!\nVer Vennligst vurder å rapportere for å hjelpe oss med å løse det via GitLab:\nhttps:\/\/gitlab.com/epistemex/mdncomp/issues\n\nPrøv å oppdatere/installere med 'npm i -g mdncomp' (eller --fupdate) hvis problemet vedvarer."
+    "notFeatureObject"    : "Ikke et egenskapobjekt eller foreldre til egenskap(er). Se også \"--list\" opsjonen."
   },
   "chars": {
     "yes"         : "J",

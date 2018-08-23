@@ -3,7 +3,7 @@
 
 /*----------------------------------------------------------------------------*/
 
-const DEBUG = true;
+const DEBUG = true;   // Run "node src/mdncomp ..." in debug mode
 
 /*----------------------------------------------------------------------------*/
 
@@ -14,7 +14,7 @@ const text = {
   "versionWarning"      : "WARNING: mdncomp is built for Node version 8 or newer. It may not work in older Node.js versions.",
   "criticalDataFile"    : "Critical error: data file not found.\n?yTry running with option --fupdate to download latest snapshot.",
   "missingModule"       : "Critical: A core module seem to be missing. Use 'npm i -g mdncomp' to reinstall.",
-  "unhandled"           : "*** An unhandled error occurred!\nPlease consider reporting to help us solve it via GitLab:\nhttps:\/\/gitlab.com/epistemex/mdncomp/issues\n\nTry update/reinstall 'npm i -g mdncomp' (or --fupdate) if the issue persists."
+  "unhandled"           : "------- An unhandled error occurred! -------\n\nConsider reporting to help us solve it via GitLab if it persists:\nhttps:\/\/gitlab.com/epistemex/mdncomp/issues\n\nAlternatively:\nTry update/reinstall 'npm i -g mdncomp' (or --fupdate for just data).\n\n"
 };
 
 /*- SYSTEM VALIDATIONS AND ERROR HANDLING ------------------------------------*/
@@ -46,7 +46,7 @@ Object.assign(global, {
   _base,
   text,
   loadModule,
-  char    : {
+  char     : {
     sep         : "|",
     progressBar : "#",
     yes         : "Y",
@@ -61,12 +61,12 @@ Object.assign(global, {
     experimental: "!",
     deprecated  : "x"
   },
-  lang    : "en-US",
-  ANSI    : loadModule("core.ansi"),
-  log     : utils.log,
-  err     : utils.err,
-  languages: ["en", "en-us", "es", "no"],
-  options : {}
+  lang     : "en-US",
+  ANSI     : loadModule("core.ansi"),
+  log      : utils.log,
+  err      : utils.err,
+  languages: [ "en", "en-us", "es", "no" ],
+  options  : {}
 });
 
 /*- PRELOAD CONFIG FILE ------------------------------------------------------*/
@@ -80,16 +80,24 @@ loadModule("core.locale");
 
 /*- INIT OPTIONS -------------------------------------------------------------*/
 
-const options = global.options = loadModule("init.options");
+const options = global["options"] = loadModule("init.options");
 
 /*- CHECKS MESSAGES ----------------------------------------------------------*/
 
 process.on("exit", () => {
-  if (options.read) utils.markMessages(true);
-  else {
-    if (options.unread) utils.markMessages(false);
-    const msg = utils.getMessages(0);
-    if (msg) log(msg);
+  if (options.msg) {
+    if (options.read) {
+      utils.markMessages(true);
+    }
+    else {
+      if (options.unread) utils.markMessages(false);
+      const msg = utils.getMessages(0);
+      if (msg) log(msg);
+    }
+  }
+  //else if (global.wasHelp || options.update || options.fupdate) {
+  else if (options.update || options.fupdate) {
+    log(`\n?y${text.skippingMsg} (?c--no-msg?y)?R\n`);
   }
 });
 
@@ -124,7 +132,7 @@ else if ( options.fupdate ) {
 /*- SHOW CONFIG PATH ---------------------------------------------------------*/
 
 else if ( options.configpath ) {
-  console.log(require("path").resolve(loadModule("core.io").getConfigDataPath()));
+  log(`\n?w${loadModule("core.io").getConfigDataPath()}?R\n`);
 }
 
 /*- LIST BROWSER VERSIONS AND STATUS -----------------------------------------*/
@@ -153,7 +161,7 @@ else if ( options.random ) {
     showResults(path);
   }
   else {
-    err("Sorry, the keyword doesn't produce a scope. Try add --fuzzy.");
+    err(`?y\n${text.tooLimitedScope}?R\n`);
   }
 }
 
@@ -234,7 +242,7 @@ function loadModule(name) {
     console.error(text.missingModule);
     console.error(name);
     if ( DEBUG ) {
-      console.error("ERROR OBJECT:", err);
+      console.error("\nERROR OBJECT:\n", err);
     }
     process.exit();
   }
