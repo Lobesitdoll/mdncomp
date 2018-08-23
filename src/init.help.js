@@ -6,13 +6,9 @@
 
 "use strict";
 
-const fs = require("fs");
-const Path = require("path");
 const args = process.argv;
 
 function show() {
-
-  //global.wasHelp = true;
 
   if (args.length >= 4) {
     let option = (args[2] === "-h" || args[2] === "--help") ? args[3] : args[2];
@@ -29,22 +25,6 @@ function show() {
     log(`    ?ymdncomp -z hctbb.        ?R${text.example2} HTMLCanvasElement.toBlob (fuzzy)`);
     log(`    ?ymdncomp --list           ?R${text.example3}`);
     log()
-  }
-
-  // Welcome message and reminder to update data
-  const frPath = Path.join(__dirname, "../data/.firstrun");
-
-  if (!fs.existsSync(frPath)) {
-    // Not localized due to being shown before user (perhaps) know about --lang
-    log("?g" + "-".repeat(76));
-    log("?gWELCOME! This appear to be a first run. To get the latest data file run:\n");
-    log("  ?wmdncomp --update\n");
-    log("?gHope mdncomp will be useful! This message is only shown at the first install");
-    log("-".repeat(76), "?R");
-    try {
-      if (!DEBUG) fs.writeFileSync(frPath, "OK", "utf-8")
-    }
-    catch(err) {console.error(err)}
   }
 
   process.exit()
