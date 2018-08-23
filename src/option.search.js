@@ -32,7 +32,7 @@ function search(keyword) {
       keys
         .filter(key => {
           const obj = utils.getPathAsObject(mdn, branch + "." + key);
-          return !(obj && obj.__compat && (obj.__compat.short || obj.__compat.title))
+          return !(!options.deep && obj && obj.__compat && (obj.__compat.short || obj.__compat.title))
         })
         .forEach(key => {
         // Deep mode
