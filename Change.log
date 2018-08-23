@@ -5,13 +5,13 @@ mdncomp 2
 TDO: User input evaluation (https://github.com/epistemex/mdncomp/issues/8)
 TDO: Data service changes -> localized patches
 TDO: Data service changes -> mark metadata branches (affects search result, hints and localized titles)
-
-(2.00.0-alpha.9)
-TDO: Option to allow unicode (> Latin1) characters (✓ instead of "Y" etc.) ?
-TDO: option "--get" (?)
-TDO: Local filters for --list and --browser
 ISS: "--history" will add note ref. to current version even if history items don't apply. Marking can be confusing.
 ISS: Same link can appear more than once in LINKS sections (todo check if there is missing a #-part)
+
+(2.00.0-alpha.9)
+TDO: Local filters for --list and --browser
+TDO: Option to allow unicode (> Latin1) characters (✓ instead of "Y" etc.) ?
+TDO: option "--get" (?)
 
 2.00.0-alpha.8
 FIX: Flag output formatting when version was no ("-")
@@ -31,7 +31,7 @@ IMP: deprecated/non-standard symbol markings in tables
 IMP: Renumber link references
 
 2.00.0-alpha.6-7
-HOT: ..as always. IDE a bit too eager to rename .short to .title everywhere.. Fixed + release.
+HOT: Build error (an unintended module ref. was accidentally renamed). Fixed + release.
 IMP: Minimum field length for 1. row in table depending on --max-chars (long format). Auto-expands as needed (as before)
 IMP: "--history" range is now marked as interval i.e. "[4-6>" (from and incl. 4, to but not incl. 6)
 IMP: Full API path for feature in header with color coding.

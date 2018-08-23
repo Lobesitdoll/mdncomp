@@ -101,14 +101,14 @@ process.on("exit", () => {
   }
 });
 
-/*- COLORS -------------------------------------------------------------------*/
+/*- ANSI COLORS --------------------------------------------------------------*/
 
-// No ANSI color?
 if ( !options.colors ) {
   Object
     .keys(global.ANSI)
-    .filter(ansi => !ansi.includes("ursor"))
-    .forEach(color => ANSI[ color ] = "");
+    .forEach(key => {
+      if (!key.includes("ursor")) ANSI[ key ] = ""
+    });
 }
 
 /*- CHECKS FOR UPDATE, UPDATE PATCH/FULL IF EXISTS, OR EXIT -------------------*/

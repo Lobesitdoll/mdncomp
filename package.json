@@ -37,6 +37,9 @@
     "type": "git",
     "url": "https://gitlab.com/epistemex/mdncomp.git"
   },
+  "engines" : {
+    "node" : ">=8.0"
+  },
   "files": [
     "bin/mdncomp.min.js",
     "build/",

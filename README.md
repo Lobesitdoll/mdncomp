@@ -48,7 +48,7 @@ to the compatibility data.
 
 - Additional included documentation:
   - Show a optional **summary description** per feature *(included in the dataset for mdncomp only)*.
-  - (TODO Localized descriptions (where and when available))
+  - (TODO) Localized descriptions (where and when available)
   - Includes a *verified* URL to the feature's documentation page on [MDN](https://developer.mozilla.org/).
   - Show standards/specification references, status and links (W3C, WHATWG, KHRONOS, ECMA, IETF etc.)
    *(included in the dataset for mdncomp only)*.
@@ -59,7 +59,7 @@ to the compatibility data.
   - Optional forced data update to reinitialize with a full clean data set, f.ex. with data corruption.
   - Integrated message system to notify of important changes, updates.
   - Compressed data transfers
-  - (TODO Update with language patches for selected locale)
+  - (TODO) Update with language patches for selected locale
 
 - Define permanent/often used options in a config file (which can be suspended via option).
 - Localized user interface.
@@ -96,7 +96,7 @@ Using wildcard:
 
     $ mdncomp j*let.
 
-*(the stop-dot "`.`" above indicates that a result line **ends** with this search term.)*
+*(the stop-dot "`.`" above indicates that a result line should **end** with this search term.)*
 
 ![wildcard example](https://i.imgur.com/3PoMXRY.png)
 
@@ -106,7 +106,7 @@ or using the absolute feature path:
 
 or as an regular expression:
 
-    $ mdncomp /j.*let$/
+    $ mdncomp /\blet\b/
 
 or as an fuzzy expression (here for `api.HTMLCanvasElement.toBlob`):
 
@@ -239,23 +239,25 @@ Image_quality|50 | - |25 | - | Y | - | - | - |25 | - | ? |50
 
 Exploration
 -----------
-Feel like exploring? try:
+Feel like discovering new features and APIs? try a random feature:
 
     $ mdncomp --random
 
-Or try combining the `--random` option with `--desc`:
+combine it with a summary description:
 
     $ mdncomp --random --desc
 
-You can also create a scope by providing a keyword or search term:
+You can also create a scope by providing a keyword or search term. Here, find
+a random feature that contains "audio" in its path:
 
     $ mdncomp --random audio
-    $ mdncomp --random abc --fuzzy --desc
 
 Global Configuration
 --------------------
 Often used options can be permanently stored in a config file in the user's home
-directory in JSON format.
+directory in JSON format (see option `--configpath` to see where it's located).
+
+The use of config file can be suspended at any time with the `-G, --no-config` option.
 
 To set or clear an option you can do:
 
@@ -272,22 +274,24 @@ To clear a setting from the config file use an empty value:
 So for example, if you always want a description to be shown:
 
     mdncomp --set desc=true
-    mdncomp --set desc=1
+
+or if you don't want to see neither hints nor legends:
+
+    mdncomp --set expert=2
+
+Using 1 here will disabled hints, but not legends.
 
 To see a list of valid keys that can be used:
 
     mdncomp --set ?
 
-You can also edit the config file directly. Use the option`--configpath` to get 
-the location to the config folder.
-
 Tip: You can as an alternative, define alias commands in some terminals with 
-specific settings for different purposes.
+specific options set for different purposes.
 
 Wiki
 ----
 
-(**NOTE: TODO** Not yet updated for version 2.x.x).
+(**NOTE: TODO** Not yet updated for version 2).
 
 See the [wiki pages](https://gitlab.com/epistemex/mdncomp/wikis/home) for more details on each options,
 how to create a config file and for usage examples.
