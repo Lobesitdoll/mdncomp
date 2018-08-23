@@ -40,7 +40,7 @@
     "url": "https://gitlab.com/epistemex/mdncomp.git"
   },
   "engines" : {
-    "node" : ">=8.0"
+    "node" : ">=8.3"
   },
   "files": [
     "bin/mdncomp.min.js",

@@ -308,7 +308,7 @@ objects are WIP and may still not be available quite yet.
 
 Requirements
 ------------
-- **Node v8** or newer (for older Node version use mdncomp version 1.23.0).
+- **Node.js version 8.3** or newer (for older Node version use mdncomp version 1.23.0).
 - NPM to install `mdncomp i -g mdncomp`
 - Internet connection when updating (via the `--update` option)
 
