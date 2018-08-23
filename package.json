@@ -51,8 +51,7 @@
     "package.json",
     "README.md",
     "LICENSE-MIT.txt",
-    "Change.log",
-    "sampleconfig.json"
+    "Change.log"
   ],
   "dependencies": {
     "rfc6902": "^2.4.0"
