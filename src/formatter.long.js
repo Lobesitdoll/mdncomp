@@ -16,6 +16,8 @@
       - api.Bluetooth.getAvailability (link validity, currently 404)
       - sharedarraybuffer.
       - javascript.statements.let (same link ref'ed twice)
+      - api.EventTarget.addEventListener (extreme title length for sub-features)
+      - css.properties.writing-mode (long and several titles length for sub-features)
 
     Currently longest API paths (93 chars):
     javascript.functions.default_parameters.parameters_without_defaults_after_default_parameters
@@ -48,6 +50,7 @@ const tblOptions = {
 
 function formatterLong(data) {
   const isWebExt = data.path.startsWith("webextensions");
+  const titles = [];
   const flags = [];
   const hint = {
     exp   : false,
@@ -98,16 +101,12 @@ function formatterLong(data) {
       if ( hint.parent ) hints.push(`?g${char.parent}?R = ${text.listParent}`);
       log("?R" + hints.join(", ") + lf);
     }
+  }
 
-    const support = data.support;
-    if ( !options.children && support.any ) {
-      if ( support.newRequired ) log(`?g*?R ${text.missing} ?cnew?R ${text.throws}`);
-      if ( support.inWorker ) log(`?g+ ?R${text.availableInHint} ?cWorker?R.`);
-      if ( support.sabAsBuffer ) log(`?g+?R ${text.accepts} ?cSharedArrayBuffer?R ${text.asBuffer}`);
-      if ( support.inSVG ) log(`?g+?R ${text.hasSupportDetails} SVG`);
-      if ( support.inTextArea ) log(`?g+?R ${text.hasSupportDetails} ?c<text-area>?R`);
-      log();
-    }
+  if (titles.length) {
+    addHeader(text.subFeatures.toUpperCase());
+    titles.forEach((title, i) => log(`?g${i}?R) ?w${utils.breakAnsiLine(utils.cleanHTML(title, true, "?w"), options.maxChars)}?R`));
+    log()
   }
 
   /* Show flags and history --------------------------------------------------*/
@@ -211,17 +210,19 @@ function formatterLong(data) {
     tbl.push(tableName.concat(colNames));
 
     // Main feature name
-    let _dataName =  utils.featureName(dataName);
+    let _dataName = utils.featureName(dataName);
     if ( !data.isCompat ) {
       _dataName = char.parent + " " + dataName;
       hint.parent = true;
     }
+    _dataName  = isSubFeature(_dataName, data);
     tbl.push(getLine(_dataName, dev, data, false));
 
     if ( options.children && data.children.length ) {
       data.children.forEach((child) => {
         let name = utils.featureName(child.name);
         if ( name === dataName ) name += "()";
+        name = isSubFeature(name, child);
         tbl.push(getLine(name, child.browsers[ device ], child, true));
       });
     }
@@ -229,11 +230,22 @@ function formatterLong(data) {
     log("?G" + table(tbl, tblOptions));
   }
 
+  function isSubFeature(name, data) {
+    if (data.title) {
+      const i = titles.indexOf(data.title);
+      name = `?R${text.subFeature} ${i < 0 ? titles.length : i}`;
+      if (i < 0) {
+        titles.push(data.title);
+      }
+    }
+    return name
+  }
+
   function getLine(name, status, data, isChild) {
     const color = isChild ? "?R" : (data.isCompat ? "?w" : "?g");
 
     // Status
-    let stat = "";
+    let stat = " ";
 
     if ( !isWebExt ) {
       if ( data.deprecated ) {
@@ -250,10 +262,10 @@ function formatterLong(data) {
       }
     }
 
-    if (stat.length) stat += " ";
+    if (stat.length) stat = stat.trimRight();
 
     // feature/child name as first entry
-    const result = [ stat + color + name + "?G" ];
+    const result = [ color + name + stat + "?G" ];
 
     status
       .sort(sortRefs)

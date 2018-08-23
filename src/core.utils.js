@@ -165,19 +165,20 @@ const utils = {
    * @returns {*}
    */
   featureName: (name) => {
-    if (!featureNames) {
-      featureNames = new Map()
-        .set("worker_support", `${text.availableInHint} ?cWorker?R`)
-        .set("sharedarraybuffer_support", `?cSAB?R ${text.asBuffer}`)
-        .set("new_required", `${text.missing} ?cnew?R ${text.throws}`)
-        .set("svg_support", `${text.supportIn} SVG`)
-        .set("textarea_support", `${text.supportOn} ?c<text-area>?R`)
-        .set("SharedArrayBuffer_as_param", `?cSAB?R ${text.asParam}`)
-        .set("cors_support", `?cCORS?R ${text.support}`);
-    }
-    if (name.endsWith("_without_new_throws")) name = "new_required";
-
-    return featureNames.get(name) || name;
+    return name
+//    if (!featureNames) {
+//      featureNames = new Map()
+//        .set("worker_support", `${text.availableInHint} ?cWorker?R`)
+//        .set("sharedarraybuffer_support", `?cSAB?R ${text.asBuffer}`)
+//        .set("new_required", `${text.missing} ?cnew?R ${text.throws}`)
+//        .set("svg_support", `${text.supportIn} SVG`)
+//        .set("textarea_support", `${text.supportOn} ?c<text-area>?R`)
+//        .set("SharedArrayBuffer_as_param", `?cSAB?R ${text.asParam}`)
+//        .set("cors_support", `?cCORS?R ${text.support}`);
+//    }
+//    if (name.endsWith("_without_new_throws")) name = "new_required";
+//
+//    return featureNames.get(name) || name;
   },
 
   /**

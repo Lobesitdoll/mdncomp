@@ -61,6 +61,8 @@
     "ext"                 : "Extended",
     "messages"            : "MESSAGES",
     "noDescription"       : "No description available.",
+    "subFeature"          : "Sub-feature",
+    "subFeatures"         : "Sub-features",
     "hdrNotes"            : "FOOTNOTES",
     "hdrLinks"            : "LINKS",
     "hdrFlags"            : "FLAGS",

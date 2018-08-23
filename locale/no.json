@@ -61,6 +61,8 @@
     "ext"                 : "Utvidet",
     "messages"            : "MELDINGER",
     "noDescription"       : "Ingen beskrivelse tilgjengelig.",
+    "subFeature"          : "Under-egenskap",
+    "subFeatures"         : "Under-egenskaper",
     "hdrNotes"            : "FOTNOTER",
     "hdrLinks"            : "LENKER",
     "hdrFlags"            : "FLAGG",

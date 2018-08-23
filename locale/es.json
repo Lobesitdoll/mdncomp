@@ -61,6 +61,8 @@
     "ext"                 : "Extendido",
     "messages"            : "MENSAJES",
     "noDescription"       : "No hay descripción disponible.",
+    "subFeature"          : "Sub-característica",
+    "subFeatures"         : "Sub-características",
     "hdrNotes"            : "NOTAS",
     "hdrLinks"            : "ENLACES",
     "hdrFlags"            : "BANDERAS",
