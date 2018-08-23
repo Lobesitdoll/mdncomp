@@ -29,7 +29,12 @@ function search(keyword) {
       let keys = Object.keys(subNode);
       if ( !options.deep ) keys = keys.filter(key => key !== "__compat");
 
-      keys.forEach(key => {
+      keys
+        .filter(key => {
+          const obj = utils.getPathAsObject(mdn, branch + "." + key);
+          return !(obj && obj.__compat && (obj.__compat.short || obj.__compat.title))
+        })
+        .forEach(key => {
         // Deep mode
         if ( key === "__compat" && !result.includes(branch) ) {
           const o = subNode[ key ];
