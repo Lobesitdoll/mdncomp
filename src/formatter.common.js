@@ -63,6 +63,11 @@ function format(path, recursive = false, subNotes, subLinks) {
   const inSVG = typeof pathObj.svg_support === "object";
   const inTextArea = typeof pathObj.textarea_support === "object";
 
+  let title = compat.title || compat.short ? (compat.title || compat.short).replace("→", "-&gt;") : null;
+  if (title) {
+    title = utils.entities("?w" + utils.breakAnsiLine(utils.cleanHTML(title, true, "?w"), options.maxChars));
+  }
+
   const url = compat.mdn_url && compat.mdn_url.length
               ? ("https://developer.mozilla.org/docs/" + compat.mdn_url).replace(".org/docs/Mozilla/Add-ons/", ".org/Add-ons/")
               : null;
@@ -75,9 +80,8 @@ function format(path, recursive = false, subNotes, subLinks) {
     },
     path        : path,
     prePath     : utils.prePathFromPath(mdn, path),
-    name        : utils.nameFromPath(path),
+    name        : title || utils.nameFromPath(path),
     description : compat.description || "",
-    title       : (compat.title || compat.short || "").replace("→", "-&gt;"),
     url         : url,
     specs       : specs,
     experimental: status.experimental,

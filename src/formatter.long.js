@@ -68,12 +68,6 @@ function formatterLong(data) {
   }
   if ( data.url ) log((data.url ? "?G" + data.url : "-") + "?R");
 
-  // Short title
-  if ( data.title && data.title.length ) {
-    let short = utils.entities("?w" + utils.breakAnsiLine(utils.cleanHTML(data.title, true, "?w"), options.maxChars));
-    log(lf + short);
-  }
-
   // Description
   if ( options.desc ) {
     if ( data.description && data.description !== data.title ) {
