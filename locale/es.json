@@ -9,6 +9,7 @@
     "example3"            : "enumerar rutas de raíz",
     "helpForOption"       : "Ayuda para la opción",
     "helpUnknownOption"   : "Opción desconocida",
+    "dataFromMDN"         : "Datos de MDN",
 
     "optionOptions"       : "Opciones",
     "optionOutputVersion" : "Dar salida al número de versión",

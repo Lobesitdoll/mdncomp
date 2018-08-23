@@ -9,6 +9,7 @@
     "example3"            : "list rot-stier",
     "helpForOption"       : "Hjelp for opsjon",
     "helpUnknownOption"   : "Ukjent opsjon",
+    "dataFromMDN"         : "Data fra MDN",
 
     "optionOptions"       : "Opsjoner",
     "optionOutputVersion" : "Vis versjonsnummer",

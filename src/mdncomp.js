@@ -4,24 +4,24 @@
 /*----------------------------------------------------------------------------*/
 
 const DEBUG = __dirname.endsWith("src");
-if (DEBUG) console.log("DEBUG MODE");
+if ( DEBUG ) console.log("DEBUG MODE");
 
 /*----------------------------------------------------------------------------*/
 
-if (!DEBUG && process.argv[2] === "---UNINSTALL") {
+if ( !DEBUG && process.argv[ 2 ] === "---UNINSTALL" ) {
   console.log("Uninstalling mdncomp");
   //console.log("Removing config and data files...")
-  process.exit();
+  process.exit(0);
 }
 
 const lf = "\r\n";
 
 // Internal texts needed in case errors happens before locale files are loaded. Are merged with locale below.
 const text = {
-  "versionWarning"      : "WARNING: mdncomp is built for Node version 8 or newer. It may not work in older Node.js versions.",
-  "criticalDataFile"    : "Critical error: data file not found.\n?yTry running with option --fupdate to download latest snapshot.",
-  "missingModule"       : "Critical: A core module seem to be missing. Use 'npm i -g mdncomp' to reinstall.",
-  "unhandled"           : "------- An unhandled error occurred! -------\n\nConsider reporting to help us solve it via GitLab if it persists:\nhttps:\/\/gitlab.com/epistemex/mdncomp/issues\n\nAlternatively:\nTry update/reinstall 'npm i -g mdncomp' (or --fupdate for just data).\n\n"
+  "versionWarning"  : "WARNING: mdncomp is built for Node version 8 or newer. It may not work in older Node.js versions.",
+  "criticalDataFile": "Critical error: data file not found.\n?yTry running with option --fupdate to download latest snapshot.",
+  "missingModule"   : "Critical: A core module seem to be missing. Use 'npm i -g mdncomp' to reinstall.",
+  "unhandled"       : "------- An unhandled error occurred! -------\n\nConsider reporting to help us solve it via GitLab if it persists:\nhttps:\/\/gitlab.com/epistemex/mdncomp/issues\n\nAlternatively:\nTry update/reinstall 'npm i -g mdncomp' (or --fupdate for just data).\n\n"
 };
 
 /*- SYSTEM VALIDATIONS AND ERROR HANDLING ------------------------------------*/
@@ -87,25 +87,25 @@ loadModule("core.locale");
 
 /*- INIT OPTIONS -------------------------------------------------------------*/
 
-const options = global["options"] = loadModule("init.options");
+const options = global[ "options" ] = loadModule("init.options");
 
 /*- CHECKS MESSAGES ----------------------------------------------------------*/
 
 process.on("exit", () => {
-  if (options.msg) {
-    if (options.read) {
-      utils.markMessages(true);
-    }
-    else {
-      if (options.unread) utils.markMessages(false);
-      const msg = utils.getMessages(0);
-      if (msg) log(msg);
-    }
-  }
-  //else if (global.wasHelp || options.update || options.fupdate) {
-  else if (options.update || options.fupdate) {
-    log(`\n?y${text.skippingMsg} (?c--no-msg?y)?R\n`);
-  }
+  //  if (options.msg) {
+  //    if (options.read) {
+  //      utils.markMessages(true);
+  //    }
+  //    else {
+  //      if (options.unread) utils.markMessages(false);
+  //      const msg = utils.getMessages(0);
+  //      if (msg) log(msg);
+  //    }
+  //  }
+  //  //else if (global.wasHelp || options.update || options.fupdate) {
+  //  else if (options.update || options.fupdate) {
+  //    log(`\n?y${text.skippingMsg} (?c--no-msg?y)?R\n`);
+  //  }
 });
 
 /*- ANSI COLORS --------------------------------------------------------------*/
@@ -114,7 +114,7 @@ if ( !options.colors ) {
   Object
     .keys(global.ANSI)
     .forEach(key => {
-      if (!key.includes("ursor")) ANSI[ key ] = ""
+      if ( !key.includes("ursor") ) ANSI[ key ] = "";
     });
 }
 
@@ -224,12 +224,12 @@ function search() {
  */
 function showResults(path) {
   const preFormat = loadModule("formatter.common")(path);
-  if (!preFormat ) return;
+  if ( !preFormat ) return;
 
   loadModule(options.shorthand ? "formatter.short" : "formatter.long")(preFormat);
 
   // Add footer
-  log("?pData from MDN - `npm i -g mdncomp` by epistemex?w?R" + lf);
+  log(`?p${text.dataFromMDN} - "npm i -g mdncomp" (c) epistemex?w?R${lf}`);
 }
 
 /*- SYSTEM -------------------------------------------------------------------*/

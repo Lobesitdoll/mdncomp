@@ -17,8 +17,7 @@
     "debug": "node ./src/mdncomp.js",
     "push": "parallelshell \"git push gitlab\" \"git push origin master\"",
     "start": "node ./bin/mdncomp.js",
-    "prepare": "grunt",
-    "postpublish": "parallelshell \"git push gitlab\" \"git push origin master\"",
+    "prepare": "parallelshell grunt && git add * && git commit -m \"Release\"",
     "postinstall" : "node bin/mdncomp.js --fupdate",
     "preuninstall": "node bin/mdncomp.js ---UNINSTALL"
   },

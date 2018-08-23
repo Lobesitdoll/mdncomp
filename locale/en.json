@@ -9,6 +9,7 @@
     "example3"            : "list root paths",
     "helpForOption"       : "Help for option",
     "helpUnknownOption"   : "Unknown option",
+    "dataFromMDN"         : "Data from MDN",
 
     "optionOptions"       : "Options",
     "optionOutputVersion" : "Output the version number",

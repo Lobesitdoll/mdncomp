@@ -4,23 +4,28 @@ mdncomp 2
 (2.00.0-beta.0)
 TDO: wiki files
 TDO: proofreading/checking locale files
+TDO: npm scripts (preuninstall) removing config folder.
 
 (2.00.0-alpha.10)
+TDO: Move data files to config folder + first install (missing data folder in npm install) do --fupdate
 TDO: User input evaluation (https://github.com/epistemex/mdncomp/issues/8)
 TDO: Data service changes -> localized patches
 TDO: Data service changes -> mark metadata branches (affects search result, hints and localized titles)
+TDO: importable for programmatic use ?
 ISS: "--history" will add note ref. to current version even if history items don't apply. Marking can be confusing.
 ISS: Same link can appear more than once in LINKS sections (todo check if there is missing a #-part)
 
 (2.00.0-alpha.9)
+TDO: "--sub" option to inspect sub-feature details?
 TDO: Local filters for --list and --browser
 TDO: Option to allow unicode (> Latin1) characters (✓ instead of "Y" etc.) ?
-TDO: option "--get" (?)
+TDO: option "--get" ?
 
 2.00.0-alpha.8
 FIX: Flag output formatting when version was no ("-")
 FIX: Option case-sensitive was ignored
-ADD: Option "--no-msg" to ignore message checking
+CHG: Sub-features are presented as separate list due to sometimes long titles.
+ADD: Option "--no-msg" to ignore message checking (currently ignored until alpha.9+)
 ADD: Integrated localized version of the commander module
 ADD: New option for messages: "--read" marks unread messages read.
 ADD: New option for messages: "--unread" marks all current messages unread.
