@@ -96,13 +96,13 @@ if ( !options.colors ) {
 /*- CHECKS FOR UPDATE, UPDATE PATCH/FULL IF EXISTS, OR EXIT -------------------*/
 
 if ( options.update ) {
-  loadModule("core.update")(false, false);
+  loadModule("core.update")(false);
 }
 
 /*- FORCE FULL UPDATE --------------------------------------------------------*/
 
 else if ( options.fupdate ) {
-  loadModule("core.update")(true, false);
+  loadModule("core.update")(true);
 }
 
 /*- SHOW CONFIG PATH ---------------------------------------------------------*/

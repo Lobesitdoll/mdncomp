@@ -38,10 +38,10 @@ function compareMD5(callback, redundant) {
   }, (err) => {
     wasRedundant = true;
     if ( redundant ) {
-      err("?rAn error occurred:?R", err.statusCode, err.error);
+      err(`?r${text.error}:?R`, err.statusCode, err.error);
     }
     else {
-      log("?yUsing redundancy...?R\n");
+      log(`?y${text.tryingRedundancy}...?R\n`);
       setImmediate(compareMD5, callback, true);
     }
   });
@@ -83,7 +83,7 @@ function getRemoteData(callback, redundant) {
       wasRedundant = true;
       if ( redundant ) callback(err);
       else {
-        log("?Trying redundancy...?R\n");
+        log(`?${text.tryingRedundancy}...?R\n`);
         setImmediate(getRemoteData, callback, true);
       }
     },
@@ -91,7 +91,7 @@ function getRemoteData(callback, redundant) {
   );
 
   function _progressBar() {
-    log(clr + "?wDownloading data [?b" + char.progressBar.repeat(prog) + " ".repeat(PWIDTH - prog) + "?w]?R");
+    log(`${clr}?w${text.downloadingData} [?b${char.progressBar.repeat(prog) + " ".repeat(PWIDTH - prog)}?w]?R`);
   }
 }
 
@@ -109,10 +109,9 @@ function getCurrentData() {
 /**
  * Update data
  * @param {boolean} force - ignore patch file
- * @param {boolean} checkOnly - check if an update is available, but don't update
  */
-function update(force, checkOnly) {
-  const noData = "?gNo new data available.?R";
+function update(force) {
+  const noData = `?g${text.noNewData}.?R\n`;
 
   log();
 
@@ -131,33 +130,30 @@ function update(force, checkOnly) {
     else if ( md5.local === md5.remote ) {
       log(noData);
     }
-    else if ( checkOnly ) {
-      log(noData);
-    }
     else {
       getPatch(md5, (err, patchStr) => {
         if ( err ) {
-          log("?yNo patch available - Loading full dataset...?R");
+          log(`?y${text.noPatchAvailable} - ${text.downloadingFullData}...?R`);
           _remote();
         }
         else {
           let data = getCurrentData();
           let hasErrors = false;
 
-          log("Applying patch...\n");
+          log(text.applyingPatch + lf);
 
           let patch = JSON.parse(patchStr);
           rfc6902
             .applyPatch(data, patch)
             .forEach(err => {
               if ( err ) {
-                err(`?rError with "${err.name}": ${err.message}?R`);
+                err(`?r${text.error}: "${err.name}": ${err.message}?R`);
                 hasErrors = true;
               }
             });
 
           if ( hasErrors ) {
-            err(`?rError during patching ${md5.local} -> ${md5.remote}.?y${lf}Downloading full dataset...?R`);
+            err(`?r${text.errorDuringPatching} ${md5.local} -> ${md5.remote}.?y${lf}${text.downloadingFullData}...?R`);
             _remote();
           }
           else {
@@ -175,7 +171,7 @@ function update(force, checkOnly) {
         else if ( entry.op === "remove" ) removes++;
         else if ( entry.op === "replace" ) updates++;
       });
-      log(`?RDiff summary: ${adds} adds, ${updates} updates, ${removes} removes\n`)
+      log(`?R${text.diffSummary}: ${adds} ${text.adds}, ${updates} ${text.updates}, ${removes} ${text.removes}\n`)
     }
 
     function _remote() {

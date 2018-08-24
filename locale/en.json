@@ -135,13 +135,25 @@
     "pathRoots"           : "root paths",
     "addOptionIndex"      : "Add option '-i <n>' to list a specific feature using the same search.",
     "dataUpdated"         : "Data updated",
+    "noNewData"           : "No new data available",
+    "downloadingData"     : "Downloading data",
+    "tryingRedundancy"    : "Trying redundancy",
+    "noPatchAvailable"    : "No patch available",
+    "applyingPatch"       : "Applying patch",
+    "errorDuringPatching" : "Error during patching",
+    "downloadingFullData" : "Downloading full dataset",
+    "diffSummary"         : "Diff summary",
+    "adds"                : "adds",
+    "updates"             : "updates",
+    "removes"             : "removes",
 
     "unknownBrowser"      : "Unknown browser",
     "noArgListsId"        : "No argument lists all valid IDs",
     "indexOutOfRange"     : "Index out of range",
     "invalidRegex"        : "Invalid regular expression.",
     "invalidColumnIds"    : "Invalid browser id in custom columns.",
-    "notFeatureObject"    : "Not a feature object or parent to feature(s). Also see the '--list' option."
+    "notFeatureObject"    : "Not a feature object or parent to feature(s). Also see the '--list' option.",
+    "error"               : "An error occurred"
   },
   "chars": {
     "yes"         : "Y",

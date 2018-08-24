@@ -135,13 +135,25 @@
     "pathRoots"           : "rot-stier",
     "addOptionIndex"      : "Bruk opsjon '-i <n>' for å liste spesifikk egenskap med samme søkebegrep.",
     "dataUpdated"         : "Data oppdatert",
+    "noNewData"           : "Ingen ny data tilgjengelig",
+    "downloadingData"     : "Laster ned data",
+    "tryingRedundancy"    : "Prøver redundant",
+    "noPatchAvailable"    : "Ingen patch tilgjengelig",
+    "applyingPatch"       : "Oppdaterer med patch",
+    "errorDuringPatching" : "Feil under patching",
+    "downloadingFullData" : "Laster ned fult datasett",
+    "diffSummary"         : "Diff oppsummering",
+    "adds"                : "aggregert",
+    "updates"             : "oppdatert",
+    "removes"             : "fjernet",
 
     "unknownBrowser"      : "Ukjent nettleser",
     "noArgListsId"        : "Ingen argument lister alle gyldige IDer",
     "indexOutOfRange"     : "Indeks utenfor rekkevidde",
     "invalidRegex"        : "Ugyldig uttrykk (RegExp)",
     "invalidColumnIds"    : "Ugyldig nettleser-ID i brukerkolonner",
-    "notFeatureObject"    : "Ikke et egenskapobjekt eller foreldre til egenskap(er). Se også \"--list\" opsjonen."
+    "notFeatureObject"    : "Ikke et egenskapobjekt eller foreldre til egenskap(er). Se også \"--list\" opsjonen.",
+    "error"               : "En feil oppstod"
   },
   "chars": {
     "yes"         : "J",
