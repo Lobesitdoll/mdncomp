@@ -5,7 +5,7 @@ Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data
 
     $ mdncomp html*toblob
 
-![xterm color + languages output](https://i.imgur.com/hSbng4R.gif)<br>
+![xterm color + languages output](https://i.imgur.com/5dcm3Ds.gif)<br>
 <sup>*cygwin/xterm snapshot ([English, Spanish, Norwegian, ...](./locale#contribute-a-translation-file))*</sup>
 
 Features
@@ -112,7 +112,7 @@ automatically invoked.
 
     $ mdncomp html*toblob -s
 
-![Shorthand format](https://i.imgur.com/yzqlDVY.png)<br>
+![Shorthand format](https://i.imgur.com/ujbb8hZ.png)<br>
 <sup>*cygwin/xterm snapshot*</sup>
 
 You can now do a local filtering of the result by simply adding one or more keywords (or search-terms)
@@ -121,7 +121,7 @@ in the `CanvasRenderingContext2D` API (using only the last part of the name, her
 
     $ mdncomp t2d stroke fill
 
-![example local filter](https://i.imgur.com/eTAGGg4.png)
+![example local filter](https://i.imgur.com/NNM7CSB.png)
 
 <h3>List results using Custom Columns</h3>
 
@@ -131,7 +131,7 @@ columns and local filter:
 
     mdncomp t2d path --columns "chrome,edge,firefox"
 
-![example custom header + filter](https://i.imgur.com/CVNJV6P.png)
+![example custom header + filter](https://i.imgur.com/5Fop2xa.png)
 
 Tip: See config file section below for how you can store custom columns permanently.
 
@@ -163,6 +163,12 @@ or simply by adding the index number in one of the following ways:
 
 (this usage of index also applies to the regular search).
 
+One can further filter the result list:
+
+    mdncomp -l api window
+
+![snapshot list with filter](https://i.imgur.com/flEnn8i.png)
+
 List per status, for example: list all features with "experimental" status:
 
     mdncomp -l experimental
@@ -187,7 +193,7 @@ List release history for a single browser:
 
     mdncomp sharedarraybuffer. --desc --specs --ext
 
-![Description and specifications summary example](https://i.imgur.com/Y3KvuEq.png)<br>
+![Description and specifications summary example](https://i.imgur.com/I3VucIh.png)<br>
 <sup>*cygwin snapshot*</sup>
 
 <h3>Or as minimal, turning off extra information</h3>
@@ -207,25 +213,26 @@ Markdown enabled tables
 The ASCII tables can be pasted directly into a markdown document and will show
 as rendered HTML tables in markdown-flavors which support tables - **live preview:**
 
-Desktop           |Chrome    |Edge      |Firefox   |IE        |Opera     |Safari
-:-----------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
-HTMLCanvasElement |     4    |     Y    |    3.6   |     9    |    9°    |    3.1
-height            |     4    |    12    |    3.6   |     9    |     9    |    3.1
-mozOpaque         |     -    |     -    |    3.5   |     -    |     -    |     -
-width             |     4    |    12    |    3.6   |     9    |     9    |    3.1
-captureStream     |    51    |     ?    |    43    |     -    |    36    |     ?
-getContext        |     Y    |    12    |    3.6   |     9    |     9    |    3.1
-mozFetchAsStream  |     -    |     -    |   13-43  |     -    |     -    |     -
-mozGetAsFile      |     -    |     -    |     4    |     -    |     -    |     -
-toBlob            |    50    |     -    |    19    |    10    |    37    |     Y
-toDataURL         |     4    |    12    |    3.6   |     9    |     9    |     4
+DESKTOP                     |Chrome    |Edge      |Firefox   |IE        |Opera     |Safari
+:---------------------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
+HTMLCanvasElement           |    4     |    Y     |   3.6    |    9     |    9°    |   3.1
+height                      |    4     |    12    |   3.6    |    9     |    9     |   3.1
+mozOpaque ?                 |    -     |    -     |   3.5    |    -     |    -     |    -
+width                       |    4     |    12    |   3.6    |    9     |    9     |   3.1
+captureStream !             |    51    |    ?     |    43    |    -     |    36    |    ?
+getContext                  |    Y     |    12    |   3.6    |    9     |    9     |   3.1
+mozFetchAsStream x?         |    -     |    -     |  13-43   |    -     |    -     |    -
+mozGetAsFile x?             |    -     |    -     |    4     |    -     |    -     |    -
+toBlob                      |    50    |    -     |    19    |   10¹    |    37    |    Y²
+toDataURL                   |    4     |    12    |   3.6    |    9     |    9     |    4
+transferControlToOffscreen !|    -     |    -     |   44F    |    -     |    -     |    -
 
 And in compact shorthand format:
 
-Browsers:    |C  |E  |F  |IE |O  |S  |C/a|E/m|F/a|O/a|S/i|W/a
-:------------|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:
-toBlob       |50 | - |19 |10*|37 |Y* |50 | - | 4 |37 | - |50
-Image_quality|50 | - |25 | - | Y | - | - | - |25 | - | ? |50
+Browsers:              |C  |E  |F  |IE |O  |S  |C/a|E/m|F/a|O/a|S/i|W/a
+:----------------------|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:
+toBlob                 |50 | - |19 |10*|37 |Y* |50 | - | 4 |37 | - |50 
+Image quality parameter|50 | - |25 | - | Y | - | - | - |25 | - | ? |50 
 
 Exploration
 -----------

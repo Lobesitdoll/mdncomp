@@ -237,7 +237,7 @@ function formatterLong(data) {
   function isSubFeature(name, data) {
     if (data.title) {
       const i = titles.indexOf(data.title);
-      name = `?R${text.subFeature} ${i < 0 ? titles.length : i}`;
+      name = `?y${text.subFeature} ?g${i < 0 ? titles.length : i}`;
       if (i < 0) {
         titles.push(data.title);
       }
