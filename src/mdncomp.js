@@ -3,15 +3,10 @@
 
 /*----------------------------------------------------------------------------*/
 
-const DEBUG = __dirname.endsWith("src");
+const DEBUG = __dirname.substring(__dirname.length - 3) === "src";  // for older nodes, checks below
 if ( DEBUG ) console.log("DEBUG MODE");
 
 /*----------------------------------------------------------------------------*/
-
-if ( !DEBUG && process.argv[ 2 ] === "---UNINSTALL" ) {
-  //console.log("Removing config and data files...")
-  process.exit(0);
-}
 
 const lf = "\r\n";
 
@@ -37,7 +32,7 @@ const _errHandler = (err) => {
 process.on("error", _errHandler);
 process.on("uncaughtException", _errHandler);
 
-const _base = `../${DEBUG ? "src" : "build"}/`; //todo refactor this as well..
+const _base = `../${DEBUG ? "src" : "build"}/`;
 const utils = loadModule("core.utils");
 
 /**
