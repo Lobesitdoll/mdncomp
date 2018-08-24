@@ -65,6 +65,7 @@ improved manner.
 
 Install
 -------
+
 Make sure to have [Node.js](https://nodejs.org/en/) and `npm` installed (included with node).
 
 To install **current development** version (**ALPHA**):
@@ -78,7 +79,6 @@ To install the **latest stable version**, install `mdncomp` using:
 These latest version includes a recent precompiled dataset. However, make sure to run mdncomp
 with the option `--update` the first time to get the latest data. It's recommended that you run
 this command weekly (data is usually updated every Thursday evening US time).
-
 
 Examples
 --------
@@ -192,7 +192,7 @@ List release history for a single browser:
 
 <h3>Rich output with additional options</h3>
 
-    mdncomp sharedarraybuffer. --desc --specs --ext
+    mdncomp sharedarraybuffer --desc --specs --ext
 
 ![Description and specifications summary example](https://i.imgur.com/I3VucIh.png)<br>
 <sup>*cygwin snapshot*</sup>
@@ -203,7 +203,7 @@ Here with options `-NRF`:
 
 `-R` = no-children, `-N` = no-notes, `-F` = no-flags (also see `-h, --help`)
     
-    mdncomp sharedarraybuffer. -RNF
+    mdncomp sharedarraybuffer -RNF
     
 ![Minimalistic example](https://i.imgur.com/0LBDDrb.png)<br>
 <sup>*cygwin snapshot*</sup>
@@ -237,6 +237,7 @@ Image quality parameter|50 | - |25 | - | Y | - | - | - |25 | - | ? |50
 
 Exploration
 -----------
+
 Feel like discovering new features and APIs? try a random feature:
 
     $ mdncomp --random
@@ -252,6 +253,7 @@ a random feature that contains "audio" in its path:
 
 Global Configuration
 --------------------
+
 Often used options can be permanently stored in a config file in the user's home
 directory in JSON format (see option `--configpath` to see where it's located).
 
@@ -288,15 +290,20 @@ specific options set for different purposes.
 
 Requirements
 ------------
+
 - **Node.js version 8.3** or newer (for older Node version use mdncomp version 1.23.0).
 - NPM to install `mdncomp i -g mdncomp`
 - Internet connection when updating (via the `--*update` options)
 
 Developer environment
 ---------------------
+
 Development IDE: JetBrains' [WebStorm](https://www.jetbrains.com/webstorm/).
 
 Test environments: Windows 8.1+, Linux (Ubuntu) 
+
+The pre-compiled data an patch repositories can be found [here](https://github.com/epistemex/mdncomp-data)
+and [here](https://gitlab.com/epistemex/mdncomp-data) (redundancy repo).
 
 Support
 -------
