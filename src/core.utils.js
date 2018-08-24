@@ -373,7 +373,12 @@ const utils = {
     return v;
   },
 
-  loadMDN: function() {
+  testFilters: (filters, str) => {
+    for(let filter of filters) if ( filter.test(str) ) return true;
+    return false
+  },
+
+loadMDN: function() {
     let mdn;
     try {
       mdn = require("../data/data.json");

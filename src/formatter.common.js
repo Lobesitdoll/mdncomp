@@ -121,7 +121,7 @@ function format(path, recursive = false, subNotes, subLinks) {
           const status = compat.status || {};
           if ( options.obsolete || isWebExt || ((status.experimental || status.standard_track || status.deprecated) && !status.deprecated) ) {
             const childPath = path + "." + child;
-            if ( !filters || testFilter(child, filters) ) {
+            if ( !filters || utils.testFilters(filters, child) ) {
               result.children.push(format(childPath, true, result.notes, result.links));
             }
           }
@@ -129,10 +129,6 @@ function format(path, recursive = false, subNotes, subLinks) {
       });
 
     options.history = _history;
-  }
-
-  function testFilter(key, filters) {
-    for(let f of filters) if ( f.test(key) ) return true;
   }
 
   function mergeSupport(key, supportObj) {
