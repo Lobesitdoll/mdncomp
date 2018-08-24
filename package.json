@@ -1,12 +1,10 @@
 {
   "name": "mdncomp",
-  "version": "2.0.0-alpha.9",
+  "version": "2.0.0-beta.0",
   "description": "Browser Compatibility Data on the command line.",
   "main": "./bin/mdncomp.js",
   "bin": "./bin/mdncomp.js",
-  "private": false,
   "publishConfig": {
-    "p_registry": "http://localhost:4444",
     "registry": "https://registry.npmjs.org"
   },
   "author": {

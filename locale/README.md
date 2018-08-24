@@ -14,9 +14,8 @@ Key             Language value for key
 ...
 ```
 
-There are three main sections in the JSON file, `texts` holding the phrases and
-`chars` holding abbreviation symbols. Note: `help` is not yet implemented in current
-alpha. 
+There are two main sections in the JSON file, `texts` holding the phrases and
+`chars` holding abbreviation symbols.
 
 ```json
 {"texts": {
@@ -25,15 +24,11 @@ alpha.
  },
  "chars": {
   "yes": "Y"
- },
- "help": {}
+ }
 }
 ```
 
-Note: Keys and values must always be enclosed in quotes.
-
-The language files must have a "minimum" language, for example English must
-have "en.json" as fallback for when "en-uk.json" doesn't exist etc.
+Note: Keys and values must always be enclosed in quotes to be a valid JSON file.
 
 
 Special color codes
@@ -58,7 +53,7 @@ Contribute a Translation file
 
 To contribute with a translated file (or improve an existing one)-
 
-First clone the repository so you can make a PR later on.
+First, clone the repository from **GitLab** so you can make a PR later on.
 
 Then use the file `locale/en.json` as basis. This is always up-to-date. Simply copy it,
 rename using a proper ISO language code, replace the English phrases with those in the
@@ -71,8 +66,11 @@ Make sure the abbreviations in `chars` don't "collide" - for example, if in `mdn
 some or all legends you see listed at the bottom ends up with the same letter, try to 
 be creative and prioritize. Same for "F = Flags" etc. in the normal table listings.
 
-To publish create a PR (Pull Request) for mdncomp. The file will be reviewed and when 
-approved merged into the repository. Contributions will be credited.
+To publish, create a PR (Pull Request) for mdncomp. The file will be reviewed and when 
+approved merged into the repository. 
+
+Contributions will be credited.
+
 
 Feature Descriptions in the Dataset
 ===================================

@@ -1,15 +1,10 @@
 mdncomp 2
 =========
 
-(2.x.x)
-
-(2.00.0-beta.0)
+(2.00.0-beta.1)
 TDO: wiki files
-TDO: proofreading/checking locale files
-TDO: Data service changes -> localized patches
-TDO: Data service changes -> mark metadata branches (affects search result, hints and localized titles)
 
-2.00.0-alpha.9
+2.00.0-beta.0
 ADD: Result filters for "--list" on API (mdncomp --list api window navigator ..")
 ADD: Result filters for "--list" on status (mdncomp --list experimental selectors ..")
 ADD: "--sub <index>" option to inspect sub-feature details

@@ -1,5 +1,6 @@
 mdncomp<sup>nx</sup>
 =========
+**BETA**
 
 Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data) on the command line.
 
@@ -57,9 +58,9 @@ to the compatibility data.
 - Cross-platform (where node and npm is available).
 - Documented with [wiki](https://gitlab.com/epistemex/mdncomp/wikis/home) pages (todo for v2)
 
-**Note to users of older version 1.x.x**: some options has been removed (and some added) to 
-make the tool more focused and lightweight for what it is intended to do. Please see the 
-[Change.log](./Change.log) for details. 
+If you're an user of version 1.x.x you need to familiarize yourself with the changes as 
+some options has been added, removed and changed. Output will also differ in a hopefully
+improved manner.
 
 
 Install
@@ -285,37 +286,28 @@ To see a list of valid keys that can be used:
 Tip: You can as an alternative, define alias commands in some terminals with 
 specific options set for different purposes.
 
-Wiki
-----
-
-(**NOTE: TODO** Not yet updated for version 2).
-
-See the [wiki pages](https://gitlab.com/epistemex/mdncomp/wikis/home) for more details on each options,
-how to create a config file and for usage examples.
-
-The wiki is also included as markdown files in the included [wiki folder](./wiki/Home.md).
-
-Want to help the MDN Team?
---------------------------
-The MDN team is working hard to convert all the Browser Compatibility Data to 
-their new format as used by this and other tools. For this reason some APIs and 
-objects are WIP and may still not be available quite yet.
-
-[Find out how to help them out here ➝](https://developer.mozilla.org/en-US/docs/MDN/Contribute/Structures/Compatibility_tables)
-
 Requirements
 ------------
 - **Node.js version 8.3** or newer (for older Node version use mdncomp version 1.23.0).
 - NPM to install `mdncomp i -g mdncomp`
 - Internet connection when updating (via the `--*update` options)
 
-Additional information
-----------------------
+Developer environment
+---------------------
 Development IDE: JetBrains' [WebStorm](https://www.jetbrains.com/webstorm/).
 
 Test environments: Windows 8.1+, Linux (Ubuntu) 
 
-The software is provided AS-IS.
+Support
+-------
+
+This product is provided AS-IS and comes with no support nor warranty. You use it
+at your risk.
+
+The main git repository can be found at **GitLab** where you also can report issues etc.:
+
+- [GitLab repo](https://gitlab.com/epistemex/mdncomp)
+- [GitLab report issues](https://gitlab.com/epistemex/mdncomp/issues)
 
 License
 -------
