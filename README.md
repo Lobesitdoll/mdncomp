@@ -28,7 +28,7 @@ to the compatibility data.
   - Get feature status (standard, experimental or deprecated).
   - Show notes, flags, vendor prefix, history and security issues.
   - Show additional links for information in notes
-  - (EXPR) Show optional detailed API specific support for a feature (Worker support, 
+  - Show optional detailed API specific support for a feature (Worker support, 
     SharedArrayBuffer support, CORS support, blob data, service workers etc.)
   - Show information for desktop, mobile and other browsers.
   - Show information for Node.js where relevant.
@@ -52,7 +52,7 @@ to the compatibility data.
   - Optional forced data update to reinitialize with a full clean data set, f.ex. with data corruption.
   - Compressed data transfers
 
-- Define permanent/often used options in a config file (which can be suspended via option).
+- Define permanent/often used options in a config file (which can be suspended when needed via option).
 - Localized user interface.
 - Built-in help per option.
 - Cross-platform (where node and npm is available).

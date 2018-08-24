@@ -699,7 +699,6 @@ Command.prototype = {
     return usage
       .concat(desc)
       .concat(options)
-      .concat([ "" ])
       .join(lf);
   },
 
