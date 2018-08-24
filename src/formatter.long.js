@@ -48,7 +48,7 @@ const tblOptions = {
   end         : "?R"
 };
 
-function formatterLong(data) {
+function formatterLong(data, isSub = false) {
   const isWebExt = data.path.startsWith("webextensions");
   const titles = [];
   const flags = [];
@@ -62,7 +62,8 @@ function formatterLong(data) {
 
   /* Header ------------------------------------------------------------------*/
 
-  log();
+  if (!isSub) log();
+  else addHeader(text.subFeature.toUpperCase());
 
   // path + api, status, url
   log(utils.breakAnsiLine(`?c${data.prePath}?w${data.name}?R`, options.maxChars));
@@ -71,18 +72,20 @@ function formatterLong(data) {
   }
   if ( data.url ) log((data.url ? "?G" + data.url : "-") + "?R");
 
-  // Description
-  if ( options.desc ) {
-    if ( data.description && data.description !== data.title ) {
-      let desc = utils.entities("?w" + utils.breakAnsiLine(utils.cleanHTML(data.description, true, "?w"), options.maxChars));
-      log(lf + desc);
-    }
-    else {
-      log(lf + "?R" + text.noDescription);
+  if (!isSub) {
+    // Description
+    if ( options.desc ) {
+      if ( data.description && data.description !== data.title ) {
+        let desc = utils.entities("?w" + utils.breakAnsiLine(utils.cleanHTML(data.description, true, "?w"), options.maxChars));
+        log(lf + desc);
+      }
+      else {
+        log(lf + "?R" + text.noDescription);
+      }
     }
   }
 
-  log("?R");
+    log("?R");
 
   /* Show table data ---------------------------------------------------------*/
 
@@ -103,10 +106,36 @@ function formatterLong(data) {
     }
   }
 
+  /* Show sub-features -------------------------------------------------------*/
+
   if (titles.length) {
-    addHeader(text.subFeatures.toUpperCase());
-    titles.forEach((title, i) => log(`?g${i}?R) ?w${utils.breakAnsiLine(utils.cleanHTML(title, true, "?w"), options.maxChars)}?R`));
-    log()
+    if (isSub || typeof options.sub === "undefined" || +options.sub < 0 || +options.sub >= titles.length) {
+      if (!isSub) addHeader(text.subFeatures.toUpperCase());
+      titles.forEach((title, i) => log(`?g${isSub ? "*" : i}?R) ?w${utils.breakAnsiLine(utils.cleanHTML(title, true, "?w"), options.maxChars)}?R`));
+      if (!isSub) log()
+    }
+    else {
+      const tmp = Object.assign({}, options);
+      const sub = options.sub|0;
+
+      options.history = options.desc = options.children = false;
+      options.flags = true;
+      options.expert = 2;
+      options.sub = undefined;
+
+      // find child
+      let i = 0;
+      for(let child of data.children) {
+        if (child.title) {
+          if (i++ === sub) {
+            log(formatterLong(child, true));
+            break;
+          }
+        }
+      }
+
+      options = Object.assign(options, tmp);
+    }
   }
 
   /* Show flags and history --------------------------------------------------*/
@@ -237,7 +266,7 @@ function formatterLong(data) {
   function isSubFeature(name, data) {
     if (data.title) {
       const i = titles.indexOf(data.title);
-      name = `?y${text.subFeature} ?g${i < 0 ? titles.length : i}`;
+      name = `${isSub ? "?g* ?w" : "?y"}${text.subFeature} ?g${isSub ? "" : (i < 0 ? titles.length : i)}`;
       if (i < 0) {
         titles.push(data.title);
       }

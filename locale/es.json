@@ -39,6 +39,7 @@
     "optionsHistory"      : "Listar entradas del historial de versiones por navegador",
     "optionsDesc"         : "Mostrar descripción de la función (si corresponde)",
     "optionsSpecs"        : "Mostrar enlaces de especificación",
+    "optionsSub"          : "Mostrar sub-elemento con índice n",
     "optionsNoObsolete"   : "Ocultar funciones obsoletas, no estándar y desaprobadas",
     "optionsColumns"      : "Defina columnas personalizadas usando IDs de válidos (vea -b)",
     "optionsUpdate"       : "Actualizar datos desde remoto si está disponible",

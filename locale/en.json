@@ -39,6 +39,7 @@
     "optionsHistory"      : "List version history entries per browser.",
     "optionsDesc"         : "Show description of the feature (if any)",
     "optionsSpecs"        : "Show specification links",
+    "optionsSub"          : "Show sub-feature with index n",
     "optionsNoObsolete"   : "Hide obsolete, non-standard and deprecated child features.",
     "optionsColumns"      : "Define custom columns using valid browser ids (see -b)",
     "optionsUpdate"       : "Update data from remote if available",

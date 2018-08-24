@@ -39,6 +39,7 @@
     "optionsHistory"      : "Vis nettleserspesifikk versjons-historikk",
     "optionsDesc"         : "Vis beskrivelse av egenskap (om noen)",
     "optionsSpecs"        : "Vis spesifikasjonlenker",
+    "optionsSub"          : "Vis under-egenskap med indeks n",
     "optionsNoObsolete"   : "Gjem foreldede og ikke-standard grenegenskaper.",
     "optionsColumns"      : "Definér brukerkolonner av gyldige nettleser-IDer (se -b)",
     "optionsUpdate"       : "Oppdatere data fra tjener, om tilgjengelig",
