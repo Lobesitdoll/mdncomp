@@ -1,13 +1,6 @@
 mdncomp<sup>nx</sup>
 =========
 
-![Announcement](https://i.imgur.com/thxTAqD.png?1) Announcement
-===
-
-***Next Generation mdncomp<sup>nx</sup> (v2) is currently being built - 
-[have your say](https://github.com/epistemex/mdncomp/issues/8) about features you would like to see.***  
-<hr>
-
 Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data) on the command line.
 
     $ mdncomp html*toblob
@@ -34,7 +27,7 @@ to the compatibility data.
   - Get feature status (standard, experimental or deprecated).
   - Show notes, flags, vendor prefix, history and security issues.
   - Show additional links for information in notes
-  - Show optional detailed API specific support for a feature (Worker support, 
+  - (EXPR) Show optional detailed API specific support for a feature (Worker support, 
     SharedArrayBuffer support, CORS support, blob data, service workers etc.)
   - Show information for desktop, mobile and other browsers.
   - Show information for Node.js where relevant.
@@ -48,7 +41,6 @@ to the compatibility data.
 
 - Additional included documentation:
   - Show a optional **summary description** per feature *(included in the dataset for mdncomp only)*.
-  - (TODO) Localized descriptions (where and when available)
   - Includes a *verified* URL to the feature's documentation page on [MDN](https://developer.mozilla.org/).
   - Show standards/specification references, status and links (W3C, WHATWG, KHRONOS, ECMA, IETF etc.)
    *(included in the dataset for mdncomp only)*.
@@ -57,9 +49,7 @@ to the compatibility data.
   - Lighting fast update process
   - Updates with patch files (RFC 6902 / 6901) with support for several versions back.
   - Optional forced data update to reinitialize with a full clean data set, f.ex. with data corruption.
-  - Integrated message system to notify of important changes, updates.
   - Compressed data transfers
-  - (TODO) Update with language patches for selected locale
 
 - Define permanent/often used options in a config file (which can be suspended via option).
 - Localized user interface.
@@ -69,7 +59,7 @@ to the compatibility data.
 
 **Note to users of older version 1.x.x**: some options has been removed (and some added) to 
 make the tool more focused and lightweight for what it is intended to do. Please see the 
-[Change.log](./Change.log) for details. Also see announcement at the top of this file. 
+[Change.log](./Change.log) for details. 
 
 
 Install
@@ -195,9 +185,9 @@ List release history for a single browser:
 
 <h3>Rich output with additional options</h3>
 
-    mdncomp sharedarraybuffer. --desc --specs --ext --history
+    mdncomp sharedarraybuffer. --desc --specs --ext
 
-![Description and specifications summary example](https://i.imgur.com/W5eU6h4.png)<br>
+![Description and specifications summary example](https://i.imgur.com/arLI795.png)<br>
 <sup>*cygwin snapshot*</sup>
 
 <h3>Or as minimal, turning off extra information</h3>
@@ -310,7 +300,7 @@ Requirements
 ------------
 - **Node.js version 8.3** or newer (for older Node version use mdncomp version 1.23.0).
 - NPM to install `mdncomp i -g mdncomp`
-- Internet connection when updating (via the `--update` option)
+- Internet connection when updating (via the `--*update` options)
 
 Additional information
 ----------------------

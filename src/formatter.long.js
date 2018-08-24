@@ -210,7 +210,7 @@ function formatterLong(data) {
     tbl.push(tableName.concat(colNames));
 
     // Main feature name
-    let _dataName = utils.featureName(dataName);
+    let _dataName = dataName;
     if ( !data.isCompat ) {
       _dataName = char.parent + " " + dataName;
       hint.parent = true;
@@ -220,7 +220,7 @@ function formatterLong(data) {
 
     if ( options.children && data.children.length ) {
       data.children.forEach((child) => {
-        let name = utils.featureName(child.name);
+        let name = child.name;
         if ( name === dataName ) name += "()";
         name = isSubFeature(name, child);
         tbl.push(getLine(name, child.browsers[ device ], child, true));

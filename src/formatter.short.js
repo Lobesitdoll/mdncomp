@@ -6,6 +6,7 @@
 
 const utils = loadModule("core.utils");
 const table = loadModule("core.table");
+const maxNameLen = 40;
 
 const browserNames = utils.getBrowserNames();
 const tblOptions = {
@@ -56,9 +57,15 @@ function formatterShort(data) {
 
     if ( options.children && data.children.length ) {
       data.children.forEach(child => {
-        let name = child.name;
-        if ( child.name === data.name ) name += "()";
-        if ( !(child.standard || child.experimental || child.deprecated) ) name = "?G" + char.deprecated + name;
+        let name = utils.entities("?w" + utils.breakAnsiLine(utils.cleanHTML(child.title || child.name, true, "?w"), -1));
+
+        if (name.length > maxNameLen) name = name.substr(0, maxNameLen - 2) + "..";
+        else if ( child.name === data.name ) name += "()";
+
+        if ( !(child.standard || child.experimental || child.deprecated) ) {
+          name = "?G" + char.deprecated + name;
+        }
+
         line.push(getLine(name + "?w", child.browsers, "?R"));
       });
     }

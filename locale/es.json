@@ -43,7 +43,6 @@
     "optionsColumns"      : "Defina columnas personalizadas usando IDs de válidos (vea -b)",
     "optionsUpdate"       : "Actualizar datos desde remoto si está disponible",
     "optionsForceUpdate"  : "Fuerza la actualización de datos completo desde el remoto",
-    "optionsCheckUpdate"  : "Verifica si la actualización está disponible",
     "optionsRandom"       : "Mostrar una entrada aleatoria dentro del alcance opcional",
     "optionsNoColors"     : "No use colores en la salida",
     "optionsMaxChars"     : "Número máximo de caracteres por línea antes del ajuste",
@@ -52,15 +51,11 @@
     "optionsConfigPath"   : "Mostrar ruta hacia donde se almacena archivo de config",
     "optionsExpert"       : "Modo experto, deshabilita las pistas",
     "optionsLang"         : "Código de idioma para UI. Utilizar ? para ver lista",
-    "optionsRead"         : "Marcar mensajes leídos como leídos",
-    "optionsNoMsg"        : "No revisar mensajes",
-    "optionsUnread"       : "Marcar mensajes no leídos",
 
     "basicSupport"        : "Soporte Básico",
     "desktop"             : "Escritorio",
     "mobile"              : "Móvil",
     "ext"                 : "Extendido",
-    "messages"            : "MENSAJES",
     "noDescription"       : "No hay descripción disponible.",
     "subFeature"          : "Sub-característica",
     "subFeatures"         : "Sub-características",
@@ -84,7 +79,6 @@
     "versionColumn"       : "Versión ",
     "see"                 : "Ver",
     "seeOption"           : "Ver opción",
-    "useOptionRead"       : "para marcar mensajes leídos.",
     "asBuffer"            : "como buffer",
     "missing"             : "Desaparecido",
     "throws"              : "falla",
@@ -139,7 +133,6 @@
     "statuses"            : "estados",
     "pathRoots"           : "rutas raíz",
     "addOptionIndex"      : "Agregue la opción '-i <n>' para listar una característica específica usando la misma búsqueda",
-    "skippingMsg"         : "Saltarse el mensaje de verificación",
     "dataUpdated"         : "Datos actualizados",
 
     "unknownBrowser"      : "Navegador desconocido",
@@ -157,8 +150,5 @@
     "parent"      : "P",
     "branch"      : "R",
     "flags"       : "B"
-  },
-  "help": {
-
   }
 }

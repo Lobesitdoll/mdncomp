@@ -7,7 +7,6 @@
 "use strict";
 
 const colorCodes = "rgyobmpcwGR";
-let featureNames = null;
 
 const utils = {
 
@@ -157,28 +156,6 @@ const utils = {
     });
 
     return result.join("?R.") + "?R.";
-  },
-
-  /**
-   * To localize metadata branches
-   * @param name
-   * @returns {*}
-   */
-  featureName: (name) => {
-    return name
-//    if (!featureNames) {
-//      featureNames = new Map()
-//        .set("worker_support", `${text.availableInHint} ?cWorker?R`)
-//        .set("sharedarraybuffer_support", `?cSAB?R ${text.asBuffer}`)
-//        .set("new_required", `${text.missing} ?cnew?R ${text.throws}`)
-//        .set("svg_support", `${text.supportIn} SVG`)
-//        .set("textarea_support", `${text.supportOn} ?c<text-area>?R`)
-//        .set("SharedArrayBuffer_as_param", `?cSAB?R ${text.asParam}`)
-//        .set("cors_support", `?cCORS?R ${text.support}`);
-//    }
-//    if (name.endsWith("_without_new_throws")) name = "new_required";
-//
-//    return featureNames.get(name) || name;
   },
 
   /**
@@ -409,22 +386,6 @@ const utils = {
     return mdn;
   },
 
-  markMessages: (state) => {
-    const mdn = utils.loadMDN();
-    const msg = mdn.__mdncomp;
-    if (Array.isArray(msg)) {
-      msg.forEach(msg => msg.read = state);
-      const path = require("path").resolve(__dirname, "../data/data.json");
-      try {
-        require("fs").writeFileSync(path, JSON.stringify(mdn), "utf-8");
-      }
-      catch(err) {
-        console.log("Could not update data file!", err);
-      }
-    }
-
-  },
-
   loadConfigFile: () => {
     const fileName = loadModule("core.io").getConfigFilePath();
     try {
@@ -447,59 +408,6 @@ const utils = {
     }
   },
 
-/**
-   * Entry in data.json as first branch followed by "api":
-   * "__mdncomp":[
-   *   {
-   *     "text" : "This is a test",
-   *     "read" : false,
-   *     "level": 0,    // 0=normal, 1=important, 2=critical
-   *     "date":1534000000000
-   *   }]
-   *
-   *  or with localized texts:
-   *
-   * "__mdncomp":[
-   *   {
-   *     "text" : {
-   *       "en": "This is a test",
-   *       "es": "Esto es una prueba",
-   *       ...
-   *     }
-   *     "read" : false,
-   *     "level": 0,
-   *     "date":1534000000000
-   *   }]
-   *
-   * @param lastCount
-   * @returns {*}
-   */
-  getMessages: (lastCount = 0) => {
-    const msg = utils.loadMDN().__mdncomp;
-
-    function _text(o) {
-      if (typeof o === "string") return o;
-      else {
-        return o[lang] || o["en-US"] || o["en"]
-      }
-    }
-
-    if (Array.isArray(msg)) {
-      msg.sort((a, b) => {
-        return a.date > b.date ? -1 : (a.data < b.date ? 1 : 0)
-      });
-      const result = msg
-        .filter(msg => !msg.read || (lastCount && msg.length < lastCount))
-        .map(msg => {
-          const date = new Date(+msg.date).toLocaleDateString(lang, { weekday: "long", year: "numeric", month: "short", day: "numeric" });
-          return `?b${date}:\n${["?g", "?y", "?r"][msg.level | 0]}${utils.breakAnsiLine(_text(msg.text), options.maxChars)}`
-        });
-
-      return result.length ? `?w${text.messages}:\n\n${result.join("\n")}\n\n?R${text.seeOption} ?c--read?R ${text.useOptionRead}` : null
-    }
-    return null
-  },
-
   log: function(...args) {
     if ( args.length === 1 && Array.isArray(args[ 0 ]) ) args[ 0 ] = args[ 0 ].join(lf);
     console.log(utils.parseColorCodes(args.join(" ")));
@@ -508,27 +416,6 @@ const utils = {
   err: function(...args) {
     console.error(utils.parseColorCodes(args.join(" ")));
   }
-
-//  getLongestAbove: (min) => {
-//    return utils
-//      .bcdToList(utils.loadMDN())
-//      .sort((a, b) => {
-//        return a.length > b.length ? -1 : (a.length > b.length ? 1 : 0)
-//      })
-//      .filter(item => item.length >= min)
-//  }
-
-//  longestPath: () => {
-//    const _list = utils.bcdToList(utils.loadMDN());
-//    let max = 0, index = -1;
-//    _list.forEach((item, i) => {
-//      if (item.length > max) {
-//        max = item.length;
-//        index = i
-//      }
-//    });
-//    return _list[index]
-//  }
 
 };
 

@@ -57,29 +57,20 @@ function format(path, recursive = false, subNotes, subLinks) {
   const specs = compat.specs || [];
   const isWebExt = path.startsWith("webextensions");
   const showNode = path.startsWith("javascript");
-  const inWorker = typeof pathObj.worker_support === "object" && typeof pathObj.worker_support.__compat === "object";
-  const newRequired = typeof pathObj.new_required === "object";
-  const sabAsBuffer = typeof pathObj.sharedarraybuffer_support === "object";
-  const inSVG = typeof pathObj.svg_support === "object";
-  const inTextArea = typeof pathObj.textarea_support === "object";
-
-  let title = compat.title || compat.short ? (compat.title || compat.short).replace("→", "-&gt;") : null;
 
   const url = compat.mdn_url && compat.mdn_url.length
               ? ("https://developer.mozilla.org/docs/" + compat.mdn_url).replace(".org/docs/Mozilla/Add-ons/", ".org/Add-ons/")
               : null;
 
+  let title = compat.title ? compat.title.replace("→", "-&gt;") : null;
+
   const result = {
     isCompat    : typeof pathObj.__compat === "object",
-    support: {
-      newRequired, inWorker, sabAsBuffer, inSVG, inTextArea,
-      any: newRequired || inWorker || sabAsBuffer || inSVG || inTextArea
-    },
     path        : path,
     prePath     : utils.prePathFromPath(mdn, path),
     name        : utils.nameFromPath(path),
     title       : title,
-    description : compat.description || "",
+    description : compat.description || "", // summary description, BCD.description is here .title (was .short) (via data-service)
     url         : url,
     specs       : specs,
     experimental: status.experimental,

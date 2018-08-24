@@ -17,27 +17,8 @@ help["-l"] = help["--list"] = `
 This will list *branches* and not objects (unless they are branches as
 well). This can help you navigate to a specific object in a branch.
 
-There are currently 3 "special" branches:
-
-If no argument or a single dot (.) a root list will be outputted:
-
-    mdncomp -l
-    ->
-    Valid path roots:                 
-    api                               
-    css                               
-    html                              
-    http                              
-    javascript                        
-    mathml                            
-    svg                               
-    webdriver                         
-    webextensions                     
-                                      
-    Valid statuses:                   
-    standard, experimental, deprecated
-
-From there you can list all branches on for example "css":
+If no argument or a single dot (.) a root list will be outputted.
+From there you can list all branches on for example "webextensions":
 
     mdncomp -l webextensions
     ->
@@ -57,21 +38,11 @@ the same):
     mdncomp -l webextensions -i 1
     mdncomp -l webextensions 1
     
-and so on. Note: using the index will list the resulting list without indices.
+and so on. Note: using the index will list the next resulting list without indices.
 
 Using status "experimental" will list all APIs and objects that are marked 
-experimental:
-
-    mdncomp -l experimental
-    ->
-    api.AbortController
-    api.AbortPaymentEvent
-    api.AbortSignal
-    api.AmbientLightSensor
-    --X8--
-
-"deprecated" will list all APIs and objects that are obsolete or
-deprecated from the standard.`;
+experimental, "deprecated" will list all APIs and objects that are obsolete or
+deprecated from the standard etc.`;
 
 /*--------------------------------------------------------------------------------------------------*/
 help["-D"] = help["--no-desktop"] = `
@@ -83,27 +54,29 @@ Don't show information for mobile device browsers.`;
 
 /*--------------------------------------------------------------------------------------------------*/
 help["-c"] = help["--case-sensitive"] = `
-When searching determine that the search should be
-conducted using case-sensitive comparison.
-Default is case-insensitive.`;
+When searching determine that the search should be conducted using case-sensitive 
+comparison.`;
 
 /*--------------------------------------------------------------------------------------------------*/
 help["-z"] = help["--fuzzy"] = `
 Search using a "fuzzy" search term. This simply mean expressing the
 search term as chosen letters from the target path:
 
-    mndcomp -z htcetblb.
+    mndcomp -z ahcb.
 
 will produce the result for "HTMLCanvasElement.toBlob".
 
-The option can be stored in the "config file" if you want to use it
+From version 2 fuzzy is automatically applied on a second pass if no result was found in the first
+(unless option --deep is used). The option can be stored in the "config file" if you want to use it
 permanently.`;
 
 /*--------------------------------------------------------------------------------------------------*/
 help["-d"] = help["--deep"] = `
-Do a deep search using the search term for descriptions, title, footnotes and history as well.
+Do a deep search using the search term for descriptions, title, footnotes,
+history and metadata branches as well.
 
-Note: The search may take significantly more time to execute.`;
+Note: The search may take significantly more time to execute. We recommend using
+custom regular expressions when doing deep searches.`;
 
 /*--------------------------------------------------------------------------------------------------*/
 help["-i"] = help["--index"] = `
@@ -111,12 +84,11 @@ When multiple results are listed they are assigned a index number in
 the result list. To list one particular result from that list, use this
 option:
 
-    $ mdncomp blob
+    mdncomp blob
     [ 0] api.Blob
     [ 1] api.BlobBuilder
     [ 2] api.BlobEvent
     [ 3] api.Body.blob
-    [ 4] api.HTMLCanvasElement.toBlob
     --X8--
 
 To list "api.BlobEvent" at index 2:
@@ -126,80 +98,28 @@ To list "api.BlobEvent" at index 2:
 Tip: you can use a shorthand version of this option, simply omit the option name and
 type in the number directly as an argument:
 
-    $ mdncomp blob 2`;
+    $ mdncomp blob 2
+`;
 
 /*--------------------------------------------------------------------------------------------------*/
 help["-s"] = help["--shorthand"] = `
-List a textual shorthand version of API information.
-
-For example:
-
- $ mdncomp blobbuilder -s
- ->
- BlobBuilder: DT: C:8 E:Y F:?-18* IE:10 O:- S:- MOB: CA:? FA:?-18* EM:Y OA:- Si:- WA:-`;
+List a compact shorthand table version of the support information.`;
 
 /*--------------------------------------------------------------------------------------------------*/
 help["-b"] = help["--browser"] = `
 This will list release and status information for a *browser* based on
 the given ID.
 
-If no argument or a single dot (.) it list all the currently valid IDs:
-
-    mdncomp --browser
-    ->
-    chrome                                       
-    edge                                         
-    edge_mobile                                  
-    firefox                                      
-    firefox_android                              
-    ie                                           
-    nodejs                                       
-    opera                                        
-    qq_android                                   
-    safari                                       
-    safari_ios                                   
-    samsunginternet_android                      
-    uc_android                                   
-    uc_chinese_android                           
-                                                 
-    Valid statuses:                              
-    beta, current, esr, nightly, planned, retired
-
-Then pick an ID to obtain information about it:
+If no argument or a single dot (.) it list all the currently valid IDs. Then pick 
+an ID to obtain information about it.
 
     mdncomp -b edge
-    ->
-    edge  12  Rel: 2015-07-15  retired
-    edge  13  Rel: 2015-11-05  retired
-    edge  14  Rel: 2016-08-02  retired
-    edge  15  Rel: 2017-04-11  retired
-    edge  16  Rel: 2017-09-26  current
-    edge  17  Rel: -           nightly
 
-You can also get a list of browser bases on status. The following
-status keywords are supported:
+You can also list browsers based on status.
 
-    beta, current, esr, nightly, planned, retired
+    mdncomp -b current
 
-So to list for example the current active browsers:
-
-    mdncomp --browser current
-    ->
-    STATUS: CURRENT                                                       
-    Chrome              68           2018-07-24  https://chromereleases.go...
-    Edge                17           2018-04-30  https://docs.microsoft.co...
-    Edge Mobile         17           2018-04-30                           
-    Firefox             61           2018-06-26  https://developer.mozilla...
-    Firefox Android     61           2018-06-26  https://developer.mozilla...
-    Internet Explorer   11           2013-10-17                           
-    Opera               53           2018-05-10  https://dev.opera.com/blo...
-    --X8--
- 
- To not list links combine the -N, --no-notes option.`;
-
-/*--------------------------------------------------------------------------------------------------*/
-help["-w"] = help["--worker"] = `
-Show detailed information about Worker support (if any).`;
+To not list links combine the -N, --no-notes option.`;
 
 /*--------------------------------------------------------------------------------------------------*/
 help["-N"] = help["--no-notes"] = `
@@ -238,18 +158,14 @@ You can separate the ids with space, comma, semi-column or column.
 The columns will automatically be be sorted and segmented.`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["--sab"] = `
-Show detailed support for SharedArrayBuffer as param (usually with WebGL) (if any).`;
-
-/*--------------------------------------------------------------------------------------------------*/
 help["--no-colors"] = `
 Turns off ANSI colors and codes in the terminal.`;
 
 /*--------------------------------------------------------------------------------------------------*/
 help["--max-chars"] = `
 Set max number of characters on a (textual) line. Default is 84 but if
-you prefer longer lines this can be set here. Using "-1" (negative one)
-as value means no line limit.
+you prefer longer lines this can be set here. Using "-1" as value means 
+no line limit.
 
 Note that width is ignored for URLs.`;
 
@@ -306,7 +222,7 @@ The settings can be manually edited directly in the JSON config file. See --conf
 
 /*--------------------------------------------------------------------------------------------------*/
 help["--lang"] = `
-Use a specific language. Language is an ISO code, for example:
+Use a specific language for the user interface. Language is an ISO code, for example:
 
   mdncomp --lang en
   mdncomp --lang en-us
@@ -324,38 +240,11 @@ And removed (in which case the default en-us will be used):
 The language setting affects the user interface and descriptions (where available).`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["--read"] = `
-Mark any unread messages (if any at all) read.
+help["--update"] = help["--fupdate"] = `
+Update the precompiled Browser Compatibility Data object as full dataset or 
+patches. If the data is considered to be the same no data will be downloaded.
 
-Messages are currently distributed with the dataset and updates of it.
-If any messages are embedded they are shown at the bottom of any output
-when mdncomp is run, until marked unread.
-
-You can mark messages in current dataset unread via the option --unread.`;
-
-/*--------------------------------------------------------------------------------------------------*/
-help["--unread"] = `
-Mark any messages (if any at all) as read.
-See help for option --read for more details.`;
-
-/*--------------------------------------------------------------------------------------------------*/
-help["--no-msg"] = `
-Skip message checking on run.
-
-Although possible, it's not recommended to set this as a permanent option via 
---set as you may miss important messages when updating the dataset with --update.
-Or run with option -G, --no-config right after an update to check for messages.`;
-
-/*--------------------------------------------------------------------------------------------------*/
-help["--update"] = help["--cupdate"] = help["--fupdate"] = `
-Update the precompiled Browser Compatibility Data object. If the data
-is considered to be the same (using MD5 hash against server file) no
-data will be downloaded.
-
-To just check if there is new data use the check option "--cupdate".
-
-To force update regardless if the data is the same you can use
-the "--fupdate" variant.
+To force update regardless if the data is the same you can use "--fupdate".
 
 No other options are allowed with the update options:
 
@@ -365,16 +254,7 @@ No other options are allowed with the update options:
 mdncomp first checks if there is a patch file available and will use
 that, otherwise a full update of the data file will be invoked.
 
-mdncomp has built-in redundancy in case main data server is down.
-
-Two files in the root directory (this may change in the future) are
-loaded:
-
-    data.json
-    data.md5
-
-These are saved locally to "[npm-install-folder]/mdncomp/data/".
-Always run a --update when (re)installing mdncomp from NPM.`;
+mdncomp has built-in redundancy in case main data server is down.`;
 
 /*--------------------------------------------------------------------------------------------------*/
 help["-y"] = help["--history"] = `

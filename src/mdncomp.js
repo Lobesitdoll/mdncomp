@@ -9,7 +9,6 @@ if ( DEBUG ) console.log("DEBUG MODE");
 /*----------------------------------------------------------------------------*/
 
 if ( !DEBUG && process.argv[ 2 ] === "---UNINSTALL" ) {
-  console.log("Uninstalling mdncomp");
   //console.log("Removing config and data files...")
   process.exit(0);
 }
@@ -38,7 +37,7 @@ const _errHandler = (err) => {
 process.on("error", _errHandler);
 process.on("uncaughtException", _errHandler);
 
-const _base = `../${DEBUG ? "src" : "build"}/`;
+const _base = `../${DEBUG ? "src" : "build"}/`; //todo refactor this as well..
 const utils = loadModule("core.utils");
 
 /**
@@ -89,25 +88,6 @@ loadModule("core.locale");
 
 const options = global[ "options" ] = loadModule("init.options");
 
-/*- CHECKS MESSAGES ----------------------------------------------------------*/
-
-process.on("exit", () => {
-  //  if (options.msg) {
-  //    if (options.read) {
-  //      utils.markMessages(true);
-  //    }
-  //    else {
-  //      if (options.unread) utils.markMessages(false);
-  //      const msg = utils.getMessages(0);
-  //      if (msg) log(msg);
-  //    }
-  //  }
-  //  //else if (global.wasHelp || options.update || options.fupdate) {
-  //  else if (options.update || options.fupdate) {
-  //    log(`\n?y${text.skippingMsg} (?c--no-msg?y)?R\n`);
-  //  }
-});
-
 /*- ANSI COLORS --------------------------------------------------------------*/
 
 if ( !options.colors ) {
@@ -122,12 +102,6 @@ if ( !options.colors ) {
 
 if ( options.update ) {
   loadModule("core.update")(false, false);
-}
-
-/*- CHECKS IF AN UPDATE IS AVAILABLE. -----------------------------------------*/
-
-else if ( options.cupdate ) {
-  loadModule("core.update")(false, true);
 }
 
 /*- FORCE FULL UPDATE --------------------------------------------------------*/

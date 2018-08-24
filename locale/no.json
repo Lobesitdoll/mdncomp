@@ -43,7 +43,6 @@
     "optionsColumns"      : "Definér brukerkolonner av gyldige nettleser-IDer (se -b)",
     "optionsUpdate"       : "Oppdatere data fra tjener, om tilgjengelig",
     "optionsForceUpdate"  : "Tvungen oppdatering av data fra tjener",
-    "optionsCheckUpdate"  : "Sjekk om nye data er tilgjengelig",
     "optionsRandom"       : "Vis tilfeldig egenskap innen opsjonelt omfang",
     "optionsNoColors"     : "Ikke bruk farger i tekst",
     "optionsMaxChars"     : "Maks antall karakterer per linje",
@@ -52,15 +51,11 @@
     "optionsConfigPath"   : "Vis sti til hvor konfigurasjons-fil er lagret",
     "optionsExpert"       : "Ekspertmodus, gjemmer hint",
     "optionsLang"         : "Språkkode for grensesnitt og beskrivelser. Bruk ? for å se liste",
-    "optionsRead"         : "Markér uleste meldinger lest",
-    "optionsNoMsg"        : "Ikke sjekk meldinger",
-    "optionsUnread"       : "Markér meldinger som ulest",
 
     "basicSupport"        : "Basis Støtte",
     "desktop"             : "Stasjonær",
     "mobile"              : "Mobil",
     "ext"                 : "Utvidet",
-    "messages"            : "MELDINGER",
     "noDescription"       : "Ingen beskrivelse tilgjengelig.",
     "subFeature"          : "Under-egenskap",
     "subFeatures"         : "Under-egenskaper",
@@ -84,7 +79,6 @@
     "versionColumn"       : "Versjon ",
     "see"                 : "Se",
     "seeOption"           : "Se opsjon",
-    "useOptionRead"       : "for å markere meldinger lest.",
     "asBuffer"            : "som buffer",
     "missing"             : "Manglende",
     "throws"              : "feiler",
@@ -139,7 +133,6 @@
     "statuses"            : "statuser",
     "pathRoots"           : "rot-stier",
     "addOptionIndex"      : "Bruk opsjon '-i <n>' for å liste spesifikk egenskap med samme søkebegrep.",
-    "skippingMsg"         : "Hopper over melding-sjekk",
     "dataUpdated"         : "Data oppdatert",
 
     "unknownBrowser"      : "Ukjent nettleser",
@@ -157,8 +150,5 @@
     "parent"      : "F",
     "branch"      : "G",
     "flags"       : "F"
-  },
-  "help": {
-
   }
 }
