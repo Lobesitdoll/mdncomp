@@ -122,9 +122,11 @@ const utils = {
    */
   getPathAsObject: (mdn, path) => {
     let obj = mdn;
-    path.split(".").forEach(part => {
-      if ( obj && obj[ part ] ) obj = obj[ part ];
-    });
+    if (path) {
+      path.split(".").forEach(part => {
+        if ( obj && obj[ part ] ) obj = obj[ part ];
+      });
+    }
     return obj;
   },
 
