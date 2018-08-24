@@ -1,42 +1,36 @@
 mdncomp 2
 =========
 
+(2.x.x)
+
 (2.00.0-beta.0)
 TDO: wiki files
 TDO: proofreading/checking locale files
-TDO: npm scripts (preuninstall) removing config folder.
-
-(2.00.0-alpha.10)
-TDO: Move data files to config folder + first install (missing data folder in npm install) do --fupdate
-TDO: User input evaluation (https://github.com/epistemex/mdncomp/issues/8)
 TDO: Data service changes -> localized patches
 TDO: Data service changes -> mark metadata branches (affects search result, hints and localized titles)
-TDO: importable for programmatic use ?
-ISS: "--history" will add note ref. to current version even if history items don't apply. Marking can be confusing.
-ISS: Same link can appear more than once in LINKS sections (todo check if there is missing a #-part)
 
 (2.00.0-alpha.9)
+TDO: Move data files to config folder + first install (missing data folder in npm install) do --fupdate
+TDO: importable for programmatic use ?
+TDO: npm scripts (preuninstall) removing config folder.
 TDO: "--sub" option to inspect sub-feature details?
 TDO: Local filters for --list and --browser
 TDO: Option to allow unicode (> Latin1) characters (✓ instead of "Y" etc.) ?
-TDO: option "--get" ?
+ISS: "--history" will add note ref. to current version even if history items don't apply. Marking can be confusing.
+ISS: Same link can appear more than once in LINKS sections (todo check if there is missing a #-part)
 
 2.00.0-alpha.8
-FIX: Flag output formatting when version was no ("-")
-FIX: Option case-sensitive was ignored
-CHG: Sub-features are presented as separate list due to sometimes long titles.
-ADD: Option "--no-msg" to ignore message checking (currently ignored until alpha.9+)
+REM: Option "--cupdate"
+FIX: Flags section output formatting when support version was marked "no"
+FIX: Option case-sensitive was ignored (regr.)
+CHG: Auto-fuzzy mode (second search-pass) disabled with --deep, must be specified manually.
+ADD: Support for metadata branches (API specific sub-features) titles in table outputs
+ADD: Metadata branches (API specific sub-features) titles are presented as separate list due to sometimes very long and many titles.
 ADD: Integrated localized version of the commander module
-ADD: New option for messages: "--read" marks unread messages read.
-ADD: New option for messages: "--unread" marks all current messages unread.
-ADD: Basic notification system via the data-update mechanism (only important messages, breaking changes etc.)
-ADD: Special localized support for some metadata branches (Worker, "new" required, SAB as buffer, in SVG, in TextArea)
 ADD: Option "-d, --deep" doing deep search (searches descriptions, footnotes, history etc. as well)
 ADD: Help argument for option "--lang [?]"
 ADD: Locale infrastructure (main program)
 ADD: Generic locales for English (--lang en), Spanish (--lang es), Norwegian (--lang no)
-CHG: Auto-fuzzy mode (second search-pass) disabled with --deep, must be specified manually.
-IMP: deprecated/non-standard symbol markings in tables
 IMP: Renumber link references
 
 2.00.0-alpha.6-7
