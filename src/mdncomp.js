@@ -127,7 +127,7 @@ else if ( options.list ) {
 /*- SEARCH APIS FOR FEATURES -------------------------------------------------*/
 
 else if ( options.args.length ) {
-  search();
+  loadModule("option.search").search();
 }
 
 /*- RANDOM -------------------------------------------------------------------*/
@@ -135,7 +135,7 @@ else if ( options.args.length ) {
 else if ( options.random ) {
   const path = loadModule("option.random")(options.random);
   if ( path.length ) {
-    showResults(path);
+    loadModule("option.search").results(path);
   }
   else {
     err(`?y\n${text.tooLimitedScope}?R\n`);
@@ -146,60 +146,6 @@ else if ( options.random ) {
 
 else {
   options.help();
-}
-
-/*- SEARCH -------------------------------------------------------------------*/
-
-function search(recursive = false) {
-  const keyword = options.args.shift(); // Note: secondary+ args are extracted in formatter.common module
-  const result = loadModule("option.search")(keyword);
-
-  // no result
-  if ( !result.length && !recursive) {
-    if ( !options.fuzzy && !options.deep && !keyword.includes("*") && !keyword.startsWith("/") ) {
-      options.fuzzy = true;
-      options.args.unshift(keyword);  // reinsert as we do a second call, just with fuzzy
-      search(true);
-    }
-    else {
-      log(`?R${text.noResult}.`);
-    }
-  }
-
-  // multiple results
-  else if ( result.length > 1 && options.index < 0 ) {
-    let pad = Math.log10(result.length) + 1;
-    let str = "";
-    result.forEach((line, i) => {
-      str += `?y[?g${("" + i).padStart(pad)}?y] ?w${line}\n`;
-    });
-    str += `?R\n` + utils.breakAnsiLine(text.addOptionIndex, options.maxLength);
-    log(str);
-  }
-
-  // index out of range?
-  else if ( result.length > 1 && options.index >= result.length ) {
-    err(`?y${text.indexOutOfRange}.?R`);
-  }
-
-  // show feature
-  else {
-    showResults(result.length === 1 ? result[ 0 ] : result[ options.index ]);
-  }
-}
-
-/**
- * Show main results
- * @param path
- */
-function showResults(path) {
-  const preFormat = loadModule("formatter.common")(path);
-  if ( !preFormat ) return;
-
-  loadModule(options.shorthand ? "formatter.short" : "formatter.long")(preFormat);
-
-  // Add footer
-  log(`?p${text.dataFromMDN} - "npm i -g mdncomp" (c) epistemex?w?R${lf}`);
 }
 
 /*- SYSTEM -------------------------------------------------------------------*/

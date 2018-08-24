@@ -6,7 +6,8 @@ TDO: wiki files
 
 2.00.0-beta.3
 FIX: Missing description could lead to error in long format.
-ADD: Support for Thunderbird in browsers and within the Webextensions scope.
+ADD: Support for Thunderbird in browsers and within the Webextensions scope (when officially made available from BCD).
+IMP: Internal refactoring
 
 2.00.0-beta.1-2
 ADD: Translations for update module
