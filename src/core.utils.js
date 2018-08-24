@@ -236,8 +236,8 @@ const utils = {
     return str;
   },
 
-  breakAnsiLine: (s, max) => {
-    const _max = Math.max(72, max >>> 0);
+  breakAnsiLine: (s, max, overrideMin = false) => {
+    const _max = overrideMin ? max : Math.max(72, max >>> 0);
     const _lf = "\n";
     let lines = [];
     let len = 0;

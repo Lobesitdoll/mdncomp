@@ -59,7 +59,10 @@ function formatterShort(data) {
       data.children.forEach(child => {
         let name = utils.entities("?w" + utils.breakAnsiLine(utils.cleanHTML(child.title || child.name, true, "?w"), -1));
 
-        if (name.length > maxNameLen) name = name.substr(0, maxNameLen - 2) + "..";
+        if (utils.ansiFree(name).length > maxNameLen) {
+          name = utils.breakAnsiLine(name, maxNameLen - 2, true).split(lf)[0].trim();
+          if (name.length < maxNameLen) name += ".."
+        }
         else if ( child.name === data.name ) name += "()";
 
         if ( !(child.standard || child.experimental || child.deprecated) ) {
