@@ -6,7 +6,7 @@ TDO: wiki files
 
 2.00.0-beta.1
 ADD: Translations for update module
-FIX: Fixed ANSI string length and truncate
+FIX: Fixed ANSI string length and truncate in compact format
 
 2.00.0-beta.0
 ADD: Result filters for "--list" on API (mdncomp --list api window navigator ..")

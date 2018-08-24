@@ -75,7 +75,7 @@ function formatterLong(data, isSub = false) {
   if (!isSub) {
     // Description
     if ( options.desc ) {
-      if ( data.description && data.description !== data.title ) {
+      if ( data.description ) {
         let desc = utils.entities("?w" + utils.breakAnsiLine(utils.cleanHTML(data.description, true, "?w"), options.maxChars));
         log(lf + desc);
       }

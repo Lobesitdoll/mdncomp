@@ -18,7 +18,6 @@ const mdn = utils.loadMDN();
  * @returns {*}
  */
 function format(path, recursive = false, subNotes, subLinks) {
-
   const pathObj = utils.getPathAsObject(mdn, path);
 
   if ( !pathObj.__compat && !utils.hasChildren(pathObj) ) {
@@ -54,7 +53,6 @@ function format(path, recursive = false, subNotes, subLinks) {
   const compat = pathObj.__compat || {};
   const support = compat.support || {};
   const status = compat.status || {};
-  const specs = compat.specs || [];
   const isWebExt = path.startsWith("webextensions");
   const showNode = path.startsWith("javascript");
 
@@ -70,9 +68,9 @@ function format(path, recursive = false, subNotes, subLinks) {
     prePath     : utils.prePathFromPath(mdn, path),
     name        : utils.nameFromPath(path),
     title       : title,
-    description : compat.description || "", // summary description, BCD.description is here .title (via data-service)
+    description : compat.description, // summary description, BCD.description is here .title (via data-service)
     url         : url,
-    specs       : specs,
+    specs       : compat.specs || [],
     experimental: status.experimental,
     standard    : status.standard_track || (recursive && isWebExt),
     deprecated  : status.deprecated,

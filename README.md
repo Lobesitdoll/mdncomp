@@ -304,7 +304,7 @@ Support
 This product is provided AS-IS and comes with no support nor warranty. You use it
 at your risk.
 
-The main git repository can be found at **GitLab** where you also can report issues etc.:
+The main git repository can be found at **GitLab** where you also can report issues:
 
 - [GitLab repo](https://gitlab.com/epistemex/mdncomp)
 - [GitLab report issues](https://gitlab.com/epistemex/mdncomp/issues)
