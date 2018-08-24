@@ -182,7 +182,7 @@ const utils = {
     return {
       desktop: [ "chrome", "edge", "firefox", "ie", "opera", "safari" ],
       mobile : [ "chrome_android", "edge_mobile", "firefox_android", "opera_android", "safari_ios", "webview_android" ],
-      ext    : [ "nodejs", "qq_android", "samsunginternet_android", "uc_android", "uc_chinese_android" ]
+      ext    : [ "nodejs", "qq_android", "samsunginternet_android", "thunderbird", "uc_android", "uc_chinese_android" ]
     };
   },
 
@@ -205,6 +205,7 @@ const utils = {
       "nodejs"                 : {short: "ND", long: "Node JS"},
       "qq_android"             : {short: "QQ", long: "QQ/A"},
       "samsunginternet_android": {short: "SM", long: "Samsung/A"},
+      "thunderbird"            : {short: "TB", long: "Thunderbrd"},
       "uc_android"             : {short: "UC", long: "UC/A"},
       "uc_chinese_android"     : {short: "UCC", long: "UC-Ch/A"}
     }

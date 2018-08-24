@@ -206,7 +206,7 @@ function formatterLong(data, isSub = false) {
 
   if ( options.expert < 1 ) {
 
-    if ( !options.desc && data.description.length ) {
+    if ( !options.desc && data.description ) {
       logHint(text.useOptionHint + " ?c--desc?R " + text.descHint);
     }
 

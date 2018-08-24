@@ -95,7 +95,7 @@ function format(path, recursive = false, subNotes, subLinks) {
   }
 
   if ( options.ext && browsers.ext.length ) {
-    browsers.ext.filter(key => showNode ? true : key !== "nodejs").forEach(key => {
+    browsers.ext.filter(key => (showNode || key !== "nodejs") && (isWebExt || key !== "thunderbird")).forEach(key => {
       result.browsers.ext.push(mergeSupport(key, support));
     });
   }
