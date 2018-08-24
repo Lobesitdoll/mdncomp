@@ -204,9 +204,13 @@ function formatterLong(data) {
     const dataName = data.name;
 
     // Header line
-    const tableName = [ "?y" + text[ device ].toUpperCase()
+    const tableName = [ "?y" + text[ device ]
+      .toUpperCase()
       .padEnd(Math.max(0, options.maxChars - 67)) + "?G" ];
-    const colNames = dev.map(o => `?w${browserNames[ o.browser ].long.padEnd(10)}?G`);
+
+    const colNames = dev
+      .map(o => `?w${browserNames[ o.browser ].long.padEnd(10)}?G`);
+
     tbl.push(tableName.concat(colNames));
 
     // Main feature name

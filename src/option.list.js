@@ -14,7 +14,7 @@ let hasBranch = false;
 function list(path, recursive = false) {
 
   // top-levels
-  if ( typeof path !== "string" || !path.length || path === "." ) {
+  if ( typeof path !== "string" || !path.length || path === "."  || path === "?" ) {
     log();
     log(`?R${text.valid} ${text.pathRoots}:`);
     log(`?g${ utils.getRootList(mdn).join(lf) }?R` + lf);
@@ -36,11 +36,11 @@ function list(path, recursive = false) {
   else {
     let result = listAPI(path, recursive);
 
-    if ( result.length === 1 && utils.isCompat(mdn, result[ 0 ]) ) {
+    if ( result.length === 1 && !options.args.length && utils.isCompat(mdn, result[ 0 ]) ) {
       options.list = undefined;
       listAPI(result[ 0 ]);
     }
-    else if (result.length > 1) {
+    else if (result.length > 0 || options.args.length) {
       checkIndex(result)
     }
   }
@@ -93,6 +93,12 @@ function listAPI(prefix, recursive = false) {
   const tbl = utils.bcdToList(mdn);
   const maxSegments = _prefix.split(".").length + 1;
 
+  // build sub-filters
+  const filters = [];
+  options.args.forEach(arg => {
+    filters.push(utils.getComparer(arg, options.fuzzy, !options.caseSensitive))
+  });
+
   let last = "";
 
   return tbl
@@ -101,6 +107,9 @@ function listAPI(prefix, recursive = false) {
       if ( _path.startsWith(_prefix) && path.split(".").length <= maxSegments && path !== last ) {
         return last = path;
       }
+    })
+    .filter(path => {
+      return !filters.length || utils.testFilters(filters, path)
     })
     .sort()
     .map((path, i, arr) => {

@@ -1,6 +1,6 @@
 {
   "name": "mdncomp",
-  "version": "2.0.0-alpha.8",
+  "version": "2.0.0-alpha.9",
   "description": "Browser Compatibility Data on the command line.",
   "main": "./bin/mdncomp.js",
   "bin": "./bin/mdncomp.js",
@@ -17,9 +17,7 @@
     "debug": "node ./src/mdncomp.js",
     "push": "parallelshell \"git push gitlab\" \"git push origin master\"",
     "start": "node ./bin/mdncomp.js",
-    "prepare": "grunt && node bin/mdncomp --fupdate",
-    "postinstall" : "node bin/mdncomp.js --fupdate",
-    "preuninstall": "node bin/mdncomp.js ---UNINSTALL"
+    "postinstall" : "mdncomp --fupdate"
   },
   "keywords": [
     "mdn",

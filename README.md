@@ -187,7 +187,7 @@ List release history for a single browser:
 
     mdncomp sharedarraybuffer. --desc --specs --ext
 
-![Description and specifications summary example](https://i.imgur.com/arLI795.png)<br>
+![Description and specifications summary example](https://i.imgur.com/Y3KvuEq.png)<br>
 <sup>*cygwin snapshot*</sup>
 
 <h3>Or as minimal, turning off extra information</h3>
