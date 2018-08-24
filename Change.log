@@ -10,7 +10,8 @@ TDO: Data service changes -> localized patches
 TDO: Data service changes -> mark metadata branches (affects search result, hints and localized titles)
 
 2.00.0-alpha.9
-ADD: Result filters for "--list" (mdncomp --list api window navigator .."
+ADD: Result filters for "--list" on API (mdncomp --list api window navigator ..")
+ADD: Result filters for "--list" on status (mdncomp --list experimental selectors ..")
 TDO: "--sub" option to inspect sub-feature details?
 
 2.00.0-alpha.8

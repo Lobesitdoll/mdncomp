@@ -70,7 +70,7 @@ function format(path, recursive = false, subNotes, subLinks) {
     prePath     : utils.prePathFromPath(mdn, path),
     name        : utils.nameFromPath(path),
     title       : title,
-    description : compat.description || "", // summary description, BCD.description is here .title (was .short) (via data-service)
+    description : compat.description || "", // summary description, BCD.description is here .title (via data-service)
     url         : url,
     specs       : specs,
     experimental: status.experimental,

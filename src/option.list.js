@@ -26,7 +26,7 @@ function list(path, recursive = false) {
   // list on status
   else if ( [ "deprecated", "experimental", "standard" ].includes(path) ) {
     const result = listOnStatus(path, recursive);
-    if (result.length > 1) {
+    if (result.length > 1 || options.args.length) {
       checkIndex(result)
     }
     else log(result);
@@ -147,8 +147,13 @@ function listAPI(prefix, recursive = false) {
 
 function listOnStatus(statTxt, recursive = false) {
   const result = [];
+  const filters = [];
 
   if ( statTxt === "standard" ) statTxt += "_track";
+
+  options.args.forEach(arg => {
+    filters.push(utils.getComparer(arg, options.fuzzy, !options.caseSensitive))
+  });
 
   utils
     .getRootList(mdn)
@@ -163,7 +168,11 @@ function listOnStatus(statTxt, recursive = false) {
         .keys(subNode)
         .filter(key => key !== "__compat")
         .forEach(key => {
-          if (_check(subNode[key].__compat)) result.push(branch + "." + key);
+          if (_check(subNode[key].__compat)) {
+            if (!filters.length || utils.testFilters(filters, branch + "." + key)) {
+              result.push(branch + "." + key);
+            }
+          }
           _iterateNode(subNode, key, branch + "." + key);
         });
     }
