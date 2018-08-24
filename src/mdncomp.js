@@ -15,7 +15,7 @@ const text = {
   "versionWarning"  : "WARNING: mdncomp is built for Node version 8.3 or newer. It may not work in older Node.js versions.",
   "criticalDataFile": "Critical error: data file not found.\n?yTry running with option --fupdate to download latest snapshot.",
   "missingModule"   : "Critical: A core module seem to be missing. Use 'npm i -g mdncomp' to reinstall.",
-  "unhandled"       : "------- An unhandled error occurred! -------\n\nConsider reporting to help us solve it via GitLab if it persists:\nhttps:\/\/gitlab.com/epistemex/mdncomp/issues\n\nAlternatively:\nTry update/reinstall 'npm i -g mdncomp' (or --fupdate for just data).\n\n"
+  "unhandled"       : "--- An unhandled error occurred! ---\n\nConsider reporting to help us solve it via GitLab if it persists:\nhttps:\/\/gitlab.com/epistemex/mdncomp/issues\n\nAlternatively:\nTry update/reinstall 'npm i -g mdncomp' (or --fupdate for just data).\n\n"
 };
 
 /*- SYSTEM VALIDATIONS AND ERROR HANDLING ------------------------------------*/
@@ -63,11 +63,11 @@ Object.assign(global, {
     experimental: "!",
     deprecated  : "x"
   },
-  lang     : "en-US",
+  lang     : "en-us",
+  languages: [ "en", "en-us", "es", "no" ],
   ANSI     : loadModule("core.ansi"),
   log      : utils.log,
   err      : utils.err,
-  languages: [ "en", "en-us", "es", "no" ],
   options  : {}
 });
 
@@ -150,16 +150,16 @@ else {
 
 /*- SEARCH -------------------------------------------------------------------*/
 
-function search() {
+function search(recursive = false) {
   const keyword = options.args.shift(); // Note: secondary+ args are extracted in formatter.common module
   const result = loadModule("option.search")(keyword);
 
   // no result
-  if ( !result.length ) {
+  if ( !result.length && !recursive) {
     if ( !options.fuzzy && !options.deep && !keyword.includes("*") && !keyword.startsWith("/") ) {
       options.fuzzy = true;
       options.args.unshift(keyword);  // reinsert as we do a second call, just with fuzzy
-      search();
+      search(true);
     }
     else {
       log(`?R${text.noResult}.`);
