@@ -123,7 +123,7 @@
     "listFeature"         : "Egenskap",
     "listParent"          : "Foreldregren",
     "listBranch"          : "Gren (ikke egenskap, ingen grenegenskaper)",
-    "browserIds"          : "nettleser identifikasjoner:",
+    "browserIds"          : "nettleser identifikasjoner",
     "statuses"            : "statuser",
     "pathRoots"           : "rot-stier",
     "addOptionIndex"      : "Bruk opsjon '-i <n>' for å liste spesifikk egenskap med samme søkebegrep.",

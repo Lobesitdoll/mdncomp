@@ -123,7 +123,7 @@
     "listFeature"         : "Característica",
     "listParent"          : "Padre matriz",
     "listBranch"          : "Rama (no es una función, no hay sub-características directas)",
-    "browserIds"          : "identificadores de navegador:",
+    "browserIds"          : "identificadores de navegador",
     "statuses"            : "estados",
     "pathRoots"           : "rutas raíz",
     "addOptionIndex"      : "Agregue la opción '-i <n>' para listar una característica específica usando la misma búsqueda",

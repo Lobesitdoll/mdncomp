@@ -53,8 +53,6 @@ module.exports = (() => {
     .option("-y, --history", text.optionsHistory)
     .option("-O, --no-obsolete", text.optionsNoObsolete)
     .option("-u, --columns <columns>", text.optionsColumns)
-    .option("--update", text.optionsUpdate)
-    .option("--fupdate", text.optionsForceUpdate)
     .option("--random [scope]", text.optionsRandom)
     .option("--no-colors", text.optionsNoColors)
     .option("--max-chars <width>", text.optionsMaxChars, 84)
@@ -63,6 +61,8 @@ module.exports = (() => {
     .option("--configpath", text.optionsConfigPath)
     .option("--expert [level]", text.optionsExpert, 0)
     .option("--lang <isocode>", text.optionsLang, "en-us")
+    .option("--update", text.optionsUpdate)
+    .option("--fupdate", text.optionsForceUpdate)
     .on("--help", extendedHelp)
     .parse(args);
 

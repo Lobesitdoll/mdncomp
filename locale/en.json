@@ -23,7 +23,7 @@
     "optionUnknownOption" : "unknown option",
     "optionGot"           : "got",
 
-    "optionsList"         : "List paths starting with given branch(es), or none for root list",
+    "optionsList"         : "List paths starting with given branch(es), ? for root list",
     "optionsBrowser"      : "Show information about this browser, or list IDs if none",
     "optionsIndex"        : "Show this index from a multiple result list",
     "optionsNoDesktop"    : "Don't show for desktop devices",
@@ -51,7 +51,7 @@
     "optionsSet"          : "Set key/value for config file. Use ? to list valid keys.",
     "optionsConfigPath"   : "Show path to where config file is stored",
     "optionsExpert"       : "Expert mode, disables hints.",
-    "optionsLang"         : "Language code for UI and descriptions. Use ? to see list.",
+    "optionsLang"         : "Language code for UI and descriptions. Use ? for list.",
 
     "desktop"             : "Desktop",
     "mobile"              : "Mobile",
@@ -123,7 +123,7 @@
     "listFeature"         : "Feature",
     "listParent"          : "Parent branch",
     "listBranch"          : "Branch (not a feature, no direct sub-features)",
-    "browserIds"          : "browser identifiers:",
+    "browserIds"          : "browser identifiers",
     "statuses"            : "statuses",
     "pathRoots"           : "root paths",
     "addOptionIndex"      : "Add option '-i <n>' to list a specific feature using the same search.",
