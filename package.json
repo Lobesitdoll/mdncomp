@@ -15,6 +15,7 @@
   "scripts": {
     "debug": "node ./src/mdncomp.js",
     "push": "parallelshell \"git push gitlab\" \"git push origin master\"",
+    "pushf": "parallelshell \"git push -f gitlab\" \"git push -f origin master\"",
     "start": "node ./bin/mdncomp.js",
     "postinstall" : "mdncomp --fupdate"
   },

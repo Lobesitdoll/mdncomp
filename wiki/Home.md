@@ -22,4 +22,4 @@ Using mdncomp
 =============
 
 - [See information for all options](./Options.md) (v2)
-- [See information for how to use](./Using.md) (v1)
+- [See information for how to use](./Using.md) (v2)

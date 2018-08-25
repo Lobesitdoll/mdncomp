@@ -56,7 +56,7 @@ to the compatibility data.
 - Localized user interface.
 - Built-in help per option.
 - Cross-platform (where node and npm is available).
-- Documented with [wiki](https://gitlab.com/epistemex/mdncomp/wikis/home) pages (todo for v2)
+- Documented with [wiki](https://gitlab.com/epistemex/mdncomp/wikis/home) pages
 
 If you're an user of version 1.x.x you need to familiarize yourself with the changes as 
 some options has been added, removed and changed. Output will also differ in a hopefully
