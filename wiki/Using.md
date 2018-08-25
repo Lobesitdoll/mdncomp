@@ -1,7 +1,23 @@
-`mdncomp` is designed for easy of use. The main purpose of `mdncomp` is to find
-and display compatibility information for specific feature in browsers.
+Using mdncomp
+=============
 
-There are several ways to locate features:
+![xterm color + languages output](https://i.imgur.com/5dcm3Ds.gif)<br>
+<sup>*cygwin/xterm snapshot ([English, Spanish, Norwegian, ...](./locale#contribute-a-translation-file))*</sup>
+
+Introduction
+------------
+
+`mdncomp` is designed for easy of use. The main purpose of `mdncomp` is to find
+and display compatibility information for a specific feature in most common browsers
+engines in order to determine if it can be used or not in your page or program.
+
+Think caniuse.com or MDN's compatibility tables; in fact, `mdncomp` uses the very 
+same data as on the latter, but presented for the terminal/CLI.
+
+For that reason `mdncomp` is probably most useful for those who spend some or much time 
+in a CLI.
+
+`mdncomp` provides several ways to locate a feature:
 
 - Using a simple search term
 - Using a wildcard expression
@@ -254,7 +270,7 @@ operation in the CLI which can potentially have undesired consequences.
 
     mdncomp "/audio|process|worklet/"
 
-An error message is displayed in the RegExp is invalid.
+An error message is displayed if the RegExp is invalid.
 
 Tip: If you're not familiar with regular expressions (or RegExp) there are many great
 resources online that will introduce and can teach you how to use this powerful
@@ -286,7 +302,7 @@ Using a regular search like this:
 
     mdncomp whitelist
 
-Gives us no result. However, doing a deep search:
+gives us no result. However, doing a deep search (here showing two variations that do the same):
 
     mdncomp whitelist --deep
     mdncomp -d whitelist
@@ -312,7 +328,7 @@ gives us:
 Searching By Status
 -------------------
 
-If we want to see for example feature that has been deprecated or are experimental,
+If we for example want to see features that has been deprecated or are experimental,
 we can use the `-l, --list` option.
 
 The option will on its own provide us with a way to find features by path, but it
@@ -337,12 +353,12 @@ can also be used to list API paths based on their current status.
 [2142] svg.elements.textPath.side
  ```
 
-That gave us more than 2000 entries, which is a bit much right, so also here we can add additional
-search terms, one or several, to be more specific:
+That gave us more than 2000 entries, which is a bit much, right, so also here we can add additional
+search terms, one or several, to get a more specific result:
 
     mdncomp -l experimental hitregion
  
- This outputs a more edible list:
+This outputs a more edible list:
  
  ```text
  
@@ -483,6 +499,59 @@ add the option `--specs` :
     $ mdncomp ht*toblob --specs
 
 These can of course be combined and set permanently via the option `--set`.
+
+
+Hints & Legends
+---------------
+
+You will notice that `mdncomp` outputs several hints and tips, sometimes together
+with legends for the tables.
+
+```text
+---X8---
+translate                 |    Y     |    Y     |    Y     |    Y     |    Y     |    Y
+
+! = Experimental, ? = Non-Standard
+
+FOOTNOTES
+---X8---
+
+Use option --desc to get a short description of the feature.
+Use option --specs to see specifications.
+Use option -y, --history to see historical data.
+Add additional search terms to filter result list.
+
+Data from MDN - "npm i -g mdncomp" (c) epistemex
+
+```
+
+This is intended to give new users information on how they can get more out of the
+program and to draw attention to features with a non-standard status.
+
+After a while however, you will probably no longer need them. At this point you can 
+turn them off via the `--expert` option which allows you to turn off either just the 
+hints or both hints and legends. 
+
+Although you can add it manually it is intended to be used as a permanent setting
+via the `--set` option.
+
+By default the level is 0. To turn off just hints:
+
+    mdncomp --set expert=1  
+
+to turn off both hints and table legends:
+
+    mdncomp --set expert=2
+
+Next time you run `mdncomp` they will be gone. You can reset this any time as
+described in the Global Config section, or temporarily using the `-G, --no-config`
+option.
+
+If you should prefer to turn it off manually or for a CLI alias, you use it as
+a regular option:
+
+    mdncomp --expert 2
+
 
 Global Configuration
 --------------------
