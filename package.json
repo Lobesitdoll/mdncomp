@@ -47,6 +47,7 @@
     "locale/no.json",
     "data/data.json",
     "data/data.md5",
+    "wiki/",
     "package.json",
     "README.md",
     "LICENSE-MIT.txt",
