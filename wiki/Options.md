@@ -1,165 +1,251 @@
 Options:
 ========
 
+**mdncomp** comes with several options to get most out of the BCD data.
+Many of the options has a shorthand version in addition to the long version.
+
+You can combine several options, and order doesn't matter except in the case of
+the `--help` option which must be first or second when used in combination with
+another option you want help for. Also the `--*update`, `--version` options are
+only used on their own.
+
+In some cases an argument is not required, such as the above mentioned ones in addition
+to options such as `--random`. Other options only works in combination with
+results such as `--desc` (summary description), `--specs` (specifications) etc.
+
 ```text
--v, --version          output the version number
--l, --list             List paths starting with the given value or '.' for top-level
--o, --out <path>       Save information to file. Use extension for type (.txt or .ansi)
--x, --overwrite        Overwrites an existing file with --out option
--d, --desktop          Show desktop only
--m, --mobile           Show mobile devices only
--c, --case-sensitive   Search in case-sensitive mode
--a, --show-all         If search results in more than entry, show info for all
--z, --fuzzy            Use path as a fuzzy search term
--i, --index <index>    Show this index from a multiple result list. (default: -1)
--s, --shorthand        Show compatibility as shorthand with multiple results
--h, --split            Split a shorthand line into two lines (use with -s)
--b, --browser          Show information about this browser, or list if '.'
--W, --no-workers       Don't show worker support information.
--N, --no-notes         Don't show notes
--e, --noteend          Show notes at end instead of in sections (text)
--f, --markdown         Format link as markdown and turns off colors
---ext                  Show extended table of browsers/servers
---desc                 Show Short description of the feature
---specs                Show specification links
---sab                  Show support for SharedArrayBuffer as param (WebGL)
---doc                  Show documentation. Show cached or fetch
---docforce             Show documentation. Force fetch from MDN server
---mdn                  Open entry's document URL in default browser
---waitkey              Wait for ENTER key before continuing
---random               Show a random entry. (mdncomp --random . )
---update, --fupdate
---cupdate              Update data from remote (--fupdate=force, --cupdate=check)
---no-colors            Don't use colors in output
---max-chars <width>    Max number of chars per line before wrap (default: 72)
---no-config            Ignore config file (mdncomp.json) in config folder
---configpath           Show path to where config file and cache is stored
--h, --help             output usage information
+-v, --version         Output the version number                                           
+-l, --list [api]      List paths starting with given branch(es), ? for root list          
+-b, --browser [id]    Show information about this browser, or list IDs if none            
+-i, --index <index>   Show this index from a multiple result list (def.: -1)              
+-D, --no-desktop      Don't show for desktop devices                                      
+-M, --no-mobile       Don't show for mobile devices                                       
+-x, --ext             Show extended table of browsers/servers                             
+-R, --no-children     Don't show children object in table                                 
+-c, --case-sensitive  Search in case-sensitive mode                                       
+-z, --fuzzy           Use fuzzy method for search term                                    
+-d, --deep            Do deep search (footnotes, history etc.)                            
+-s, --shorthand       Show compact table format                                           
+--desc                Show description of the feature (if any)                            
+--specs               Show specification links                                            
+--sub <index>         Show sub-feature with index n                                       
+-N, --no-notes        Don't show footnotes                                                
+-F, --no-flags        Don't show flags                                                    
+-y, --history         List version history entries per browser.                           
+-O, --no-obsolete     Hide obsolete, non-standard and deprecated child features.          
+-u, --columns <cols>  Define custom columns using valid browser ids (see -b)              
+--random [scope]      Show a random entry within optional scope                           
+--no-colors           Don't use colors in output                                          
+--max-chars <width>   Max number of chars per line before wrap (def.: 84)                 
+-G, --no-config       Ignore config file                                                  
+--set <kv>            Set key/value for config file. Use ? to list valid keys.            
+--configpath          Show path to where config file is stored                            
+--expert [level]      Expert mode, disables hints. (def.: 0)                              
+--lang <isocode>      Language code for UI and descriptions. Use ? for list.
+--update              Update data from remote if available                                
+--fupdate             Force update full data-set from remote                              
+-h, --help            Output usage information                                            
 ```
 
 -v, --version
 -------------
-Output version of current `mdncomp`.
+List version information for this release in semver format.
 
 -h, --help
 -------------
-Output information about options as above.
+List options, or show more detailed help per option (no options will
+default to `--help`):
 
--l, --list
--------------
-This will list *branches* and not objects (unless they are branches as well).
-This can help you navigate to a specific object in a branch.
+    mdncomp
+    mdncomp --help
+    mdncomp -h -l      # shows help for the --list option
 
-There are currently 3 "special" branches:
+-l, --list [path|status]
+------------------------
+This will list paths and not features (unless they are a parent path as well).
 
-`.` (a single dot) will list the top-level branches, the roots if you will:
+A path is based on how the BCD data is structured. The data is normally a hierarchy 
+of *branches*, and when flattened a path represent the end-branch. For example:
+
+    "javascript": {
+      statements: {
+        "let": { ... }
+      }    
+    }
+
+becomes a dot-separated path like:
+
+     javascript.statements.let
+
+This can help you navigate to a specific object in a path, or to see what branches
+are attached at the different levels to find (or explore) features.
+
+Using `--list` or `-l` on its own (or with a optional `?` or `.` as argument) will show 
+a list of valid *root* paths:
+
 ```text
-mdncomp -l .
-->
+mdncomp --list
+                                  
+Valid root paths:                 
 api
 css
 html
 http
 javascript
+mathml
 svg
 webdriver
 webextensions
+
+Valid statuses:
+standard, experimental, deprecated
+
 ```
 
-From there you can list all branches on for example `css`:
+From here you can list all branches attached to one, for example say `css`:
 
 ```text
 mdncomp -l css
-->
-css.at-rules
-css.properties
-css.selectors
-css.types
+                    
+[0] P css.at-rules  
+[1] P css.properties
+[2] P css.selectors 
+[3] P css.types     
+                    
+P = Parent branch   
+
 ```
 
-and so on.
+And you can keep adding next branch using full name or part of it, or the index
+when there are several:
 
-`experimental` will list all APIs and objects that are marked experimental:
+    mdncomp -l css.selectors
+    mdncomp -l css.sel
+    mdncomp -l css --index 3
+    mdncomp -l css --i 3
+    mdncomp -l css 3
+
+all do the same. Note that when you're not using the full name you will still
+need to type it in full to go to the next branch level later on.
+
+There are three types of branches which can be seen here:
 
 ```text
-mdncomp -l experimental
-->
-api.AbortController
-api.AbortSignal
-api.Animation
-api.AnimationEffectReadOnly
-...
+mdncomp -l webext
+
+[0] B webextensions.api                                                           
+[1] P webextensions.manifest                                                      
+[2] F webextensions.match_patterns                                                
+                                                                                  
+F = Feature, P = Parent branch, B = Branch (not a feature, no direct sub-features)
+
+```
+Note: the actual letters used depends on the language used fore the user interface (see option
+`--lang` and `--set` for details on how to set a user interface language).
+
+- "F" here means the end branch represents a *feature*. It may or may not have sub-features.
+- "P" means it's a parent branch to features or other branches
+- "B" is just a branch but does not have direct features attached to it (just other branches).
+
+There are currently 3 special status "paths":
+
+    standard, experimental and deprecated
+
+Using these will list features based on their status instead:
+
+    mdncomp -l experimental
+
+For very long results you can add additional filter arguments which only affects
+the result:
+
+    mdncomp -l api window navigator
+
+This lists features on the api branch which contains the word "window" and
+"navigator".
+
+-b, --browser [id|status]
+-------------------------
+
+This option lists release and status information for browsers (incl. Node.js and Thunderbird).
+
+Using no argument (or optionally `?` or `.`  as argument) will list all the currently valid browser IDs:
+```text
+mdncomp --browser .
+
+Valid browser identifiers:
+chrome
+edge
+edge_mobile
+firefox
+firefox_android
+ie
+nodejs
+opera
+qq_android
+safari
+safari_ios
+samsunginternet_android
+uc_android
+uc_chinese_android
+                               
+Valid statuses: 
+beta, current, esr, nightly, planned, retired
+
 ```
 
-`deprecated` will list all APIs and objects that are obsolete or deprecated from the standard.
+Then chose an ID to obtain information about it:
+```text
+mdncomp -b edge
 
+Edge  12   2015-07-28  retired  https://docs.microso...
+Edge  13   2015-11-12  retired  https://docs.microso...
+Edge  14   2016-08-02  retired  https://docs.microso...
+Edge  15   2017-04-05  retired  https://docs.microso...
+Edge  16   2017-10-17  retired  https://docs.microso...
+Edge  17   2018-04-30  current  https://docs.microso...                      
+Edge  18   -           nightly
+```
 
--o, --out <path>
-----------------
-Outputs the results to a file. The extension of the file can currently be
-"txt" or "ansi", and will determine output *type*. Any other extension will be
-considered ansi.
+To not show the release links combine with the option `-N, --no-notes` (note that
+`N` must come before `b` in this case as `b` requires the argument):
 
-If a file with the same name already exists you will be prompted if you
-want to override or not. This unless the `-x, --overwrite` option is used
-(see below).
+    mdncomp -Nb edge
 
--x, --overwrite
-----------------
-When outputting a file, using this option will override an existing file
-with the same name.
-
--d, --desktop
-----------------
-Only show information about desktop browsers.
-
--m, --mobile
-----------------
-Only show information about mobile device browsers.
-
--c, --case-sensitive
-----------------
-When searching (see Usage page) determine that the search should be
-conducted using case-sensitive comparison. Default is case-insensitive.
-
--a, --all
----------
-If there are multiple results for a search term, this will allow showing
-information for all the results.
-
-Note: currently not supported with SVG output.
-
--z, --fuzzy
------------
-Search using a "fuzzy" search term. This simply mean expressing the search
-term as chosen letters from the target path:
+You can get a list of browser bases on status as argument instead of a browser ID.
+The following status keywords are supported:
 
 ```text
-mndcomp -z htcetblbq
+beta, current, esr, nightly, planned, retired
 ```
 
-will produce the result for `HTMLCanvasElement.toBlob.Image_quality`.
-
-Since the letters are existing various places but in the same order:
-
-**HT**ML**C**anvas**E**lement.**t**o**Bl**o**b**.Image_**q**uality
-
-while
+To list current active browsers then, use (here with the optional `--no-notes` option):
 
 ```text
-mndcomp -z htcetblb.
+mdncomp --browser current --no-notes
+
+STATUS: CURRENT
+
+Chrome              68           2018-07-24
+Edge                17           2018-04-30
+Edge Mobile         17           2018-04-30
+Firefox             61           2018-06-26
+Firefox Android     61           2018-06-26
+Internet Explorer   11           2013-10-17
+Opera               53           2018-05-10
+QQ Browser           8.2         2018-02-01
+Safari              11.1         2018-04-12
+iOS Safari          11.1         -
+Samsung Internet     7.2         2018-03-07
+UC Browser          12.5.0.1109  2018-05-04
+Chinese UC Browser  11.9.6.976   2018-05-04
+
 ```
 
-will produce the result for `HTMLCanvasElement.toBlob` since we added a
-stop character (dot) at the end as with wildcard searches.
+-i, --index &lt;index&gt;
+-------------------------
 
-The option can be stored in the [config file](./Config.md) if you want to use it permanently.
-
-
--i, --index <index>
--------------------
 When multiple results are listed they are assigned a index number in the
-result list. To list one particular result from that list, use this option:
+result list. To list one particular result from that list you use this option:
 
 ```text
 $ mdncomp blob
@@ -175,249 +261,407 @@ $ mdncomp blob
 
 To list index 6, `api.BlobEvent` do:
 
+    mdncomp blob -i 6
+
+TIP: `--index` has a shorthand `-i` but also a special mode where a number as
+argument is treated as index. For example, this example does the same as the above:
+
+    mdncomp blob 6
+
+-D, --no-desktop
+----------------
+
+Hide information about desktop browsers which is enabled by default.
+
+In version 1 this was `-d`.
+
+This option can be stored permanently using the `--set` option.
+
+-M, --no-mobile
+----------------
+
+Hide information about mobile browsers which is enabled by default.
+
+In version 1 this was `-m`.
+
+This option can be stored permanently using the `--set` option.
+
+-x, --ext
+----------------
+
+Show extended set of browsers that are less common, or in case of Node.js
+and Thunderbird.
+
+Note: Node.js will only show up when querying a feature in the `javascript` 
+branch, while Thunderbird only show in the `webextensions` branch.
+
+This option can be stored permanently using the `--set` option.
+
+-R, --no-children
+-----------------
+
+In version 2 any children (or sub-features) are listed in the table below the
+main feature. For example:
+
 ```text
-$ mdncomp blob -i 6
+mdncomp t2d
+--X8--
+
+DESKTOP                   |Chrome    |Edge      |Firefox   |IE        |Opera     |Safari    
+:-------------------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
+CanvasRenderingContext2D !|    1     |    Y     |   1.5    |    9     |    9     |    2     
+canvas                    |    Y     |    12    |    Y     |    Y     |    Y     |    Y     
+currentTransform !        |    YF    |    Y     |    -°    |    -     |    -     |    -¹    
+direction !               |    YF    |    ?     |    -     |    -     |    -     |    Y     
+fillStyle                 |    Y     |    12    |    Y     |    Y     |    Y     |    Y     
+filter !                  |    52    |    ?     |    49    |    -     |    -     |    -     
+font                      |    Y     |    12    |   3.5    |    9     |    Y     |    Y     
 ...
 ```
 
+Combining this option will only list the feature. This can keep result lists short.
+See [Using.md](Using.md) for how you can filter long result lists.
+
+```text
+mdncomp t2d --no-children
+--X8--
+
+DESKTOP                   |Chrome    |Edge      |Firefox   |IE        |Opera     |Safari    
+:-------------------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
+CanvasRenderingContext2D !|    1     |    Y     |   1.5    |    9     |    9     |    2     
+                                                                                            
+MOBILE                    |Chrome/A  |Edge/mob  |Firefox/A |Opera/A   |Safari/iOS|Webview/A 
+:-------------------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
+CanvasRenderingContext2D !|    Y     |    Y     |    ?     |    ?     |    ?     |    Y     
+...
+```
+
+-c, --case-sensitive
+--------------------
+Do search using case-sensitive queries.
+
+This option can be stored permanently using the `--set` option.
+
+-z, --fuzzy
+-----------
+Search using a "fuzzy" search term. This simply mean expressing the search
+term as sequence of contracted letters found, in sequence, in the path:
+
+```text
+mndcomp -z htcetblbq
+```
+
+will produce the result for `HTMLCanvasElement.toBlob.Image_quality`.
+
+Since the letters are existing various places but in the same order:
+
+**HT**ML**C**anvas**E**lement.**t**o**Bl**o**b**.Image_**q**uality
+
+while
+
+```text
+mndcomp -z ahcb.
+```
+
+will produce the result for `HTMLCanvasElement.toBlob` since we also added a
+stop-dot (see Using.md for details on this) at the end which means the path
+branch will end in the last letter, here "b".
+
+In version 2 a fuzzy search is automatically perform in a second pass if no
+result was found in the first. The exception is when the search term is a
+wildcard or regular expression term, or if the option `--deep` is used.
+
+This option can be stored permanently using the `--set` option.
+
+-d, --deep
+----------
+The option `--deep` allow you in addition to search in paths, also search in
+summary descriptions, footnotes, alternative names, prefix and flags.
+
+Note that depending on the search term(s) this may take significantly more time
+to finish than a regular path based search.
+
 -s, --shorthand
 ----------------
-List a textual shorthand version of API information.
+List a compacted table output with minimal of information.
 
 For example:
 
 ```text
-$ mdncomp blobbuilder -s
-->
-BlobBuilder: DT: C:8 E:Y F:?-18* IE:10 O:- S:- MOB: CA:? FA:?-18* EM:Y OA:- Si:- WA:-
+mdncomp blobbuilder -s
+
+api.BlobBuilder  [DEPR]
+https://developer.mozilla.org/docs/Web/API/BlobBuilder
+
+Browsers:  |C  |E  |F  |IE |O  |S  |C/a|E/m|F/a|O/a|S/i|W/a
+:----------|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:
+BlobBuilder|8* | Y |Y* |10*| - | - | ? | Y |Y* | - | - |3*
+
+*) Some entries has notes
+Use full format to see details
+
 ```
 
--h, --split
----------------------
-Used with the `-s, --shorthand` option to split a line into two. For example:
+This option can be stored permanently using the `--set` option.
+
+--desc
+------
+
+This option will show a summary description of the feature after the MDN link in 
+the default long output format, but only if available (a note is displayed if not).
 
 ```text
-mdncomp blob -ash
-->
-Blob:
-  DT: C:5 E:Y F:4 IE:10 O:11 S:5.1  MOB: WA:- CA:? FA:14 EM:Y OA:? Si:?
-Blob.Blob:
-  DT: C:20 E:? F:13* IE:10 O:12 S:8  MOB: WA:- CA:? FA:14* EM:? OA:? Si:?
-Blob.size:
-  DT: C:5 E:Y F:4 IE:10 O:11 S:5.1  MOB: WA:- CA:- FA:- EM:Y OA:- Si:-
-...etc.
+mdncomp t2d --desc
+
+api.CanvasRenderingContext2D
+Experimental
+https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D
+
+To get an object of this interface, call getContext() on a <canvas> element,
+supplying "2d" as the argument:
+
+DESKTOP                   |Chrome    |Edge      |Firefox   |IE        |Opera     |Safari
+---X8---
 ```
 
--b, --browser
+This option can be stored permanently using the `--set` option.
+
+--specs
+-------
+
+Show specification links and status, if available.
+
+```text
+mdncomp t2d --desc
+
+api.CanvasRenderingContext2D
+---X8---
+DESKTOP                   |Chrome    |Edge      |Firefox   |IE        |Opera     |Safari
+---X8---
+
+SPECS
+HTML Living Standard [Living Standard]
+https://html.spec.whatwg.org/multipage/scripting.html#2dcontext:canvasrenderingcontext2d
+
+```
+
+This option can be stored permanently using the `--set` option.
+
+--sub <index>
 -------------
-This will list release and status information for a *browser* based on the given ID.
 
-Using `.` (a single dot) will list all the currently valid IDs:
+Some table results includes special metadata branches, or API specific sub-features which is not
+a feature of its own, but has an description such as "Available in Workers", "SharedArrayBuffer accepted 
+as buffer" and so on.
+
+Normally most of the information is shown on the same line but it may occur in some cases that these has
+flags and notes. To inspect these you can use this option to indicate which sub-feature you will inspect.
+
+For example:
 ```text
-mdncomp --browser .
-->
-chrome
-edge
-edge_mobile
-firefox
-firefox_android
-ie
-nodejs
-opera
-safari
-safari_ios
-samsunginternet_android
+mdncomp dataview
+
+---X8---
+DESKTOP          |Chrome    |Edge      |Firefox   |IE        |Opera     |Safari    
+:----------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
+DataView         |    9     |    12    |    15    |    10    |   12.1   |   5.1    
+Sub-feature 0    |    Y     |    Y     |    40    |    -     |    Y     |    ?     
+Sub-feature 1    |    60    |    ?     |    55    |    ?     |    ?     |    ?     
+buffer           |    9     |    12    |    15    |    10    |   12.1   |   5.1    
+byteLength       |    9     |    12    |    15    |    10    |   12.1   |   5.1    
+---X8---
+
+SUB-FEATURES
+0) DataView() without new throws
+1) SharedArrayBuffer accepted as buffer
+
 ```
 
-Then pick an ID to obtain information about it:
-```text
-mdncomp -b edge
-->
-Edge  12  2015-07-28  retired
-Edge  13  2015-11-12  retired
-Edge  14  2016-08-02  retired
-Edge  15  2017-04-05  retired
-Edge  16  2017-10-17  retired
-Edge  17  2018-04-30  current
-Edge  18  -           nightly
-```
+Here there are two sub-feature as we can see at the bottom. Simply add the option with an index
+to include it in the result:
 
-You can also get a list of browser bases on status. The following status keywords
-are supported:
-
-```text
-current, retired, planned, beta, nightly, esr
-```
-
-So to list for example the current active browsers:
-
-```text
-mdncomp --browser current
-->
-STATUS: CURRENT
-Chrome             67  2018-05-29  https://chromereleases.googleblog.com/2018/05/stable-channel-update-for-desktop_58.html
-Edge               17  2018-04-30  https://docs.microsoft.com/en-us/microsoft-edge/dev-guide
-Edge Mobile        17  2018-04-30
-Firefox            61  2018-06-26  https://developer.mozilla.org/Firefox/Releases/61
-Firefox Android    61  2018-06-26  https://developer.mozilla.org/Firefox/Releases/61
-Internet Explorer  11  2013-10-17
-Node.js             6  2016-04-26  https://nodejs.org/en/blog/release/v6.0.0/
-...etc.
-```
-
-To not show the links at the end you can use the option [--no-notes, -N](./Options.md#-n-no-notes).
-
--W, --no-workers
-----------------
-Don't show information about support in Web Workers.
+    mdncomp dataview --sub 1
 
 -N, --no-notes
-----------------
+--------------
+
 Don't list footnotes with the information. A browser will still be marked
 having footnotes but with a generic astrix symbol instead.
 
 For the [--browser](./Options.md#-b-browser) option the links will not be shown.
 
--e, --noteend
-----------------
-Footnotes are collected and shown at the end when information about both
-desktop and mobile are shown in the textual output.
+This option can be stored permanently using the `--set` option.
 
-By default footnotes are shown separately for each section.
+-F, --no-flags
+--------------
+hide flag section in the result, if any.
 
--f, --markdown
-----------------
-Formats the MDN link as markdown in the textual output.
+This option can be stored permanently using the `--set` option.
+                                                            
+-y, --history
+-------------
+Show a detailed version history section.
 
---ext
------
-Will show an additional table for less common browsers.
+This option can be stored permanently using the `--set` option.
+                           
+-O, --no-obsolete
+-----------------
+Hide obsolete, non-standard and deprecated child features.
 
---desc
-------
-Will include a short description of the feature after the link in the default
-long output format, if available.
+This option can be stored permanently using the `--set` option.
+          
+-u, --columns &lt;cols&gt;
+--------------------------
+Define custom columns using valid browser IDs (see option `--browser` for IDs). This is useful
+when you only want to check or compare certain browsers.
 
---specs
--------
-Show specification links and status, if available.
+Example, this will only show result for the browsers "Edge", "Chrome" and "Firefox":
 
---sab
------
-Show support for SharedArrayBuffer as param (usually with WebGL).
+```text
+mdncomp html*toblob --columns edge,chrome,firefox
 
---doc
------
-Show an excerpt from the official documentation for this feature.
+---X8---
+DESKTOP          |Chrome    |Edge      |Firefox
+:----------------|:--------:|:--------:|:--------:
+toBlob           |    50    |    -     |    19
+Sub-feature 0    |    50    |    -     |    25
+---X8---
 
-The documentation is loaded from MDN server and parsed into text in the terminal.
-The HTML excerpt is cached in the `[installation folder]/cached` with a MD5 as file
-name based on the URL.
+```
 
-To update cache either delete the folder, an entry or use the `--docforce` option
+You can separate the browsers using column (":"), semi-column (";") and space, the latter
+requires quotes:
 
---docforce
-----------
-Same as `--doc` but will force fetch the content, re-parse and update the cache.
+    mdncomp --columns edge,chrome,firefox ...
+    mdncomp --columns edge;chrome;firefox ...
+    mdncomp --columns edge:chrome:firefox ...
+    mdncomp --columns "edge chrome firefox" ...
+ 
+Browsers in different sections (desktop, mobile, extended) are automatically sectioned.
+The browser names are also being sorted.
 
---mdn
------
-If a documentation link is defined for the feature this option will attempt opening the link in
-the default browser.
-
---waitkey
----------
-Wait for the ENTER key before continuing/exiting. This can be useful if mdncomp is used in
-a "popup" terminal so the terminal stays open until the <kbr>ENTER</kbr> key is hit before closing.
+This option can be stored permanently using the `--set` option.
 
 --random
 --------
-Feel like exploring? Discover new features using this option. You can specify either all
-by using a dot (`.`) or a keyword or search term (which of course can be combined with
-[fuzzy](./Options.md#-z-fuzzy) search).
 
-    $ mdncomp --random .
-    $ mdncomp --random audio
-    $ mdncomp --random ht*blob
-    $ mdncomp --random --fuzzy hblb
+This option is for pure exploration and discovery.
 
-It can be combined with documentation excerpts (if the URL for it is available) or short descriptions:
+Simply run it standalone:
 
-    $ mdncomp --random . --doc
-    $ mdncomp --random . --desc
-    $ mdncomp --random --desc audio
+    mdncomp --random
+    
+and a random feature is shown. Combine it with a description:
 
-As well as `--mdn` (opens browser for this feature if URL for it is available) etc.
+    mdncomp --random --desc
 
-Note that some options are ignored using this option.
+to only show features that has one.
 
+You can also limit the scope, say you want to show random features that contains
+"audio" in it:
+
+    mdncomp --random --desc audio
+
+You can combine other options such as `--fuzzy` if you'd like to use a fuzzy term
+to define the scope.
+ 
+                           
 --no-colors
 -----------
-Turns off ANSI colors and codes in the terminal.
 
---max-chars <width>
--------------------
-Set max number of characters on a (textual) line. Default is 72 but if you
-prefer longer lines this can be set here. Using "-1" (negative one) as value means no line limit.
+Turns off ANSI colors in the terminal.
+
+Note that in some cases ANSI codes will still be outputted such as with
+progress bars (as during data updates).
+ 
+This option can be stored permanently using the `--set` option.
+                                          
+--max-chars &lt;width&gt;
+-------------------------
+Set max number of characters on a (textual) line. Default is 84 but if you
+prefer longer lines this can be set here. "-1" means no limit.
 
 Note that width is ignored for *links*.
 
---update, --fupdate, --cupdate
-------------------------------
-Update the precompiled Browser Compatibility Data object. If the data is
-considered to be the same (using MD5 hash against server file) no data will
-be downloaded.
-
-To just check if there is new data use the check option `--cupdate`.
-
-To force update regardless if the data is the same you can use
-the `--fupdate` variant.
-
-No other options are allowed with the update options:
-
-```text
-mdncomp --update
-mdncomp --fupdate
-```
-
-**NOTE:** Data is checked (MD5) and downloaded from the following GitHub repository:
-
-    https://github.com/epistemex/data-for-mdncomp
-
-which must be allowed through your firewall.
-
-Two files in the root directory (this may change in the future) are loaded:
-
-    data.json
-    data.md5
-
-These are saved locally to `[npm-install-folder]/mdncomp/data/`
-
-The data update mechanism will change in the future when the BCD schema has stabilized.
-
---no-config
------------
-Ignores the config file if specified. As the config file will override options
+This option can be stored permanently using the `--set` option.
+                 
+-G, --no-config
+---------------
+Ignores the config file if any. As the config file will override options
 this option will allow bypassing those overrides.
 
-Options that will be ignored regardless are:
+--set &lt;kv&gt;
+----------------
+Set key/value for config file. Use "?" as value to list valid keys.
 
-`--no-config`, `--out`, `--all`, `--index`, `--browser`, `--list`,
-`--version`, `--update`, `--cupdate`, `--fupdate` and `--help`.
+For example, to always show a description in the result:
 
-See the [config file wiki](./Config.md) for more details.
+    mdncomp --set desc=true
 
+Tip: You can also use 0 and 1 for boolean values.
+
+Next time you run mdncomp a description is shown (if any) without having to
+specify the `--desc` option.
+
+There may be times you don't want permanent options from the config file to be applied.
+You can suspend the use of the config file using the `-G, --no-config` option.
+
+To see where the config file is located, use the option `--configpath`.
+            
 --configpath
 ------------
-Show the path to the root folder used to store the optional config file and
-the documentation excerpts cache.
 
--h, --help
-----------
-List options, or show more detailed help per option (no options will default to `--help`):
+Show the path to the root folder used to store the optional config file.
+                            
+--expert [level]
+----------------
+Set "expert mode" which enable you to disable hints and legends in the result.
 
-```text
-mdncomp
-mdncomp --help
-mdncomp -h -l   # shows help for the --list option
-```
+- Level 0 (default) shows all hints and legends
+- Level 1 will hide usage hints, but shows legends
+- Level 2 will hide both usage hints as well as legends.
+
+This option can be stored permanently using the `--set` option.
+                              
+--lang &lt;isocode&gt;
+----------------------
+Language code for UI and descriptions. Use "?" for list valid languages.
+
+This option will let you show the user interface and messages in one of the
+preferred languages included with mdncomp.
+
+For example, to show the user-interface in Spanish:
+
+    mdncomp --lang es ... 
+
+Currently the data itself is not available in other languages than English.
+This may change in the future as these projects evolve.
+
+This option can be stored permanently using the `--set` option.
+
+--update
+--------
+Update data from remote location if any new data or data patches are available.
+
+The update mechanism will first try to find a patch file for your current data
+and the newest and download that. If none is found the full compressed dataset
+is download instead.
+
+Currently, the data is downloaded and stored inside the mdncomp installation
+directory in a sub-folder "data". This may change in the future.
+
+The update mechanism has built-in redundancy. If the main server is down a
+second backup server will be used instead. The data is synchronized between the
+two servers.
+
+--fupdate
+---------
+
+Force update will download the full compressed dataset from the remote location.
+                              
+The update mechanism has built-in redundancy. If the main server is down a
+second backup server will be used instead. The data is synchronized between the
+two servers.
+
+Note that this option is used automatically when mdncomp is installed, updated 
+or reinstalled.
