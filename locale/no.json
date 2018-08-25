@@ -51,7 +51,7 @@
     "optionsSet"          : "Sett nøkkel/verdi i konfigurasjons-fil. ? viser gyldige nøkler",
     "optionsConfigPath"   : "Vis sti til hvor konfigurasjons-fil er lagret",
     "optionsExpert"       : "Ekspertmodus, gjemmer hint",
-    "optionsLang"         : "Språkkode for grensesnitt og beskrivelser. Bruk ? for å se liste",
+    "optionsLang"         : "Språkkode for brukergrensesnitt. Bruk ? for å se liste",
 
     "desktop"             : "Stasjonær",
     "mobile"              : "Mobil",

@@ -51,7 +51,7 @@
     "optionsSet"          : "Set key/value for config file. Use ? to list valid keys.",
     "optionsConfigPath"   : "Show path to where config file is stored",
     "optionsExpert"       : "Expert mode, disables hints.",
-    "optionsLang"         : "Language code for UI and descriptions. Use ? for list.",
+    "optionsLang"         : "Language code for UI. Use ? for list.",
 
     "desktop"             : "Desktop",
     "mobile"              : "Mobile",

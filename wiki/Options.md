@@ -41,7 +41,7 @@ results such as `--desc` (summary description), `--specs` (specifications) etc.
 --set <kv>            Set key/value for config file. Use ? to list valid keys.            
 --configpath          Show path to where config file is stored                            
 --expert [level]      Expert mode, disables hints. (def.: 0)                              
---lang <isocode>      Language code for UI and descriptions. Use ? for list.
+--lang <isocode>      Language code for UI. Use ? for list.
 --update              Update data from remote if available                                
 --fupdate             Force update full data-set from remote                              
 -h, --help            Output usage information                                            
