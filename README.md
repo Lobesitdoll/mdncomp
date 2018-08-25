@@ -68,7 +68,7 @@ Install
 
 Make sure to have [Node.js](https://nodejs.org/en/) and `npm` installed (included with node).
 
-To install **current development** version (**ALPHA**):
+To install **current development** version (**BETA**):
 
     $ npm i -g mdncomp
 
