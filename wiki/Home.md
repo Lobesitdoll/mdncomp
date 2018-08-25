@@ -1,21 +1,25 @@
-*Please be patient as we build version 2, or next generation mdncomp. We will add updated
-wikis when we enter beta phase.*
 
 Install
 =======
-Make sure [node](https://nodejs.org/en/) is installed, then:
+
+Make sure [node](https://nodejs.org/en/) minimum version 8.3 is installed, then
+install **mdncomp** globally:
 
     npm i -g mdncomp
 
-This will install mdncomp globally.
-
-Update the Browser Compatibility Data itself occasionally:
+At install the latest data will be downloaded automatically.
+ 
+Update the Browser Compatibility Data itself occasionally using the option:
 
     mdncomp --update
+
+In version 2 you *can* use NPM to update the data, however, do note that this 
+will only work if there is a new version of **mdncomp** itself even if there 
+are new data available.
+
 
 Using mdncomp
 =============
 
-- [See information for all options](./Options.md)
-- [See information for how to use](./Using.md)
-- [Details on the .config.json file](./Config.md)
+- [See information for all options](./Options.md) (v2)
+- [See information for how to use](./Using.md) (v1)
