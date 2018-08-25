@@ -2,10 +2,11 @@ mdncomp 2
 =========
 
 2.00.0-beta.4
-UPD: Wiki files
-IMP: Allow "?" as argument for --browser option
+TDO: Wiki files
 
 2.00.0-beta.3
+UPD: Wiki files
+IMP: Allow "?" as argument for --browser option
 FIX: Missing description could lead to error in long format.
 ADD: Support for Thunderbird in browsers and within the Webextensions scope (when officially made available from BCD).
 IMP: Internal refactoring

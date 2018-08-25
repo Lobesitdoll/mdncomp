@@ -309,7 +309,7 @@ Support
 -------
 
 This product is provided AS-IS and comes with no support nor warranty. You use it
-at your risk.
+at your own risk.
 
 The main git repository can be found at **GitLab** where you also can report issues:
 
