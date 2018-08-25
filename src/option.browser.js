@@ -19,7 +19,7 @@ const tblOptions = {
 
 function browsers(_path) {
   let path = typeof _path === "boolean" ? "." : _path;
-  if (path === ".") {
+  if (typeof path !== "string" || !path.length || path === "." || path === "?") {
     log();
     log(`?R${text.valid} ${text.browserIds}:`);
     log(`?g${browserKeys().join(lf)}?R`);
