@@ -2,7 +2,8 @@ mdncomp 2
 =========
 
 2.00.0-beta.4
-TDO: Wiki files
+FIX: Hints for --list when expert mode < 2
+ADD: Wiki files for v2
 
 2.00.0-beta.3
 UPD: Wiki files

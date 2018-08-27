@@ -62,7 +62,7 @@ function list(path, recursive = false) {
       log();
       log(result);
 
-      if (!options.expert) {
+      if (options.expert < 2) {
         const hints = [];
         if (hasFeatures) hints.push(`?c${char.feature}?R = ${text.listFeature}`);
         if (hasParent) hints.push(`?g${char.parent}?R = ${text.listParent}`);
