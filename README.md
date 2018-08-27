@@ -9,6 +9,7 @@ Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data
 ![xterm color + languages output](https://i.imgur.com/5dcm3Ds.gif)<br>
 <sup>*cygwin/xterm snapshot ([English, Spanish, Norwegian, ...](./locale#contribute-a-translation-file))*</sup>
 
+
 Features
 --------
 
@@ -79,6 +80,7 @@ To install the **latest stable version**, install `mdncomp` using:
 These latest version includes a recent precompiled dataset. However, make sure to run mdncomp
 with the option `--update` the first time to get the latest data. It's recommended that you run
 this command weekly (data is usually updated every Thursday evening US time).
+
 
 Examples
 --------
@@ -208,6 +210,7 @@ Here with options `-NRF`:
 ![Minimalistic example](https://i.imgur.com/0LBDDrb.png)<br>
 <sup>*cygwin snapshot*</sup>
 
+
 Markdown enabled tables
 -----------------------
 
@@ -235,6 +238,7 @@ Browsers:              |C  |E  |F  |IE |O  |S  |C/a|E/m|F/a|O/a|S/i|W/a
 toBlob                 |50 | - |19 |10*|37 |Y* |50 | - | 4 |37 | - |50 
 Image quality parameter|50 | - |25 | - | Y | - | - | - |25 | - | ? |50 
 
+
 Exploration
 -----------
 
@@ -250,6 +254,7 @@ You can also create a scope by providing a keyword or search term. Here, find
 a random feature that contains "audio" in its path:
 
     $ mdncomp --random audio
+
 
 Global Configuration
 --------------------
@@ -288,6 +293,10 @@ To see a list of valid keys that can be used:
 Tip: You can as an alternative, define alias commands in some terminals with 
 specific options set for different purposes.
 
+Note: On macOS you likely have to use `sudo` to set options as it write to
+a file store in the user area.
+
+
 Requirements
 ------------
 
@@ -295,15 +304,17 @@ Requirements
 - NPM to install `mdncomp i -g mdncomp`
 - Internet connection when updating (via the `--*update` options)
 
+
 Developer environment
 ---------------------
 
 Development IDE: JetBrains' [WebStorm](https://www.jetbrains.com/webstorm/).
 
-Test environments: Windows 8.1+, Linux (Ubuntu) 
+Test environments: Windows 8.1+, Linux (Ubuntu), Darwin (High Sierra)
 
 The pre-compiled data an patch repositories can be found [here](https://github.com/epistemex/mdncomp-data)
 and [here](https://gitlab.com/epistemex/mdncomp-data) (redundancy repo).
+
 
 Support
 -------
@@ -315,6 +326,7 @@ The main git repository can be found at **GitLab** where you also can report iss
 
 - [GitLab repo](https://gitlab.com/epistemex/mdncomp)
 - [GitLab report issues](https://gitlab.com/epistemex/mdncomp/issues)
+
 
 License
 -------
