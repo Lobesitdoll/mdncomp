@@ -235,7 +235,7 @@ function formatterLong(data, isSub = false) {
     // Header line
     const tableName = [
       (`?b${text[ device ].toUpperCase()} >`)
-      .padEnd(Math.max(0, options.maxChars - 67)) + "?G"
+      .padEnd(Math.max(0, options.maxChars - 65)) + "?G"
     ];
 
     const colNames = dev

@@ -6,7 +6,7 @@ Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data
 
     $ mdncomp html*toblob
 
-![xterm color + languages output](https://i.imgur.com/5dcm3Ds.gif)<br>
+![xterm color + languages output](https://i.imgur.com/zaFt0lA.gif)<br>
 <sup>*cygwin/xterm snapshot ([English, Spanish, Norwegian, ...](./locale#contribute-a-translation-file))*</sup>
 
 
