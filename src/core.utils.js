@@ -6,7 +6,7 @@
 
 "use strict";
 
-const colorCodes = "rgyobmpcwGR";
+const colorCodes = "rgyobmpcwCGR";
 
 const utils = {
 
@@ -152,7 +152,7 @@ const utils = {
       o = (o || {})[part];
       if (o) {
         // colors: feature > hasChildren = cyan, hasChildren, no feature = green, just branch = yellow
-        let color = o.__compat ? "?c" : (utils.hasChildren(o) ? "?g" : "?y");
+        let color = o.__compat ? "?C" : (utils.hasChildren(o) ? "?g" : "?y");
         result.push(color + part);
       }
     });
@@ -312,6 +312,7 @@ const utils = {
       "p": ANSI.purple,
       "c": ANSI.cyan,
       "w": ANSI.white,
+      "C": ANSI.cyanDark,
       "G": ANSI.gray,
       "R": ANSI.reset
     };

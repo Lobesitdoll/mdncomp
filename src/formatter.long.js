@@ -66,7 +66,7 @@ function formatterLong(data, isSub = false) {
   else addHeader(text.subFeature.toUpperCase());
 
   // path + api, status, url
-  log(utils.breakAnsiLine(`?c${data.prePath}?w${data.name}?R`, options.maxChars));
+  log(utils.breakAnsiLine(`?R${data.prePath}?w${data.name}?R`, options.maxChars));
   if ( !isWebExt ) {
     log(getStatus());
   }
@@ -233,9 +233,10 @@ function formatterLong(data, isSub = false) {
     const dataName = data.name;
 
     // Header line
-    const tableName = [ "?y" + text[ device ]
-      .toUpperCase()
-      .padEnd(Math.max(0, options.maxChars - 67)) + "?G" ];
+    const tableName = [
+      (`?b${text[ device ].toUpperCase()} >`)
+      .padEnd(Math.max(0, options.maxChars - 67)) + "?G"
+    ];
 
     const colNames = dev
       .map(o => `?w${browserNames[ o.browser ].long.padEnd(10)}?G`);
