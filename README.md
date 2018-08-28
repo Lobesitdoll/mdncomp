@@ -9,8 +9,11 @@ Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data
 ![xterm color + languages output](https://i.imgur.com/zaFt0lA.gif)<br>
 <sup>*cygwin/xterm snapshot ([English, Spanish, Norwegian, ...](./locale#contribute-a-translation-file))*</sup>
 
+![cmder output](https://i.imgur.com/I0IsvcG.png)<br>
+<sup>*cmder output*</sup>
+
 ![High contrast](https://i.imgur.com/tO349ZA.png)<br>
-<sup>*High-contrast colorless output*</sup>
+<sup>*Windows/cmd high-contrast colorless output*</sup>
 
 
 Features
