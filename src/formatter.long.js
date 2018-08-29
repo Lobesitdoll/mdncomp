@@ -35,10 +35,7 @@ const utils = loadModule("core.utils");
 const table = loadModule("core.table");
 
 const browserNames = utils.getBrowserNames();
-const refs = [ // skipping "l", "o", "x, on purpose:
-  "°", "¹", "²", "³", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "m", "n", "p", "q", "r", "s", "t", "u", "v", "w", "y", "z", "^", "ª", "º",
-  "æ", "ø", "å", "ä", "ö", "á", "é", "ò", "ú", "à", "è", "ù", "Æ", "Ø", "Å", "Ö", "Ä", "Á", "É", "Ò", "Ú", "À", "È"
-];
+const refs = global.char.refs.split("");
 
 const tblOptions = {
   align       : [ "l" ],

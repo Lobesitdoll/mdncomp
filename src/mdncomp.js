@@ -57,11 +57,13 @@ Object.assign(global, {
     feature     : "F",
     parent      : "P",
     branch      : "B",
-    flags       : "F",
+    flags       : "§",
     notes       : "*",
     nonStd      : "?",
     experimental: "!",
-    deprecated  : "x"
+    deprecated  : "x",
+    arrowRight  : "-&gt;",
+    refs        : "°¹²³abcdefghikmnpqrtuvwz^ªºæøåäöáéòúàèùÆØÅÖÄÁÉÒÚÀÈ"
   },
   lang     : "en-us",
   languages: [ "en", "en-us", "es", "no" ],
@@ -84,7 +86,7 @@ loadModule("core.locale");
 
 const options = global[ "options" ] = loadModule("init.options");
 
-/*- ANSI COLORS --------------------------------------------------------------*/
+/*- INIT ANSI COLORS ---------------------------------------------------------*/
 
 if ( !options.colors ) {
   Object
@@ -92,6 +94,12 @@ if ( !options.colors ) {
     .forEach(key => {
       if ( !key.includes("ursor") ) ANSI[ key ] = "";
     });
+}
+
+/*- INIT UNICODE -------------------------------------------------------------*/
+
+if (options.unicode) {
+  global.char = Object.assign(global.char, loadModule("core.unicode"))
 }
 
 /*- CHECKS FOR UPDATE, UPDATE PATCH/FULL IF EXISTS, OR EXIT -------------------*/

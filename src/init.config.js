@@ -58,7 +58,8 @@ function initConfig(options) {
     .set("maxChars", { type: isNum, convert: toNum, validate: mx })
     .set("columns", { type: isList, convert: toList, validate: valList })
     .set("expert", { type: isNum, convert: toNum, validate: v => clamp(v, 0, 2) })
-    .set("lang", { type: isStr, convert: toStr, validate: v => valLang(v) });
+    .set("lang", { type: isStr, convert: toStr, validate: v => valLang(v) })
+    .set("unicode", { type: isBool, convert: toBool, validate: nop });
 
   /*- Load / Init Config file if any -------------------------------------------------------------*/
 

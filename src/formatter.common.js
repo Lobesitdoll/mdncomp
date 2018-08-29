@@ -60,7 +60,7 @@ function format(path, recursive = false, subNotes, subLinks) {
               ? ("https://developer.mozilla.org/docs/" + compat.mdn_url).replace(".org/docs/Mozilla/Add-ons/", ".org/Add-ons/")
               : null;
 
-  let title = compat.title ? compat.title.replace("→", "-&gt;") : null;
+  let title = compat.title ? compat.title.replace("→", char.arrowRight) : null;
 
   const result = {
     isCompat    : typeof pathObj.__compat === "object",
