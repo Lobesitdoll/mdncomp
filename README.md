@@ -92,7 +92,7 @@ Using wildcard:
 
 *(the stop-dot "`.`" above indicates that a result line should **end** with this search term.)*
 
-![wildcard example](https://i.imgur.com/3PoMXRY.png)
+![wildcard example](https://i.imgur.com/mW9uDVq.png)
 
 or using the absolute feature path:
 
@@ -116,7 +116,7 @@ automatically invoked.
 
     $ mdncomp html*toblob -s
 
-![Shorthand format](https://i.imgur.com/ujbb8hZ.png)<br>
+![Shorthand format](https://i.imgur.com/wxZYoOC.png)<br>
 <sup>*cygwin/xterm snapshot*</sup>
 
 You can now do a local filtering of the result by simply adding one or more keywords (or search-terms)
@@ -125,7 +125,7 @@ in the `CanvasRenderingContext2D` API (using only the last part of the name, her
 
     $ mdncomp t2d stroke fill
 
-![example local filter](https://i.imgur.com/NNM7CSB.png)
+![example local filter](https://i.imgur.com/673gH6D.png)
 
 <h3>List results using Custom Columns</h3>
 
@@ -135,7 +135,7 @@ columns and local filter:
 
     mdncomp t2d path --columns "chrome,edge,firefox"
 
-![example custom header + filter](https://i.imgur.com/5Fop2xa.png)
+![example custom header + filter](https://i.imgur.com/8FFFN0H.png)
 
 Tip: See config file section below for how you can store custom columns permanently.
 
@@ -197,7 +197,7 @@ List release history for a single browser:
 
     mdncomp sharedarraybuffer --desc --specs --ext
 
-![Description and specifications summary example](https://i.imgur.com/I3VucIh.png)<br>
+![Description and specifications summary example](https://i.imgur.com/MqprqR1.png)<br>
 <sup>*cygwin snapshot*</sup>
 
 <h3>Or as minimal, turning off extra information</h3>
@@ -208,7 +208,7 @@ Here with options `-NRF`:
     
     mdncomp sharedarraybuffer -RNF
     
-![Minimalistic example](https://i.imgur.com/0LBDDrb.png)<br>
+![Minimalistic example](https://i.imgur.com/Fs8RnhK.png)<br>
 <sup>*cygwin snapshot*</sup>
 
 
