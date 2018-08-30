@@ -33,30 +33,30 @@ function doSearch(keyword) {
       keys
         .filter(key => {
           const obj = utils.getPathAsObject(mdn, branch + "." + key);
-          return !(!options.deep && obj && obj.__compat && (obj.__compat.short || obj.__compat.title))
+          return !(!options.deep && obj && obj.__compat && (obj.__compat.short || obj.__compat.title));
         })
         .forEach(key => {
-        // Deep mode
-        if ( key === "__compat" && !result.includes(branch) ) {
-          const o = subNode[ key ];
-          if (
-            (typeof o.description === "string" && cmp.test(o.description)) ||
-            (typeof (o.title || o.short) === "string" && cmp.test(o.title || o.short) ||
-              inSupportObject(o.support))
-          ) {
-            result.push(branch);
-          }
-        }
-        else {
-          const currentBranch = branch + "." + key;
-          if ( cmp.test(currentBranch) && ((key !== inKey && result.length) || !result.length) ) {
-            result.push(currentBranch);
+          // Deep mode
+          if ( key === "__compat" && !result.includes(branch) ) {
+            const o = subNode[ key ];
+            if (
+              (typeof o.description === "string" && cmp.test(o.description)) ||
+              (typeof (o.title || o.short) === "string" && cmp.test(o.title || o.short) ||
+                inSupportObject(o.support))
+            ) {
+              result.push(branch);
+            }
           }
           else {
-            _iterateNode(subNode, key, currentBranch);
+            const currentBranch = branch + "." + key;
+            if ( cmp.test(currentBranch) && ((key !== inKey && result.length) || !result.length) ) {
+              result.push(currentBranch);
+            }
+            else {
+              _iterateNode(subNode, key, currentBranch);
+            }
           }
-        }
-      });
+        });
     }
   }
 
@@ -105,7 +105,7 @@ function search(recursive = false) {
   const result = doSearch(keyword);
 
   // no result
-  if ( !result.length && !recursive) {
+  if ( !result.length && !recursive ) {
     if ( !options.fuzzy && !options.deep && !keyword.includes("*") && !keyword.startsWith("/") ) {
       options.fuzzy = true;
       options.args.unshift(keyword);  // reinsert as we do a second call, just with fuzzy

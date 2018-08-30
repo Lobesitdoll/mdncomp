@@ -30,7 +30,9 @@ function compareMD5(callback, redundant) {
   try {
     local = fs.readFileSync(filePrefix + "data.md5", "utf-8");
   }
-  catch(err) {err(err)}
+  catch(_err) {
+    err(_err);
+  }
 
   // remote MD5
   io.request(_urlPrefix + "data.md5", null, null, (remote) => {
@@ -79,11 +81,11 @@ function getRemoteData(callback, redundant) {
       _progressBar();
       callback(null, zlib.gunzipSync(data));
     },
-    (err) => {
+    (_err) => {
       wasRedundant = true;
-      if ( redundant ) callback(err);
+      if ( redundant ) callback(_err);
       else {
-        log(`?${text.tryingRedundancy}...?R\n`);
+        err(`?${text.tryingRedundancy}...?R\n`);
         setImmediate(getRemoteData, callback, true);
       }
     },
@@ -101,7 +103,8 @@ function getCurrentData() {
   try {
     data = JSON.parse(fs.readFileSync(filePrefix + "data.json", "utf-8"));
   }
-  catch(err) {}
+  catch(err) {
+  }
 
   return data;
 }
@@ -115,13 +118,13 @@ function update(force) {
 
   log();
 
-//  if (!fs.existsSync(filePrefix)) {
-//    // create data folder for now
-//    try {
-//      fs.mkdirSync(filePrefix)
-//    }
-//    catch(_err) {console.log(_err);}
-//  }
+  //  if (!fs.existsSync(filePrefix)) {
+  //    // create data folder for now
+  //    try {
+  //      fs.mkdirSync(filePrefix)
+  //    }
+  //    catch(_err) {console.log(_err);}
+  //  }
 
   compareMD5(md5 => {
     if ( force ) {
@@ -171,7 +174,7 @@ function update(force) {
         else if ( entry.op === "remove" ) removes++;
         else if ( entry.op === "replace" ) updates++;
       });
-      log(`?R${text.diffSummary}: ${adds} ${text.adds}, ${updates} ${text.updates}, ${removes} ${text.removes}\n`)
+      log(`?R${text.diffSummary}: ${adds} ${text.adds}, ${updates} ${text.updates}, ${removes} ${text.removes}\n`);
     }
 
     function _remote() {
@@ -188,7 +191,9 @@ function update(force) {
         fs.writeFileSync(filePrefix + "data.json", data, "utf-8");
         fs.writeFileSync(filePrefix + "data.md5", remoteMD5, "utf-8");
       }
-      catch(_err) {err(_err)}
+      catch(_err) {
+        err(_err);
+      }
 
       clrLine();
       log(`?g${text.dataUpdated}!?R`);

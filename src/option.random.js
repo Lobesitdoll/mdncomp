@@ -13,23 +13,23 @@ function getRandom(path) {
   let state = false;
   let i;
 
-  if (typeof path === "string" && path.length) {
+  if ( typeof path === "string" && path.length ) {
     let cmp = utils.getComparer(path, options.fuzzy, options.caseSensitive);
     tbl = tbl.filter(item => cmp.test(item));
   }
 
-  if (!tbl.length) return "";
+  if ( !tbl.length ) return "";
 
-  while(!state) {
-    i = (Math.random() * tbl.length)|0;
-    state = utils.isCompat(mdn, tbl[i]);
-    if (state && options.desc) {
-      let o = utils.getPathAsObject(mdn, tbl[i]).__compat;
-      if (!(o.mdn_url && o.mdn_url.length)) state = false;
+  while( !state ) {
+    i = (Math.random() * tbl.length) | 0;
+    state = utils.isCompat(mdn, tbl[ i ]);
+    if ( state && options.desc ) {
+      let o = utils.getPathAsObject(mdn, tbl[ i ]).__compat;
+      if ( !(o.mdn_url && o.mdn_url.length) ) state = false;
     }
   }
 
-  return tbl[i]
+  return tbl[ i ];
 }
 
 module.exports = getRandom;

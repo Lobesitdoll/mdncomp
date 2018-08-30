@@ -1,6 +1,6 @@
 {
   "name": "mdncomp",
-  "version": "2.0.0-beta.4",
+  "version": "2.0.0",
   "description": "Browser Compatibility Data on the command line.",
   "main": "./bin/mdncomp.js",
   "bin": "./bin/mdncomp.js",
@@ -16,7 +16,7 @@
     "push": "parallelshell \"git push gitlab\" \"git push origin master\"",
     "pushf": "parallelshell \"git push -f gitlab\" \"git push -f origin master\"",
     "start": "node ./bin/mdncomp.js",
-    "postinstall" : "mdncomp --fupdate"
+    "postinstall": "mdncomp --fupdate"
   },
   "keywords": [
     "mdn",
@@ -35,8 +35,8 @@
     "type": "git",
     "url": "https://gitlab.com/epistemex/mdncomp.git"
   },
-  "engines" : {
-    "node" : ">=8.3"
+  "engines": {
+    "node": ">=8.3"
   },
   "files": [
     "bin/",

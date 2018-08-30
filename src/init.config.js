@@ -6,11 +6,7 @@
 
 "use strict";
 
-const fs = require("fs");
-const Path = require("path");
 const utils = loadModule("core.utils");
-const io = loadModule("core.io");
-const filePath = Path.join(io.getConfigDataPath(), ".config.json");
 
 let configFile = null;
 
@@ -33,8 +29,8 @@ function initConfig(options) {
   const toBool = (v) => !(v === "0" || v.toLowerCase() === "false");
   const toNum = (v) => v | 0;
   const toStr = (v) => "" + v;
-  const isList = () => true; // todo share check with formatter.common
-  const valList = (v) => v; // todo share check with formatter.common
+  const isList = () => true;
+  const valList = (v) => v;
   const valLang = (v) => global.languages.includes(v.toLowerCase()) ? v.toLowerCase() : "en-us";
   const toList = (v) => v;
 
@@ -95,8 +91,8 @@ function initConfig(options) {
         msg = `\n?yInvalid key "?c${key}?y". `;
         process.exitCode = 1;
       }
-      // todo consider locale for these
-      err(`${msg}\n?gValid config keys:\n\n?w${utils.breakAnsiLine([ ...keys.keys() ].sort().join("?R, ?w"), options.maxChars)}?R\n`);
+      err(`${msg}\n?gValid config keys:\n\n?w${utils.breakAnsiLine([ ...keys.keys() ].sort()
+        .join("?R, ?w"), options.maxChars)}?R\n`);
       process.exit();
     }
 
@@ -122,7 +118,7 @@ function initConfig(options) {
 
 module.exports = {
   initConfig,
-  config: () => configFile,
+  config : () => configFile,
   preload: () => configFile = utils.loadConfigFile(),
-  locale: () => (configFile.options && configFile.options.lang) ? configFile.options.lang : "en-us"
+  locale : () => (configFile.options && configFile.options.lang) ? configFile.options.lang : "en-us"
 };

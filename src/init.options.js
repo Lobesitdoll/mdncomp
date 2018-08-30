@@ -20,14 +20,14 @@ const args = process.argv;
 module.exports = (() => {
 
   // override help combined with an option
-  if (args.length >= 4) {
+  if ( args.length >= 4 ) {
     for(let arg of args) {
-      if (arg === "-h" || arg === "--help") extendedHelp();
+      if ( arg === "-h" || arg === "--help" ) extendedHelp();
     }
   }
 
   // override "?" -> -h
-  if (args.length === 3 && args[2] === "?") args[2] = "-h";
+  if ( args.length === 3 && args[ 2 ] === "?" ) args[ 2 ] = "-h";
 
   options
     .version(version, "-v, --version")
@@ -75,7 +75,7 @@ module.exports = (() => {
 
   // check for shorthand index number arg
   if ( options.index < 0 ) {
-    for(let i = 0, arg; arg = options.args[i]; i++) {
+    for(let i = 0, arg; arg = options.args[ i ]; i++) {
       //noinspection JSCheckFunctionSignatures
       if ( !isNaN(arg) ) {
         options.args.splice(i, 1);
@@ -85,5 +85,5 @@ module.exports = (() => {
     }
   }
 
-  return options
+  return options;
 })();

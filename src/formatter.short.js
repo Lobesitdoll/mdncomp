@@ -36,13 +36,13 @@ function formatterShort(data) {
   log(lf + table(tbl, tblOptions));
 
   // hints
-  if (options.expert < 2) {
+  if ( options.expert < 2 ) {
     const hints = [];
-    if (hasNotes) hints.push(`?c${char.notes}?R) ${text.someNotesHint}`);
-    if (hasFlags) hints.push(`?c${char.flags}?R) ${text.someFlagsHint}`);
-    if (hints.length) {
+    if ( hasNotes ) hints.push(`?c${char.notes}?R) ${text.someNotesHint}`);
+    if ( hasFlags ) hints.push(`?c${char.flags}?R) ${text.someFlagsHint}`);
+    if ( hints.length ) {
       log(hints.join(", "));
-      log(text.someHints + lf)
+      log(text.someHints + lf);
     }
   }
 
@@ -59,9 +59,9 @@ function formatterShort(data) {
       data.children.forEach(child => {
         let name = utils.entities("?w" + utils.breakAnsiLine(utils.cleanHTML(child.title || child.name, true, "?w"), -1));
 
-        if (utils.ansiFree(name).length > maxNameLen) {
-          name = utils.breakAnsiLine(name, maxNameLen - 2, true).split(lf)[0].trim();
-          if (name.length < maxNameLen) name += ".."
+        if ( utils.ansiFree(name).length > maxNameLen ) {
+          name = utils.breakAnsiLine(name, maxNameLen - 2, true).split(lf)[ 0 ].trim();
+          if ( name.length < maxNameLen ) name += "..";
         }
         else if ( child.name === data.name ) name += "()";
 

@@ -1,6 +1,5 @@
 mdncomp<sup>nx</sup>
 =========
-**BETA**
 
 Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data) on the command line.
 
@@ -14,73 +13,70 @@ Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data
 Features
 --------
 
-New main core with improved search algorithm to get you faster and more flexible
+Refactored core code with improved search algorithm to get you faster and more flexible
 to the compatibility data.
 
 - Browser Compatibility Data (BCD from Mozilla Developer Network)
-  - Search **API**, **CSS**, **HTML**, **HTTP**, **JavaScript**, **MathML**, **SVG**,
-   **WebDriver** and **WebExtensions**.
-  - Search and list features using keywords, paths, wildcards, fuzzy terms or regular expressions
-  - Search case (in)sensitive
-  - Deep search option (search in notes, flags, alternative names, prefixes etc.)
-  - Navigate and show information using path and branches
-  - Filter results using additional search terms
-  - Shows data on the command line as a ANSI colored ASCII formatted table
-  - Lists children features
+  - Search **APIs**, **CSS**, **HTML**, **HTTP**, **JavaScript**, **MathML**, **SVG**,
+   **WebDriver**, **WebExtensions**, **XPath** and **XSLT**.
+  - Search and list features using keywords, paths, wildcards, fuzzy terms or regular expressions.
+  - Search case (in)sensitive.
+  - Deep Search option (search in notes, flags, alternative names, prefixes etc.).
+  - Navigate and show information using path and branches.
+  - Filter result lists using additional search terms.
+  - Show data on the command line as ANSI colored tables.
+  - Include children features in table results.
   - Get feature status (standard, experimental or deprecated).
-  - Show notes, flags, vendor prefix, history and security issues.
-  - Show additional links for information in notes
+  - Show notes, flags, vendor prefixes, history and security issues.
+  - Show additional links for information in notes.
   - Show optional detailed API specific support for a feature (Worker support, 
-    SharedArrayBuffer support, CORS support, blob data, service workers etc.)
-  - Show information for desktop, mobile and other browsers.
-  - Show information for Node.js where relevant.
-  - All data available offline (only --*update require a internet connection)
+    SharedArrayBuffer support, CORS support, blob data, service workers etc.).
+  - Show support sections for desktop, mobile and other browsers.
+  - Show information for Node.js and Thunderbird where relevant.
+  - Works offline (only updates requires a internet connection).
 
 - Browser status
   - List **current** browser versions
   - List current, esr, beta, nightly, planned and retired versions *per browser*.
   - List current, esr, beta, nightly, planned and retired versions *per status*.
-  - List status and release dates per browser, including release notes (if available).
+  - List status and release dates per browser, including release notes (if any).
 
 - Additional included documentation:
-  - Show a optional **summary description** per feature *(included in the dataset for mdncomp only)*.
-  - Includes a *verified* URL to the feature's documentation page on [MDN](https://developer.mozilla.org/).
+  - Show a optional **summary description** per feature
+    *(only in the mdncomp dataset)*.
+  - Includes a *verified* URL to the feature's documentation page on [MDN](https://developer.mozilla.org/)
+    *(only in the mdncomp dataset)*.
   - Show standards/specification references, status and links (W3C, WHATWG, KHRONOS, ECMA, IETF etc.)
-   *(included in the dataset for mdncomp only)*.
+   *(only in the mdncomp dataset)*.
 
 - Integrated update mechanism
-  - Lighting fast update process
-  - Updates with patch files (RFC 6902 / 6901) with support for several versions back.
+  - Fast update process of compatibility data
+  - Updates with patch files (RFC 6902 + 6901) with support for several diffs back.
   - Optional forced data update to reinitialize with a full clean data set, f.ex. with data corruption.
   - Compressed data transfers
 
-- Define permanent/often used options in a config file (which can be suspended when needed via option).
+- Define permanent/often used options in a config file (can be suspended when needed via option).
 - Localized user interface.
-- Built-in help per option.
+- Built-in help per mdncomp option.
 - Cross-platform (where node and npm is available).
-- Documented with [wiki](https://gitlab.com/epistemex/mdncomp/wikis/home) pages
+- Usage documentation included as [wiki](./wiki/Home.md) pages
 
-If you're an user of version 1.x.x you need to familiarize yourself with the changes as 
-some options has been added, removed and changed. Output will also differ in a hopefully
+If you're an user of version 1.23 or earlier, you'll need to familiarize yourself with the new
+changes as some options has been added, removed and changed. Output will also differ in a hopefully
 improved manner.
 
 
-Install
--------
+Installation
+------------
 
 Make sure to have [Node.js](https://nodejs.org/en/) and `npm` installed (included with node).
 
-To install **current development** version (**BETA**):
+Then install latest globally:
 
     $ npm i -g mdncomp
 
-To install the **latest stable version**, install `mdncomp` using:
-
-    $ npm i -g mdncomp@1.23.0
-    
-These latest version includes a recent precompiled dataset. However, make sure to run mdncomp
-with the option `--update` the first time to get the latest data. It's recommended that you run
-this command weekly (data is usually updated every Thursday evening US time).
+Update weekly or so using the built-in `--update` option (i.e. `mdncomp --update`). The data
+is updated automatically when installed.
 
 
 Examples
@@ -90,7 +86,7 @@ Using wildcard:
 
     $ mdncomp j*let.
 
-*(the stop-dot "`.`" above indicates that a result line should **end** with this search term.)*
+*(the stop-dot "`.`" above indicates that the resulting path line should **end** with this search term.)*
 
 ![wildcard example](https://i.imgur.com/mW9uDVq.png)
 
@@ -98,19 +94,18 @@ or using the absolute feature path:
 
     $ mdncomp javascript.statements.let
 
-or as an regular expression:
+or as an regular expression, for example word-bound searches (\\b):
 
     $ mdncomp /\blet\b/
 
-or as an fuzzy expression (here for `api.HTMLCanvasElement.toBlob`):
+or as a fuzzy-expression (here for `api.HTMLCanvasElement.toBlob`):
 
     $ mdncomp -z ahcb.
     $ mdncomp ahcb.
 
-From *version 2* you can run without the `--fuzzy` option: if a result is not found 
-using the basic search method, a second search using the same expression (unless the 
-term contains astrix or starts with forward-slash) using the fuzzy method is 
-automatically invoked.
+Note: From *version 2* you can run without the `--fuzzy` option: if the term has no results
+a second search search pass is performed using the same expression but as a fuzzy term (unless
+the term contains wildcards or starts with forward-slash for RegExp).
 
 <h3>Show data in a compact shorthand format using option `-s, --shorthand`:</h3>
 
@@ -119,8 +114,8 @@ automatically invoked.
 ![Shorthand format](https://i.imgur.com/wxZYoOC.png)<br>
 <sup>*cygwin/xterm snapshot*</sup>
 
-You can now do a local filtering of the result by simply adding one or more keywords (or search-terms)
-to the argument list. For example - this will only list child features containing "stroke" or "fill"
+You can from version 2 do filtering of the result by simply adding one or several keywords (or search-terms)
+to the argument list. For example: this will only list child features containing "stroke" or "fill"
 in the `CanvasRenderingContext2D` API (using only the last part of the name, here "`t2d`"):
 
     $ mdncomp t2d stroke fill
@@ -129,13 +124,15 @@ in the `CanvasRenderingContext2D` API (using only the last part of the name, her
 
 <h3>List results using Custom Columns</h3>
 
-You can now define custom columns using a comma (or space, semi-column, column)
-separated list with the new option "-u, --columns". An example using custom
-columns and local filter:
+From version 2 you can define custom columns using the new option "-u, --columns".
+Simply specify a comma separated (or space, semi-column, column) list. For example,
+a custom column result using search term ("`t2d`") and a result filter ("`path`"):
 
-    mdncomp t2d path --columns "chrome,edge,firefox"
+    mdncomp t2d path -u "chrome,edge,firefox"
 
 ![example custom header + filter](https://i.imgur.com/8FFFN0H.png)
+
+To get a list of valid browser IDs use the option `-, --browser`.
 
 Tip: See config file section below for how you can store custom columns permanently.
 
@@ -147,17 +144,17 @@ To list root simply add the option `--list` (or shorthand `-l`) with no argument
 
     mdncomp --list
 
-![example of root list](https://i.imgur.com/7EVhbXl.png)
+![example of root list](https://i.imgur.com/ZRhyNLd.png)
 
 List using one of the root branches:
 
-    mdncomp --list webext
+    mdncomp -l webext
 
 ![example list an api](https://i.imgur.com/FBARr1D.png)
 
 You can go to next branch by adding the name of the branch, fully or partly (if unique):
 
-    mdncomp --list api.audiobu
+    mdncomp -l api.audiobu
 
 or simply by adding the index number in one of the following ways:
 
@@ -165,7 +162,7 @@ or simply by adding the index number in one of the following ways:
     mdncomp --list api -i 7
     mdncomp -l api 7
 
-(this usage of index also applies to the regular search).
+(this usage of shorthand index also applies to the regular search).
 
 One can further filter the result list:
 
@@ -183,7 +180,7 @@ List per status, for example: list all features with "experimental" status:
 
     mdncomp --browser current
 
-![example show current browsers](https://i.imgur.com/kJuN8hV.png)
+![example show current browsers](https://i.imgur.com/HUvq866.png)
 
 Tip: You can combine the option with `-N, --no-notes` to hide the links at the end.
 
@@ -206,7 +203,7 @@ Here with options `-NRF`:
 
 `-R` = no-children, `-N` = no-notes, `-F` = no-flags (also see `-h, --help`)
     
-    mdncomp sharedarraybuffer -RNF
+    mdncomp sharedbuffer -RNF
     
 ![Minimalistic example](https://i.imgur.com/Fs8RnhK.png)<br>
 <sup>*cygwin snapshot*</sup>
@@ -218,32 +215,32 @@ Markdown enabled tables
 The ASCII tables can be pasted directly into a markdown document and will show
 as rendered HTML tables in markdown-flavors which support tables - **live preview:**
 
-DESKTOP                     |Chrome    |Edge      |Firefox   |IE        |Opera     |Safari
+DESKTOP >                   |Chrome    |Edge      |Firefox   |IE        |Opera     |Safari    
 :---------------------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
-HTMLCanvasElement           |    4     |    Y     |   3.6    |    9     |    9°    |   3.1
-height                      |    4     |    12    |   3.6    |    9     |    9     |   3.1
-mozOpaque ?                 |    -     |    -     |   3.5    |    -     |    -     |    -
-width                       |    4     |    12    |   3.6    |    9     |    9     |   3.1
-captureStream !             |    51    |    ?     |    43    |    -     |    36    |    ?
-getContext                  |    Y     |    12    |   3.6    |    9     |    9     |   3.1
-mozFetchAsStream x?         |    -     |    -     |  13-43   |    -     |    -     |    -
-mozGetAsFile x?             |    -     |    -     |    4     |    -     |    -     |    -
-toBlob                      |    50    |    -     |    19    |   10¹    |    37    |    Y²
-toDataURL                   |    4     |    12    |   3.6    |    9     |    9     |    4
-transferControlToOffscreen !|    -     |    -     |   44F    |    -     |    -     |    -
+HTMLCanvasElement           |    4     |    Y     |   3.6    |    9     |    9°    |   3.1    
+height                      |    4     |    12    |   3.6    |    9     |    9     |   3.1    
+mozOpaque ?                 |    -     |    -     |   3.5    |    -     |    -     |    -     
+width                       |    4     |    12    |   3.6    |    9     |    9     |   3.1    
+captureStream !             |    51    |    ?     |    43    |    -     |    36    |    ?     
+getContext                  |    Y     |    12    |   3.6    |    9     |    9     |   3.1    
+mozFetchAsStream x?         |    -     |    -     |  13-43   |    -     |    -     |    -     
+mozGetAsFile x?             |    -     |    -     |    4     |    -     |    -     |    -     
+toBlob                      |    50    |    -     |    19    |   10¹    |    37    |    Y²    
+toDataURL                   |    4     |    12    |   3.6    |    9     |    9     |    4     
+transferControlToOffscreen !|    -     |    -     |   44F    |    -     |    -     |    -     
 
 And in compact shorthand format:
 
-Browsers:              |C  |E  |F  |IE |O  |S  |C/a|E/m|F/a|O/a|S/i|W/a
+BROWSERS >             |C  |E  |F  |IE |O  |S  |C/a|E/m|F/a|O/a|S/i|W/a
 :----------------------|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:
-toBlob                 |50 | - |19 |10*|37 |Y* |50 | - | 4 |37 | - |50 
-Image quality parameter|50 | - |25 | - | Y | - | - | - |25 | - | ? |50 
+toBlob                 |50 | - |19 |10*|37 |Y* |50 | - | 4 |37 | - |50
+Image quality parameter|50 | - |25 | - | Y | - | - | - |25 | - | ? |50
 
 
 Exploration
 -----------
 
-Feel like discovering new features and APIs? try a random feature:
+Feel like exploring? Find new features and APIs using the `--random` options:
 
     $ mdncomp --random
 
@@ -251,7 +248,7 @@ combine it with a summary description:
 
     $ mdncomp --random --desc
 
-You can also create a scope by providing a keyword or search term. Here, find
+You can create a limiting scope by providing a keyword or search term. Here, find
 a random feature that contains "audio" in its path:
 
     $ mdncomp --random audio
@@ -294,26 +291,28 @@ To see a list of valid keys that can be used:
 Tip: You can as an alternative, define alias commands in some terminals with 
 specific options set for different purposes.
 
-Note: On macOS you likely have to use `sudo` to set options as it write to
-a file store in the user area.
+Note: On macOS/Linux you'll likely have to use `sudo` to set options as it write
+to a file store in the user area.
 
+    sudo mdncomp --set specs=1
+    
 
 Requirements
 ------------
 
-- **Node.js version 8.3** or newer (for older Node version use mdncomp version 1.23.0).
-- NPM to install `mdncomp i -g mdncomp`
+- **Node.js version 8.3** or newer (for older Node version use mdncomp version 1.23).
+- NPM to install `npm i -g mdncomp`
 - Internet connection when updating (via the `--*update` options)
 
 
-Developer environment
+Developer Environment
 ---------------------
 
-Development IDE: JetBrains' [WebStorm](https://www.jetbrains.com/webstorm/).
+Development IDE: JetBrains [WebStorm](https://www.jetbrains.com/webstorm/).
 
-Test environments: Windows 8.1+, Linux (Ubuntu), Darwin (High Sierra)
+Test environments: Windows 8.1+, Linux (Ubuntu), Darwin (macOS High Sierra)
 
-The pre-compiled data an patch repositories can be found [here](https://github.com/epistemex/mdncomp-data)
+The pre-compiled data and patch repositories can be found [here](https://github.com/epistemex/mdncomp-data)
 and [here](https://gitlab.com/epistemex/mdncomp-data) (redundancy repo).
 
 
@@ -321,7 +320,7 @@ Support
 -------
 
 This product is provided AS-IS and comes with no support nor warranty. You use it
-at your own risk.
+at your own risk. It's continued development depends on user interest and feedback.
 
 The main git repository can be found at **GitLab** where you also can report issues:
 

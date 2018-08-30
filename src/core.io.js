@@ -32,23 +32,23 @@ module.exports = {
 
         // handle redirects
 
-        if (!res || !res.statusCode) {
+        if ( !res || !res.statusCode ) {
           onError("Could not connect");
         }
-        else if (res.statusCode === 301 || res.statusCode === 302) {
+        else if ( res.statusCode === 301 || res.statusCode === 302 ) {
           return this.request(res.headers.location, onResp, onProgress, onData, onError);
         }
-        else if (res.statusCode === 200 && onResp({headers: res.headers})) {
-          let length = res.headers["content-length"]|0;
+        else if ( res.statusCode === 200 && onResp({ headers: res.headers }) ) {
+          let length = res.headers[ "content-length" ] | 0;
           res.on("data", d => {
             buffer.push(d);
             current += d.length;
-            if (onProgress) onProgress(length ? current / length : (current % 7) / 7);
+            if ( onProgress ) onProgress(length ? current / length : (current % 7) / 7);
           }).on("end", () => {
             onData(rawBuffer ? Buffer.concat(buffer) : Buffer.concat(buffer).toString());
           });
         }
-        else if (onError) _error(res, "");
+        else if ( onError ) _error(res, "");
 
       })
       .on("error", err => _error(_res, err));
@@ -56,7 +56,7 @@ module.exports = {
     req.end();
 
     function _error(res, error) {
-      if (onError) onError({statusCode: res && res.statusCode ? res.statusCode : -1, error: error});
+      if ( onError ) onError({ statusCode: res && res.statusCode ? res.statusCode : -1, error: error });
       else err("Error", res, error);
     }
   },
@@ -68,15 +68,15 @@ module.exports = {
 
     return process.platform === "darwin"
            ? require("path").resolve(app, "/Library/Preferences")
-           : app
+           : app;
   },
 
   getConfigPath: function() {
-    return path.resolve(this.getConfigRootPath(), ".mdncomp")
+    return path.resolve(this.getConfigRootPath(), ".mdncomp");
   },
 
   getConfigFilePath: function() {
-    return path.join(this.getConfigDataPath(), ".config.json")
+    return path.join(this.getConfigDataPath(), ".config.json");
   },
 
   /**
@@ -100,11 +100,11 @@ module.exports = {
 
     // check/create sub-folders if defined
     for(let i = 0; i < arguments.length; i++) {
-      _check(root = path.resolve(root, arguments[i]));
+      _check(root = path.resolve(root, arguments[ i ]));
     }
 
     function _check(root) {
-      if (!fs.existsSync(root)) {
+      if ( !fs.existsSync(root) ) {
         try {
           fs.mkdirSync(root);
         }
@@ -114,6 +114,6 @@ module.exports = {
       }
     }
 
-    return root
+    return root;
   }
 };

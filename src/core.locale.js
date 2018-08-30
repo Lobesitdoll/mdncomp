@@ -12,17 +12,17 @@ let lang = loadModule("init.config").locale();
 const args = process.argv;
 const i = args.indexOf("--lang");
 
-if (i > -1) {
-  if (args.length > i + 1) {
-    lang = args[i + 1].toLowerCase();
+if ( i > -1 ) {
+  if ( args.length > i + 1 ) {
+    lang = args[ i + 1 ].toLowerCase();
     args.splice(i, 2);
   }
 }
 
 // Show help for supported languages
-if (lang === "?") {
+if ( lang === "?" ) {
   log(`?g\nSupported languages: ?c${global.languages.join(", ")}\n?R`);
-  process.exit()
+  process.exit();
 }
 
 // Load language file or default to English
@@ -47,7 +47,7 @@ function loadLang(lang) {
     Object.assign(global.text, langFile.texts);
     Object.assign(global.char, langFile.chars);
     global.lang = lang;
-    return true
+    return true;
   }
   catch(_err) {
     //if (DEBUG) err(_err);

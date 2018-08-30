@@ -45,7 +45,7 @@ const utils = {
    * @returns {string[]}
    */
   getRootList: (mdn) => {
-    return Object.keys(mdn).filter(key => key !== "browsers" && key !== "__mdncomp")
+    return Object.keys(mdn).filter(key => key !== "browsers" && key !== "__mdncomp");
   },
 
   /**
@@ -122,7 +122,7 @@ const utils = {
    */
   getPathAsObject: (mdn, path) => {
     let obj = mdn;
-    if (path) {
+    if ( path ) {
       path.split(".").forEach(part => {
         if ( obj && obj[ part ] ) obj = obj[ part ];
       });
@@ -149,8 +149,8 @@ const utils = {
     parts.pop();
 
     parts.forEach(part => {
-      o = (o || {})[part];
-      if (o) {
+      o = (o || {})[ part ];
+      if ( o ) {
         // colors: feature > hasChildren = cyan, hasChildren, no feature = green, just branch = yellow
         let color = o.__compat ? "?C" : (utils.hasChildren(o) ? "?g" : "?y");
         result.push(color + part);
@@ -190,27 +190,27 @@ const utils = {
 
   getBrowserNames: () => {
     return {
-      "chrome"                 : {short: "C", long: "Chrome"},
-      "edge"                   : {short: "E", long: "Edge"},
-      "firefox"                : {short: "F", long: "Firefox"},
-      "ie"                     : {short: "IE", long: "IE"},
-      "opera"                  : {short: "O", long: "Opera"},
-      "safari"                 : {short: "S", long: "Safari"},
+      "chrome" : { short: "C", long: "Chrome" },
+      "edge"   : { short: "E", long: "Edge" },
+      "firefox": { short: "F", long: "Firefox" },
+      "ie"     : { short: "IE", long: "IE" },
+      "opera"  : { short: "O", long: "Opera" },
+      "safari" : { short: "S", long: "Safari" },
 
-      "chrome_android"         : {short: "C/a", long: "Chrome/A"},
-      "edge_mobile"            : {short: "E/m", long: "Edge/mob"},
-      "firefox_android"        : {short: "F/a", long: "Firefox/A"},
-      "opera_android"          : {short: "O/a", long: "Opera/A"},
-      "safari_ios"             : {short: "S/i", long: "Safari/iOS"},
-      "webview_android"        : {short: "W/a", long: "Webview/A"},
+      "chrome_android" : { short: "C/a", long: "Chrome/A" },
+      "edge_mobile"    : { short: "E/m", long: "Edge/mob" },
+      "firefox_android": { short: "F/a", long: "Firefox/A" },
+      "opera_android"  : { short: "O/a", long: "Opera/A" },
+      "safari_ios"     : { short: "S/i", long: "Safari/iOS" },
+      "webview_android": { short: "W/a", long: "Webview/A" },
 
-      "nodejs"                 : {short: "ND", long: "Node JS"},
-      "qq_android"             : {short: "QQ", long: "QQ/A"},
-      "samsunginternet_android": {short: "SM", long: "Samsung/A"},
-      "thunderbird"            : {short: "TB", long: "Thunderbrd"},
-      "uc_android"             : {short: "UC", long: "UC/A"},
-      "uc_chinese_android"     : {short: "UCC", long: "UC-Ch/A"}
-    }
+      "nodejs"                 : { short: "ND", long: "Node JS" },
+      "qq_android"             : { short: "QQ", long: "QQ/A" },
+      "samsunginternet_android": { short: "SM", long: "Samsung/A" },
+      "thunderbird"            : { short: "TB", long: "Thunderbrd" },
+      "uc_android"             : { short: "UC", long: "UC/A" },
+      "uc_chinese_android"     : { short: "UCC", long: "UC-Ch/A" }
+    };
   },
 
   /**
@@ -260,9 +260,7 @@ const utils = {
           isShort = ch === "?";
         }
         else {
-          // todo for now, we need more checks for dot to work "properly" (undefined, other break chars etc.)
-          //if ( ch === " " || ch === _lf || ch === "/" || (ch === "." && s[i + 1] !== " ")) lastBreak = i;
-          if ( ch === " " || ch === _lf || ch === "/" || ch === ".") lastBreak = i;
+          if ( ch === " " || ch === _lf || ch === "/" || ch === "." ) lastBreak = i;
 
           len++;
           if ( len === _max || ch === _lf ) {
@@ -346,11 +344,11 @@ const utils = {
       "&quot;": "\"",
       "&amp;" : "&",
       "&lt;"  : "<",
-      "&gt;"  : ">",
+      "&gt;"  : ">"
     };
 
     const rx = new RegExp(Object.keys(ent).join("|"), "gi");
-    return txt.replace(rx, m => ent[m])
+    return txt.replace(rx, m => ent[ m ]);
   },
 
   versionAddRem: (add, rem, hasNotes = false, interval = false) => {
@@ -370,7 +368,7 @@ const utils = {
       v = (rem ? "?r" : (hasNotes ? "?y" : "?g")) + add;
       if ( rem ) {
         v += "?R-?r" + (typeof rem === "boolean" ? char.unknown : rem);
-        if (interval && typeof rem !== "boolean") v = "[" + v + ">"
+        if ( interval && typeof rem !== "boolean" ) v = "[" + v + ">";
       }
     }
 
@@ -379,10 +377,10 @@ const utils = {
 
   testFilters: (filters, str) => {
     for(let filter of filters) if ( filter.test(str) ) return true;
-    return false
+    return false;
   },
 
-loadMDN: function() {
+  loadMDN: function() {
     let mdn;
     try {
       mdn = require("../data/data.json");

@@ -37,7 +37,7 @@ function table(tbl, options) {
   // render table
   let result = "";
   tbl.forEach((line, i) => {
-    result += buildLine(line, !i && options.header)
+    result += buildLine(line, !i && options.header);
   });
 
   function buildLine(cells, isHeader) {
@@ -73,10 +73,10 @@ function table(tbl, options) {
       }
     });
 
-    return line + options.end + options.lineEnding + (isHeader ? hdr + options.end + options.lineEnding : "")
+    return line + options.end + options.lineEnding + (isHeader ? hdr + options.end + options.lineEnding : "");
   }
 
-  return result
+  return result;
 }
 
 module.exports = table;

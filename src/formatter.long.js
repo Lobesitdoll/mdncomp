@@ -59,7 +59,7 @@ function formatterLong(data, isSub = false) {
 
   /* Header ------------------------------------------------------------------*/
 
-  if (!isSub) log();
+  if ( !isSub ) log();
   else addHeader(text.subFeature.toUpperCase());
 
   // path + api, status, url
@@ -69,7 +69,7 @@ function formatterLong(data, isSub = false) {
   }
   if ( data.url ) log((data.url ? "?G" + data.url : "-") + "?R");
 
-  if (!isSub) {
+  if ( !isSub ) {
     // Description
     if ( options.desc ) {
       if ( data.description ) {
@@ -82,7 +82,7 @@ function formatterLong(data, isSub = false) {
     }
   }
 
-    log("?R");
+  log("?R");
 
   /* Show table data ---------------------------------------------------------*/
 
@@ -93,7 +93,7 @@ function formatterLong(data, isSub = false) {
   /* Show hints if any -------------------------------------------------------*/
 
   if ( options.expert < 2 ) {
-    if ( hint.dep || hint.nonStd || hint.exp || hint.parent) {
+    if ( hint.dep || hint.nonStd || hint.exp || hint.parent ) {
       let hints = [];
       if ( hint.exp ) hints.push(`?y${char.experimental}?R = ${text.experimental}`);
       if ( hint.dep ) hints.push(`?b${char.deprecated}?R = ${text.deprecated}`);
@@ -105,15 +105,15 @@ function formatterLong(data, isSub = false) {
 
   /* Show sub-features -------------------------------------------------------*/
 
-  if (titles.length) {
-    if (isSub || typeof options.sub === "undefined" || +options.sub < 0 || +options.sub >= titles.length) {
-      if (!isSub) addHeader(text.subFeatures.toUpperCase());
+  if ( titles.length ) {
+    if ( isSub || typeof options.sub === "undefined" || +options.sub < 0 || +options.sub >= titles.length ) {
+      if ( !isSub ) addHeader(text.subFeatures.toUpperCase());
       titles.forEach((title, i) => log(`?g${isSub ? "*" : i}?R) ?w${utils.breakAnsiLine(utils.cleanHTML(title, true, "?w"), options.maxChars)}?R`));
-      if (!isSub) log()
+      if ( !isSub ) log();
     }
     else {
       const tmp = Object.assign({}, options);
-      const sub = options.sub|0;
+      const sub = options.sub | 0;
 
       options.history = options.desc = options.children = false;
       options.flags = true;
@@ -123,8 +123,8 @@ function formatterLong(data, isSub = false) {
       // find child
       let i = 0;
       for(let child of data.children) {
-        if (child.title) {
-          if (i++ === sub) {
+        if ( child.title ) {
+          if ( i++ === sub ) {
             log(formatterLong(child, true));
             break;
           }
@@ -232,7 +232,7 @@ function formatterLong(data, isSub = false) {
     // Header line
     const tableName = [
       (`?b${text[ device ].toUpperCase()} >`)
-      .padEnd(Math.max(0, options.maxChars - 65)) + "?G"
+        .padEnd(Math.max(0, options.maxChars - 65)) + "?G"
     ];
 
     const colNames = dev
@@ -246,7 +246,7 @@ function formatterLong(data, isSub = false) {
       _dataName = char.parent + " " + dataName;
       hint.parent = true;
     }
-    _dataName  = isSubFeature(_dataName, data);
+    _dataName = isSubFeature(_dataName, data);
     tbl.push(getLine(_dataName, dev, data, false));
 
     if ( options.children && data.children.length ) {
@@ -262,14 +262,14 @@ function formatterLong(data, isSub = false) {
   }
 
   function isSubFeature(name, data) {
-    if (data.title) {
+    if ( data.title ) {
       const i = titles.indexOf(data.title);
       name = `${isSub ? "?g* ?w" : "?y"}${text.subFeature} ?g${isSub ? "" : (i < 0 ? titles.length : i)}`;
-      if (i < 0) {
+      if ( i < 0 ) {
         titles.push(data.title);
       }
     }
-    return name
+    return name;
   }
 
   function getLine(name, status, data, isChild) {
@@ -293,7 +293,7 @@ function formatterLong(data, isSub = false) {
       }
     }
 
-    if (stat.length) stat = stat.trimRight();
+    if ( stat.length ) stat = stat.trimRight();
 
     // feature/child name as first entry
     const result = [ color + name + stat + "?G" ];
@@ -405,9 +405,9 @@ function formatterLong(data, isSub = false) {
 
   function linkFromNoteIndex(note) {
     for(let link of data.links) {
-      if (link.index === note.index) return link
+      if ( link.index === note.index ) return link;
     }
-    return {linkIndex: "-"}
+    return { linkIndex: "-" };
   }
 
   function addHeader(txt) {

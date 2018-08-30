@@ -1,6 +1,9 @@
 mdncomp 2
 =========
 
+2.00.0
+NOP: No changes.
+
 2.00.0-beta.4
 FIX: Hints for --list when expert mode < 2
 ADD: Wiki files for v2

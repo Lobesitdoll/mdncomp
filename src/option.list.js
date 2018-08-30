@@ -14,7 +14,7 @@ let hasBranch = false;
 function list(path, recursive = false) {
 
   // top-levels
-  if ( typeof path !== "string" || !path.length || path === "."  || path === "?" ) {
+  if ( typeof path !== "string" || !path.length || path === "." || path === "?" ) {
     log();
     log(`?R${text.valid} ${text.pathRoots}:`);
     log(`?g${ utils.getRootList(mdn).join(lf) }?R` + lf);
@@ -26,8 +26,8 @@ function list(path, recursive = false) {
   // list on status
   else if ( [ "deprecated", "experimental", "standard" ].includes(path) ) {
     const result = listOnStatus(path, recursive);
-    if (result.length > 1 || options.args.length) {
-      checkIndex(result)
+    if ( result.length > 1 || options.args.length ) {
+      checkIndex(result);
     }
     else log(result);
   }
@@ -40,20 +40,20 @@ function list(path, recursive = false) {
       options.list = undefined;
       listAPI(result[ 0 ]);
     }
-    else if (result.length > 0 || options.args.length) {
-      checkIndex(result)
+    else if ( result.length > 0 || options.args.length ) {
+      checkIndex(result);
     }
   }
 
   function checkIndex(result) {
-    if (options.index > -1) {
-      if (options.index < 0 || options.index >= result.length) {
+    if ( options.index > -1 ) {
+      if ( options.index < 0 || options.index >= result.length ) {
         err(text.indexOutOfRange);
         return;
       }
 
-      let parts = result[options.index].split(" ");
-      let line = parts[parts.length - 1].replace(/\?./g, "");
+      let parts = result[ options.index ].split(" ");
+      let line = parts[ parts.length - 1 ].replace(/\?./g, "");
       options.index = -1;
 
       list(line, true);
@@ -62,12 +62,12 @@ function list(path, recursive = false) {
       log();
       log(result);
 
-      if (options.expert < 2) {
+      if ( options.expert < 2 ) {
         const hints = [];
-        if (hasFeatures) hints.push(`?c${char.feature}?R = ${text.listFeature}`);
-        if (hasParent) hints.push(`?g${char.parent}?R = ${text.listParent}`);
-        if (hasBranch) hints.push(`?y${char.branch}?R = ${text.listBranch}`);
-        if (hints.length) log(utils.breakAnsiLine(lf + hints.join(", "), options.maxChars))
+        if ( hasFeatures ) hints.push(`?c${char.feature}?R = ${text.listFeature}`);
+        if ( hasParent ) hints.push(`?g${char.parent}?R = ${text.listParent}`);
+        if ( hasBranch ) hints.push(`?y${char.branch}?R = ${text.listBranch}`);
+        if ( hints.length ) log(utils.breakAnsiLine(lf + hints.join(", "), options.maxChars));
       }
       log();
     }
@@ -96,7 +96,7 @@ function listAPI(prefix, recursive = false) {
   // build sub-filters
   const filters = [];
   options.args.forEach(arg => {
-    filters.push(utils.getComparer(arg, options.fuzzy, !options.caseSensitive))
+    filters.push(utils.getComparer(arg, options.fuzzy, !options.caseSensitive));
   });
 
   let last = "";
@@ -109,7 +109,7 @@ function listAPI(prefix, recursive = false) {
       }
     })
     .filter(path => {
-      return !filters.length || utils.testFilters(filters, path)
+      return !filters.length || utils.testFilters(filters, path);
     })
     .sort()
     .map((path, i, arr) => {
@@ -117,15 +117,15 @@ function listAPI(prefix, recursive = false) {
       let color;
       let prefix;
 
-      if (obj.__compat) {
+      if ( obj.__compat ) {
         hasFeatures = true;
         color = "?c";
-        prefix = char.feature
+        prefix = char.feature;
       }
-      else if (utils.hasChildren(obj)) {
+      else if ( utils.hasChildren(obj) ) {
         hasParent = true;
         color = "?g";
-        prefix = char.parent
+        prefix = char.parent;
       }
       else {
         hasBranch = true;
@@ -135,13 +135,13 @@ function listAPI(prefix, recursive = false) {
 
       const index = recursive ? "" : `?y[?g${ (i + "").padStart(Math.log10(arr.length) + 1) }?y]?R `;
 
-      if (color.length) {
+      if ( color.length ) {
         const parts = path.split(".");
-        parts[parts.length - 1] = color + parts[parts.length - 1] + "?R";
-        return `${index}${color}${prefix}?R ${parts.join(".")}`
+        parts[ parts.length - 1 ] = color + parts[ parts.length - 1 ] + "?R";
+        return `${index}${color}${prefix}?R ${parts.join(".")}`;
       }
 
-      return `${index}${prefix} ${path}`
+      return `${index}${prefix} ${path}`;
     });
 }
 
@@ -152,7 +152,7 @@ function listOnStatus(statTxt, recursive = false) {
   if ( statTxt === "standard" ) statTxt += "_track";
 
   options.args.forEach(arg => {
-    filters.push(utils.getComparer(arg, options.fuzzy, !options.caseSensitive))
+    filters.push(utils.getComparer(arg, options.fuzzy, !options.caseSensitive));
   });
 
   utils
@@ -168,8 +168,8 @@ function listOnStatus(statTxt, recursive = false) {
         .keys(subNode)
         .filter(key => key !== "__compat")
         .forEach(key => {
-          if (_check(subNode[key].__compat)) {
-            if (!filters.length || utils.testFilters(filters, branch + "." + key)) {
+          if ( _check(subNode[ key ].__compat) ) {
+            if ( !filters.length || utils.testFilters(filters, branch + "." + key) ) {
               result.push(branch + "." + key);
             }
           }
@@ -179,7 +179,7 @@ function listOnStatus(statTxt, recursive = false) {
   }
 
   function _check(compat) {
-    if (compat) {
+    if ( compat ) {
       const status = compat.status || {};
       return !!status[ statTxt ];
     }

@@ -20,7 +20,7 @@ const text = {
 
 /*- SYSTEM VALIDATIONS AND ERROR HANDLING ------------------------------------*/
 
-const nv = process.versions.node.split(".").map(n => n|0);
+const nv = process.versions.node.split(".").map(n => n | 0);
 if ( nv[ 0 ] < 8 || (nv[ 0 ] === 8 && nv[ 1 ] < 3) ) {
   console.log(text.versionWarning);
 }
@@ -98,8 +98,8 @@ if ( !options.colors ) {
 
 /*- INIT UNICODE -------------------------------------------------------------*/
 
-if (options.unicode) {
-  global.char = Object.assign(global.char, loadModule("core.unicode"))
+if ( options.unicode ) {
+  global.char = Object.assign(global.char, loadModule("core.unicode"));
 }
 
 /*- CHECKS FOR UPDATE, UPDATE PATCH/FULL IF EXISTS, OR EXIT -------------------*/

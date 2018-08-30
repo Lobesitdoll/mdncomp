@@ -9,11 +9,11 @@ const help = {};
 // Use string literals and start on the -next- line to prepend a line-feed. Likewise DON'T allow linefeed at the end (is added by parser).
 
 /*--------------------------------------------------------------------------------------------------*/
-help["-v"] = help["--version"] = `
+help[ "-v" ] = help[ "--version" ] = `
 List version information for this release in semver format.`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["-l"] = help["--list"] = `
+help[ "-l" ] = help[ "--list" ] = `
 This will list *branches* and not objects (unless they are branches as
 well). This can help you navigate to a specific object in a branch.
 
@@ -45,20 +45,20 @@ experimental, "deprecated" will list all APIs and objects that are obsolete or
 deprecated from the standard etc.`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["-D"] = help["--no-desktop"] = `
+help[ "-D" ] = help[ "--no-desktop" ] = `
 Don't show information for desktop browsers.`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["-M"] = help["--no-mobile"] = `
+help[ "-M" ] = help[ "--no-mobile" ] = `
 Don't show information for mobile device browsers.`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["-c"] = help["--case-sensitive"] = `
+help[ "-c" ] = help[ "--case-sensitive" ] = `
 When searching determine that the search should be conducted using case-sensitive 
 comparison.`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["-z"] = help["--fuzzy"] = `
+help[ "-z" ] = help[ "--fuzzy" ] = `
 Search using a "fuzzy" search term. This simply mean expressing the
 search term as chosen letters from the target path:
 
@@ -71,7 +71,7 @@ From version 2 fuzzy is automatically applied on a second pass if no result was 
 permanently.`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["-d"] = help["--deep"] = `
+help[ "-d" ] = help[ "--deep" ] = `
 Do a deep search using the search term for descriptions, title, footnotes,
 history and metadata branches as well.
 
@@ -79,7 +79,7 @@ Note: The search may take significantly more time to execute. We recommend using
 custom regular expressions when doing deep searches.`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["-i"] = help["--index"] = `
+help[ "-i" ] = help[ "--index" ] = `
 When multiple results are listed they are assigned a index number in 
 the result list. To list one particular result from that list, use this
 option:
@@ -102,11 +102,11 @@ type in the number directly as an argument:
 `;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["-s"] = help["--shorthand"] = `
+help[ "-s" ] = help[ "--shorthand" ] = `
 List a compact shorthand table version of the support information.`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["-b"] = help["--browser"] = `
+help[ "-b" ] = help[ "--browser" ] = `
 This will list release and status information for a *browser* based on
 the given ID.
 
@@ -122,33 +122,33 @@ You can also list browsers based on status.
 To not list links combine the -N, --no-notes option.`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["-N"] = help["--no-notes"] = `
+help[ "-N" ] = help[ "--no-notes" ] = `
 Don't list footnotes with the information. A browser will still be
 marked having footnotes but with a generic astrix symbol instead.
 
 For the --browser option the links will not be shown.`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["--ext"] = help["-x"] = `
+help[ "--ext" ] = help[ "-x" ] = `
 Shows an additional table for less common browsers.`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["--desc"] = `
+help[ "--desc" ] = `
 Will include a short description of the feature after the link in the
 default long output format, if available.`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["--specs"] = `
+help[ "--specs" ] = `
 Show specification links and status, if available.`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["--no-obsolete"] = `
+help[ "--no-obsolete" ] = `
 Hide obsolete, non-standard and deprecated child features.
 
 If ANSI colors are enabled it will show as darker gray in the output.`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["--custom"] = help["-u"] = `
+help[ "--custom" ] = help[ "-u" ] = `
 Define custom columns (see option -b, --browser for a list of valid ids).
 
     mdncomp -u "chrome edge firefox" html*toblob
@@ -158,11 +158,11 @@ You can separate the ids with space, comma, semi-column or column.
 The columns will automatically be be sorted and segmented.`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["--no-colors"] = `
+help[ "--no-colors" ] = `
 Turns off ANSI colors and codes in the terminal.`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["--max-chars"] = `
+help[ "--max-chars" ] = `
 Set max number of characters on a (textual) line. Default is 84 but if
 you prefer longer lines this can be set here. Using "-1" as value means 
 no line limit.
@@ -170,7 +170,7 @@ no line limit.
 Note that width is ignored for URLs.`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["--random"] = `
+help[ "--random" ] = `
 Feel like exploring? Discover new features using this option. You can 
 specify either all by omitting any argument, or a keyword or search term 
 (which can be combined with the --fuzzy option) to limit scope.
@@ -193,17 +193,17 @@ available) etc.
 Note that some options are ignored using this option.`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["--configpath"] = `
+help[ "--configpath" ] = `
 Show the path to the root folder used to store the optional config file
 and the documentation excerpts cache.`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["-G"] = help["--no-config"] = `
+help[ "-G" ] = help[ "--no-config" ] = `
 Ignores the config file if specified. As the config file will override
 options this option will allow bypassing those overrides.`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["--set"] = `
+help[ "--set" ] = `
 Set or clear a value in the config file. If no config exists, one will be created.
 
 Example: define permanent custom columns:
@@ -221,7 +221,7 @@ List valid keys:
 The settings can be manually edited directly in the JSON config file. See --configpath.`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["--lang"] = `
+help[ "--lang" ] = `
 Use a specific language for the user interface. Language is an ISO code, for example:
 
   mdncomp --lang en
@@ -240,7 +240,7 @@ And removed (in which case the default en-us will be used):
 The language setting affects the user interface and descriptions (where available).`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["--update"] = help["--fupdate"] = `
+help[ "--update" ] = help[ "--fupdate" ] = `
 Update the precompiled Browser Compatibility Data object as full dataset or 
 patches. If the data is considered to be the same no data will be downloaded.
 
@@ -257,15 +257,15 @@ that, otherwise a full update of the data file will be invoked.
 mdncomp has built-in redundancy in case main data server is down.`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["-y"] = help["--history"] = `
+help[ "-y" ] = help[ "--history" ] = `
 Show detailed list of version history for each browser.`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["--expert"] = `
+help[ "--expert" ] = `
 Disables output of hints information including legends.`;
 
 /*--------------------------------------------------------------------------------------------------*/
-help["-h"] = help["--help"] = `
+help[ "-h" ] = help[ "--help" ] = `
 List options, or show more detailed help per option (no options will
 default to \`--help\`):
 

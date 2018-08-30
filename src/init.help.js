@@ -10,9 +10,9 @@ const args = process.argv;
 
 function show() {
 
-  if (args.length >= 4) {
-    let option = (args[2] === "-h" || args[2] === "--help") ? args[3] : args[2];
-    let helpText = require("./help.options").help[option];
+  if ( args.length >= 4 ) {
+    let option = (args[ 2 ] === "-h" || args[ 2 ] === "--help") ? args[ 3 ] : args[ 2 ];
+    let helpText = require("./help.options").help[ option ];
 
     log();
     log(`?g${text.helpForOption} "${option}":?R`);
@@ -24,10 +24,10 @@ function show() {
     log(`    ?ymdncomp html*toblob      ?R${text.example2} HTMLCanvasElement.toBlob`);
     log(`    ?ymdncomp -z hctbb.        ?R${text.example2} HTMLCanvasElement.toBlob (fuzzy)`);
     log(`    ?ymdncomp --list           ?R${text.example3}`);
-    log()
+    log();
   }
 
-  process.exit()
+  process.exit();
 }
 
 module.exports = show;

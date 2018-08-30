@@ -95,9 +95,10 @@ function format(path, recursive = false, subNotes, subLinks) {
   }
 
   if ( options.ext && browsers.ext.length ) {
-    browsers.ext.filter(key => (showNode || key !== "nodejs") && (isWebExt || key !== "thunderbird")).forEach(key => {
-      result.browsers.ext.push(mergeSupport(key, support));
-    });
+    browsers.ext.filter(key => (showNode || key !== "nodejs") && (isWebExt || key !== "thunderbird"))
+      .forEach(key => {
+        result.browsers.ext.push(mergeSupport(key, support));
+      });
   }
 
   // get children
@@ -176,8 +177,8 @@ function format(path, recursive = false, subNotes, subLinks) {
             });
           }
 
-          if (!noteIndices.includes(index)) noteIndices.push(index);
-          if (!localNotesIndices.includes(index)) localNotesIndices.push(index);
+          if ( !noteIndices.includes(index) ) noteIndices.push(index);
+          if ( !localNotesIndices.includes(index) ) localNotesIndices.push(index);
         });
       }
 
@@ -203,12 +204,12 @@ function format(path, recursive = false, subNotes, subLinks) {
   function renumLinks() {
     let i = -1, last = -1;
     result.links.forEach(link => {
-      if (link.index !== last) {
+      if ( link.index !== last ) {
         last = link.index;
         i++;
       }
       link.linkIndex = i;
-    })
+    });
   }
 
   renumLinks();
