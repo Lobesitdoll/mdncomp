@@ -1,32 +1,35 @@
 mdncomp 2
 =========
 
-2.00.0
+2.0.1
+FIX: Removed obsolete remaining keys from "--set"/config file.
+
+2.0.0
 NOP: No changes.
 
-2.00.0-beta.4
+2.0.0-beta.4
 FIX: Hints for --list when expert mode < 2
 ADD: Wiki files for v2
 CHG: Added ANSI color code
 CHG: Colors for table headers for consistency
 
-2.00.0-beta.3
+2.0.0-beta.3
 UPD: Wiki files
 IMP: Allow "?" as argument for --browser option
 FIX: Missing description could lead to error in long format.
 ADD: Support for Thunderbird in browsers and within the Webextensions scope (when officially made available from BCD).
 IMP: Internal refactoring
 
-2.00.0-beta.1-2
+2.0.0-beta.1-2
 ADD: Translations for update module
 FIX: Fixed ANSI string length and truncate in compact format
 
-2.00.0-beta.0
+2.0.0-beta.0
 ADD: Result filters for "--list" on API (mdncomp --list api window navigator ..")
 ADD: Result filters for "--list" on status (mdncomp --list experimental selectors ..")
 ADD: "--sub <index>" option to inspect sub-feature details
 
-2.00.0-alpha.8
+2.0.0-alpha.8
 REM: Option "--cupdate"
 FIX: Flags section output formatting when support version was marked "no"
 FIX: Option case-sensitive was ignored (regr.)
@@ -40,7 +43,7 @@ ADD: Locale infrastructure (main program)
 ADD: Generic locales for English (--lang en), Spanish (--lang es), Norwegian (--lang no)
 IMP: Renumber link references
 
-2.00.0-alpha.6-7
+2.0.0-alpha.6-7
 HOT: Build error (an unintended module ref. was accidentally renamed). Fixed + release.
 IMP: Minimum field length for 1. row in table depending on --max-chars (long format). Auto-expands as needed (as before)
 IMP: "--history" range is now marked as interval i.e. "[4-6>" (from and incl. 4, to but not incl. 6)
@@ -61,17 +64,17 @@ IMP: Color coding for added support changed from green to yellow if notes exists
 IMP: "--ext" option automatically applied when "--columns" contains extended browsers
 IMP: All error output goes to STDERR, the rest to STDOUT
 
-2.00.0-alpha.4-5
+2.0.0-alpha.4-5
 NPM: published bypassing private npm, another version bump due to build mode...
      (NB: package.json overrides both cmd line arg --registry and env settings)
 ADD: Option "-u, --columns" to allow custom browser column definitions
 
-2.00.0-alpha.3
+2.0.0-alpha.3
 FIX: search recall failed with auto-fuzzy mode due to search-term argument not reinserted
 ADD: option "--expert" to disable hints, legends
 CHG: option "--workers" renamed to singular "--worker"
 
-2.00.0-alpha.1-2
+2.0.0-alpha.1-2
 HOT: Path for marking first-run message read, in [--help]
 CHG: Only show Node.js data if a JavaScript path.
 ADD: Local result filter in multi-line result (simply providing (multiple) additional args)
@@ -92,7 +95,7 @@ REM: Option "--all" (replaced by the inverse "--no-children")
 IMP: Allow children with compat even if parent doesn't have one (f.ex webextensions.manifest)
 FIX: core.utils name feature invocation.
 
-2.00.0-alpha.0
+2.0.0-alpha.0
 ADD: List children features of main feature (disable by new option "-R, --no-children")
 ADD: "--history" option to list browser history, flags; not just most recent
 ADD: Link list to links referenced in notes (bugs etc.)

@@ -47,8 +47,6 @@ function initConfig(options) {
     .set("history", { type: isBool, convert: toBool, validate: nop })
     .set("desc", { type: isBool, convert: toBool, validate: nop })
     .set("specs", { type: isBool, convert: toBool, validate: nop })
-    .set("worker", { type: isBool, convert: toBool, validate: nop })
-    .set("sab", { type: isBool, convert: toBool, validate: nop })
     .set("obsolete", { type: isBool, convert: toBool, validate: nop })
     .set("colors", { type: isBool, convert: toBool, validate: nop })
     .set("maxChars", { type: isNum, convert: toNum, validate: mx })
