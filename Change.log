@@ -3,6 +3,8 @@ mdncomp 2
 
 2.0.1
 FIX: Removed obsolete remaining keys from "--set"/config file.
+IMP: Error message when writing to config file on Darwin/Linux
+INT: Data free main distribution (data downloaded separately on npm install/mdncomp --update)
 
 2.0.0
 NOP: No changes.

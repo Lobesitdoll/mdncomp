@@ -28,7 +28,7 @@ function compareMD5(callback, redundant) {
   const _urlPrefix = redundant || wasRedundant ? urlPrefixR : urlPrefix;
   let local;
   try {
-    local = fs.readFileSync(filePrefix + "data.md5", "utf-8");
+    local = fs.readFileSync(filePrefix + filenameMD5, "utf-8");
   }
   catch(_err) {
     err(_err);
@@ -101,7 +101,7 @@ function getRemoteData(callback, redundant) {
 function getCurrentData() {
   let data = {};
   try {
-    data = JSON.parse(fs.readFileSync(filePrefix + "data.json", "utf-8"));
+    data = JSON.parse(fs.readFileSync(filePrefix + filenameData, "utf-8"));
   }
   catch(err) {
   }
@@ -188,8 +188,8 @@ function update(force) {
 
     function _save(data, remoteMD5) {
       try {
-        fs.writeFileSync(filePrefix + "data.json", data, "utf-8");
-        fs.writeFileSync(filePrefix + "data.md5", remoteMD5, "utf-8");
+        fs.writeFileSync(filePrefix + filenameData, data, "utf-8");
+        fs.writeFileSync(filePrefix + filenameMD5, remoteMD5, "utf-8");
       }
       catch(_err) {
         err(_err);

@@ -3,7 +3,7 @@
 
 /*----------------------------------------------------------------------------*/
 
-const DEBUG = __dirname.substring(__dirname.length - 3) === "src";  // for older nodes, checks below
+const DEBUG = __dirname.substring(__dirname.length - 3) === "src";  // for older node, checks below
 if ( DEBUG ) console.log("DEBUG MODE");
 
 /*----------------------------------------------------------------------------*/
@@ -35,6 +35,7 @@ process.on("uncaughtException", _errHandler);
 
 const _base = `../${DEBUG ? "src" : "build"}/`;
 const utils = loadModule("core.utils");
+const dataPrefix = DEBUG ? "." : "";
 
 /**
  * Available globally to all modules.
@@ -48,7 +49,7 @@ Object.assign(global, {
   _base,
   text,
   loadModule,
-  char     : {
+  char        : {
     sep         : "|",
     progressBar : "#",
     yes         : "Y",
@@ -65,12 +66,14 @@ Object.assign(global, {
     arrowRight  : "-&gt;",
     refs        : "°¹²³abcdefghikmnpqrtuvwz^ªºæøåäöáéòúàèùÆØÅÖÄÁÉÒÚÀÈ"
   },
-  lang     : "en-us",
-  languages: [ "en", "en-us", "es", "no" ],
-  ANSI     : loadModule("core.ansi"),
-  log      : utils.log,
-  err      : utils.err,
-  options  : {}
+  lang        : "en-us",
+  languages   : [ "en", "en-us", "es", "no" ],
+  ANSI        : loadModule("core.ansi"),
+  log         : utils.log,
+  err         : utils.err,
+  filenameData: dataPrefix + "data.json",
+  filenameMD5 : dataPrefix + "data.md5",
+  options     : {}
 });
 
 /*- PRELOAD CONFIG FILE ------------------------------------------------------*/

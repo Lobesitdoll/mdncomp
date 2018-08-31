@@ -7,6 +7,7 @@
 "use strict";
 
 const colorCodes = "rgyobmpcwCGR";
+let _dataWarn = false;
 
 const utils = {
 
@@ -383,11 +384,17 @@ const utils = {
   loadMDN: function() {
     let mdn;
     try {
-      mdn = require("../data/data.json");
+      mdn = require("../data/" + filenameData);
     }
     catch(err) {
       utils.err(`?r${text.criticalDataFile}?R`);
       process.exit(1);
+    }
+
+    if ( !_dataWarn && typeof mdn.api === "undefined" ) {
+      _dataWarn = true;
+      utils.log(`?g\n*** ${text.downloadDataset} "mdncomp --update" ***\n?R`);
+      process.exitCode = 1;
     }
 
     return mdn;
@@ -411,6 +418,9 @@ const utils = {
     catch(_err) {
       // don't localize this
       err(`?rCould not write config file.${DEBUG ? lf + _err : ""}?R`);
+      if ( process.platform === "darwin" || process.platform === "linux" ) {
+        err(`Try using "sudo mdncomp --set <kv>" to write config.`);
+      }
       process.exitCode = 1;
     }
   },

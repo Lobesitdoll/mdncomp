@@ -140,6 +140,7 @@
     "adds"                : "aggregert",
     "updates"             : "oppdatert",
     "removes"             : "fjernet",
+    "downloadDataset"     : "Vennligst last ned dataset ved",
 
     "unknownBrowser"      : "Ukjent nettleser",
     "noArgListsId"        : "Ingen argument lister alle gyldige IDer",

@@ -140,6 +140,7 @@
     "adds"                : "agrega",
     "updates"             : "actualizaciones",
     "removes"             : "elimina",
+    "downloadDataset"     : "Descargue el conjunto de datos usando",
 
     "unknownBrowser"      : "Navegador desconocido",
     "noArgListsId"        : "Ningún argumento enumera todos los ID válidos",
