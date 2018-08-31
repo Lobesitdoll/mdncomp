@@ -1,7 +1,9 @@
 mdncomp 2
 =========
 
-2.0.1
+2.1.0
+ADD: Include sub-features in result lists for the "css" branch
+ADD: Separate color/char coding for sub-feature in option "--list".
 FIX: Removed obsolete remaining keys from "--set"/config file.
 IMP: Error message when writing to config file on Darwin/Linux
 INT: Data free main distribution (data downloaded separately on npm install/mdncomp --update)

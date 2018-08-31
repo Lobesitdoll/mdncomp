@@ -33,7 +33,7 @@ function doSearch(keyword) {
       keys
         .filter(key => {
           const obj = utils.getPathAsObject(mdn, branch + "." + key);
-          return !(!options.deep && obj && obj.__compat && obj.__compat.title);
+          return !(!options.deep && obj && obj.__compat && obj.__compat.title) || branch.startsWith("css.");
         })
         .forEach(key => {
           // Deep mode
