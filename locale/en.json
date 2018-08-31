@@ -121,6 +121,7 @@
     "specProposed"        : "Proposed",
     "valid"               : "Valid",
     "listFeature"         : "Feature",
+    "listSubFeature"      : "Sub-Feature",
     "listParent"          : "Parent branch",
     "listBranch"          : "Branch (not a feature, no direct sub-features)",
     "browserIds"          : "browser identifiers",
@@ -155,6 +156,7 @@
     "no"          : "-",
     "unknown"     : "?",
     "feature"     : "F",
+    "subFeature"  : "S",
     "parent"      : "P",
     "branch"      : "B",
     "flags"       : "§"

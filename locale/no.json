@@ -121,6 +121,7 @@
     "specProposed"        : "Foreslått",
     "valid"               : "Gyldig",
     "listFeature"         : "Egenskap",
+    "listSubFeature"      : "Under-Egenskap",
     "listParent"          : "Foreldregren",
     "listBranch"          : "Gren (ikke egenskap, ingen grenegenskaper)",
     "browserIds"          : "nettleser identifikasjoner",
@@ -155,6 +156,7 @@
     "no"          : "-",
     "unknown"     : "?",
     "feature"     : "E",
+    "subFeature"  : "U",
     "parent"      : "F",
     "branch"      : "G",
     "flags"       : "§"

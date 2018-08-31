@@ -121,6 +121,7 @@
     "specProposed"        : "Propuesto",
     "valid"               : "Válido",
     "listFeature"         : "Característica",
+    "listSubFeature"      : "Sub-Elemento",
     "listParent"          : "Padre matriz",
     "listBranch"          : "Rama (no es una función, no hay sub-características directas)",
     "browserIds"          : "identificadores de navegador",
@@ -155,6 +156,7 @@
     "no"          : "-",
     "unknown"     : "?",
     "feature"     : "C",
+    "subFeature"  : "S",
     "parent"      : "P",
     "branch"      : "R",
     "flags"       : "§"

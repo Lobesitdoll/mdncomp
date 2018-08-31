@@ -8,6 +8,7 @@ const utils = loadModule("core.utils");
 const mdn = utils.loadMDN();
 
 let hasFeatures = false;
+let hasSubFeatures = false;
 let hasParent = false;
 let hasBranch = false;
 
@@ -65,6 +66,7 @@ function list(path, recursive = false) {
       if ( options.expert < 2 ) {
         const hints = [];
         if ( hasFeatures ) hints.push(`?c${char.feature}?R = ${text.listFeature}`);
+        if ( hasSubFeatures ) hints.push(`?m${char.subFeature}?R = ${text.listSubFeature}`);
         if ( hasParent ) hints.push(`?g${char.parent}?R = ${text.listParent}`);
         if ( hasBranch ) hints.push(`?y${char.branch}?R = ${text.listBranch}`);
         if ( hints.length ) log(utils.breakAnsiLine(lf + hints.join(", "), options.maxChars));
@@ -118,9 +120,16 @@ function listAPI(prefix, recursive = false) {
       let prefix;
 
       if ( obj.__compat ) {
-        hasFeatures = true;
-        color = "?c";
-        prefix = char.feature;
+        if (obj.__compat.title) {
+          hasSubFeatures = true;
+          color = "?m";
+          prefix = char.subFeature;
+        }
+        else {
+          hasFeatures = true;
+          color = "?c";
+          prefix = char.feature;
+        }
       }
       else if ( utils.hasChildren(obj) ) {
         hasParent = true;

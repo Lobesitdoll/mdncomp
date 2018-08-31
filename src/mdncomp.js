@@ -56,6 +56,7 @@ Object.assign(global, {
     no          : "-",
     unknown     : "?",
     feature     : "F",
+    subFeature  : "S",
     parent      : "P",
     branch      : "B",
     flags       : "§",
