@@ -124,7 +124,7 @@ function formatterLong(data, isSub = false) {
       let i = 0;
       for(let child of data.children) {
         if ( child.title ) {
-          if ( i++ === sub ) {
+          if ( ++i === sub ) {
             log(formatterLong(child, true));
             break;
           }
