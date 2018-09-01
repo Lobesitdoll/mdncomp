@@ -58,6 +58,7 @@ to the compatibility data.
   - Compressed data transfers
 
 - Define permanent/often used options in a config file (can be suspended when needed via option).
+- Copied text from terminal is easy to paste to Q&A sites, forums etc. to document feature support.
 - Localized user interface.
 - Built-in help per mdncomp option.
 - Cross-platform (where node and npm is available).
@@ -134,7 +135,7 @@ a custom column result using search term ("`t2d`") and a result filter ("`path`"
 
 ![example custom header + filter](https://i.imgur.com/8FFFN0H.png)
 
-To get a list of valid browser IDs use the option `-, --browser`.
+To get a list of valid browser IDs use the option `-b, --browser`.
 
 Tip: See config file section below for how you can store custom columns permanently.
 
