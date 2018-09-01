@@ -1,6 +1,8 @@
 mdncomp<sup>nx</sup>
 =========
 
+[![Monthly Downloads from NPM](https://img.shields.io/npm/dm/mdncomp.svg?style=flat-square)](https://www.npmjs.com/package/mdncomp)
+
 Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data) on the command line.
 
     $ mdncomp html*toblob
