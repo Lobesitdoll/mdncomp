@@ -6,11 +6,16 @@ mdncomp<sup>nx</sup>
 Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data) on the command line.
 
     $ mdncomp html*toblob
+    $ bcd api.navigator.          # "bcd" can be used from v2.1
 
 ![xterm color + languages output](https://i.imgur.com/zaFt0lA.gif)<br>
 <sup>*cygwin/xterm snapshot ([English, Spanish, Norwegian, ...](./locale#contribute-a-translation-file))*</sup>
 
-[[High contrast output in cmd](https://i.imgur.com/tO349ZA.png)] [[cmder output](https://i.imgur.com/I0IsvcG.png)] [[macOS High Sierra bash](https://i.imgur.com/PdenCOg.png)]
+[[High contrast output in cmd](https://i.imgur.com/tO349ZA.png)]
+[[cmder output](https://i.imgur.com/I0IsvcG.png)]
+[[macOS High Sierra bash](https://i.imgur.com/PdenCOg.png)]
+[Linux/Ubuntu 18 bash](https://i.imgur.com/Qo6kcV0.png)]
+
 
 Features
 --------
@@ -123,7 +128,9 @@ in the `CanvasRenderingContext2D` API (using only the last part of the name, her
 
     $ mdncomp t2d stroke fill
 
-![example local filter](https://i.imgur.com/673gH6D.png)
+![example local filter](https://i.imgur.com/OKzqor8.png)
+
+<sup>The check-mark "✓" here is from using the config setting `unicode`, e.g. `bcd --set unicode=true`.
 
 <h3>List results using Custom Columns</h3>
 
@@ -197,7 +204,7 @@ List release history for a single browser:
 
     mdncomp sharedarraybuffer --desc --specs --ext
 
-![Description and specifications summary example](https://i.imgur.com/MqprqR1.png)<br>
+![Description and specifications summary example](https://i.imgur.com/7V9E5S5.png)<br>
 <sup>*cygwin snapshot*</sup>
 
 <h3>Or as minimal, turning off extra information</h3>
@@ -220,18 +227,17 @@ as rendered HTML tables in markdown-flavors which support tables - **live previe
 
 DESKTOP >                   |Chrome    |Edge      |Firefox   |IE        |Opera     |Safari    
 :---------------------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
-HTMLCanvasElement           |    4     |    Y     |   3.6    |    9     |    9°    |   3.1    
+HTMLCanvasElement           |    4     |    ✓     |   3.6    |    9     |    9°    |   3.1    
+captureStream !             |    51    |    ?     |    43    |    ˟     |    36    |    ?     
+getContext                  |    ✓     |    12    |   3.6    |    9     |    9     |   3.1    
 height                      |    4     |    12    |   3.6    |    9     |    9     |   3.1    
-mozOpaque ?                 |    -     |    -     |   3.5    |    -     |    -     |    -     
-width                       |    4     |    12    |   3.6    |    9     |    9     |   3.1    
-captureStream !             |    51    |    ?     |    43    |    -     |    36    |    ?     
-getContext                  |    Y     |    12    |   3.6    |    9     |    9     |   3.1    
-mozFetchAsStream x?         |    -     |    -     |  13-43   |    -     |    -     |    -     
-mozGetAsFile x?             |    -     |    -     |    4     |    -     |    -     |    -     
-toBlob                      |    50    |    -     |    19    |   10¹    |    37    |    Y²    
+mozFetchAsStream x?         |    ˟     |    ˟     |  13-43   |    ˟     |    ˟     |    ˟     
+mozGetAsFile x?             |    ˟     |    ˟     |    4     |    ˟     |    ˟     |    ˟     
+mozOpaque ?                 |    ˟     |    ˟     |   3.5    |    ˟     |    ˟     |    ˟     
+toBlob                      |    50    |    ˟     |    19    |   10¹    |    37    |    ✓²    
 toDataURL                   |    4     |    12    |   3.6    |    9     |    9     |    4     
-transferControlToOffscreen !|    -     |    -     |   44F    |    -     |    -     |    -     
-
+transferControlToOffscreen !|    ˟     |    ˟     |   44§    |    ˟     |    ˟     |    ˟     
+width                       |    4     |    12    |   3.6    |    9     |    9     |   3.1    
 And in compact shorthand format:
 
 BROWSERS >             |C  |E  |F  |IE |O  |S  |C/a|E/m|F/a|O/a|S/i|W/a
@@ -297,7 +303,7 @@ specific options set for different purposes.
 Note: On macOS/Linux you'll likely have to use `sudo` to set options as it write
 to a file store in the user area.
 
-    sudo mdncomp --set specs=1
+    sudo mdncomp --set unicode=1
     
 
 Requirements
