@@ -1,6 +1,9 @@
 mdncomp 2
 =========
 
+2.1.2
+CHG: tweak: unicode chars: "No" back to simple dash
+
 2.1.1
 IMP: Children features are now sorted by name (or title, if present)
 
