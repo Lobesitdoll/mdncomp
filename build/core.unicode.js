@@ -1,1 +1,1 @@
-"use strict";module.exports={yes:"✓",no:"˟",arrowRight:"→"};
+"use strict";module.exports={yes:"✓",arrowRight:"→"};

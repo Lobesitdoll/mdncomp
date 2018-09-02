@@ -3,7 +3,7 @@ mdncomp<sup>nx</sup>
 
 [![Monthly Downloads from NPM](https://img.shields.io/npm/dm/mdncomp.svg?style=flat-square)](https://www.npmjs.com/package/mdncomp)
 
-Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data) on the command line.
+A Web Developer's friend that shows [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data) on the command line.
 
     $ mdncomp html*toblob
     $ bcd api.navigator.          # "bcd" can be used from v2.1
@@ -11,10 +11,10 @@ Show [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data
 ![xterm color + languages output](https://i.imgur.com/zaFt0lA.gif)<br>
 <sup>*cygwin/xterm snapshot ([English, Spanish, Norwegian, ...](./locale#contribute-a-translation-file))*</sup>
 
-[[High contrast output in cmd](https://i.imgur.com/tO349ZA.png)]
+[[cmd high contrast output](https://i.imgur.com/tO349ZA.png)]
 [[cmder output](https://i.imgur.com/I0IsvcG.png)]
 [[macOS High Sierra bash](https://i.imgur.com/PdenCOg.png)]
-[Linux/Ubuntu 18 bash](https://i.imgur.com/Qo6kcV0.png)]
+[[Linux/Ubuntu 18 bash](https://i.imgur.com/Qo6kcV0.png)]
 
 
 Features
@@ -69,9 +69,8 @@ to the compatibility data.
 - Cross-platform (where node and npm is available).
 - Usage documentation included as [wiki](./wiki/Home.md) pages
 
-If you're an user of version 1.23 or earlier, you'll need to familiarize yourself with the new
-changes as some options has been added, removed and changed. Output will also differ in a hopefully
-improved manner.
+Note: If you're an user of version 1.23 or earlier, you'll need to familiarize yourself with the new
+changes as some options has been added, removed and changed.
 
 
 Installation
@@ -322,14 +321,14 @@ Development IDE: JetBrains [WebStorm](https://www.jetbrains.com/webstorm/).
 Test environments: Windows 8.1+, Linux (Ubuntu), Darwin (macOS High Sierra)
 
 The pre-compiled data and patch repositories can be found [here](https://github.com/epistemex/mdncomp-data)
-and [here](https://gitlab.com/epistemex/mdncomp-data) (redundancy repo).
+(primary atm) and [here](https://gitlab.com/epistemex/mdncomp-data) (redundancy repo).
 
 
 Support
 -------
 
 This product is provided AS-IS and comes with no support nor warranty. You use it
-at your own risk. It's continued development depends on user interest and feedback.
+at your own risk. It's continued development depends largely on user interest and feedback.
 
 The main git repository can be found at **GitLab** where you also can report issues:
 

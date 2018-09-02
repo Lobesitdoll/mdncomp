@@ -1,12 +1,13 @@
 {
   "name": "mdncomp",
-  "version": "2.1.1",
-  "description": "Browser Compatibility Data on the command line.",
+  "version": "2.1.2",
+  "description": "MDN Browser Compatibility Data (BCD) on the command line.",
   "main": "./bin/mdncomp.js",
   "bin": {
     "mdncomp": "./bin/mdncomp.js",
     "bcd": "./bin/mdncomp.js"
-  },  "publishConfig": {
+  },
+  "publishConfig": {
     "registry": "https://registry.npmjs.org"
   },
   "author": {
@@ -23,14 +24,14 @@
   "keywords": [
     "mdn",
     "developer",
-    "documentation",
+    "docs",
     "browser",
     "compatibility",
+    "data",
     "cli",
     "terminal",
-    "command",
     "bcd",
-    "specifications"
+    "specs"
   ],
   "license": "MIT",
   "repository": {
