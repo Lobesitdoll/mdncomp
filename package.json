@@ -1,10 +1,12 @@
 {
   "name": "mdncomp",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Browser Compatibility Data on the command line.",
   "main": "./bin/mdncomp.js",
-  "bin": "./bin/mdncomp.js",
-  "publishConfig": {
+  "bin": {
+    "mdncomp": "./bin/mdncomp.js",
+    "bcd": "./bin/mdncomp.js"
+  },  "publishConfig": {
     "registry": "https://registry.npmjs.org"
   },
   "author": {
