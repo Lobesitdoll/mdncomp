@@ -30,7 +30,6 @@ function format(path, recursive = false, subNotes, subLinks) {
 
   // validate custom columns
   if ( options.columns ) {
-    //todo share check with --set
     const array = options.columns.split(/[ ,;:]/g);
     const ids = Object.keys(utils.getBrowserNames());
     const columns = array.filter(item => ids.includes(item));
