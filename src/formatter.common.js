@@ -214,6 +214,12 @@ function format(path, recursive = false, subNotes, subLinks) {
 
   renumLinks();
 
+  result.children.sort((a, b) => {
+    const aName = a.title || a.name;
+    const bName = b.title || b.name;
+    return aName > bName ? 1 : (aName < bName ? -1 : 0)
+  });
+
   return result;
 }
 

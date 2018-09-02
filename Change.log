@@ -1,6 +1,9 @@
 mdncomp 2
 =========
 
+2.1.1
+IMP: Children features are now sorted by name (or title, if present)
+
 2.1.0
 ADD: You can now use the shorter "bcd" as command name in the CLI in addition to "mdncomp"
 ADD: Include sub-features in result lists for the "css" branch
