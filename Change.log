@@ -1,6 +1,9 @@
 mdncomp 2
 =========
 
+2.1.3
+FIX: internal error in "--update" (conflicting names)
+
 2.1.2
 CHG: tweak: unicode chars: "No" back to simple dash
 

@@ -37,10 +37,10 @@ function compareMD5(callback, redundant) {
   // remote MD5
   io.request(_urlPrefix + "data.md5", null, null, (remote) => {
     callback({ local, remote });
-  }, (err) => {
+  }, (_err) => {
     wasRedundant = true;
     if ( redundant ) {
-      err(`?r${text.error}:?R`, err.statusCode, err.error);
+      err(`?r${text.error}:?R`, _err.statusCode, _err.error);
     }
     else {
       log(`?y${text.tryingRedundancy}...?R\n`);
