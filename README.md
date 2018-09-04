@@ -11,10 +11,10 @@ A Web Developer's friend that shows [MDN Browser Compatibility Data](https://git
 ![xterm color + languages output](https://i.imgur.com/zaFt0lA.gif)<br>
 <sup>*cygwin/xterm snapshot ([English, Spanish, Norwegian, ...](./locale#contribute-a-translation-file))*</sup>
 
-[[cmd high contrast output](https://i.imgur.com/tO349ZA.png)]
-[[cmder output](https://i.imgur.com/I0IsvcG.png)]
-[[macOS High Sierra bash](https://i.imgur.com/PdenCOg.png)]
-[[Linux/Ubuntu 18 bash](https://i.imgur.com/Qo6kcV0.png)]
+[ [cmd high contrast output](https://i.imgur.com/tO349ZA.png) ]
+[ [cmder output](https://i.imgur.com/I0IsvcG.png) ]
+[ [macOS High Sierra bash](https://i.imgur.com/PdenCOg.png) ]
+[ [Linux/Ubuntu 18 bash](https://i.imgur.com/Qo6kcV0.png) ]
 
 
 Features

@@ -118,14 +118,6 @@ function update(force) {
 
   log();
 
-  //  if (!fs.existsSync(filePrefix)) {
-  //    // create data folder for now
-  //    try {
-  //      fs.mkdirSync(filePrefix)
-  //    }
-  //    catch(_err) {console.log(_err);}
-  //  }
-
   compareMD5(md5 => {
     if ( force ) {
       _remote();
