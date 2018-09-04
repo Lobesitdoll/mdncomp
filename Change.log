@@ -1,7 +1,8 @@
 mdncomp 2
 =========
 
-2.1.3
+2.2.0
+REM: Data patch mode removed. Downloads full data when available (or when forced)
 FIX: internal error in "--update" (conflicting names)
 FIX: Wrong internal machine name for "Candidate" for specs.
 

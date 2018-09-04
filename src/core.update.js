@@ -6,7 +6,6 @@
 const fs = require("fs");
 const Path = require("path");
 const zlib = require("zlib");
-const rfc6902 = require("rfc6902");
 const io = loadModule("core.io");
 
 const filePrefix = Path.join(__dirname, "../data") + Path.sep;                                      // Local data/ path
@@ -49,18 +48,6 @@ function compareMD5(callback, redundant) {
   });
 }
 
-// Download patch file between current and update version
-function getPatch(md5, callback) {
-  let rFile = urlPrefix + "patches/" + md5.remote + "_" + md5.local;
-  io
-    .request(rFile, null, null,
-      (patch) => {
-        callback(null, zlib.gunzipSync(patch));
-      },
-      (err) => callback(err),
-      true);
-}
-
 // Download compressed data json
 function getRemoteData(callback, redundant) {
   const _urlPrefix = redundant || wasRedundant ? urlPrefixR : urlPrefix;
@@ -97,18 +84,6 @@ function getRemoteData(callback, redundant) {
   }
 }
 
-// Get current data json from disk
-function getCurrentData() {
-  let data = {};
-  try {
-    data = JSON.parse(fs.readFileSync(filePrefix + filenameData, "utf-8"));
-  }
-  catch(err) {
-  }
-
-  return data;
-}
-
 /**
  * Update data
  * @param {boolean} force - ignore patch file
@@ -126,47 +101,7 @@ function update(force) {
       log(noData);
     }
     else {
-      getPatch(md5, (err, patchStr) => {
-        if ( err ) {
-          log(`?y${text.noPatchAvailable} - ${text.downloadingFullData}...?R`);
-          _remote();
-        }
-        else {
-          let data = getCurrentData();
-          let hasErrors = false;
-
-          log(text.applyingPatch + lf);
-
-          let patch = JSON.parse(patchStr);
-          rfc6902
-            .applyPatch(data, patch)
-            .forEach(err => {
-              if ( err ) {
-                err(`?r${text.error}: "${err.name}": ${err.message}?R`);
-                hasErrors = true;
-              }
-            });
-
-          if ( hasErrors ) {
-            err(`?r${text.errorDuringPatching} ${md5.local} -> ${md5.remote}.?y${lf}${text.downloadingFullData}...?R`);
-            _remote();
-          }
-          else {
-            _diff(patch);
-            _save(JSON.stringify(data), md5.remote);
-          }
-        }
-      });
-    }
-
-    function _diff(patch) {
-      let adds = 0, removes = 0, updates = 0;
-      patch.forEach(entry => {
-        if ( entry.op === "add" ) adds++;
-        else if ( entry.op === "remove" ) removes++;
-        else if ( entry.op === "replace" ) updates++;
-      });
-      log(`?R${text.diffSummary}: ${adds} ${text.adds}, ${updates} ${text.updates}, ${removes} ${text.removes}\n`);
+      _remote();
     }
 
     function _remote() {

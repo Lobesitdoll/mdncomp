@@ -55,9 +55,7 @@
     "LICENSE-MIT.txt",
     "Change.log"
   ],
-  "dependencies": {
-    "rfc6902": "^2.4.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "grunt": "^1.0.3",
     "grunt-contrib-uglify-es": "^3.3.0"
