@@ -188,7 +188,6 @@ function formatterLong(data, isSub = false) {
     data
       .specs
       .forEach(spec => {
-        console.log(spec.status);
         log(`?w${utils.entities(spec.name)} ?R[${getSpecStatus(spec.status)}?R]${lf}?G${spec.url}?R`);
       });
 
