@@ -188,6 +188,7 @@ function formatterLong(data, isSub = false) {
     data
       .specs
       .forEach(spec => {
+        console.log(spec.status);
         log(`?w${utils.entities(spec.name)} ?R[${getSpecStatus(spec.status)}?R]${lf}?G${spec.url}?R`);
       });
 
@@ -390,7 +391,7 @@ function formatterLong(data, isSub = false) {
       "RFC"           : "yIETF RFC",
       "STANDARD"      : `g${text.specStandard}`,
       "REC"           : `g${text.specRec}`,
-      "CR"            : `c${text.candidate} ${text.specRec}`,
+      "CR"            : `c${text.specCandidate} ${text.specRec}`,
       "LIVING"        : `c${text.specLiving} ${text.specStandard}`,
       "DRAFT"         : `y${text.specDraft}`,
       "PR"            : `y${text.specProposed} ${text.specRec}`,
