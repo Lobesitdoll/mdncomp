@@ -1,6 +1,6 @@
 {
   "name": "mdncomp",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "MDN Browser Compatibility Data (BCD) on the command line.",
   "main": "./bin/mdncomp.js",
   "bin": {
