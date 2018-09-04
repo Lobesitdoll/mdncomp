@@ -57,8 +57,7 @@ to the compatibility data.
    *(only in the mdncomp dataset)*.
 
 - Integrated update mechanism
-  - Fast update process of compatibility data
-  - Updates with patch files (RFC 6902 + 6901) with support for several diffs back.
+  - Fast update using "precompiled" compatibility data
   - Optional forced data update to reinitialize with a full clean data set, f.ex. with data corruption.
   - Compressed data transfers
 
