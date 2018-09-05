@@ -6,7 +6,7 @@
 
 "use strict";
 
-const io = loadModule("core.io");
+const io = require("./core.io");
 const colorCodes = "rgyobmpcwCGR";
 
 let _dataWarn = false;
