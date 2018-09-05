@@ -1,8 +1,9 @@
 mdncomp 2
 =========
 
-2.2.3
+2.2.3-5
 FIX: Attempt to fix initial sudo requirement (Linux/Darwin) on install if no access to config folder
+INT: Sorry about these bumps. Internal checks failed due to a moved script.
 
 2.2.0-2
 REM: Data patch mode removed. Downloads full data when available (or when forced)
