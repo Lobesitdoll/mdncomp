@@ -6,7 +6,9 @@
 
 "use strict";
 
+const io = loadModule("core.io");
 const colorCodes = "rgyobmpcwCGR";
+
 let _dataWarn = false;
 
 const utils = {
@@ -401,7 +403,7 @@ const utils = {
   },
 
   loadConfigFile: () => {
-    const fileName = loadModule("core.io").getConfigFilePath();
+    const fileName = io.getConfigFilePath(false);
     try {
       return require(fileName);
     }
@@ -411,7 +413,7 @@ const utils = {
   },
 
   saveConfigFile: (config) => {
-    const fileName = loadModule("core.io").getConfigFilePath();
+    const fileName = io.getConfigFilePath(true);
     try {
       require("fs").writeFileSync(fileName, JSON.stringify(config), "utf-8");
     }

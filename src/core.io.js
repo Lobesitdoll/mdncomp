@@ -75,8 +75,8 @@ module.exports = {
     return path.resolve(this.getConfigRootPath(), ".mdncomp");
   },
 
-  getConfigFilePath: function() {
-    return path.resolve(this.getConfigDataPath(), ".config.json");
+  getConfigFilePath: function(check = true) {
+    return path.resolve(this.getConfigDataPath(check), ".config.json");
   },
 
   /**
@@ -93,14 +93,17 @@ module.exports = {
    *
    * @returns {string}
    */
-  getConfigDataPath: function() {
+  getConfigDataPath: function(check = true) {
     // root config path, using . for *nix systems
     let root = this.getConfigPath();
-    _check(root);
 
-    // check/create sub-folders if defined
-    for(let i = 0; i < arguments.length; i++) {
-      _check(root = path.resolve(root, arguments[ i ]));
+    if (check) {
+      _check(root);
+
+      // check/create sub-folders if defined
+      for(let i = 0; i < arguments.length; i++) {
+        _check(root = path.resolve(root, arguments[ i ]));
+      }
     }
 
     function _check(root) {
