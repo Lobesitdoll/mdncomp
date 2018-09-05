@@ -67,7 +67,7 @@ module.exports = {
               : process.env.HOME;
 
     return process.platform === "darwin"
-           ? require("path").resolve(app, "/Library/Preferences")
+           ? path.resolve(app, "/Library/Preferences")
            : app;
   },
 
@@ -76,7 +76,7 @@ module.exports = {
   },
 
   getConfigFilePath: function() {
-    return path.join(this.getConfigDataPath(), ".config.json");
+    return path.resolve(this.getConfigDataPath(), ".config.json");
   },
 
   /**
@@ -110,6 +110,10 @@ module.exports = {
         }
         catch(err) {
           log(`${ANSI.red}Could not create config folder:\n${root}\n${err.message}${ANSI.reset}`);
+          if ( process.platform === "darwin" || process.platform === "linux" ) {
+            err(`Try using "sudo mdncomp --set <kv>" to write config.`);
+          }
+          process.exitCode = 1;
         }
       }
     }
