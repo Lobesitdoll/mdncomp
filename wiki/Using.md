@@ -12,7 +12,8 @@ and display compatibility information for a specific feature in most common brow
 engines in order to determine if it can be used or not in your page or program.
 
 Think caniuse.com or MDN's compatibility tables; in fact, `mdncomp` uses the very 
-same data as on the latter, but presented for the terminal/CLI.
+same data as on the latter, but presented for the terminal/CLI and with some additional
+data not available in the original BCD data such as summary description and specifications.
 
 For that reason `mdncomp` is probably most useful for those who spend some or much time 
 in a CLI.
@@ -29,6 +30,11 @@ in a CLI.
 `mdncomp` will in addition supply information about browsers themselves via the
 `--b, -browser` option to see release history, statuses and notes for each browser,
 version and status.
+
+From version 2.1.0 you can use the shorter "`bcd`" as an alias for "`mdncomp`".
+
+    $ bcd html*toblob
+
 
 Direct Results
 --------------
@@ -583,6 +589,11 @@ or clear the option all together if you change your mind:
 
 (tip: the equal sign is not required to clear a setting).
 
+Note: Darwin and Linux users may have to use sudo to be able to write to the config:
+
+    sudo mdncomp --set key=value
+
+
 Localization and Languages
 --------------------------
 
@@ -610,6 +621,10 @@ Now the output will be in Spanish.
 For languages that doesn't exist an error message is displayed. English is used
 as the default language. 
 
+Note: Darwin and Linux users may have to use sudo to be able to write to the config:
+
+    sudo mdncomp --set key=value
+
 
 Keeping Things Up-To-Date
 -------------------------
@@ -623,9 +638,8 @@ To stay up-to-date you should at least once a week run the option `--update`.
 
     mdncomp --update
 
-The update mechanism will first try to find a patch file for your current data
-and the newest and download that. If none is found the full compressed dataset
-is download instead.
+The update mechanism will check if there is a new version to download. If none
+the operation is aborted.
 
 The update mechanism has built-in redundancy. If the main server is down a
 second backup server will be used instead. The data is synchronized between the
@@ -633,11 +647,13 @@ two servers.
 
 **Forced updates**
 
-If you suspect a patching failed, or the dataset has been corrupted, you can
-force download a full complete dataset using the `--fupdate` option instead:
+If you have installed mdncomp for the first time and data update was prevented
+for any reason, or if you suspect the dataset has become corrupted, you can *force* 
+download a full complete dataset using the `--fupdate`  option instead 
+(although, for the first case a normal `--update` should work as well):
 
     mdncomp --fupdate
-
+    
 This is the same command that is run when installing or updating `mdncomp`
 via NPM.
 
@@ -650,10 +666,8 @@ most features.
 
 **Other updates**
 
-You can normally check NPM for updates of the program itself. This is not a good
-way to update the *dataset* though as there is no regular releases here. The
-NPM version is only used for bug fixes, new features etc. Use the `--update`
-option if the intent is updating the data only. 
+Check NPM for updates of the program itself. Data-sets are no longer distributed 
+within the NPM package itself. To update the dataset always use the `--update` mechanism.
 
 Consider also to check the git repo at [GitLab](https://gitlab.com/epistemex/mdncomp)
 from time to time for important changes, updates, messages and so forth.

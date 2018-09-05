@@ -6,15 +6,14 @@ mdncomp<sup>nx</sup>
 A Web Developer's friend that shows [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data) on the command line.
 
     $ mdncomp html*toblob
-    $ bcd api.navigator.          # "bcd" can be used from v2.1
 
 ![xterm color + languages output](https://i.imgur.com/zaFt0lA.gif)<br>
 <sup>*cygwin/xterm snapshot ([English, Spanish, Norwegian, ...](./locale#contribute-a-translation-file))*</sup>
 
 [ [cmd high contrast output](https://i.imgur.com/tO349ZA.png) ]
 [ [cmder output](https://i.imgur.com/I0IsvcG.png) ]
-[ [macOS High Sierra bash](https://i.imgur.com/PdenCOg.png) ]
-[ [Linux/Ubuntu 18 bash](https://i.imgur.com/Qo6kcV0.png) ]
+[ [macOS High Sierra](https://i.imgur.com/PdenCOg.png) ]
+[ [Linux/Ubuntu 18](https://i.imgur.com/Qo6kcV0.png) ]
 
 
 Features
@@ -31,16 +30,17 @@ to the compatibility data.
   - Deep Search option (search in notes, flags, alternative names, prefixes etc.).
   - Navigate and show information using path and branches.
   - Filter result lists using additional search terms.
+  - Show result using custom defined browser list.
   - Show data on the command line as ANSI colored tables.
   - Include children features in table results.
   - Get feature status (standard, experimental or deprecated).
   - Show notes, flags, vendor prefixes, history and security issues.
   - Show additional links for information in notes.
-  - Show optional detailed API specific support for a feature (Worker support, 
+  - Show optional detailed API specific support for a sub-feature (Worker support, 
     SharedArrayBuffer support, CORS support, blob data, service workers etc.).
-  - Show support sections for desktop, mobile and other browsers.
-  - Show information for Node.js and Thunderbird where relevant.
-  - Works offline (only updates requires a internet connection).
+  - Sectioned tables for desktop, mobile and other browsers.
+  - Show information for Node.js where relevant.
+  - Works offline
 
 - Browser status
   - List **current** browser versions
@@ -56,9 +56,8 @@ to the compatibility data.
   - Show standards/specification references, status and links (W3C, WHATWG, KHRONOS, ECMA, IETF etc.)
    *(only in the mdncomp dataset)*.
 
-- Integrated update mechanism
-  - Fast update using "precompiled" compatibility data
-  - Optional forced data update to reinitialize with a full clean data set, f.ex. with data corruption.
+- Integrated update mechanism for dataset
+  - Fast update using "precompiled" compatibility data with additional data (summary description, specs)
   - Compressed data transfers
 
 - Define permanent/often used options in a config file (can be suspended when needed via option).
@@ -77,12 +76,18 @@ Installation
 
 Make sure to have [Node.js](https://nodejs.org/en/) and `npm` installed (included with node).
 
-Then install latest globally:
+Then install latest version globally:
 
     $ npm i -g mdncomp
 
-Update weekly or so using the built-in `--update` option (i.e. `mdncomp --update`). The data
-is updated automatically when installed.
+Update weekly or so using the built-in `--update` option. The data should be updated automatically 
+when installed via NPM. If for some reason this failed via NPM you can run this manually:
+
+    $ mdncomp --update 
+
+If you prefer the old version 1.23 you can install it using tag its tag:
+
+    $ npm i -g mdncomp@1.23.0
 
 
 Examples
@@ -91,6 +96,10 @@ Examples
 Using wildcard:
 
     $ mdncomp j*let.
+
+Tip: from version 2.1 you can also use the shorter "bcd" alias instead of "mdncomp":
+
+    $ bcd ...
 
 *(the stop-dot "`.`" above indicates that the resulting path line should **end** with this search term.)*
 
@@ -298,8 +307,8 @@ To see a list of valid keys that can be used:
 Tip: You can as an alternative, define alias commands in some terminals with 
 specific options set for different purposes.
 
-Note: On macOS/Linux you'll likely have to use `sudo` to set options as it write
-to a file store in the user area.
+Note: On macOS/Linux you'll likely have to use `sudo` to set options as it writes
+to a config file stored in the user area.
 
     sudo mdncomp --set unicode=1
     

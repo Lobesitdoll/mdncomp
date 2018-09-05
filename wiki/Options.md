@@ -634,14 +634,10 @@ This option can be stored permanently using the `--set` option.
 
 --update
 --------
-Update data from remote location if any new data or data patches are available.
+Update data from remote location if any new data is available.
 
-The update mechanism will first try to find a patch file for your current data
-and the newest and download that. If none is found the full compressed dataset
-is download instead.
-
-Currently, the data is downloaded and stored inside the mdncomp installation
-directory in a sub-folder "data". This may change in the future.
+The data is downloaded and stored inside the mdncomp installation
+directory in a sub-folder "data".
 
 The update mechanism has built-in redundancy. If the main server is down a
 second backup server will be used instead. The data is synchronized between the
@@ -650,14 +646,19 @@ two servers.
 --fupdate
 ---------
 
-Force update will download the full compressed dataset from the remote location.
+Force update will download the full compressed dataset from the remote location
+regardless of having changes or not.
                               
 The update mechanism has built-in redundancy. If the main server is down a
 second backup server will be used instead. The data is synchronized between the
 two servers.
 
 Note that this option is used automatically when mdncomp is installed, updated 
-or reinstalled.
+or reinstalled. It should always be run at first installation.
+
+For users of Darwin/Linux, you may have to re-run mdncomp using sudo:
+
+    $ sudo mdncomp --fupdate
 
 -h, --help
 -------------
