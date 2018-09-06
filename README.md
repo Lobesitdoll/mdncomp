@@ -12,7 +12,7 @@ A Web Developer's friend that shows [MDN Browser Compatibility Data](https://git
 
 [ [cmd high contrast output](https://i.imgur.com/tO349ZA.png) ]
 [ [cmder output](https://i.imgur.com/I0IsvcG.png) ]
-[ [macOS High Sierra](https://i.imgur.com/PdenCOg.png) ]
+[ [macOS High Sierra](https://i.imgur.com/yUvfHm2.png) ]
 [ [Linux/Ubuntu 18](https://i.imgur.com/Qo6kcV0.png) ]
 
 
@@ -81,11 +81,13 @@ Then install latest version globally:
     $ npm i -g mdncomp
 
 Update weekly or so using the built-in `--update` option. The data should be updated automatically 
-when installed via NPM. If for some reason this failed via NPM you can run this manually:
+when installed via NPM (may not apply to Linux/Darwin users due to permission restrictions).
+If for some reason update failed via NPM post-installation, you can run this manually:
 
     $ mdncomp --update 
+    $ sudo mdncomp --update   # Linux/Darwin first run 
 
-If you prefer the old version 1.23 you can install it using tag its tag:
+If you prefer the old version 1.23 you can install it using its tag:
 
     $ npm i -g mdncomp@1.23.0
 
