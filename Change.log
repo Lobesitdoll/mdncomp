@@ -1,6 +1,9 @@
 mdncomp 2
 =========
 
+2.2.6
+REG: Regression from changing config file read. Reverting to prev. state.
+
 2.2.3-5
 FIX: Attempt to fix initial sudo requirement (Linux/Darwin) on install if no access to config folder
 INT: Sorry about these bumps. Internal checks failed due to a moved script.
