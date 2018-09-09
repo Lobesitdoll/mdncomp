@@ -18,42 +18,42 @@ module.exports = {
    * @param {function} onData - gets the data itself
    * @param {function} [onError] - if any errors
    * @param {boolean} [rawBuffer=false] - if true send back raw buffer to callback, otherwise string
+   * @param {number} [rLimit=2] - recursive limit for redirects
    */
-  request: function(url, onResp, onProgress, onData, onError, rawBuffer) {
+  request: function(url, onResp, onProgress, onData, onError, rawBuffer, rLimit = 2) {
     onResp = onResp || (() => true);
 
-    let _res;
+    let response;
 
-    const req = https
-      .get(url, res => {
+    https
+      .get(url, _response => {
         const buffer = [];
         let current = 0;
-        _res = res;
+        response = _response;
 
-        // handle redirects
-
-        if ( !res || !res.statusCode ) {
+        if ( !_response || !_response.statusCode || !rLimit) {
           onError("Could not connect");
         }
-        else if ( res.statusCode === 301 || res.statusCode === 302 ) {
-          return this.request(res.headers.location, onResp, onProgress, onData, onError);
+        // handle redirects
+        else if ( _response.statusCode === 301 || _response.statusCode === 302 ) {
+          return this.request(_response.headers.location, onResp, onProgress, onData, onError, --rLimit);
         }
-        else if ( res.statusCode === 200 && onResp({ headers: res.headers }) ) {
-          let length = res.headers[ "content-length" ] | 0;
-          res.on("data", d => {
-            buffer.push(d);
-            current += d.length;
-            if ( onProgress ) onProgress(length ? current / length : (current % 7) / 7);
-          }).on("end", () => {
-            onData(rawBuffer ? Buffer.concat(buffer) : Buffer.concat(buffer).toString());
-          });
+        else if ( _response.statusCode === 200 && onResp({ headers: _response.headers }) ) {
+          const length = _response.headers[ "content-length" ] | 0;
+          _response
+            .on("data", data => {
+              buffer.push(data);
+              current += data.length;
+              if ( onProgress ) onProgress(length ? current / length : (current % 7) / 7);
+            })
+            .on("end", () => {
+              onData(rawBuffer ? Buffer.concat(buffer) : Buffer.concat(buffer).toString());
+            });
         }
-        else if ( onError ) _error(res, "");
-
+        else if ( onError ) _error(_response, "");
       })
-      .on("error", err => _error(_res, err));
-
-    req.end();
+      .on("error", err => _error(response, err))
+      .end();
 
     function _error(res, error) {
       if ( onError ) onError({ statusCode: res && res.statusCode ? res.statusCode : -1, error: error });
@@ -62,13 +62,15 @@ module.exports = {
   },
 
   getConfigRootPath: function() {
-    let app = process.platform === "win32"
-              ? path.resolve(process.env.APPDATA, "../../")
-              : process.env.HOME;
-
-    return process.platform === "darwin"
-           ? path.resolve(app, "/Library/Preferences")
-           : app;
+    if (process.platform === "win32") {
+      return path.resolve(process.env.APPDATA, "../..")
+    }
+    else if (process.platform === "darwin") {
+      return path.resolve(process.env.HOME, "/Library/Preferences")
+    }
+    else {
+      return process.env.HOME
+    }
   },
 
   getConfigPath: function() {
@@ -81,7 +83,7 @@ module.exports = {
 
   /**
    * Get config path and/or sub folders within the config path.
-   * Will create the directories that are missing.
+   * Will try to create directories that are missing.
    *
    * This is the main method to use for configs/data etc.
    *
@@ -94,7 +96,6 @@ module.exports = {
    * @returns {string}
    */
   getConfigDataPath: function() {
-    // root config path, using . for *nix systems
     let root = this.getConfigPath();
     _check(root);
 
