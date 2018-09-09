@@ -65,7 +65,7 @@ Object.assign(global, {
     experimental: "!",
     deprecated  : "x",
     arrowRight  : "-&gt;",
-    refs        : "°¹²³abcdefghikmnpqrtuvwz^ªºæøåäöáéòúàèùÆØÅÖÄÁÉÒÚÀÈ"
+    refs        : "abcdefghikmnpqrtuvwzABCDEFGHIKMNPQRTUVWZ^ªºæøåäöáéòúàèùÆØÅÖÄÁÉÒÚÀÈ"
   },
   lang        : "en-us",
   languages   : [ "en", "en-us", "es", "no" ],
