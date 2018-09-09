@@ -149,7 +149,9 @@ function results(path) {
   loadModule(options.shorthand ? "formatter.short" : "formatter.long")(preFormat);
 
   // Add footer
+  if (!options.nofooter) {
   log(`?p${text.dataFromMDN} - "npm i -g mdncomp" (c) epistemex?w?R${lf}`);
+  }
 }
 
 module.exports = {
