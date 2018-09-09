@@ -91,6 +91,10 @@ If you prefer the old version 1.23 you can install it using its tag:
 
     $ npm i -g mdncomp@1.23.0
 
+To try out current development version:
+
+    $ npm i -g https://github.com/epistemex/mdncomp.git
+
 
 Examples
 --------
@@ -99,11 +103,11 @@ Using wildcard:
 
     $ mdncomp j*let.
 
+*(the stop-dot "`.`" above indicates that the resulting path line should **end** with this search term.)*
+
 Tip: from version 2.1 you can also use the shorter "bcd" alias instead of "mdncomp":
 
     $ bcd ...
-
-*(the stop-dot "`.`" above indicates that the resulting path line should **end** with this search term.)*
 
 ![wildcard example](https://i.imgur.com/mW9uDVq.png)
 
