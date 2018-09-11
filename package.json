@@ -19,7 +19,7 @@
     "push": "parallelshell \"git push gitlab\" \"git push origin master\"",
     "pushf": "parallelshell \"git push -f gitlab\" \"git push -f origin master\"",
     "start": "node ./bin/mdncomp.js",
-    "postinstall": "mdncomp --fupdate"
+    "postinstall": "node ./bin/mdncomp.js --fupdate"
   },
   "keywords": [
     "mdn",
