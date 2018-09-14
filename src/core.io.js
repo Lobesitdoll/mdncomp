@@ -66,7 +66,7 @@ module.exports = {
       return path.resolve(process.env.APPDATA, "../..")
     }
     else if (process.platform === "darwin") {
-      return path.resolve(process.env.HOME, "/Library/Preferences")
+      return path.resolve(process.env.HOME, "Library/Preferences")
     }
     else {
       return process.env.HOME
