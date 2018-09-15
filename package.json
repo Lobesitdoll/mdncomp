@@ -1,6 +1,6 @@
 {
   "name": "mdncomp",
-  "version": "2.2.8",
+  "version": "2.2.9",
   "description": "MDN Browser Compatibility Data (BCD) on the command line.",
   "main": "./bin/mdncomp.js",
   "bin": {
@@ -19,7 +19,7 @@
     "push": "parallelshell \"git push gitlab\" \"git push origin master\"",
     "pushf": "parallelshell \"git push -f gitlab\" \"git push -f origin master\"",
     "start": "node ./bin/mdncomp.js",
-    "postinstall": "node ./bin/mdncomp.js --fupdate"
+    "postinstall": "echo At first run use option [sudo] mdncomp --update."
   },
   "keywords": [
     "mdn",
