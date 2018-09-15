@@ -364,8 +364,13 @@ const utils = {
       v = "?r" + char.no;
     }
     else if ( typeof add === "boolean" ) {
-      if ( add ) v = (hasNotes ? "?y" : "?g") + char.yes;
-      else v = "?r" + char.no;
+      if (typeof rem === "string") {
+        v = "?R-?r" + rem
+      }
+      else {
+        if ( add ) v = (hasNotes ? "?y" : "?g") + char.yes;
+        else v = "?r" + char.no;
+      }
     }
     else if ( typeof add === "string" ) {
       v = (rem ? "?r" : (hasNotes ? "?y" : "?g")) + add;

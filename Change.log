@@ -1,6 +1,9 @@
 mdncomp 2
 =========
 
+2.2.8
+IMP: Version ranges where from is simply true.
+
 2.2.7
 FIX: NPM/postinstall script on Linux. Thanks to @CookieEngineer!
 ADD: Internal option (via "--set") "nofooter"
