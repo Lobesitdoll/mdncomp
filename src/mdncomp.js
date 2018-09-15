@@ -13,7 +13,7 @@ const lf = "\r\n";
 // Internal texts needed in case errors happens before locale files are loaded. Are merged with locale below.
 const text = {
   "versionWarning"  : "WARNING: mdncomp is built for Node version 8.3 or newer. It may not work in older Node.js versions.",
-  "criticalDataFile": "Critical error: data file not found.\n?yTry running with option --fupdate to download latest snapshot.",
+  "criticalDataFile": "Warning: Data file not found.\n?y- Running update to download latest snapshot...",
   "missingModule"   : "Critical: A core module seem to be missing. Use 'npm i -g mdncomp' to reinstall.",
   "unhandled"       : "--- An unhandled error occurred! ---\n\nConsider reporting to help us solve it via GitLab if it persists:\nhttps:\/\/gitlab.com/epistemex/mdncomp/issues\n\nAlternatively:\nTry update/reinstall 'npm i -g mdncomp' (or --fupdate for just data).\n\n"
 };

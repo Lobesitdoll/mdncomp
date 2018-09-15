@@ -1,6 +1,9 @@
 mdncomp 2
 =========
 
+2.2.9
+SYS: Removing postinstall from NPM all together. Embedding first update into mdncomp.
+
 2.2.8
 FIX: Preference location on macOS. Thanks to @sideshowbarker!
 FIX: Version ranges where `from` field is simply "true".

@@ -394,8 +394,11 @@ const utils = {
       mdn = require("../data/" + filenameData);
     }
     catch(err) {
-      utils.err(`?r${text.criticalDataFile}?R`);
-      process.exit(1);
+      if (_dataWarn) return {};
+      utils.err(`?y${text.criticalDataFile}?R`);
+      loadModule("core.update")(_dataWarn = true);
+      return {};
+      //process.exit(1);
     }
 
     if ( !_dataWarn && typeof mdn.api === "undefined" ) {
