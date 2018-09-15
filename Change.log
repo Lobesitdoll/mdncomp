@@ -2,7 +2,8 @@ mdncomp 2
 =========
 
 2.2.8
-IMP: Version ranges where from is simply true.
+FIX: Preference location on macOS. Thanks to @sideshowbarker!
+FIX: Version ranges where `from` field is simply "true".
 
 2.2.7
 FIX: NPM/postinstall script on Linux. Thanks to @CookieEngineer!
