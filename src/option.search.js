@@ -147,7 +147,7 @@ function results(path) {
   if (options.json) {
     const o = utils.getPathAsObject(utils.loadMDN(), path);
     if (typeof o.__compat === "object") {
-      log(require("util").inspect(o.__compat, {depth: 3}));
+      log(JSON.stringify(o.__compat));
     }
     else {
       err(text.notFeatureObject)
