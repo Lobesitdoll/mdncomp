@@ -67,6 +67,7 @@ function format(path, recursive = false, subNotes, subLinks) {
     prePath     : utils.prePathFromPath(mdn, path),
     name        : utils.nameFromPath(path),
     title       : title,
+    mdntitle    : compat.mdn_title,
     description : compat.description, // summary description, BCD.description is here .title (via data-service)
     url         : url,
     specs       : compat.specs || [],

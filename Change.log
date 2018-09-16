@@ -2,6 +2,7 @@ mdncomp 2
 =========
 
 2.3.0
+ADD: MDN title for the "--desc" option (this is work-in-progress on the MDN site so currently this title will be somewhat similar to already shown path).
 ADD: Raw JSON output of feature via option "-j, --json" (requested by @sideshowbarker).
 
 2.2.9

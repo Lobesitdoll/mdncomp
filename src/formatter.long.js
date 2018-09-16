@@ -73,8 +73,9 @@ function formatterLong(data, isSub = false) {
     // Description
     if ( options.desc ) {
       if ( data.description ) {
-        let desc = utils.entities("?w" + utils.breakAnsiLine(utils.cleanHTML(data.description, true, "?w"), options.maxChars));
-        log(lf + desc);
+        const desc = utils.entities("?w" + utils.breakAnsiLine(utils.cleanHTML(data.description, true, "?w"), options.maxChars));
+        const title = data.mdntitle ? `?b${data.mdntitle}${lf}${"-".repeat(data.mdntitle.length)}${lf}?R` : "";
+        log(lf + title + desc);
       }
       else {
         log(lf + "?R" + text.noDescription);
