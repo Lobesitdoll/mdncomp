@@ -1,6 +1,7 @@
 mdncomp<sup>nx</sup>
 =========
 
+[![npm](https://img.shields.io/npm/v/mdncomp.svg)](https://www.npmjs.com/package/mdncomp)
 [![Monthly Downloads from NPM](https://img.shields.io/npm/dm/mdncomp.svg?style=flat-square)](https://www.npmjs.com/package/mdncomp)
 
 A Web Developer's friend that shows [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data) on the command line.
@@ -40,6 +41,7 @@ to the compatibility data.
     SharedArrayBuffer support, CORS support, blob data, service workers etc.).
   - Sectioned tables for desktop, mobile and other browsers.
   - Show information for Node.js where relevant.
+  - Output as JSON raw data incl. specification list and summary description
   - Works offline
 
 - Browser status

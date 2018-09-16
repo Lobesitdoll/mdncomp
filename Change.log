@@ -1,6 +1,9 @@
 mdncomp 2
 =========
 
+2.3.0
+ADD: Raw JSON output of feature via option "-j, --json"
+
 2.2.9
 SYS: Removing postinstall from NPM all together. Embedding first update into mdncomp.
 

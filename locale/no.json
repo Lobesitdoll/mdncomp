@@ -52,6 +52,7 @@
     "optionsConfigPath"   : "Vis sti til hvor konfigurasjons-fil er lagret",
     "optionsExpert"       : "Ekspertmodus, gjemmer hint",
     "optionsLang"         : "Språkkode for brukergrensesnitt. Bruk ? for å se liste",
+    "optionJSON"          : "Vis som rå JSON",
 
     "desktop"             : "Stasjonær",
     "mobile"              : "Mobil",

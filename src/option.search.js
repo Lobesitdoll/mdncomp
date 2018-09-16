@@ -143,6 +143,18 @@ function search(recursive = false) {
  * @param path
  */
 function results(path) {
+
+  if (options.json) {
+    const o = utils.getPathAsObject(utils.loadMDN(), path);
+    if (typeof o.__compat === "object") {
+      log(require("util").inspect(o.__compat, {depth: 3}));
+    }
+    else {
+      err(text.notFeatureObject)
+    }
+    return
+  }
+
   const preFormat = loadModule("formatter.common")(path);
   if ( !preFormat ) return;
 

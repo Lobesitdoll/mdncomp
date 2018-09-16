@@ -48,6 +48,7 @@ module.exports = (() => {
     .option("--desc", text.optionsDesc)
     .option("--specs", text.optionsSpecs)
     .option("--sub <index>", text.optionsSub)
+    .option("-j, --json", text.optionJSON)
     .option("-N, --no-notes", text.optionsNoNotes)
     .option("-F, --no-flags", text.optionsNoFlags)
     .option("-y, --history", text.optionsHistory)

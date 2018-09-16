@@ -52,6 +52,7 @@
     "optionsConfigPath"   : "Mostrar ruta hacia donde se almacena archivo de config",
     "optionsExpert"       : "Modo experto, deshabilita las pistas",
     "optionsLang"         : "Código de idioma para UI. Utilizar ? para ver lista",
+    "optionJSON"          : "Salida como JSON sin procesar",
 
     "desktop"             : "Escritorio",
     "mobile"              : "Móvil",

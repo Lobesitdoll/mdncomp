@@ -53,6 +53,7 @@ function initConfig(options) {
     .set("columns", { type: isList, convert: toList, validate: valList })
     .set("expert", { type: isNum, convert: toNum, validate: v => clamp(v, 0, 2) })
     .set("lang", { type: isStr, convert: toStr, validate: v => valLang(v) })
+    .set("json", { type: isBool, convert: toBool, validate: nop })
     .set("nofooter", { type: isBool, convert: toBool, validate: nop })
     .set("unicode", { type: isBool, convert: toBool, validate: nop });
 
