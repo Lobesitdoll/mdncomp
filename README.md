@@ -321,7 +321,21 @@ Note: On macOS/Linux you'll likely have to use `sudo` to set options as it write
 to a config file stored in the user area.
 
     sudo mdncomp --set unicode=1
-    
+
+
+A Note On JSON Output
+---------------------
+
+There are a few differences between the **mdncomp** dataset and the original BCD ref. option `-j, --json`:
+
+- `description` in BCD becomes `title` in **mdncomp** (refers to sub-feature entries)
+- `description` in **mdncomp** is the *summary description* from MDN
+- `mdn_url` in **mdncomp** holds a shortened form of the URL (wo/ prefixed part: "`https://developer.mozilla.org/docs/`") to compact the data (was incorporated pre compression of the data)
+- **mdncomp** has `mdn_title`, the *page entry title* from MDN
+- **mdncomp** has `spec_urls` (currently `specs`; is in emigration process) which is an array holding objects for each spec entry, if any
+
+Note that the **mdncomp** *data-format* version is still considered **alpha** as BCD itself is, so this as well as other fields may change in the future.
+
 
 Requirements
 ------------
