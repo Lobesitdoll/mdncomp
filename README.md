@@ -8,7 +8,7 @@ A Web Developer's friend that shows [MDN Browser Compatibility Data](https://git
 
     $ mdncomp html*toblob
 
-![xterm color + languages output](https://i.imgur.com/zaFt0lA.gif)<br>
+![xterm color + languages output](https://i.imgur.com/yG1W1CK.gif)<br>
 <sup>*cygwin/xterm snapshot ([English, Spanish, Norwegian, ...](./locale#contribute-a-translation-file))*</sup>
 
 [ [cmd high contrast output](https://i.imgur.com/tO349ZA.png) ]
@@ -51,6 +51,8 @@ to the compatibility data.
   - List status and release dates per browser, including release notes (if any).
 
 - Additional included documentation:
+  - Show MDN documentation title (WIP at MDN) per feature
+    *(only in the mdncomp dataset)*.
   - Show a optional **summary description** per feature
     *(only in the mdncomp dataset)*.
   - Includes a *verified* URL to the feature's documentation page on [MDN](https://developer.mozilla.org/)
@@ -219,7 +221,7 @@ List release history for a single browser:
 
     mdncomp sharedarraybuffer --desc --specs --ext
 
-![Description and specifications summary example](https://i.imgur.com/7V9E5S5.png)<br>
+![Description and specifications summary example](https://i.imgur.com/TgKJ7fo.png)<br>
 <sup>*cygwin snapshot*</sup>
 
 <h3>Or as minimal, turning off extra information</h3>
@@ -229,8 +231,8 @@ Here with options `-NRF`:
 `-R` = no-children, `-N` = no-notes, `-F` = no-flags (also see `-h, --help`)
     
     mdncomp sharedbuffer -RNF
-    
-![Minimalistic example](https://i.imgur.com/Fs8RnhK.png)<br>
+
+![Minimalistic example](https://i.imgur.com/aeD4g8t.png)<br>
 <sup>*cygwin snapshot*</sup>
 
 
