@@ -142,6 +142,11 @@ help[ "--specs" ] = `
 Show specification links and status, if available.`;
 
 /*--------------------------------------------------------------------------------------------------*/
+help[ "--json" ] = help[ "-j" ] = `
+Output search result as raw JSON. This is useful for piping the entry to other tools
+or to locate errors.`;
+
+/*--------------------------------------------------------------------------------------------------*/
 help[ "--no-obsolete" ] = `
 Hide obsolete, non-standard and deprecated child features.
 

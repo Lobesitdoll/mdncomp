@@ -15,37 +15,38 @@ results such as `--desc` (summary description), `--specs` (specifications) etc.
 
 Option name                                     | Short description
 :-----------------------------------------------|:-----------------------------------------------------------
-[`-v, --version`](#-v-version)                  | Output the version number                                           
-[`-l, --list [api]`](#-l-list-pathstatus)       | List paths starting with given branch(es), ? for root list          
-[`-b, --browser [id]`](#-b-browser-idstatus)    | Show information about this browser, or list IDs if none            
-[`-i, --index <index>`](#-i-index-index)        | Show this index from a multiple result list (def.: -1)              
-[`-D, --no-desktop`](#-d-no-desktop)            | Don't show for desktop devices                                      
-[`-M, --no-mobile`](#-m-no-mobile)              | Don't show for mobile devices                                       
-[`-x, --ext`](#-x-ext)                          | Show extended table of browsers/servers                             
-[`-R, --no-children`](#-r-no-children)          | Don't show children object in table                                 
-[`-c, --case-sensitive`](#-c-case-sensitive)    | Search in case-sensitive mode                                       
-[`-z, --fuzzy`](#-z-fuzzy)                      | Use fuzzy method for search term                                    
-[`-d, --deep`](#-d-deep)                        | Do deep search (footnotes, history etc.)                            
-[`-s, --shorthand`](#-s-shorthand)              | Show compact table format                                           
-[`--desc`](#-desc)                              | Show description of the feature (if any)                            
-[`--specs`](#-specs)                            | Show specification links                                            
-[`--sub <index>`](#-sub-)                       | Show sub-feature with index n                                       
-[`-N, --no-notes`](#-n-no-notes)                | Don't show footnotes                                                
-[`-F, --no-flags`](#-f-no-flags)                | Don't show flags                                                    
-[`-y, --history`](#-y-history)                  | List version history entries per browser.                           
-[`-O, --no-obsolete`](#-o-no-obsolete)          | Hide obsolete, non-standard and deprecated child features.          
-[`-u, --columns <cols>`](#-u-columns-cols)      | Define custom columns using valid browser ids (see -b)              
-[`--random [scope]`](#-random)                  | Show a random entry within optional scope                           
-[`--no-colors`](#-no-colors)                    | Don't use colors in output                                          
-[`--max-chars <width>`](#-max-chars-width)      | Max number of chars per line before wrap (def.: 84)                 
-[`-G, --no-config`](#-g-no-config)              | Ignore config file                                                  
-[`--set <kv>`](#-set-kv)                        | Set key/value for config file. Use ? to list valid keys.            
-[`--configpath`](#-configpath)                  | Show path to where config file is stored                            
-[`--expert [level]`](#-expert-level)            | Expert mode, disables hints. (def.: 0)                              
-[`--lang <isocode>`](#-lang-isocode)            | Language code for UI. Use ? for list.
-[`--update`](#-update)                          | Update data from remote if available                                
-[`--fupdate`](#-fupdate)                        | Force update full data-set from remote                              
-[`-h, --help`](#-h-help)                        | Output usage information                                            
+[`-v, --version`](#-v-version)                  | Output the version number
+[`-l, --list [api]`](#-l-list-pathstatus)       | List paths starting with given branch(es), ? for root list
+[`-b, --browser [id]`](#-b-browser-idstatus)    | Show information about this browser, or list IDs if none
+[`-i, --index <index>`](#-i-index-index)        | Show this index from a multiple result list (def.: -1)
+[`-D, --no-desktop`](#-d-no-desktop)            | Don't show for desktop devices
+[`-M, --no-mobile`](#-m-no-mobile)              | Don't show for mobile devices
+[`-x, --ext`](#-x-ext)                          | Show extended table of browsers/servers
+[`-R, --no-children`](#-r-no-children)          | Don't show children object in table
+[`-c, --case-sensitive`](#-c-case-sensitive)    | Search in case-sensitive mode
+[`-z, --fuzzy`](#-z-fuzzy)                      | Use fuzzy method for search term
+[`-d, --deep`](#-d-deep)                        | Do deep search (footnotes, history etc.)
+[`-s, --shorthand`](#-s-shorthand)              | Show compact table format
+[`--desc`](#-desc)                              | Show description of the feature (if any)
+[`--specs`](#-specs)                            | Show specification links
+[`--sub <index>`](#-sub-)                       | Show sub-feature with index n
+[`-j, --json`](#-n-json)                        | Output as raw JSON
+[`-N, --no-notes`](#-n-no-notes)                | Don't show footnotes
+[`-F, --no-flags`](#-f-no-flags)                | Don't show flags
+[`-y, --history`](#-y-history)                  | List version history entries per browser.
+[`-O, --no-obsolete`](#-o-no-obsolete)          | Hide obsolete, non-standard and deprecated child features.
+[`-u, --columns <cols>`](#-u-columns-cols)      | Define custom columns using valid browser ids (see -b)
+[`--random [scope]`](#-random)                  | Show a random entry within optional scope
+[`--no-colors`](#-no-colors)                    | Don't use colors in output
+[`--max-chars <width>`](#-max-chars-width)      | Max number of chars per line before wrap (def.: 84)
+[`-G, --no-config`](#-g-no-config)              | Ignore config file
+[`--set <kv>`](#-set-kv)                        | Set key/value for config file. Use ? to list valid keys.
+[`--configpath`](#-configpath)                  | Show path to where config file is stored
+[`--expert [level]`](#-expert-level)            | Expert mode, disables hints. (def.: 0)
+[`--lang <isocode>`](#-lang-isocode)            | Language code for UI. Use ? for list
+[`--update`](#-update)                          | Update data from remote if available
+[`--fupdate`](#-fupdate)                        | Force update full data-set from remote
+[`-h, --help`](#-h-help)                        | Output usage information
 
 <sup>Note: the anchor links above follows the [GitLab formatting](https://gitlab.com/epistemex/mdncomp/wikis/Options.md).</sup>
 
@@ -474,6 +475,15 @@ Here there are two sub-feature as we can see at the bottom. Simply add the optio
 to include it in the result:
 
     mdncomp dataview --sub 1
+
+
+-j, --json
+----------
+
+Output search result (single entry) as raw JSON.
+
+This is useful for piping the entry to other tools or to locate errors.
+
 
 -N, --no-notes
 --------------
