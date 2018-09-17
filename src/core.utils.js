@@ -216,6 +216,10 @@ const utils = {
     };
   },
 
+  uncompactURL: (url) => {
+    return url.startsWith("https://") ? url : ("https://developer.mozilla.org/docs/" + url).replace(".org/docs/Mozilla/Add-ons/", ".org/Add-ons/")
+  },
+
   /**
    * Removes any HTML tags from a string. <code> tags are replaced
    * with ANSI colored text.

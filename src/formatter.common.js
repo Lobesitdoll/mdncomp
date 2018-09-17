@@ -54,10 +54,7 @@ function format(path, recursive = false, subNotes, subLinks) {
   const status = compat.status || {};
   const isWebExt = path.startsWith("webextensions");
   const showNode = path.startsWith("javascript");
-
-  const url = compat.mdn_url && compat.mdn_url.length
-              ? ("https://developer.mozilla.org/docs/" + compat.mdn_url).replace(".org/docs/Mozilla/Add-ons/", ".org/Add-ons/")
-              : null;
+  const url = compat.mdn_url && compat.mdn_url.length ? utils.uncompactURL(compat.mdn_url) : null;
 
   let title = compat.title ? compat.title.replace("→", char.arrowRight) : null;
 
