@@ -9,8 +9,6 @@
 const io = require("./core.io");
 const colorCodes = "rgyobmpcwCGR";
 
-let _dataWarn = false;
-
 const utils = {
 
   /**
@@ -398,19 +396,13 @@ const utils = {
       mdn = require("../data/" + filenameData);
     }
     catch(err) {
-      if ( _dataWarn ) return {};
       utils.err(`?y${text.criticalDataFile}?R`);
-      loadModule("core.update")(_dataWarn = true);
-      return {};
-      //process.exit(1);
+      process.exit(1);
     }
 
-    if ( !_dataWarn && typeof mdn.api === "undefined" ) {
-      _dataWarn = true;
-      //utils.log(`?g\n*** ${text.downloadDataset} "mdncomp --update" ***\n?R`);
-      loadModule("core.update")(true);
-      mdn = {};
-      //process.exitCode = 1;
+    if ( typeof mdn.api === "undefined" ) {
+      utils.log(`?g\n*** ${text.downloadDataset} "mdncomp --update" ***\n?R`);
+      process.exit(1);
     }
 
     return mdn;
