@@ -120,7 +120,7 @@ function listAPI(prefix, recursive = false) {
       let prefix;
 
       if ( obj.__compat ) {
-        if (obj.__compat.title) {
+        if ( obj.__compat.title ) {
           hasSubFeatures = true;
           color = "?m";
           prefix = char.subFeature;

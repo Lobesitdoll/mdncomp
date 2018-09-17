@@ -61,7 +61,7 @@ function formatterLong(data, isSub = false) {
 
   if ( !isSub ) {
     log();
-    if ( data.mdntitle) log(getMDNTitle(data.mdntitle));
+    if ( data.mdntitle ) log(getMDNTitle(data.mdntitle));
   }
   else {
     addHeader(text.subFeature.toUpperCase());
@@ -233,7 +233,7 @@ function formatterLong(data, isSub = false) {
     title = utils.entities(title);
     title = utils.breakAnsiLine(title);
     title = `?b${title}?R`;
-    return title
+    return title;
   }
 
   function doDevice(device) {

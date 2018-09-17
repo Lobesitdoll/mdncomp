@@ -364,8 +364,8 @@ const utils = {
       v = "?r" + char.no;
     }
     else if ( typeof add === "boolean" ) {
-      if (typeof rem === "string") {
-        v = "?R-?r" + rem
+      if ( typeof rem === "string" ) {
+        v = "?R-?r" + rem;
       }
       else {
         if ( add ) v = (hasNotes ? "?y" : "?g") + char.yes;
@@ -394,7 +394,7 @@ const utils = {
       mdn = require("../data/" + filenameData);
     }
     catch(err) {
-      if (_dataWarn) return {};
+      if ( _dataWarn ) return {};
       utils.err(`?y${text.criticalDataFile}?R`);
       loadModule("core.update")(_dataWarn = true);
       return {};

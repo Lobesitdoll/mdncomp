@@ -31,7 +31,7 @@ module.exports = {
         let current = 0;
         response = _response;
 
-        if ( !_response || !_response.statusCode || !rLimit) {
+        if ( !_response || !_response.statusCode || !rLimit ) {
           onError("Could not connect");
         }
         // handle redirects
@@ -62,14 +62,14 @@ module.exports = {
   },
 
   getConfigRootPath: function() {
-    if (process.platform === "win32") {
-      return path.resolve(process.env.APPDATA, "../..")
+    if ( process.platform === "win32" ) {
+      return path.resolve(process.env.APPDATA, "../..");
     }
-    else if (process.platform === "darwin") {
-      return path.resolve(process.env.HOME, "Library/Preferences")
+    else if ( process.platform === "darwin" ) {
+      return path.resolve(process.env.HOME, "Library/Preferences");
     }
     else {
-      return process.env.HOME
+      return process.env.HOME;
     }
   },
 

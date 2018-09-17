@@ -144,15 +144,15 @@ function search(recursive = false) {
  */
 function results(path) {
 
-  if (options.json) {
+  if ( options.json ) {
     const o = utils.getPathAsObject(utils.loadMDN(), path);
-    if (typeof o.__compat === "object") {
+    if ( typeof o.__compat === "object" ) {
       log(JSON.stringify(o.__compat));
     }
     else {
-      err(text.notFeatureObject)
+      err(text.notFeatureObject);
     }
-    return
+    return;
   }
 
   const preFormat = loadModule("formatter.common")(path);
@@ -161,8 +161,8 @@ function results(path) {
   loadModule(options.shorthand ? "formatter.short" : "formatter.long")(preFormat);
 
   // Add footer
-  if (!options.nofooter) {
-  log(`?p${text.dataFromMDN} - "npm i -g mdncomp" (c) epistemex?w?R${lf}`);
+  if ( !options.nofooter ) {
+    log(`?p${text.dataFromMDN} - "npm i -g mdncomp" (c) epistemex?w?R${lf}`);
   }
 }
 
