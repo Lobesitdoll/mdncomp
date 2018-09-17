@@ -96,13 +96,61 @@ function doSearch(keyword) {
   return result;
 }
 
+function doSearchByLink(link) {
+  const mdn = utils.loadMDN();
+  const result = [];
+  const cs = options.caseSensitive;
+
+  if (!cs) link = link.toLowerCase();
+
+  utils
+    .getRootList(mdn)
+    .forEach(key => _iterateNode(mdn, key, key));
+
+  function _iterateNode(node, inKey, branch) {
+    const subNode = node[ inKey ];
+
+    if ( typeof subNode === "object" ) {
+      Object
+        .keys(subNode)
+        .filter(key => key !== "__compat")
+        .forEach(key => {
+          if ( !result.includes(branch) ) {
+            const currentBranch = branch + "." + key;
+            const o = (subNode[ key ] || {}).__compat;
+            const specs = o ? o.spec_urls || o.specs : null;  // todo tmp until specs is completely removed
+
+            if (o && o.mdn_url) {
+              const url = cs ? utils.uncompactURL(o.mdn_url) : utils.uncompactURL(o.mdn_url).toLowerCase();
+              if (url === link) {
+                result.push(currentBranch);
+              }
+              else if ( specs ) {
+                for(let spec of specs) {
+                  const url = cs ? spec.url : spec.url.toLowerCase();
+                  if (url.length === link.length && url === link) {
+                    result.push(currentBranch);
+                    break;
+                  }
+                }
+              }
+            }
+            _iterateNode(subNode, key, currentBranch);
+          }
+        });
+    }
+  }
+
+  return result;
+}
+
 /**
  * Public exposed search call. Uses options.args for input.
  * @param recursive - for second pass (fuzzy) when no-deep
  */
 function search(recursive = false) {
   const keyword = options.args.shift(); // Note: additional args are extracted in formatter.common module
-  const result = doSearch(keyword);
+  const result = (keyword.toLowerCase().startsWith("https://") ? doSearchByLink : doSearch)(keyword);
 
   // no result
   if ( !result.length && !recursive ) {

@@ -25,6 +25,7 @@ in a CLI.
 - Using a fuzzy term
 - Using regular expressions
 - Using an absolute path
+- Using a link to a specification or MDN documentation
 - Or even get a randomly picked feature for the purpose of exploring
 
 `mdncomp` will in addition supply information about browsers themselves via the
@@ -291,6 +292,24 @@ or provide it as a regular expression (ref. shorthand `-i, --index` mentioned ea
 
     mdncomp *32*
     mdncomp /32/
+
+
+Searching using links
+---------------------
+
+You can from version 2.3.0 use links for either a specification or MDN documentation
+as search terms.
+
+The only requirements are that the URL is fully qualified HTTPS link. In addition:
+ 
+- for MDN documentation contains no locale specific part (i.e. "/en-us/")
+- for specification links contains a hash part (i.e. "#dom-canvas-toblob").
+
+Example using a specification link:
+
+    mdncomp https://html.spec.whatwg.org/multipage/scripting.html#dom-canvas-toblob
+
+Note: Only features that has valid MDN links will have searchable links.
 
 
 Looking Deeper

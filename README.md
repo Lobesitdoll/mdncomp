@@ -29,6 +29,7 @@ to the compatibility data.
   - Search and list features using keywords, paths, wildcards, fuzzy terms or regular expressions.
   - Search case (in)sensitive.
   - Deep Search option (search in notes, flags, alternative names, prefixes etc.).
+  - Search using MDN documentation or specification links as search term 
   - Navigate and show information using path and branches.
   - Filter result lists using additional search terms.
   - Show result using custom defined browser list.
@@ -131,6 +132,19 @@ or as a fuzzy-expression (here for `api.HTMLCanvasElement.toBlob`):
 Note: From *version 2* you can run without the `--fuzzy` option: if the term has no results
 a second search search pass is performed using the same expression but as a fuzzy term (unless
 the term contains wildcards or starts with forward-slash for RegExp).
+
+**Search using links for specifications or MDN documentation**
+ 
+The only requirements are that the URL is fully qualified HTTPS link. In addition: 
+- for MDN documentation contains no locale specific part (i.e. "/en-us/")
+- for specification links contains a hash part (i.e. "#dom-canvas-toblob").
+
+Example using a specification link:
+
+    mdncomp https://html.spec.whatwg.org/multipage/scripting.html#dom-canvas-toblob
+
+Note: Only features that has valid MDN links will have searchable links.
+
 
 <h3>Show data in a compact shorthand format using option `-s, --shorthand`:</h3>
 
