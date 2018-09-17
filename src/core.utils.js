@@ -7,7 +7,7 @@
 "use strict";
 
 const io = require("./core.io");
-const colorCodes = "rgyobmpcwCGR";
+const colorCodes = "rgyobmpcwCGRB";
 
 const utils = {
 
@@ -317,7 +317,8 @@ const utils = {
       "w": ANSI.white,
       "C": ANSI.cyanDark,
       "G": ANSI.gray,
-      "R": ANSI.reset
+      "R": ANSI.reset,
+      "B": ANSI.black
     };
 
     let result = "";

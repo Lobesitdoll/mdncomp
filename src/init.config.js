@@ -55,6 +55,7 @@ function initConfig(options) {
     .set("lang", { type: isStr, convert: toStr, validate: v => valLang(v) })
     .set("json", { type: isBool, convert: toBool, validate: nop })
     .set("nofooter", { type: isBool, convert: toBool, validate: nop })
+    .set("simple", { type: isBool, convert: toBool, validate: nop })
     .set("unicode", { type: isBool, convert: toBool, validate: nop });
 
   /*- Load / Init Config file if any -------------------------------------------------------------*/

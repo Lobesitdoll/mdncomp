@@ -39,7 +39,7 @@ const refs = global.char.refs.split("");
 
 const tblOptions = {
   align       : [ "l" ],
-  delimiter   : char.sep,
+  delimiter   : options.simple ? "?B" + char.sep : char.sep,
   stringLength: utils.ansiLength,
   start       : "?G",
   end         : "?R"
