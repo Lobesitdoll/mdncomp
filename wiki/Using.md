@@ -302,18 +302,21 @@ Searching using links
 You can from version 2.3.0 use links for either a specification or MDN documentation
 as search terms.
 
-The only requirements are that the URL is fully qualified HTTPS link. In addition:
- 
-- for MDN documentation links: no locale specific part is included (i.e. "/en-us/")
-- for specification links: it contains a hash part (i.e. "#dom-canvas-toblob").
-- you can use wildcards, regex etc. as any other term with the exception that the prefix 
-"https://" is required to do link searches (unless you use the "-d, --deep" option).
+To search using a link make sure:
+
+- the URL is starting with `https://` regardless of wildcard, regex etc. (except in
+combination with the "-d, --deep" option). 
+- for specification links: it contains a hash part (e.g. "...#dom-canvas-toblob").
 
 Example using a specification link:
 
     mdncomp https://html.spec.whatwg.org/multipage/scripting.html#dom-canvas-toblob
 
-Note: Only features that has valid MDN links will have searchable links.
+Example using a specification link using wildcard:
+
+    mdncomp https://*#dom-canvas-toblob
+
+Note: Only features that has a verified MDN link will have searchable links.
 
 
 Looking Deeper

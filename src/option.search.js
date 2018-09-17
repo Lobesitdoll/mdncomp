@@ -130,7 +130,7 @@ function doSearchByLink(link) {
             const specs = o ? o.spec_urls || o.specs : null;  // todo tmp until "specs" is completely removed
 
             if ( o && o.mdn_url ) {
-              if ( cmp.test(o.mdn_url) ) {
+              if ( cmp.test(utils.uncompactURL(o.mdn_url)) ) {
                 result.push(currentBranch);
               }
               else if ( specs ) {
@@ -158,7 +158,7 @@ function doSearchByLink(link) {
 function search(recursive = false) {
   const keyword = options.args.shift(); // Note: additional args are extracted in formatter.common module
   const isLink = !options.deep && keyword.toLowerCase().startsWith("https://") && keyword.length > 8;
-  const result = (isLink ? doSearchByLink : doSearch)(keyword);
+  const result = isLink ? doSearchByLink(trimMDNURL(keyword)) : doSearch(keyword);
 
   // no result and not running recursive
   if ( !result.length ) {
@@ -191,6 +191,15 @@ function search(recursive = false) {
   // show feature
   else {
     results(result.length === 1 ? result[ 0 ] : result[ options.index ]);
+  }
+
+  function trimMDNURL(url) {
+    const prefix = "https://developer.mozilla.org/";
+    const _url = url.toLowerCase();
+    if (_url.startsWith(prefix) && !_url.startsWith(prefix + "docs/")) {
+      url = url.substr(0, prefix.length - 1) + url.substr(url.indexOf("/", prefix.length));
+    }
+    return url
   }
 }
 

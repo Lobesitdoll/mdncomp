@@ -145,7 +145,6 @@ To search using a link make sure:
 
 - the URL is starting with `https://` regardless of wildcard, regex etc. (except in
 combination with the "-d, --deep" option). 
-- for MDN documentation links: no locale specific part is included (e.g. "/en-us/")
 - for specification links: it contains a hash part (e.g. "...#dom-canvas-toblob").
 
 Example using a specification link:
