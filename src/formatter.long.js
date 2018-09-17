@@ -59,8 +59,13 @@ function formatterLong(data, isSub = false) {
 
   /* Header ------------------------------------------------------------------*/
 
-  if ( !isSub ) log();
-  else addHeader(text.subFeature.toUpperCase());
+  if ( !isSub ) {
+    log();
+    if ( data.mdntitle) log(getMDNTitle(data.mdntitle));
+  }
+  else {
+    addHeader(text.subFeature.toUpperCase());
+  }
 
   // path + api, status, url
   log(utils.breakAnsiLine(`?R${data.prePath}?w${data.name}?R`, options.maxChars));
@@ -74,8 +79,7 @@ function formatterLong(data, isSub = false) {
     if ( options.desc ) {
       if ( data.description ) {
         const desc = utils.entities("?w" + utils.breakAnsiLine(utils.cleanHTML(data.description, true, "?w"), options.maxChars));
-        const title = data.mdntitle ? `?b${data.mdntitle}${lf}${"-".repeat(data.mdntitle.length)}${lf}?R` : "";
-        log(lf + title + desc);
+        log(lf + desc);
       }
       else {
         log(lf + "?R" + text.noDescription);
@@ -224,6 +228,13 @@ function formatterLong(data, isSub = false) {
   }
 
   /* Helpers -----------------------------------------------------------------*/
+
+  function getMDNTitle(title) {
+    title = utils.entities(title);
+    title = utils.breakAnsiLine(title);
+    title = `?b${title}?R`;
+    return title
+  }
 
   function doDevice(device) {
     const tbl = [];
