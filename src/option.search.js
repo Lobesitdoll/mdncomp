@@ -157,7 +157,7 @@ function doSearchByLink(link) {
  */
 function search(recursive = false) {
   const keyword = options.args.shift(); // Note: additional args are extracted in formatter.common module
-  const result = (!options.deep && keyword.toLowerCase().startsWith("https://")
+  const result = (!options.deep && keyword.toLowerCase().startsWith("https://") && keyword.length > 8
                   ? doSearchByLink
                   : doSearch)(keyword);
 
