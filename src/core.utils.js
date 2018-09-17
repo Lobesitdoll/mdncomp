@@ -403,8 +403,10 @@ const utils = {
 
     if ( !_dataWarn && typeof mdn.api === "undefined" ) {
       _dataWarn = true;
-      utils.log(`?g\n*** ${text.downloadDataset} "mdncomp --update" ***\n?R`);
-      process.exitCode = 1;
+      //utils.log(`?g\n*** ${text.downloadDataset} "mdncomp --update" ***\n?R`);
+      loadModule("core.update")(true);
+      mdn = {};
+      //process.exitCode = 1;
     }
 
     return mdn;

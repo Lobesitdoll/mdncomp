@@ -2,11 +2,14 @@ mdncomp 2
 =========
 
 2.3.0
-ADD: MDN title for the "--desc" option (this is work-in-progress on the MDN site so currently this title will be somewhat similar to already shown path).
-ADD: Raw JSON output of feature via option "-j, --json" (requested by @sideshowbarker).
+ADD: MDN title if available (this is work-in-progress on the MDN site so currently this title will be somewhat similar to already shown path for most features).
+ADD: (Reintroduction) Raw JSON output of feature via option "-j, --json" (requested by @sideshowbarker).
+CHG: Internal emigration process of internal specs->spec_urls property in the dataset
+FIX: Automatically invoke data download if data file not present (stage 2).
+FIX: Data back-end - spec links (bugs and excess links) Thanks to @sideshowbarker!
 
 2.2.9
-SYS: Removing postinstall from NPM all together. Embedding first update into mdncomp.
+SYS: Removing postinstall from NPM all together. Embedding first update into mdncomp (stage 1).
 
 2.2.8
 FIX: Preference location on macOS. Thanks to @sideshowbarker!
