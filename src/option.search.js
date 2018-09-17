@@ -42,6 +42,7 @@ function doSearch(keyword) {
             if (
               (typeof o.description === "string" && cmp.test(o.description)) ||
               (typeof o.title === "string" && cmp.test(o.title)) ||
+              (typeof o.mdn_url === "string" && cmp.test(o.mdn_url)) ||
               inSupportObject(o.support) || inSpecs(o, cmp)
             ) {
               result.push(branch);
