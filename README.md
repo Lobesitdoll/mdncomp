@@ -342,6 +342,13 @@ The pre-compiled data and patch repositories can be found [here](https://github.
 (primary atm) and [here](https://gitlab.com/epistemex/mdncomp-data) (redundancy repo).
 
 
+Contributors
+------------
+
+- [GitLab overview](https://gitlab.com/epistemex/mdncomp/graphs/master)
+- [GitHub overview](https://github.com/epistemex/mdncomp/graphs/contributors)
+
+
 Support
 -------
 
