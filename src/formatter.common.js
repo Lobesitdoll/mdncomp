@@ -70,7 +70,7 @@ function format(path, recursive = false, subNotes, subLinks) {
     mdntitle    : compat.mdn_title,
     description : compat.description, // summary description, BCD.description is here .title (via data-service)
     url         : url,
-    specs       : compat.specs || [],
+    specs       : compat.specs || compat.spec_urls || [],
     experimental: status.experimental,
     standard    : status.standard_track || (recursive && isWebExt),
     deprecated  : status.deprecated,
