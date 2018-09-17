@@ -157,13 +157,12 @@ function doSearchByLink(link) {
  */
 function search(recursive = false) {
   const keyword = options.args.shift(); // Note: additional args are extracted in formatter.common module
-  const result = (!options.deep && keyword.toLowerCase().startsWith("https://") && keyword.length > 8
-                  ? doSearchByLink
-                  : doSearch)(keyword);
+  const isLink = !options.deep && keyword.toLowerCase().startsWith("https://") && keyword.length > 8;
+  const result = (isLink ? doSearchByLink : doSearch)(keyword);
 
   // no result and not running recursive
   if ( !result.length ) {
-    if ( !recursive && !options.fuzzy && !options.deep && !keyword.includes("*") && !keyword.startsWith("/") ) {
+    if ( !recursive && !isLink && !options.fuzzy && !options.deep && !keyword.includes("*") && !keyword.startsWith("/") ) {
       options.fuzzy = true;
       options.args.unshift(keyword);  // reinsert as we do a second call, just with fuzzy
       search(true);
