@@ -4,6 +4,7 @@ Using mdncomp
 ![xterm color + languages output](https://i.imgur.com/5dcm3Ds.gif)<br>
 <sup>*cygwin/xterm snapshot ([English, Spanish, Norwegian, ...](./locale#contribute-a-translation-file))*</sup>
 
+
 Introduction
 ------------
 
@@ -194,6 +195,7 @@ the option `-z, --fuzzy`.
 
 Notice that additional terms are used as **OR** terms, not AND.
 
+
 Multiple Results
 ----------------
 
@@ -302,8 +304,8 @@ as search terms.
 
 The only requirements are that the URL is fully qualified HTTPS link. In addition:
  
-- for MDN documentation contains no locale specific part (i.e. "/en-us/")
-- for specification links contains a hash part (i.e. "#dom-canvas-toblob").
+- for MDN documentation links: no locale specific part is included (i.e. "/en-us/")
+- for specification links: it contains a hash part (i.e. "#dom-canvas-toblob").
 
 Example using a specification link:
 
@@ -401,6 +403,7 @@ This outputs a more edible list:
 Now simply add the index number to the command line to inspect:
 
     mdncomp -l experimental hitregion 0
+
 
 Browsers
 --------
@@ -502,6 +505,7 @@ and use the option `--no-colors` to remove ANSI color sequences:
 If we *do* want to keep the ANSI codes:
 
     mdncomp blobuilder > blob-builder.ansi
+
 
 Documentation
 -------------

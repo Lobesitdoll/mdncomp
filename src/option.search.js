@@ -38,11 +38,11 @@ function doSearch(keyword) {
         .forEach(key => {
           // Deep mode
           if ( key === "__compat" && !result.includes(branch) ) {
-            const o = subNode[ key ];
+            const o = subNode.__compat;
             if (
               (typeof o.description === "string" && cmp.test(o.description)) ||
-              (typeof (o.title || o.short) === "string" && cmp.test(o.title || o.short) ||
-                inSupportObject(o.support))
+              (typeof o.title === "string" && cmp.test(o.title)) ||
+              inSupportObject(o.support) || inSpecs(o, cmp)
             ) {
               result.push(branch);
             }
@@ -93,15 +93,25 @@ function doSearch(keyword) {
     return false;
   }
 
+  function inSpecs(compat, cmp) {
+    const specs = compat.specs || compat.spec_urls;
+    if ( specs ) {
+      for(let spec of specs) {
+        if ( cmp.test(spec.url) || cmp.test(spec.name) || cmp.test(spec.spec) ) return true;
+      }
+    }
+    return false;
+  }
+
   return result;
 }
 
 function doSearchByLink(link) {
   const mdn = utils.loadMDN();
   const result = [];
-  const cs = options.caseSensitive;
+  const caseSensitive = options.caseSensitive;
 
-  if (!cs) link = link.toLowerCase();
+  if ( !caseSensitive ) link = link.toLowerCase();
 
   utils
     .getRootList(mdn)
@@ -118,17 +128,23 @@ function doSearchByLink(link) {
           if ( !result.includes(branch) ) {
             const currentBranch = branch + "." + key;
             const o = (subNode[ key ] || {}).__compat;
-            const specs = o ? o.spec_urls || o.specs : null;  // todo tmp until specs is completely removed
+            const specs = o ? o.spec_urls || o.specs : null;  // todo tmp until "specs" is completely removed
 
-            if (o && o.mdn_url) {
-              const url = cs ? utils.uncompactURL(o.mdn_url) : utils.uncompactURL(o.mdn_url).toLowerCase();
-              if (url === link) {
+            if ( o && o.mdn_url ) {
+              const url = caseSensitive
+                          ? utils.uncompactURL(o.mdn_url)
+                          : utils.uncompactURL(o.mdn_url).toLowerCase();
+
+              if ( url === link ) {
                 result.push(currentBranch);
               }
               else if ( specs ) {
                 for(let spec of specs) {
-                  const url = cs ? spec.url : spec.url.toLowerCase();
-                  if (url.length === link.length && url === link) {
+                  const url = caseSensitive
+                              ? spec.url
+                              : spec.url.toLowerCase();
+
+                  if ( url.length === link.length && url === link ) {
                     result.push(currentBranch);
                     break;
                   }
@@ -150,7 +166,9 @@ function doSearchByLink(link) {
  */
 function search(recursive = false) {
   const keyword = options.args.shift(); // Note: additional args are extracted in formatter.common module
-  const result = (keyword.toLowerCase().startsWith("https://") ? doSearchByLink : doSearch)(keyword);
+  const result = (!options.deep && keyword.toLowerCase().startsWith("https://")
+                  ? doSearchByLink
+                  : doSearch)(keyword);
 
   // no result
   if ( !result.length && !recursive ) {

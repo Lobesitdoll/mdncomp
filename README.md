@@ -28,7 +28,7 @@ to the compatibility data.
    **WebDriver**, **WebExtensions**, **XPath** and **XSLT**.
   - Search and list features using keywords, paths, wildcards, fuzzy terms or regular expressions.
   - Search case (in)sensitive.
-  - Deep Search option (search in notes, flags, alternative names, prefixes etc.).
+  - Deep Search option (wildcard search in notes, flags, alternative names, prefixes, links etc.).
   - Search using MDN documentation or specification links as search term 
   - Navigate and show information using path and branches.
   - Filter result lists using additional search terms.
@@ -136,8 +136,9 @@ the term contains wildcards or starts with forward-slash for RegExp).
 **Search using links for specifications or MDN documentation**
  
 The only requirements are that the URL is fully qualified HTTPS link. In addition: 
-- for MDN documentation contains no locale specific part (i.e. "/en-us/")
-- for specification links contains a hash part (i.e. "#dom-canvas-toblob").
+
+- for MDN documentation link: no locale specific part is included (i.e. "/en-us/")
+- for specification links: it contains a hash part (i.e. "#dom-canvas-toblob").
 
 Example using a specification link:
 
