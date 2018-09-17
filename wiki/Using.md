@@ -672,27 +672,23 @@ two servers.
 
 **Forced updates**
 
-If you have installed mdncomp for the first time and data update was prevented
-for any reason, or if you suspect the dataset has become corrupted, you can *force* 
-download a full complete dataset using the `--fupdate`  option instead 
-(although, for the first case a normal `--update` should work as well):
+If you suspect the dataset has become corrupted, you can *force* 
+download a full complete dataset using the `--fupdate`  option:
 
     mdncomp --fupdate
     
-This is the same command that is run when installing or updating `mdncomp`
-via NPM.
-
 The `mdncomp` version of the dataset will only include *validated* URLs to
 MDN documentation. These are shown with results, and in many terminals you
 can click or CTRL+click these links directly.
 
 The`mdncomp` version of the dataset also has included summary description of
-most features.
+most features as well as a title field from the MDN site.
 
 **Other updates**
 
-Check NPM for updates of the program itself. Data-sets are no longer distributed 
-within the NPM package itself. To update the dataset always use the `--update` mechanism.
+Check NPM for updates of the program itself. It's recommended that you
+always use the `--update` option update as the dataset included in the NPM
+distribution may not be fully up-to-date.
 
 Consider also to check the git repo at [GitLab](https://gitlab.com/epistemex/mdncomp)
 from time to time for important changes, updates, messages and so forth.

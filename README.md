@@ -30,12 +30,13 @@ to the compatibility data.
   - Search and list features using keywords, paths, wildcards, fuzzy terms or regular expressions.
   - Search case (in)sensitive.
   - Deep Search option (wildcard search in notes, flags, alternative names, prefixes, links etc.).
-  - Search using MDN documentation or specification links as search term 
+  - Search using MDN documentation or specification links as search term incl. wildcards 
   - Navigate and show information using path and branches.
   - Filter result lists using additional search terms.
   - Show result using custom defined browser list.
-  - Show data on the command line as ANSI colored tables.
   - Include children features in table results.
+  - Output data as ANSI colored text or as monochrome.
+  - Outputs Markdown compatible tables (for MD flavors supporting tables)
   - Get feature status (standard, experimental or deprecated).
   - Show notes, flags, vendor prefixes, history and security issues.
   - Show additional links for information in notes.
@@ -57,19 +58,19 @@ to the compatibility data.
     *(only in the mdncomp dataset)*.
   - Show a optional **summary description** per feature
     *(only in the mdncomp dataset)*.
-  - Includes a *verified* URL to the feature's documentation page on [MDN](https://developer.mozilla.org/)
+  - Includes a *verified* URL to the feature's documentation page on MDN
     *(only in the mdncomp dataset)*.
   - Show standards/specification references, status and links (W3C, WHATWG, KHRONOS, ECMA, IETF etc.)
    *(only in the mdncomp dataset)*.
 
 - Integrated update mechanism for dataset
-  - Fast update using "precompiled" compatibility data with additional data (summary description, specs)
+  - Fast update using "precompiled" compatibility data with additional data (summary description, specs, MDN title)
   - Compressed data transfers
 
-- Define permanent/often used options in a config file (can be suspended when needed via option).
+- Set often used options permanently to avoid entering them each time (can be temporary suspended when needed).
 - Copied text from terminal is easy to paste to Q&A sites, forums etc. to document feature support.
 - Localized user interface.
-- Built-in help per mdncomp option.
+- Built-in help per **mdncomp** option.
 - Cross-platform (where node and npm is available).
 - Usage documentation included as [wiki](./wiki/Home.md) pages
 
@@ -80,18 +81,19 @@ changes as some options has been added, removed and changed.
 Installation
 ------------
 
-Make sure to have [Node.js](https://nodejs.org/en/) and `npm` installed (included with node).
+Make sure to have [Node.js v.8.3+](https://nodejs.org/en/) and `npm` installed (included with node).
 
 Then install latest version globally:
 
     $ npm i -g mdncomp
 
-Update weekly or so using the built-in `--update` option. The data should be updated automatically 
-when installed via NPM (may not apply to Linux/Darwin users due to permission restrictions).
-If for some reason update failed via NPM post-installation, you can run this manually:
+macOS (Darwin) and Linux users may have to use sudo to install:
+
+    $ sudo npm i -g mdncomp
+
+Update weekly or so using the built-in `--update` option:
 
     $ mdncomp --update 
-    $ sudo mdncomp --update   # Linux/Darwin first run 
 
 If you prefer the old version 1.23 you can install it using its tag:
 
@@ -111,11 +113,11 @@ Using wildcard:
 
 *(the stop-dot "`.`" above indicates that the resulting path line should **end** with this search term.)*
 
-Tip: from version 2.1 you can also use the shorter "bcd" alias instead of "mdncomp":
+**Tip**: from version 2.1 you can also use the shorter "bcd" alias instead of "mdncomp":
 
     $ bcd ...
 
-![wildcard example](https://i.imgur.com/mW9uDVq.png)
+![wildcard example](https://i.imgur.com/o0ySWsr.png)
 
 or using the absolute feature path:
 
@@ -135,26 +137,33 @@ a second search search pass is performed using the same expression but as a fuzz
 the term contains wildcards or starts with forward-slash for RegExp).
 
 **Search using links for specifications or MDN documentation**
- 
-The only requirements are that the URL is fully qualified HTTPS link. In addition: 
 
-- for MDN documentation link: no locale specific part is included (i.e. "/en-us/")
-- for specification links: it contains a hash part (i.e. "#dom-canvas-toblob").
-- you can use wildcards, regex etc. as any other term with the exception that the prefix 
-"https://" is required to do link searches (unless you use the "-d, --deep" option).
+From version 2.3 you can use a URL as search term. The scope is either a MDN documentation
+link or a specification link. The link may contain wildcards, regex etc.
+
+To search using a link make sure:
+
+- the URL is starting with `https://` regardless of wildcard, regex etc. (except in
+combination with the "-d, --deep" option). 
+- for MDN documentation links: no locale specific part is included (e.g. "/en-us/")
+- for specification links: it contains a hash part (e.g. "...#dom-canvas-toblob").
 
 Example using a specification link:
 
     mdncomp https://html.spec.whatwg.org/multipage/scripting.html#dom-canvas-toblob
 
-Note: Only features that has valid MDN links will have searchable links.
+Example using a specification link using wildcard:
+
+    mdncomp https://*#dom-canvas-toblob
+
+Note: Only features that has a verified MDN link will have searchable links.
 
 
 <h3>Show data in a compact shorthand format using option `-s, --shorthand`:</h3>
 
     $ mdncomp html*toblob -s
 
-![Shorthand format](https://i.imgur.com/wxZYoOC.png)<br>
+![Shorthand format](https://i.imgur.com/BBZvUEs.png)<br>
 <sup>*cygwin/xterm snapshot*</sup>
 
 You can from version 2 do filtering of the result by simply adding one or several keywords (or search-terms)
@@ -175,7 +184,7 @@ a custom column result using search term ("`t2d`") and a result filter ("`path`"
 
     mdncomp t2d path -u "chrome,edge,firefox"
 
-![example custom header + filter](https://i.imgur.com/8FFFN0H.png)
+![example custom header + filter](https://i.imgur.com/joLxnTb.png)
 
 To get a list of valid browser IDs use the option `-b, --browser`.
 
@@ -189,13 +198,13 @@ To list root simply add the option `--list` (or shorthand `-l`) with no argument
 
     mdncomp --list
 
-![example of root list](https://i.imgur.com/ZRhyNLd.png)
+![example of root list](https://i.imgur.com/ensgKMT.png)
 
 List using one of the root branches:
 
     mdncomp -l webext
 
-![example list an api](https://i.imgur.com/FBARr1D.png)
+![example list an api](https://i.imgur.com/4NsQiiX.png)
 
 You can go to next branch by adding the name of the branch, fully or partly (if unique):
 
@@ -213,7 +222,7 @@ One can further filter the result list:
 
     mdncomp -l api window
 
-![snapshot list with filter](https://i.imgur.com/flEnn8i.png)
+![snapshot list with filter](https://i.imgur.com/C4uZpeO.png)
 
 List per status, for example: list all features with "experimental" status:
 
@@ -225,7 +234,7 @@ List per status, for example: list all features with "experimental" status:
 
     mdncomp --browser current
 
-![example show current browsers](https://i.imgur.com/HUvq866.png)
+![example show current browsers](https://i.imgur.com/yO6UfZS.png)
 
 Tip: You can combine the option with `-N, --no-notes` to hide the links at the end.
 
@@ -233,13 +242,13 @@ List release history for a single browser:
 
     mdncomp -Nb edge
 
-![example listing on browser](https://i.imgur.com/7MIgKbU.png)
+![example listing on browser](https://i.imgur.com/jHM2J9a.png)
 
 <h3>Rich output with additional options</h3>
 
     mdncomp sharedarraybuffer --desc --specs --ext
 
-![Description and specifications summary example](https://i.imgur.com/TgKJ7fo.png)<br>
+![Description and specifications summary example](https://i.imgur.com/pDdUT7o.png)<br>
 <sup>*cygwin snapshot*</sup>
 
 <h3>Or as minimal, turning off extra information</h3>
@@ -250,7 +259,7 @@ Here with options `-NRF`:
     
     mdncomp sharedbuffer -RNF
 
-![Minimalistic example](https://i.imgur.com/aeD4g8t.png)<br>
+![Minimalistic example](https://i.imgur.com/T2CXlRF.png)<br>
 <sup>*cygwin snapshot*</sup>
 
 
@@ -358,7 +367,7 @@ Note that the **mdncomp** *data-format* version is still considered **alpha** as
 Requirements
 ------------
 
-- **Node.js version 8.3** or newer (for older Node version use mdncomp version 1.23).
+- **Node.js version 8.3** or newer (for older Node version use **mdncomp** version 1.23).
 - NPM to install `npm i -g mdncomp`
 - Internet connection when updating (via the `--*update` options)
 
