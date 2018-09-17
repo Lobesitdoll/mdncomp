@@ -3,11 +3,13 @@ mdncomp 2
 
 2.3.0
 ADD: MDN documentation or specification links can now be used directly as search term (requested by @sideshowbarker).
-ADD: Using wildcard/regex etc. for MDN/specs links via the "-d, --deep" option
+ADD: Using wildcard/regex etc. for MDN/specs links + for the "-d, --deep" option
 ADD: MDN title if available (this is work-in-progress on the MDN site so currently this title will be somewhat similar to already shown path for most features).
 ADD: (Reintroduction) Raw JSON output of feature via option "-j, --json" (requested by @sideshowbarker).
+REV: Revert back to incl. dataset in NPM dist. as original to reduce install problems on Darwin/Linux.
 FIX: Automatically invoke data download if data file not present (stage 2).
 FIX: Data back-end - spec links (bugs and excess links) Thanks to @sideshowbarker!
+FIX: Some cases showing wrong message when no result
 INT: Internal emigration process of internal specs->spec_urls property in the dataset
 INT: Support full URLs for mdn_url in addition to the current compact version
 

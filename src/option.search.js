@@ -161,9 +161,9 @@ function search(recursive = false) {
                   ? doSearchByLink
                   : doSearch)(keyword);
 
-  // no result
-  if ( !result.length && !recursive ) {
-    if ( !options.fuzzy && !options.deep && !keyword.includes("*") && !keyword.startsWith("/") ) {
+  // no result and not running recursive
+  if ( !result.length ) {
+    if ( !recursive && !options.fuzzy && !options.deep && !keyword.includes("*") && !keyword.startsWith("/") ) {
       options.fuzzy = true;
       options.args.unshift(keyword);  // reinsert as we do a second call, just with fuzzy
       search(true);
