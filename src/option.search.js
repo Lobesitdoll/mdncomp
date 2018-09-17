@@ -42,7 +42,7 @@ function doSearch(keyword) {
             if (
               (typeof o.description === "string" && cmp.test(o.description)) ||
               (typeof o.title === "string" && cmp.test(o.title)) ||
-              (typeof o.mdn_url === "string" && cmp.test(o.mdn_url)) ||
+              (typeof o.mdn_url === "string" && cmp.test(utils.uncompactURL(o.mdn_url))) ||
               inSupportObject(o.support) || inSpecs(o, cmp)
             ) {
               result.push(branch);
@@ -109,10 +109,8 @@ function doSearch(keyword) {
 
 function doSearchByLink(link) {
   const mdn = utils.loadMDN();
+  const cmp = utils.getComparer(link, options.fuzzy, !options.caseSensitive);
   const result = [];
-  const caseSensitive = options.caseSensitive;
-
-  if ( !caseSensitive ) link = link.toLowerCase();
 
   utils
     .getRootList(mdn)
@@ -132,20 +130,12 @@ function doSearchByLink(link) {
             const specs = o ? o.spec_urls || o.specs : null;  // todo tmp until "specs" is completely removed
 
             if ( o && o.mdn_url ) {
-              const url = caseSensitive
-                          ? utils.uncompactURL(o.mdn_url)
-                          : utils.uncompactURL(o.mdn_url).toLowerCase();
-
-              if ( url === link ) {
+              if ( cmp.test(o.mdn_url) ) {
                 result.push(currentBranch);
               }
               else if ( specs ) {
                 for(let spec of specs) {
-                  const url = caseSensitive
-                              ? spec.url
-                              : spec.url.toLowerCase();
-
-                  if ( url.length === link.length && url === link ) {
+                  if ( cmp.test(spec.url) ) {
                     result.push(currentBranch);
                     break;
                   }
