@@ -17,8 +17,8 @@ A Web Developer's friend showing [MDN Browser Compatibility Data](https://github
 [ [macOS High Sierra](https://i.imgur.com/yUvfHm2.png) ]
 [ [Linux/Ubuntu 18](https://i.imgur.com/Qo6kcV0.png) ]
 
-![Table with simple config set](https://i.imgur.com/iPr15gn.png)<br>
-<sup>*Table with the `simple` config set still providing a markdown enabled format, i.e.* `bcd --set simple=true`</sup>
+![Table with bright table separators](https://i.imgur.com/B0KNOxU.png)<br>
+<sup>*Table with the `brightbars` config set, i.e.* `bcd --set brightbars=true`</sup>
 
 
 Features

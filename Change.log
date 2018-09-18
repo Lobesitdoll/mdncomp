@@ -1,8 +1,8 @@
 mdncomp 2
 =========
 
-2.3.1
-EXP: Make vertical table lines "invisible" to simplify the look (and still preserve markdown table formatting). Enable via config: "bcd --set simple=true"
+(2.4.0-alpha)
+CHG: Default vertical table separator color is now dark. New setting "brightbars" to enable "old" bright look.
 
 2.3.0
 ADD: MDN documentation or specification links can now be used directly as search term (requested by @sideshowbarker).
