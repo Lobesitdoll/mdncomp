@@ -9,7 +9,7 @@ A Web Developer's friend showing [MDN Browser Compatibility Data](https://github
 
     $ mdncomp html*toblob
 
-![xterm color + languages output](https://i.imgur.com/doMLcHF.png)<br>
+![xterm color + languages output](https://i.imgur.com/2mnEWg7.png)<br>
 <sup>*cygwin/xterm snapshot ([English, Spanish, Norwegian, ...](./locale#contribute-a-translation-file))*</sup>
 
 [ [cmd high contrast output](https://i.imgur.com/tO349ZA.png) ]
