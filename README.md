@@ -120,7 +120,8 @@ Using wildcard:
 
     $ bcd ...
 
-![wildcard example](https://i.imgur.com/o0ySWsr.png)
+![wildcard example](https://i.imgur.com/o0ySWsr.png)<br>
+<sup>*Example of wildcard usage*</sup>
 
 or using the absolute feature path:
 
@@ -166,7 +167,7 @@ Note: Only features that has a verified MDN link will have searchable links.
     $ mdncomp html*toblob -s
 
 ![Shorthand format](https://i.imgur.com/BBZvUEs.png)<br>
-<sup>*cygwin/xterm snapshot*</sup>
+<sup>*Example of the shorthand option output*</sup>
 
 You can from version 2 do filtering of the result by simply adding one or several keywords (or search-terms)
 to the argument list. For example: this will only list child features containing "stroke" or "fill"
@@ -174,9 +175,8 @@ in the `CanvasRenderingContext2D` API (using only the last part of the name, her
 
     $ mdncomp t2d stroke fill
 
-![example local filter](https://i.imgur.com/OKzqor8.png)
-
-<sup>The check-mark "✓" here is from using the config setting `unicode`, e.g. `bcd --set unicode=true`.
+![example local filter](https://i.imgur.com/OKzqor8.png)<br>
+<sup>*The check-mark* "✓" *here is from using the config setting* `unicode`, *i.e.* `bcd --set unicode=true`.</sup>
 
 <h3>List results using Custom Columns</h3>
 
@@ -186,7 +186,9 @@ a custom column result using search term ("`t2d`") and a result filter ("`path`"
 
     mdncomp t2d path -u "chrome,edge,firefox"
 
-![example custom header + filter](https://i.imgur.com/joLxnTb.png)
+![example custom header + filter](https://i.imgur.com/joLxnTb.png)<br>
+<sup>*Example of a custom header + filter*</sup>
+
 
 To get a list of valid browser IDs use the option `-b, --browser`.
 
@@ -200,13 +202,15 @@ To list root simply add the option `--list` (or shorthand `-l`) with no argument
 
     mdncomp --list
 
-![example of root list](https://i.imgur.com/ensgKMT.png)
+![example of root list](https://i.imgur.com/ensgKMT.png)<br>
+<sup>*Example listing valid root branches and statuses*</sup>
 
 List using one of the root branches:
 
     mdncomp -l webext
 
-![example list an api](https://i.imgur.com/4NsQiiX.png)
+![example list an api](https://i.imgur.com/4NsQiiX.png)<br>
+<sup>*Example of listing 1. level branches on a root branch using partial name*</sup>
 
 You can go to next branch by adding the name of the branch, fully or partly (if unique):
 
@@ -224,19 +228,22 @@ One can further filter the result list:
 
     mdncomp -l api window
 
-![snapshot list with filter](https://i.imgur.com/C4uZpeO.png)
+![snapshot list with filter](https://i.imgur.com/C4uZpeO.png)<br>
+<sup>*Example list using additional result filter*</sup>
 
 List per status, for example: list all features with "experimental" status:
 
     mdncomp -l experimental
 
-![example list on status](https://i.imgur.com/Uvc7fqH.png)
+![example list on status](https://i.imgur.com/Uvc7fqH.png)<br>
+<sup>*Example listing features based on status*</sup>
 
 <h3>List current browser versions:</h3>
 
     mdncomp --browser current
 
-![example show current browsers](https://i.imgur.com/yO6UfZS.png)
+![example show current browsers](https://i.imgur.com/yO6UfZS.png)<br>
+<sup>*Example showing current browser versions*</sup>
 
 Tip: You can combine the option with `-N, --no-notes` to hide the links at the end.
 
@@ -244,14 +251,15 @@ List release history for a single browser:
 
     mdncomp -Nb edge
 
-![example listing on browser](https://i.imgur.com/jHM2J9a.png)
+![example listing on browser](https://i.imgur.com/jHM2J9a.png)<br>
+<sup>*Example listing version history of a browser*</sup>
 
 <h3>Rich output with additional options</h3>
 
     mdncomp sharedarraybuffer --desc --specs --ext
 
 ![Description and specifications summary example](https://i.imgur.com/pDdUT7o.png)<br>
-<sup>*cygwin snapshot*</sup>
+<sup>*Description and specifications summary example*</sup>
 
 <h3>Or as minimal, turning off extra information</h3>
 
@@ -262,7 +270,7 @@ Here with options `-NRF`:
     mdncomp sharedbuffer -RNF
 
 ![Minimalistic example](https://i.imgur.com/T2CXlRF.png)<br>
-<sup>*cygwin snapshot*</sup>
+<sup>*Minimal output*</sup>
 
 
 Markdown enabled tables
