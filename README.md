@@ -4,12 +4,12 @@ mdncomp<sup>nx</sup>
 [![npm](https://img.shields.io/npm/v/mdncomp.svg)](https://www.npmjs.com/package/mdncomp)
 [![Monthly Downloads from NPM](https://img.shields.io/npm/dm/mdncomp.svg?style=flat-square)](https://www.npmjs.com/package/mdncomp)
 
-A Web Developer's friend that shows [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data) 
+A Web Developer's friend showing [MDN Browser Compatibility Data](https://github.com/mdn/browser-compat-data) 
 (and then some) on the command line.
 
     $ mdncomp html*toblob
 
-![xterm color + languages output](https://i.imgur.com/KDPQJnw.gif)<br>
+![xterm color + languages output](https://i.imgur.com/doMLcHF.png)<br>
 <sup>*cygwin/xterm snapshot ([English, Spanish, Norwegian, ...](./locale#contribute-a-translation-file))*</sup>
 
 [ [cmd high contrast output](https://i.imgur.com/tO349ZA.png) ]

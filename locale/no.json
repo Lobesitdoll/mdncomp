@@ -155,7 +155,6 @@
     "feature"     : "E",
     "subFeature"  : "U",
     "parent"      : "F",
-    "branch"      : "G",
-    "flags"       : "§"
+    "branch"      : "G"
   }
 }

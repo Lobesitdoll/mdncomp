@@ -58,13 +58,13 @@ Object.assign(global, {
     subFeature  : "S",
     parent      : "P",
     branch      : "B",
-    flags       : "§",
+    flags       : "^",
     notes       : "*",
     nonStd      : "?",
     experimental: "!",
     deprecated  : "x",
     arrowRight  : "-&gt;",
-    refs        : "abcdefghikmnpqrtuvwzABCDEFGHIKMNPQRTUVWZ^ªºæøåäöáéòúàèùÆØÅÖÄÁÉÒÚÀÈ"
+    refs        : "°¹²³abcdefghikmnpqrtuvwzABCDEFGHIKMNPQRTUVWZ^ªºæøåäöáéòúàèùÆØÅÖÄÁÉÒÚÀÈ"
   },
   lang        : "en-us",
   languages   : [ "en", "en-us", "es", "no" ],
