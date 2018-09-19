@@ -11,7 +11,7 @@ const maxNameLen = 40;
 const browserNames = utils.getBrowserNames();
 const tblOptions = {
   align       : [ "l" ],
-  delimiter   : char.sep,
+  delimiter    : options.brightbars ? char.sep : "?G" + char.sep,
   stringLength: utils.ansiLength
 };
 

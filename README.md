@@ -169,7 +169,7 @@ Note: Only features that has a verified MDN link will have searchable links.
 
     $ mdncomp html*toblob -s
 
-![Shorthand format](https://i.imgur.com/BBZvUEs.png)<br>
+![Shorthand format](https://i.imgur.com/kC9LHkB.png)<br>
 <sup>*Example of the shorthand option output*</sup>
 
 You can from version 2 do filtering of the result by simply adding one or several keywords (or search-terms)
