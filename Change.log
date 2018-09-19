@@ -2,8 +2,13 @@ mdncomp 2
 =========
 
 2.4.0
-CHG: Default vertical table separator color is now dark. New setting "brightbars" to enable "old" look (i.e. "bcd --set brightbars=1")
+ADD: New wiki page (Config.md) describing config settings (via --set key=value) not covered in Options.md
+ADD: New config "minihelp" for a minimal help output (i.e. "bcd --set minihelp=1").
+ADD: New setting "brightbars" to enable "old" bright look for vertical table bars (i.e. "bcd --set brightbars=1")
+CHG: Default vertical table separator color is now dark.
 CHG: Symbol for flags changed to: ^
+CHG; Colorized option args and default values in "-h, --help"
+CHG: Reduced number of examples in "-h, --help" to shorten output height for smaller screens/terminal windows
 
 2.3.0
 ADD: MDN documentation or specification links can now be used directly as search term (requested by @sideshowbarker).

@@ -1,14 +1,10 @@
 {
   "name": "mdncomp",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "MDN Browser Compatibility Data (BCD) on the command line.",
-  "main": "./bin/mdncomp.js",
   "bin": {
     "mdncomp": "./bin/mdncomp.js",
     "bcd": "./bin/mdncomp.js"
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org"
   },
   "author": {
     "name": "epistemex",
@@ -16,10 +12,10 @@
   },
   "scripts": {
     "debug": "node ./src/mdncomp.js",
+    "start": "node ./bin/mdncomp.js",
     "push": "parallelshell \"git push gitlab\" \"git push origin master\"",
     "pushf": "parallelshell \"git push -f gitlab\" \"git push -f origin master\"",
-    "start": "node ./bin/mdncomp.js",
-    "postinstall": "echo At first run use option [sudo] mdncomp --update."
+    "postinstall": "echo To update data run: [sudo] mdncomp --update."
   },
   "keywords": [
     "mdn",
@@ -52,7 +48,7 @@
     "wiki/",
     "package.json",
     "README.md",
-    "LICENSE-MIT.txt",
+    "LICENSE.txt",
     "Change.log"
   ],
   "dependencies": {},
