@@ -97,10 +97,6 @@ macOS (Darwin) and Linux users may have to use sudo to install:
 
     $ sudo npm i -g mdncomp
 
-Update weekly or so using the built-in `--update` option:
-
-    $ mdncomp --update 
-
 If you prefer the old version 1.23 you can install it using its tag:
 
     $ npm i -g mdncomp@1.23.0
@@ -108,6 +104,18 @@ If you prefer the old version 1.23 you can install it using its tag:
 To try out current development version:
 
     $ npm i -g https://github.com/epistemex/mdncomp.git
+
+
+Data Update
+-----------
+
+Update weekly or so using the built-in `--update` option:
+
+    $ mdncomp --update 
+
+In case you want to update regardless of new data or now you can use force-update:
+
+    $ mdncomp --fupdate 
 
 
 Examples
