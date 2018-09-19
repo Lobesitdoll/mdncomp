@@ -216,19 +216,15 @@ const utils = {
 
   uncompactURL: (url, noAppendix = false) => {
     url = url.startsWith("https://") ? url : ("https://developer.mozilla.org/docs/" + url).replace(".org/docs/Mozilla/Add-ons/", ".org/Add-ons/");
-    return noAppendix ? utils.urlNoAppendix(url) : url
+    return noAppendix ? utils.urlNoAppendix(url) : url;
   },
 
   urlNoAppendix: (url) => {
     let i = url.indexOf("#");
-//    if (i >= 0) {
-//      return url.substr(0, i)
-//    }
-//    i = url.lastIndexOf("#");  // change first check above to "?" if this ever should be needed
-    if (i >= 0) {
-      return url.substr(0, i)
+    if ( i >= 0 ) {
+      return url.substr(0, i);
     }
-    return url
+    return url;
   },
 
   /**
