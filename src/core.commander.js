@@ -435,16 +435,16 @@ Command.prototype = {
    * @return {Object}
    * @api public
    */
-  opts: function() {
-    let result = {},
-      len = this.options.length;
-
-    for(let i = 0; i < len; i++) {
-      let key = this.options[ i ].attributeName();
-      result[ key ] = key === this._versionOptionName ? this._version : this[ key ];
-    }
-    return result;
-  },
+//  opts: function() {
+//    let result = {},
+//      len = this.options.length;
+//
+//    for(let i = 0; i < len; i++) {
+//      let key = this.options[ i ].attributeName();
+//      result[ key ] = key === this._versionOptionName ? this._version : this[ key ];
+//    }
+//    return result;
+//  },
 
   /**
    * `Option` is missing an argument, but received `flag` or nothing.
@@ -703,7 +703,8 @@ Command.prototype = {
     }
     const usage = [
       "",
-      "  ?g" + text.optionUsage + ": ?w" + cmdName + " " + this.usage() + "?R",
+      "  ?C" + text.optionUsage + ": ?w" + cmdName + " ?g" + this.usage() + "?R",
+      "  ?C" + text.optionUsage + ": ?wbcd ?g" + this.usage() + "?R",
       ""
     ];
 
