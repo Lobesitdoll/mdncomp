@@ -9,11 +9,11 @@ A Web Developer's friend showing [MDN Browser Compatibility Data](https://github
 
     $ mdncomp html*toblob
 
-![xterm color + languages output](https://i.imgur.com/2mnEWg7.png)<br>
+![xterm color + languages output](https://i.imgur.com/mNxvRqR.png)<br>
 <sup>*cygwin/xterm snapshot ([English, Spanish, Norwegian, ...](./locale#contribute-a-translation-file))*</sup>
 
 [ [cmd high contrast output](https://i.imgur.com/U0rszM2.png) ]
-[ [cmder output](https://i.imgur.com/7hOiakR.png) ]
+[ [cmder output](https://i.imgur.com/WdkGNkp.jpg) ]
 [ [macOS High Sierra](https://i.imgur.com/yUvfHm2.png) ]
 [ [Linux/Ubuntu 18](https://i.imgur.com/Qo6kcV0.png) ]
 
@@ -120,7 +120,7 @@ Using wildcard:
 
     $ bcd ...
 
-![wildcard example](https://i.imgur.com/o0ySWsr.png)<br>
+![wildcard example](https://i.imgur.com/tEYUrP7.png)<br>
 <sup>*Example of wildcard usage*</sup>
 
 or using the absolute feature path:
@@ -186,7 +186,7 @@ a custom column result using search term ("`t2d`") and a result filter ("`path`"
 
     mdncomp t2d path -u "chrome,edge,firefox"
 
-![example custom header + filter](https://i.imgur.com/joLxnTb.png)<br>
+![example custom header + filter](https://i.imgur.com/wgBGB04.png)<br>
 <sup>*Example of a custom header + filter*</sup>
 
 
@@ -258,7 +258,7 @@ List release history for a single browser:
 
     mdncomp sharedarraybuffer --desc --specs --ext
 
-![Description and specifications summary example](https://i.imgur.com/pDdUT7o.png)<br>
+![Description and specifications summary example](https://i.imgur.com/QY1BBuS.png)<br>
 <sup>*Description and specifications summary example*</sup>
 
 <h3>Or as minimal, turning off extra information</h3>
@@ -269,7 +269,7 @@ Here with options `-NRF`:
     
     mdncomp sharedbuffer -RNF
 
-![Minimalistic example](https://i.imgur.com/T2CXlRF.png)<br>
+![Minimalistic example](https://i.imgur.com/K7k0R2O.png)<br>
 <sup>*Minimal output*</sup>
 
 
