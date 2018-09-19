@@ -679,7 +679,7 @@ Command.prototype = {
    */
   helpInformation: function() {
     let desc = [];
-    if ( this._description ) {
+    if ( this._description && !this.minihelp ) {
       desc = [
         "  ?b" + this._description,
         "?R"
@@ -701,14 +701,16 @@ Command.prototype = {
     if ( this._alias ) {
       cmdName = cmdName + "|" + this._alias;
     }
-    const usage = [
+    const usage = this.minihelp ? [""] : [
       "",
       "  ?C" + text.optionUsage + ": ?w" + cmdName + " ?g" + this.usage() + "?R",
       "  ?C" + text.optionUsage + ": ?wbcd ?g" + this.usage() + "?R",
       ""
     ];
 
-    const options = [
+    const options = this.minihelp ? [
+      "" + this.optionHelp().replace(/^/gm, "    ")
+    ] : [
       "  ?w" + text.optionOptions + ":?R",
       "",
       "" + this.optionHelp().replace(/^/gm, "    "),

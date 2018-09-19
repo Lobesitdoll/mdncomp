@@ -56,6 +56,7 @@ function initConfig(options) {
     .set("json", { type: isBool, convert: toBool, validate: nop })
     .set("nofooter", { type: isBool, convert: toBool, validate: nop })
     .set("brightbars", { type: isBool, convert: toBool, validate: nop })
+    .set("minihelp", { type: isBool, convert: toBool, validate: nop })
     .set("unicode", { type: isBool, convert: toBool, validate: nop });
 
   /*- Load / Init Config file if any -------------------------------------------------------------*/

@@ -32,7 +32,7 @@ module.exports = (() => {
   options
     .version(version, "-v, --version")
     .usage(`[${text.aboutOptions}] [*]`)
-    .description(`${text.aboutBCD}${lf}  ${text.aboutVersion} ${version + lf}  (c) 2018 epistemex.com`)
+    .description(`${text.aboutBCD}${lf}  (c) 2018 epistemex.com`)
 
     .option("-l, --list [api]", text.optionsList)
     .option("-b, --browser [id]", text.optionsBrowser)
@@ -71,7 +71,8 @@ module.exports = (() => {
   loadModule("init.config").initConfig(options);
 
   function extendedHelp() {
-    loadModule("init.help")();
+    if (!options.minihelp) loadModule("init.help")();
+    else log();
   }
 
   // check for shorthand index number arg

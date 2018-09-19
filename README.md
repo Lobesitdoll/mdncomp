@@ -80,7 +80,7 @@ to the compatibility data.
 Note: If you're an user of version 1.23 or earlier, you'll need to familiarize yourself with the new
 changes as some options has been added, removed and changed.
 
-![Options](https://i.imgur.com/jdJTwge.png)<br>
+![Options](https://i.imgur.com/yl7ym7p.png)<br>
 <sup>*The* `-h, --help` *output and available options*</sup>
 
 
