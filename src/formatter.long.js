@@ -38,11 +38,12 @@ const browserNames = utils.getBrowserNames();
 const refs = global.char.refs.split("");
 
 const tblOptions = {
-  align       : [ "l" ],
-  delimiter   : options.brightbars ? char.sep : "?B" + char.sep,
-  stringLength: utils.ansiLength,
-  start       : "?G",
-  end         : "?R"
+  align        : [ "l" ],
+  delimiter    : options.brightbars ? char.sep : "?B" + char.sep,
+  headerLineSep: options.brightbars ? char.sep : "?B" + char.sep + "?G",
+  stringLength : utils.ansiLength,
+  start        : "?G",
+  end          : "?R"
 };
 
 function formatterLong(data, isSub = false) {
