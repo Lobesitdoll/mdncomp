@@ -1,8 +1,9 @@
 mdncomp 2
 =========
 
-(2.4.0-alpha)
-CHG: Default vertical table separator color is now dark. New setting "brightbars" to enable "old" bright look.
+2.4.0
+CHG: Default vertical table separator color is now dark. New setting "brightbars" to enable "old" look (i.e. "bcd --set brightbars=1")
+CHG: Symbol for flags changed to: ^
 
 2.3.0
 ADD: MDN documentation or specification links can now be used directly as search term (requested by @sideshowbarker).
