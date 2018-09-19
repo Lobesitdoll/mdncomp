@@ -12,8 +12,8 @@ A Web Developer's friend showing [MDN Browser Compatibility Data](https://github
 ![xterm color + languages output](https://i.imgur.com/2mnEWg7.png)<br>
 <sup>*cygwin/xterm snapshot ([English, Spanish, Norwegian, ...](./locale#contribute-a-translation-file))*</sup>
 
-[ [cmd high contrast output](https://i.imgur.com/tO349ZA.png) ]
-[ [cmder output](https://i.imgur.com/I0IsvcG.png) ]
+[ [cmd high contrast output](https://i.imgur.com/U0rszM2.png) ]
+[ [cmder output](https://i.imgur.com/7hOiakR.png) ]
 [ [macOS High Sierra](https://i.imgur.com/yUvfHm2.png) ]
 [ [Linux/Ubuntu 18](https://i.imgur.com/Qo6kcV0.png) ]
 
