@@ -83,6 +83,8 @@ changes as some options has been added, removed and changed.
 ![Options](https://i.imgur.com/yl7ym7p.png)<br>
 <sup>*The* `-h, --help` *output and available options*</sup>
 
+Also see [help in other languages](https://i.imgur.com/adLD8dr.png)
+
 
 Installation
 ------------
