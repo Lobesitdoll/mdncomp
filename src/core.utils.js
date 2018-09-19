@@ -220,7 +220,7 @@ const utils = {
   },
 
   urlNoAppendix: (url) => {
-    let i = url.lastIndexOf("#");
+    let i = url.indexOf("#");
 //    if (i >= 0) {
 //      return url.substr(0, i)
 //    }
