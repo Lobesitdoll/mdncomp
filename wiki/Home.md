@@ -29,4 +29,5 @@ Using mdncomp
 =============
 
 - [See information for all options](./Options.md) (v2)
+- [See information for all config settings](./Config.md) (v2)
 - [See information for how to use](./Using.md) (v2)

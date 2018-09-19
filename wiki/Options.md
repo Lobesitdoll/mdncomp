@@ -1,5 +1,7 @@
-Options:
-========
+Options
+=======
+
+Note: the wiki links are using the GitLab version.
 
 **mdncomp** comes with several options to get most out of the BCD data.
 Many of the options has a shorthand version in addition to the long version.
