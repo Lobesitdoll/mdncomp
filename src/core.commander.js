@@ -1,15 +1,6 @@
 /*
-  Modified 2.17.1 version for local need:
-  - Locale support
-  - ES6 format
-  - Stripped off unneeded functionality
-  - Reduced overall size (from ~28kb to ~7kb in build)
-
-  Module dependencies.
-
   "The MIT License"
 
-  Copyright (c) 2018 epistemex
   Copyright (c) 2011 TJ Holowaychuk <tj@vision-media.ca>
 
   Permission is hereby granted, free of charge, to any person obtaining
@@ -30,6 +21,20 @@
   CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
   TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
   SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+  Additional modifications, removals, additions also under MIT:
+
+  Modified 2.17.1 version for local need:
+  - Locale support
+  - Colorized output
+  - ES6 format
+  - Stripped off unneeded functionality
+  - Reduced overall size (from ~28kb to ~7kb in build)
+
+  Module dependencies.
+
+  Copyright (c) 2018 epistemex
+
  */
 
 const EventEmitter = require("events").EventEmitter;
@@ -645,11 +650,24 @@ Command.prototype = {
   optionHelp: function() {
     let width = this.padWidth();
 
+    function colorArg(option) {
+      let i = option.indexOf("<");
+      if (i >= 0) {
+        return option.substr(0, i) + "?y" + option.substr(i)
+      }
+      i = option.indexOf("[");
+      if (i >= 0) {
+        return option.substr(0, i) + "?g" + option.substr(i)
+      }
+      return option
+    }
+
     // Append the help information
     return this.options.map(function(option) {
-      return "?c" + pad(option.flags, width) + "?R  " + option.description +
-        ((option.bool && option.defaultValue !== undefined) ? ` (${text.optionDefault}.: ${option.defaultValue})` : "");
-    }).concat([ "?c" + pad("-h, --help", width) + "?R  " + text.optionOutputUsage ])
+      return "?c" + colorArg(pad(option.flags, width)) + "?R  " + option.description +
+        ((option.bool && option.defaultValue !== undefined) ? ` (?y${text.optionDefault}: ${option.defaultValue}?R)` : "");
+      })
+      .concat([ "?c" + pad("-h, --help", width) + "?R  " + text.optionOutputUsage ])
       .join("\n");
   },
 
