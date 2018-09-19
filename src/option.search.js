@@ -107,14 +107,20 @@ function doSearch(keyword) {
   return result;
 }
 
-function doSearchByLink(link) {
+function doSearchByLink(url) {
   const mdn = utils.loadMDN();
-  const cmp = utils.getComparer(link, options.fuzzy, !options.caseSensitive);
+  const cmp = utils.getComparer(checkAppendix(url), options.fuzzy, !options.caseSensitive);
   const result = [];
 
   utils
     .getRootList(mdn)
     .forEach(key => _iterateNode(mdn, key, key));
+
+  function checkAppendix(url) {
+    return url.toLowerCase().startsWith("https://developer.mozilla.org/")
+           ? utils.urlNoAppendix(url)
+           : url;
+  }
 
   function _iterateNode(node, inKey, branch) {
     const subNode = node[ inKey ];
@@ -130,7 +136,7 @@ function doSearchByLink(link) {
             const specs = o ? o.spec_urls || o.specs : null;  // todo tmp until "specs" is completely removed
 
             if ( o && o.mdn_url ) {
-              if ( cmp.test(utils.uncompactURL(o.mdn_url)) ) {
+              if ( cmp.test(utils.uncompactURL(o.mdn_url, true)) ) {
                 result.push(currentBranch);
               }
               else if ( specs ) {
@@ -157,7 +163,8 @@ function doSearchByLink(link) {
  */
 function search(recursive = false) {
   const keyword = options.args.shift(); // Note: additional args are extracted in formatter.common module
-  const isLink = !options.deep && keyword.toLowerCase().startsWith("https://") && keyword.length > 8;
+  const isLink = !options.deep && keyword.toLowerCase()
+    .startsWith("https://") && keyword.length > 8;
   const result = isLink ? doSearchByLink(trimMDNURL(keyword)) : doSearch(keyword);
 
   // no result and not running recursive
@@ -196,10 +203,10 @@ function search(recursive = false) {
   function trimMDNURL(url) {
     const prefix = "https://developer.mozilla.org/";
     const _url = url.toLowerCase();
-    if (_url.startsWith(prefix) && !_url.startsWith(prefix + "docs/")) {
+    if ( _url.startsWith(prefix) && !_url.startsWith(prefix + "docs/") ) {
       url = url.substr(0, prefix.length - 1) + url.substr(url.indexOf("/", prefix.length));
     }
-    return url
+    return url;
   }
 }
 
