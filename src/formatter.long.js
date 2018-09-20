@@ -70,10 +70,14 @@ function formatterLong(data, isSub = false) {
 
   // path + api, status, url
   log(utils.breakAnsiLine(`?R${data.prePath}?w${data.name}?R`, options.maxChars));
+
   if ( !isWebExt ) {
     log(getStatus());
   }
-  if ( data.url ) log((data.url ? "?G" + data.url : "-") + "?R");
+
+  if ( data.url ) {
+    log((data.url ? "?G" + data.url : "-") + "?R");
+  }
 
   if ( !isSub ) {
     // Description
@@ -127,7 +131,7 @@ function formatterLong(data, isSub = false) {
       options.sub = undefined;
 
       // find child
-      let i = 0;
+      let i = -1;
       for(let child of data.children) {
         if ( child.title ) {
           if ( ++i === sub ) {
