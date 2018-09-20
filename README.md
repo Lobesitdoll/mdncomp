@@ -83,7 +83,7 @@ changes as some options has been added, removed and changed.
 ![Options](https://i.imgur.com/yl7ym7p.png)<br>
 <sup>*The* `-h, --help` *output and available options*</sup>
 
-Also see [help in other languages](https://i.imgur.com/adLD8dr.png)
+You can also see [help in other languages](https://i.imgur.com/adLD8dr.png).
 
 
 Installation
@@ -115,7 +115,7 @@ Update weekly or so using the built-in `--update` option:
 
     $ mdncomp --update 
 
-In case you want to update regardless of new data or now you can use force-update:
+In case you want to update regardless of there being new data or not you can use forced update:
 
     $ mdncomp --fupdate 
 
