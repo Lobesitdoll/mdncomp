@@ -311,6 +311,7 @@ toBlob                      |    50    |    ˟     |    19    |   10¹    |    3
 toDataURL                   |    4     |    12    |   3.6    |    9     |    9     |    4     
 transferControlToOffscreen !|    ˟     |    ˟     |   44§    |    ˟     |    ˟     |    ˟     
 width                       |    4     |    12    |   3.6    |    9     |    9     |   3.1    
+
 And in compact shorthand format:
 
 BROWSERS >             |C  |E  |F  |IE |O  |S  |C/a|E/m|F/a|O/a|S/i|W/a
