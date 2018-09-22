@@ -64,7 +64,7 @@
     "hdrFlags"            : "FLAGS",
     "hdrFlagsHistory"     : "FLAGS & HISTORY",
     "hdrHistory"          : "HISTORY",
-    "hdrSpecs"            : "SPECS",
+    "hdrSpecs"            : "SPECIFICATIONS",
     "hdrBrowsers"         : "Browsers",
     "standard"            : "On Standard Track",
     "experimental"        : "Experimental",

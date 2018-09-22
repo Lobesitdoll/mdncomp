@@ -274,7 +274,7 @@ Command.prototype = {
         ret.push(arg);
       }
       else if ( arg.length > 1 && arg[ 0 ] === "-" && arg[ 1 ] !== "-" ) {
-        arg.slice(1).split("").forEach(function(c) {
+        arg.slice(1).split("").forEach(c => {
           ret.push("-" + c);
         });
       }
@@ -303,14 +303,12 @@ Command.prototype = {
    * @api private
    */
   parseArgs: function(args, unknown) {
-    //    let name;
-
     if ( !args.length ) {
       outputHelpIfNecessary(this, unknown);
 
       // If there were no args and we have unknown options,
       // then they are extraneous and we need to error.
-      if ( unknown.length > 0 ) {
+      if ( unknown.length ) {
         this.unknownOption(unknown[ 0 ]);
       }
     }
@@ -326,10 +324,8 @@ Command.prototype = {
    * @api private
    */
   optionFor: function(arg) {
-    for(let i = 0, len = this.options.length; i < len; ++i) {
-      if ( this.options[ i ].is(arg) ) {
-        return this.options[ i ];
-      }
+    for(let option of this.options) {
+      if ( option.is(arg) ) return option;
     }
   },
 
@@ -411,7 +407,7 @@ Command.prototype = {
       args.push(arg);
     }
 
-    return { args: args, unknown: unknownOptions };
+    return { args, unknown: unknownOptions };
   },
 
   /**
@@ -459,7 +455,7 @@ Command.prototype = {
    * @api public
    */
   version: function(str, flags) {
-    if ( arguments.length === 0 ) return this._version;
+    if ( !arguments.length ) return this._version;
     this._version = str;
     flags = flags || "-v, --version";
     const versionOption = new Option(flags, text.optionOutputVersion);

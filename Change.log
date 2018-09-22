@@ -3,7 +3,7 @@ mdncomp 2
 
 2.4.1
 FIX: "--sub" option with index 0 was skipped (closes #12).
-INT: Updated relevant changes for commander + optimizations, quality
+INT: Updated relevant changes for commander + optimizations, code quality
 IMP: "--set" outputs "OK" when all-OK
 
 2.4.0
