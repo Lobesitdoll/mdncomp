@@ -3,6 +3,7 @@ mdncomp 2
 
 2.4.1
 FIX: "--sub" option with index 0 was skipped (closes #12).
+INT: Updated relevant changes for commander
 
 2.4.0
 ADD: New wiki page (Config.md) describing config settings (via --set key=value) not covered in Options.md

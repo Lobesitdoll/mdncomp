@@ -24,7 +24,7 @@
 
   Additional modifications, removals, additions also under MIT:
 
-  Modified 2.17.1 version for local need:
+  Modified 2.18.0 version for local need:
   - Locale support
   - Colorized output
   - ES6 format
@@ -34,7 +34,6 @@
   Module dependencies.
 
   Copyright (c) 2018 epistemex
-
  */
 
 const EventEmitter = require("events").EventEmitter;
@@ -48,6 +47,7 @@ const basename = "mdncomp";
  * @api public
  */
 function Option(flags, description) {
+  //noinspection JSUnusedGlobalSymbols
   this.flags = flags;
   this.required = flags.indexOf("<") >= 0;
   this.optional = flags.indexOf("[") >= 0;
@@ -160,17 +160,16 @@ Command.prototype = {
    * @api public
    */
   option: function(flags, description, fn, defaultValue) {
-    let self = this,
-      option = new Option(flags, description),
-      oname = option.name(),
-      name = option.attributeName();
+    const option = new Option(flags, description);
+    const oname = option.name();
+    const name = option.attributeName();
 
     // default as 3rd arg
     if ( typeof fn !== "function" ) {
       if ( fn instanceof RegExp ) {
-        let regex = fn;
+        const regex = fn;
         fn = function(val, def) {
-          let m = regex.exec(val);
+          const m = regex.exec(val);
           return m ? m[ 0 ] : def;
         };
       }
@@ -186,7 +185,8 @@ Command.prototype = {
       if ( !option.bool ) defaultValue = true;
       // preassign only if we have a default
       if ( defaultValue !== undefined ) {
-        self[ name ] = defaultValue;
+        this[ name ] = defaultValue;
+        //noinspection JSUndefinedPropertyAssignment
         option.defaultValue = defaultValue;
       }
     }
@@ -196,27 +196,25 @@ Command.prototype = {
 
     // when it's passed assign the value
     // and conditionally invoke the callback
-    this.on("option:" + oname, function(val) {
+    this.on("option:" + oname, (val) => {
       // coercion
       if ( val !== null && fn ) {
-        val = fn(val, self[ name ] === undefined ? defaultValue : self[ name ]);
+        val = fn(val, this[ name ] === undefined ? defaultValue : this[ name ]);
       }
 
       // unassigned or bool
-      if ( typeof self[ name ] === "boolean" || typeof self[ name ] === "undefined" ) {
+      if ( typeof this[ name ] === "boolean" || typeof this[ name ] === "undefined" ) {
         // if no value, bool true, and we have a default, then use it!
         if ( val == null ) {
-          self[ name ] = option.bool
-                         ? defaultValue || true
-                         : false;
+          this[ name ] = option.bool ? defaultValue || true : false;
         }
         else {
-          self[ name ] = val;
+          this[ name ] = val;
         }
       }
-      else if ( val !== null ) {
+      else if ( val != null ) {
         // reassign
-        self[ name ] = val;
+        this[ name ] = val;
       }
     });
 
@@ -233,7 +231,7 @@ Command.prototype = {
   parse: function(argv) {
 
     // store raw args
-    this.rawArgs = argv;
+    //this.rawArgs = argv;
 
     // guess name
     this._name = this._name || basename;
@@ -255,10 +253,10 @@ Command.prototype = {
    * @api private
    */
   normalize: function(args) {
-    let ret = [],
-      arg,
-      lastOpt,
-      index;
+    const ret = [];
+    let arg;
+    let lastOpt;
+    let index;
 
     for(let i = 0, len = args.length; i < len; ++i) {
       arg = args[ i ];
@@ -268,7 +266,7 @@ Command.prototype = {
 
       if ( arg === "--" ) {
         // Honor option terminator
-        ret = ret.concat(args.slice(i));
+        ret.push(args.slice(i)[0]);
         break;
       }
       else if ( lastOpt && lastOpt.required ) {
@@ -280,7 +278,8 @@ Command.prototype = {
         });
       }
       else if ( /^--/.test(arg) && ~(index = arg.indexOf("=")) ) {
-        ret.push(arg.slice(0, index), arg.slice(index + 1));
+        // todo check this. using item instead of array for now
+        ret.push(arg.slice(0, index)[0], arg.slice(index + 1)[0]);
       }
       else {
         ret.push(arg);
@@ -303,30 +302,15 @@ Command.prototype = {
    * @api private
    */
   parseArgs: function(args, unknown) {
-    let name;
+    //    let name;
 
-    if ( args.length ) {
-      name = args[ 0 ];
-      if ( this.listeners("command:" + name).length ) {
-        this.emit("command:" + args.shift(), args, unknown);
-      }
-      else {
-        this.emit("command:*", args);
-      }
-    }
-    else {
+    if ( !args.length ) {
       outputHelpIfNecessary(this, unknown);
 
       // If there were no args and we have unknown options,
       // then they are extraneous and we need to error.
       if ( unknown.length > 0 ) {
         this.unknownOption(unknown[ 0 ]);
-      }
-      if ( this.commands.length === 0 &&
-        this._args.filter(function(a) {
-          return a.required;
-        }).length === 0 ) {
-        this.emit("command:*");
       }
     }
 
@@ -430,27 +414,10 @@ Command.prototype = {
   },
 
   /**
-   * Return an object containing options as key-value pairs
-   *
-   * @return {Object}
-   * @api public
-   */
-//  opts: function() {
-//    let result = {},
-//      len = this.options.length;
-//
-//    for(let i = 0; i < len; i++) {
-//      let key = this.options[ i ].attributeName();
-//      result[ key ] = key === this._versionOptionName ? this._version : this[ key ];
-//    }
-//    return result;
-//  },
-
-  /**
    * `Option` is missing an argument, but received `flag` or nothing.
    *
-   * @param {String} option
-   * @param {String} flag
+   * @param {*} option
+   * @param {String} [flag]
    * @api private
    */
   optionMissingArgument: function(option, flag) {
@@ -522,7 +489,7 @@ Command.prototype = {
   /**
    * Set / get the command usage `str`.
    *
-   * @param {String} str
+   * @param {String} [str]
    * @return {String|Command}
    * @api public
    */
@@ -652,20 +619,20 @@ Command.prototype = {
 
     function colorArg(option) {
       let i = option.indexOf("<");
-      if (i >= 0) {
-        return option.substr(0, i) + "?y" + option.substr(i)
+      if ( i >= 0 ) {
+        return option.substr(0, i) + "?y" + option.substr(i);
       }
       i = option.indexOf("[");
-      if (i >= 0) {
-        return option.substr(0, i) + "?g" + option.substr(i)
+      if ( i >= 0 ) {
+        return option.substr(0, i) + "?g" + option.substr(i);
       }
-      return option
+      return option;
     }
 
     // Append the help information
     return this.options.map(function(option) {
-      return "?c" + colorArg(pad(option.flags, width)) + "?R  " + option.description +
-        ((option.bool && option.defaultValue !== undefined) ? ` (?y${text.optionDefault}: ${option.defaultValue}?R)` : "");
+        return "?c" + colorArg(pad(option.flags, width)) + "?R  " + option.description +
+          ((option.bool && option.defaultValue !== undefined) ? " (default: " + JSON.stringify(option.defaultValue) + ")" : "");
       })
       .concat([ "?c" + pad("-h, --help", width) + "?R  " + text.optionOutputUsage ])
       .join("\n");
@@ -678,12 +645,12 @@ Command.prototype = {
    * @api private
    */
   helpInformation: function() {
-    let desc = [];
+    const desc = [];
     if ( this._description && !this.minihelp ) {
-      desc = [
+      desc.push(
         "  ?b" + this._description,
         "?R"
-      ];
+      );
 
       let argsDescription = this._argsDescription;
       if ( argsDescription && this._args.length ) {
@@ -701,7 +668,7 @@ Command.prototype = {
     if ( this._alias ) {
       cmdName = cmdName + "|" + this._alias;
     }
-    const usage = this.minihelp ? [""] : [
+    const usage = this.minihelp ? [ "" ] : [
       "",
       "  ?C" + text.optionUsage + ": ?w" + cmdName + " ?g" + this.usage() + "?R",
       "  ?C" + text.optionUsage + ": ?wbcd ?g" + this.usage() + "?R",
