@@ -103,7 +103,6 @@ Option.prototype = {
  * @api public
  */
 function Command(name = "") {
-  this.commands = [];
   this.options = [];
   this._allowUnknownOption = false;
   this._args = [];
@@ -235,13 +234,14 @@ Command.prototype = {
     //this.rawArgs = argv;
 
     // guess name
-    this._name = this._name || basename;
+    //this._name = this._name || basename;
+    this._name = basename;
 
     // process argv
-    let parsed = this.parseOptions(this.normalize(argv.slice(2)));
+    const parsed = this.parseOptions(this.normalize(argv.slice(2)));
     this.args = parsed.args;
 
-    return this.parseArgs(this.args, parsed.unknown);
+    return this.parseArgs(parsed.args, parsed.unknown);
   },
 
   /**
@@ -259,7 +259,7 @@ Command.prototype = {
     let lastOpt;
     let index;
 
-    for(let i = 0, len = args.length; i < len; ++i) {
+    for(let i = 0; i < args.length; ++i) {
       arg = args[ i ];
       if ( i > 0 ) {
         lastOpt = this.optionFor(args[ i - 1 ]);
@@ -267,16 +267,14 @@ Command.prototype = {
 
       if ( arg === "--" ) {
         // Honor option terminator
-        ret.push(args.slice(i)[ 0 ]);
+        ret.push(...args.slice(i));
         break;
       }
       else if ( lastOpt && lastOpt.required ) {
         ret.push(arg);
       }
       else if ( arg.length > 1 && arg[ 0 ] === "-" && arg[ 1 ] !== "-" ) {
-        arg.slice(1).split("").forEach(c => {
-          ret.push("-" + c);
-        });
+        arg.slice(1).split("").forEach(c => ret.push("-" + c));
       }
       else if ( /^--/.test(arg) && ~(index = arg.indexOf("=")) ) {
         // todo check this. using item instead of array for now
@@ -338,16 +336,14 @@ Command.prototype = {
    * @api public
    */
   parseOptions: function(argv) {
-    let args = [],
-      len = argv.length,
-      literal,
-      option,
-      arg;
-
-    let unknownOptions = [];
+    const args = [];
+    const unknown = [];
+    let literal;
+    let option;
+    let arg;
 
     // parse options
-    for(let i = 0; i < len; ++i) {
+    for(let i = 0; i < argv.length; ++i) {
       arg = argv[ i ];
 
       // literal args after --
@@ -392,13 +388,12 @@ Command.prototype = {
 
       // looks like an option
       if ( arg.length > 1 && arg[ 0 ] === "-" ) {
-        unknownOptions.push(arg);
+        unknown.push(arg);
 
-        // If the next argument looks like it might be
-        // an argument for this option, we pass it on.
-        // If it isn't, then it'll simply be ignored
+        // If the next argument looks like it might be an argument for this
+        // option, we pass it on. If it isn't, then it'll simply be ignored
         if ( (i + 1) < argv.length && argv[ i + 1 ][ 0 ] !== "-" ) {
-          unknownOptions.push(argv[ ++i ]);
+          unknown.push(argv[ ++i ]);
         }
         continue;
       }
@@ -407,7 +402,7 @@ Command.prototype = {
       args.push(arg);
     }
 
-    return { args, unknown: unknownOptions };
+    return { args, unknown };
   },
 
   /**
@@ -456,6 +451,7 @@ Command.prototype = {
    */
   version: function(str, flags) {
     if ( !arguments.length ) return this._version;
+
     this._version = str;
     flags = flags || "-v, --version";
     const versionOption = new Option(flags, text.optionOutputVersion);
@@ -478,6 +474,7 @@ Command.prototype = {
    */
   description: function(str, argsDescription) {
     if ( !arguments.length ) return this._description;
+
     this._description = str;
     this._argsDescription = argsDescription;
     return this;
@@ -492,9 +489,7 @@ Command.prototype = {
    */
   usage: function(str) {
     const args = this._args.map(arg => humanReadableArgName(arg));
-
-    let usage = `[${lang.options}]` +
-      (this._args.length ? " " + args.join(" ") : "");
+    const usage = `[${lang.options}]${this._args.length ? " " + args.join(" ") : ""}`;
 
     if ( !arguments.length ) return this._usage || usage;
     this._usage = str;
@@ -511,6 +506,7 @@ Command.prototype = {
    */
   name: function(str) {
     if ( !arguments.length ) return this._name;
+
     this._name = str;
     return this;
   },
@@ -522,11 +518,9 @@ Command.prototype = {
    * @api private
    */
   largestOptionLength: function() {
-    const options = [].concat(this.options);
-    options.push({
-      flags: "-h, --help"
-    });
-    return options.reduce((max, option) => Math.max(max, option.flags.length), 0);
+    return [ { flags: "-h, --help" } ]
+      .concat(this.options)
+      .reduce((max, option) => Math.max(max, option.flags.length), 0);
   },
 
   /**
@@ -546,20 +540,11 @@ Command.prototype = {
    * @api private
    */
   padWidth: function() {
-    let width = this.largestOptionLength();
-    if ( this._argsDescription && this._args.length ) {
-      if ( this.largestArgLength() > width ) {
-        width = this.largestArgLength();
-      }
-    }
-
-    if ( this.commands && this.commands.length ) {
-      if ( this.largestCommandLength() > width ) {
-        width = this.largestCommandLength();
-      }
-    }
-
-    return width;
+    const argWidth = this.largestArgLength();
+    const optWidth = this.largestOptionLength();
+    return this._argsDescription && this._args.length && argWidth > optWidth
+           ? argWidth
+           : optWidth;
   },
 
   /**
@@ -571,7 +556,7 @@ Command.prototype = {
   optionHelp: function() {
     const width = this.padWidth();
 
-    function colorArg(option) {
+    function _colorArg(option) {
       let i = option.indexOf("<");
       if ( i >= 0 ) {
         return option.substr(0, i) + "?y" + option.substr(i);
@@ -586,7 +571,7 @@ Command.prototype = {
     // Append the help information
     return this.options.map(option => {
         const def = option.bool && option.defaultValue !== undefined ? ` (?g${text.optionDefault}: ${JSON.stringify(option.defaultValue)}?R)` : "";
-        return `?c${colorArg(pad(option.flags, width))}?R  ${option.description}${def}`;
+        return `?c${_colorArg(pad(option.flags, width))}?R  ${option.description}${def}`;
       })
       .concat([ `?c${pad("-h, --help", width)}?R  ${text.optionOutputUsage}` ])
       .join("\n");
@@ -600,6 +585,7 @@ Command.prototype = {
    */
   helpInformation: function() {
     const desc = [];
+
     if ( this._description && !this.minihelp ) {
       desc.push(
         "  ?b" + this._description,
@@ -647,9 +633,7 @@ Command.prototype = {
    * @api public
    */
   outputHelp: function(cb) {
-    if ( !cb ) {
-      cb = (passthrue) => passthrue;
-    }
+    if ( !cb ) cb = (passthrue) => passthrue;
     log(cb(this.helpInformation()));
     this.emit("--help");
   },
