@@ -114,6 +114,7 @@ function initConfig(options) {
 
     // save back config and exit
     utils.saveConfigFile(config);
+    log("?gOK?R");
     process.exit();
   }
 }
