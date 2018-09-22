@@ -30,7 +30,7 @@ module.exports = (() => {
   if ( args.length === 3 && args[ 2 ] === "?" ) args[ 2 ] = "-h";
 
   options
-    .version(version, "-v, --version")
+    .version(version)
     .usage(`[${text.aboutOptions}] [*]`)
     .description(`${text.aboutBCD}${lf}  (c) 2018 epistemex.com`)
 

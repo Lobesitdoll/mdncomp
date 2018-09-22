@@ -38,6 +38,7 @@
 
 const EventEmitter = require("events").EventEmitter;
 const basename = "mdncomp";
+const basename2 = "bcd";
 
 /**
  * Initialize a new `Option` with the given `flags` and `description`.
@@ -266,7 +267,7 @@ Command.prototype = {
 
       if ( arg === "--" ) {
         // Honor option terminator
-        ret.push(args.slice(i)[0]);
+        ret.push(args.slice(i)[ 0 ]);
         break;
       }
       else if ( lastOpt && lastOpt.required ) {
@@ -279,7 +280,7 @@ Command.prototype = {
       }
       else if ( /^--/.test(arg) && ~(index = arg.indexOf("=")) ) {
         // todo check this. using item instead of array for now
-        ret.push(arg.slice(0, index)[0], arg.slice(index + 1)[0]);
+        ret.push(arg.slice(0, index)[ 0 ], arg.slice(index + 1)[ 0 ]);
       }
       else {
         ret.push(arg);
@@ -460,12 +461,12 @@ Command.prototype = {
   version: function(str, flags) {
     if ( arguments.length === 0 ) return this._version;
     this._version = str;
-    flags = flags || "-V, --version";
-    let versionOption = new Option(flags, text.optionOutputVersion);
+    flags = flags || "-v, --version";
+    const versionOption = new Option(flags, text.optionOutputVersion);
     this._versionOptionName = versionOption.long.substr(2) || "version";
     this.options.push(versionOption);
-    this.on("option:" + this._versionOptionName, function() {
-      process.stdout.write(str + "\n");
+    this.on("option:" + this._versionOptionName, () => {
+      log(str);
       process.exit(0);
     });
     return this;
@@ -474,13 +475,13 @@ Command.prototype = {
   /**
    * Set the description to `str`.
    *
-   * @param {String} str
+   * @param {String} [str]
    * @param {Object} [argsDescription]
    * @return {Command}
    * @api public
    */
   description: function(str, argsDescription) {
-    if ( arguments.length === 0 ) return this._description;
+    if ( !arguments.length ) return this._description;
     this._description = str;
     this._argsDescription = argsDescription;
     return this;
@@ -494,14 +495,12 @@ Command.prototype = {
    * @api public
    */
   usage: function(str) {
-    let args = this._args.map(function(arg) {
-      return humanReadableArgName(arg);
-    });
+    const args = this._args.map(arg => humanReadableArgName(arg));
 
     let usage = `[${lang.options}]` +
       (this._args.length ? " " + args.join(" ") : "");
 
-    if ( arguments.length === 0 ) return this._usage || usage;
+    if ( !arguments.length ) return this._usage || usage;
     this._usage = str;
 
     return this;
@@ -515,46 +514,9 @@ Command.prototype = {
    * @api public
    */
   name: function(str) {
-    if ( arguments.length === 0 ) return this._name;
+    if ( !arguments.length ) return this._name;
     this._name = str;
     return this;
-  },
-
-  /**
-   * Return prepared commands.
-   *
-   * @return {Array}
-   * @api private
-   */
-  prepareCommands: function() {
-    return this.commands.filter(function(cmd) {
-      return !cmd._noHelp;
-    }).map(function(cmd) {
-      let args = cmd._args.map(function(arg) {
-        return humanReadableArgName(arg);
-      }).join(" ");
-
-      return [
-        cmd._name +
-        (cmd._alias ? "|" + cmd._alias : "") +
-        (cmd.options.length ? ` [${lang.options}]` : "") +
-        (args ? " " + args : ""),
-        cmd._description
-      ];
-    });
-  },
-
-  /**
-   * Return the largest command length.
-   *
-   * @return {Number}
-   * @api private
-   */
-  largestCommandLength: function() {
-    let commands = this.prepareCommands();
-    return commands.reduce(function(max, command) {
-      return Math.max(max, command[ 0 ].length);
-    }, 0);
   },
 
   /**
@@ -564,13 +526,11 @@ Command.prototype = {
    * @api private
    */
   largestOptionLength: function() {
-    let options = [].slice.call(this.options);
+    const options = [].concat(this.options);
     options.push({
       flags: "-h, --help"
     });
-    return options.reduce(function(max, option) {
-      return Math.max(max, option.flags.length);
-    }, 0);
+    return options.reduce((max, option) => Math.max(max, option.flags.length), 0);
   },
 
   /**
@@ -580,9 +540,7 @@ Command.prototype = {
    * @api private
    */
   largestArgLength: function() {
-    return this._args.reduce(function(max, arg) {
-      return Math.max(max, arg.name.length);
-    }, 0);
+    return this._args.reduce((max, arg) => Math.max(max, arg.name.length), 0);
   },
 
   /**
@@ -615,7 +573,7 @@ Command.prototype = {
    * @api private
    */
   optionHelp: function() {
-    let width = this.padWidth();
+    const width = this.padWidth();
 
     function colorArg(option) {
       let i = option.indexOf("<");
@@ -630,11 +588,11 @@ Command.prototype = {
     }
 
     // Append the help information
-    return this.options.map(function(option) {
-        return "?c" + colorArg(pad(option.flags, width)) + "?R  " + option.description +
-          ((option.bool && option.defaultValue !== undefined) ? " (default: " + JSON.stringify(option.defaultValue) + ")" : "");
+    return this.options.map(option => {
+        const def = option.bool && option.defaultValue !== undefined ? ` (?g${text.optionDefault}: ${JSON.stringify(option.defaultValue)}?R)` : "";
+        return `?c${colorArg(pad(option.flags, width))}?R  ${option.description}${def}`;
       })
-      .concat([ "?c" + pad("-h, --help", width) + "?R  " + text.optionOutputUsage ])
+      .concat([ `?c${pad("-h, --help", width)}?R  ${text.optionOutputUsage}` ])
       .join("\n");
   },
 
@@ -652,31 +610,28 @@ Command.prototype = {
         "?R"
       );
 
-      let argsDescription = this._argsDescription;
+      const argsDescription = this._argsDescription;
       if ( argsDescription && this._args.length ) {
-        let width = this.padWidth();
-        desc.push("  " + text.optionArguments + ":");
-        desc.push("");
-        this._args.forEach(function(arg) {
-          desc.push("    ?c" + pad(arg.name, width) + "?R  " + argsDescription[ arg.name ]);
+        const width = this.padWidth();
+        desc.push(
+          "  " + text.optionArguments + ":",
+          "");
+        this._args.forEach(arg => {
+          desc.push(`    ?c${pad(arg.name, width)}?R  ${argsDescription[ arg.name ]}`);
         });
         desc.push("");
       }
     }
 
-    let cmdName = this._name;
-    if ( this._alias ) {
-      cmdName = cmdName + "|" + this._alias;
-    }
     const usage = this.minihelp ? [ "" ] : [
       "",
-      "  ?C" + text.optionUsage + ": ?w" + cmdName + " ?g" + this.usage() + "?R",
-      "  ?C" + text.optionUsage + ": ?wbcd ?g" + this.usage() + "?R",
+      "  ?C" + text.optionUsage + `: ?w${basename} ?g${this.usage()}?R`,
+      "  ?C" + text.optionUsage + `: ?w${basename2} ?g${this.usage()}?R`,
       ""
     ];
 
     const options = this.minihelp ? [
-      "" + this.optionHelp().replace(/^/gm, "    ")
+      "" + this.optionHelp().replace(/^/gm, "  ")
     ] : [
       "  ?w" + text.optionOptions + ":?R",
       "",
@@ -697,9 +652,7 @@ Command.prototype = {
    */
   outputHelp: function(cb) {
     if ( !cb ) {
-      cb = function(passthru) {
-        return passthru;
-      };
+      cb = (passthrue) => passthrue;
     }
     log(cb(this.helpInformation()));
     this.emit("--help");
@@ -724,9 +677,7 @@ Command.prototype = {
  * @api private
  */
 function camelcase(flag) {
-  return flag.split("-").reduce(function(str, word) {
-    return str + word[ 0 ].toUpperCase() + word.slice(1);
-  });
+  return flag.split("-").reduce((str, word) => str + word[ 0 ].toUpperCase() + word.slice(1));
 }
 
 /**
@@ -738,8 +689,7 @@ function camelcase(flag) {
  * @api private
  */
 function pad(str, width) {
-  let len = Math.max(0, width - str.length);
-  return str + Array(len + 1).join(" ");
+  return str.padEnd(width);
 }
 
 /**
@@ -747,14 +697,14 @@ function pad(str, width) {
  *
  * @api private
  * @param cmd
- * @param options
+ * @param [options]
  */
 function outputHelpIfNecessary(cmd, options) {
   options = options || [];
-  for(let i = 0; i < options.length; i++) {
-    if ( options[ i ] === "--help" || options[ i ] === "-h" ) {
+  for(let option of options) {
+    if ( option === "--help" || option === "-h" ) {
       cmd.outputHelp();
-      process.exit(0);
+      process.exit();
     }
   }
 }
@@ -767,7 +717,7 @@ function outputHelpIfNecessary(cmd, options) {
  * @api private
  */
 function humanReadableArgName(arg) {
-  const nameOutput = arg.name + (arg.variadic === true ? "..." : "");
+  const nameOutput = arg.name; // + (arg.variadic === true ? "..." : "");
   return arg.required
          ? "<" + nameOutput + ">"
          : "[" + nameOutput + "]";
